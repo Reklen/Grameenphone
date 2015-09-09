@@ -45,27 +45,27 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 break;
             case 1:
                 fragment = new ProFragment();
-                title = "Pro";
+                title = getString(R.string.nav_item_friends);
                 break;
             case 2:
                 fragment = new ManageFavorite();
-                title ="Manage Favorite";
+                title =getString(R.string.nav_item_notifications);
                 break;
             case 3:
                 fragment = new PinChange();
-                title = "Pin Change";
+                title = getString(R.string.nav_item_pin);
                 break;
             case 4:
                 fragment = new DemoFragment();
-                title = "Demo";
+                title = getString(R.string.nav_item_demo);
                 break;
             case 5:
                 fragment = new TermsCondition();
-                title = "terms condition";
+                title = getString(R.string.nav_item_tc);
                 break;
             case 6:
                 fragment = new Logout();
-                title = "Logout";
+                title = getString(R.string.nav_item_logout);
                 break;
             default:
                 break;
@@ -76,7 +76,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container_body, fragment);
             fragmentTransaction.commit();
-
+            // set the toolbar title
+            getSupportActionBar().setTitle(title);
         }
     }
 }
