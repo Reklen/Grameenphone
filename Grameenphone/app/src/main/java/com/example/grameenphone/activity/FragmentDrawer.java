@@ -1,4 +1,4 @@
-package com.example.grameenphone.binay_ui;
+package com.example.grameenphone.activity;
 
 import android.content.Context;
 import android.os.Bundle;

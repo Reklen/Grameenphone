@@ -39,40 +39,254 @@
     </RadioGroup>
 
     <RelativeLayout
+        android:id="@+id/top_container1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/radiogroup"
         android:layout_marginTop="20dp">
 
-        <EditText
+        <TextView
             android:id="@+id/areacode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="15dp"
-            android:hint="+88017"
+            android:layout_marginTop="35dp"
+            android:text="+88017"
             android:textColor="#aaaaaa"
+            android:textSize="17sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/editphone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <View
+            android:layout_width="60dp"
+            android:layout_height="1dp"
+            android:layout_below="@+id/areacode"
             android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@+id/areacode"
-            android:hint="Phone number"
-            android:textColor="#aaaaaa"
-            android:textStyle="normal" />
+            android:layout_marginTop="7dp"
+            android:background="#aaaaaa">
 
+        </View>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/phone_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/areacode">
+
+            <EditText
+                android:id="@+id/editphone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:ems="10"
+                android:hint="Phone number"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:textColor="#929292"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/phone_container"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_toRightOf="@+id/areacode"
+            android:background="#aaaaaa">
+
+        </View>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/contact_icons"
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="35dp" />
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/other_flex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:textSize="20sp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="35dp"
+            android:text="OTHER FLEXILOAD"
             android:textColor="#ff0099cc"
-            android:text="OTHER FLEXILOAD" />
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/amount_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_container1"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp">
+
+        <EditText
+            android:id="@+id/editamt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter amount"
+            android:inputType="phone"
+            android:maxLength="5"
+            android:textColor="#929292"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/flexi_btn"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_below="@+id/amount_container"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/flexi_button_border"
+        android:gravity="center"
+        android:text="FLEXILOAD"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:id="@+id/bill_pay"
+        android:layout_width="155dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/flexi_btn"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bill_background">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/billpay"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/icon_invite"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/bill_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/billpay"
+            android:text="Bill Payment"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:textColor="#80ffffff"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/transaction_view"
+        android:layout_width="155dp"
+        android:layout_height="100dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/flexi_btn"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/transaction_background">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/trans_icon"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/icon_invite"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/transc_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/trans_icon"
+            android:text="Transaction Overview"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:textColor="#80ffffff"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/emergency"
+        android:layout_width="155dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/bill_pay"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/emergency_back">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/emergencyicon"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/icon_invite"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/emergency_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/emergencyicon"
+            android:text="Emergency   Balance"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:textColor="#80ffffff"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/refer_frnd"
+        android:layout_width="155dp"
+        android:layout_height="100dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/transaction_view"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/refer_freind_back">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/friends"
+            android:src="@drawable/icon_invite"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/friends_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/friends"
+            android:text="Refer Friends"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:textColor="#80ffffff"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 </RelativeLayout>

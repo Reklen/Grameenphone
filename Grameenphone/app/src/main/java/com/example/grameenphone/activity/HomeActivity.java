@@ -1,4 +1,4 @@
-package com.example.grameenphone.binay_ui;
+package com.example.grameenphone.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,10 +10,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.example.grameenphone.R;
+import com.example.grameenphone.fragments.DemoFragment;
+import com.example.grameenphone.fragments.HomePage;
+import com.example.grameenphone.fragments.Logout;
+import com.example.grameenphone.fragments.ManageFavorite;
+import com.example.grameenphone.fragments.PinChange;
+import com.example.grameenphone.fragments.ProFragment;
+import com.example.grameenphone.fragments.TermsCondition;
 
-public class HomeActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener{
+public class HomeActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener, View.OnClickListener {
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +36,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         drawerFragment.setDrawerListener(HomeActivity.this);
         // display the first navigation drawer view on app launch
         displayView(0);
+
+
     }
 
 
@@ -49,7 +60,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 break;
             case 2:
                 fragment = new ManageFavorite();
-                title =getString(R.string.nav_item_notifications);
+                title = getString(R.string.nav_item_notifications);
                 break;
             case 3:
                 fragment = new PinChange();
@@ -80,4 +91,10 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
             getSupportActionBar().setTitle(title);
         }
     }
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
 }

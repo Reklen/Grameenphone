@@ -1,4 +1,4 @@
-package com.example.grameenphone.binay_ui;
+package com.example.grameenphone.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import com.example.grameenphone.R;
 /**
  * Created by rajkiran on 09/09/15.
  */
-public class TermsCondition extends Fragment {
-    public TermsCondition() {
+public class ManageFavorite extends Fragment {
+    public ManageFavorite() {
         // Required empty public constructor
     }
 
@@ -26,7 +26,7 @@ public class TermsCondition extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.termcondition_layout, container, false);
+        View rootView = inflater.inflate(R.layout.manage_favorite_layout, container, false);
 
 
         // Inflate the layout for this fragment
