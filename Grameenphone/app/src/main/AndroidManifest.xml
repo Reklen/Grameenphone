@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/MyMaterialTheme" >
         <activity
-            android:name=".binay_ui.HomeActivity"
+            android:name=".raj_ui.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,6 +20,8 @@
             android:name=".Splashscreen"
             android:label="@string/title_activity_home" >
         </activity>
+        <activity android:name=".raj_ui.SignUpActivity"
+            android:label="@string/app_name"/>
     </application>
 
 </manifest>

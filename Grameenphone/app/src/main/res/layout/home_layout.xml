@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textSize="20sp"
-            android:textColor="#40ff0099cc"
+            android:textColor="#40ff0099"
             android:text="OTHER FLEXILOAD" />
 
     </RelativeLayout>

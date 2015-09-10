@@ -1,0 +1,38 @@
+<android.support.v7.widget.Toolbar
+    android:id="@+id/sign_up_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/actionBarSize"
+    android:background="@color/blue_900"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/profile"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:paddingLeft="10dp"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:layout_weight="0.7"
+            />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:background="@null"
+            android:textColor="@color/white"
+            android:text="@string/skip"
+            />
+
+    </LinearLayout>
+
+</android.support.v7.widget.Toolbar>

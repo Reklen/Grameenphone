@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/sign_up_toolbar"
+        layout="@layout/sign_up_toolboar"/>
+
+    <ScrollView
+        android:layout_below="@+id/sign_up_toolbar"
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
+        <LinearLayout
+            android:id="@+id/sign_up_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            >
+
+    <ImageView
+        android:id="@+id/grameen_icon01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/copy"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        />
+    <TextView
+        android:id="@+id/grameen_text01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/grameenPhone"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:id="@+id/phnnumb_layout01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:weightSum="1"
+        >
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.2"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/number_text01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/numberText"
+                android:textSize="17sp"
+                android:layout_marginBottom="2dp"
+                android:layout_gravity="center"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#808080"
+
+                android:layout_gravity="center"
+                />
+
+        </LinearLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/sign_phone_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            >
+
+        <EditText
+            android:id="@+id/sign_number_edittext01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Phone number"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:textColor="#929292"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+            /></android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/setPin_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+            <EditText
+                android:id="@+id/setPinEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberPassword"
+                android:layout_marginTop="10dp"
+                android:hint="@string/setPin"
+                android:textSize="17sp"
+                /></android.support.design.widget.TextInputLayout>
+            <TextView
+                android:id="@+id/consecutivetext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Consecutive"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"
+                />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/confromPin_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+            <EditText
+                android:id="@+id/conformPinEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberPassword"
+                android:layout_marginTop="10dp"
+                android:hint="@string/ConfirmPin"
+                android:textSize="17sp"
+                /></android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/referral_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                >
+
+            <EditText
+                android:id="@+id/referralPinEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/enterRefferal"
+
+                /></android.support.design.widget.TextInputLayout>
+            <RelativeLayout
+                android:id="@+id/checkbox_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/wallet_pin_layout"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                >
+                <CheckBox
+                    android:id="@+id/sign_check_box01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/sign_accept_text01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/accept"
+                    android:textSize="15sp"
+                    android:layout_toRightOf="@+id/sign_check_box01"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black"
+                    />
+                <TextView
+                    android:id="@+id/sign_terms_text01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/terms_condition"
+                    android:textSize="15sp"
+                    android:layout_toRightOf="@+id/sign_accept_text01"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="5dp"
+                    android:textColor="@color/blue_900"
+                    />
+            </RelativeLayout>
+            <Button
+                android:id="@+id/sign_up_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/signUp"
+                android:background="@drawable/login_button"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:visibility="gone"
+                />
+        </LinearLayout>
+
+
+</ScrollView>
+
+</RelativeLayout>
