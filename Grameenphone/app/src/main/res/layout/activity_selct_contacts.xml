@@ -3,16 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.grameenphone.activity.SelctContacts">
-    <include
+   <!-- <include
         android:id="@+id/sel_toolbar"
-        layout="@layout/select_contact_toolbar" />
+        layout="@layout/select_contact_toolbar" />-->
 
     <com.example.grameenphone.tabs.SlidingTabLayout
         android:id="@+id/contacts_tabs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:background="@color/colorPrimary"
-        android:layout_below="@+id/sel_toolbar" />
+        />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/contacts_viewpager"

@@ -43,7 +43,7 @@ public class HomePage extends Fragment {
         flexText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(),SelctContacts.class));
+                startActivity(new Intent(getActivity(), SelctContacts.class));
                 /*cntcts.setVisibility(View.VISIBLE);
                 cntcts.setOnClickListener(new View.OnClickListener() {
                     @Override
