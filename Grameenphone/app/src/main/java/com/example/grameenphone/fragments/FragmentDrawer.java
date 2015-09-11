@@ -1,4 +1,4 @@
-package com.example.grameenphone.activity;
+package com.example.grameenphone.fragments;
 
 import android.content.Context;
 import android.os.Bundle;

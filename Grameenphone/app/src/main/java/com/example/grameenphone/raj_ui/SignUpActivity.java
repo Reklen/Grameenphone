@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.grameenphone.R;
-import com.example.grameenphone.activity.Grameenhome;
+import com.example.grameenphone.activity.GrameenhomeActivity;
 
 /**
  * Created by Rajkiran on 9/9/2015.
@@ -67,8 +67,7 @@ public class SignUpActivity extends Activity {
         back_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(SignUpActivity.this,MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
         checkBox01= (CheckBox) findViewById(R.id.sign_check_box01);
@@ -81,7 +80,7 @@ public class SignUpActivity extends Activity {
                     sign_up.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            startActivity(new Intent(SignUpActivity.this, Grameenhome.class));
+                            startActivity(new Intent(SignUpActivity.this, GrameenhomeActivity.class));
                         }
                     });
                 } else {

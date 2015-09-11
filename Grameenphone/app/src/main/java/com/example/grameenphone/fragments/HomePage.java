@@ -17,8 +17,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.grameenphone.R;
-import com.example.grameenphone.activity.SelctContacts;
-import com.example.grameenphone.activity.TransactionOverview;
+import com.example.grameenphone.activity.ReferFriendsActivity;
+import com.example.grameenphone.activity.SelectContactsActivity;
+import com.example.grameenphone.activity.TransactionOverviewActivity;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -89,17 +90,26 @@ public class HomePage extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.home_layout, container, false);
         RelativeLayout transactionView1 = (RelativeLayout) rootView.findViewById(R.id.transaction_view);
+        RelativeLayout transactionView2 = (RelativeLayout) rootView.findViewById(R.id.bill_pay);
+        RelativeLayout transactionView3 = (RelativeLayout) rootView.findViewById(R.id.emergency);
+        RelativeLayout transactionView4 = (RelativeLayout) rootView.findViewById(R.id.refer_frnd);
         transactionView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), TransactionOverview.class));
+                startActivity(new Intent(getActivity(), TransactionOverviewActivity.class));
+            }
+        });
+        transactionView4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), ReferFriendsActivity.class));
             }
         });
         TextView flexText = (TextView) rootView.findViewById(R.id.other_flex);
         flexText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), SelctContacts.class));
+                startActivity(new Intent(getActivity(), SelectContactsActivity.class));
 
             }
         });

@@ -1,12 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/first_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Prooo"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal" />
-</LinearLayout>
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="First Name"
+        android:textColor="#aaaaaa"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/frst_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/first_text"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="John"
+        android:textColor="#323232"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/frst_name"
+        android:layout_marginTop="5dp"
+        android:background="#929292">
+
+    </View>
+
+    <TextView
+        android:id="@+id/last_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view1"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Last Name"
+        android:textColor="#aaaaaa"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/last_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/last_text"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="Doe"
+        android:textColor="#323232"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/last_name"
+        android:layout_marginTop="5dp"
+        android:background="#929292">
+
+    </View>
+    <TextView
+        android:id="@+id/email_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view2"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Email"
+        android:textColor="#aaaaaa"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/emil_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/email_text"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="john.doe@example.com"
+        android:textColor="#323232"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/emil_name"
+        android:layout_marginTop="5dp"
+        android:background="#929292">
+
+    </View>
+    <TextView
+        android:id="@+id/national_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view3"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="National ID"
+        android:textColor="#aaaaaa"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/national_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/national_name"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="28484848859"
+        android:textColor="#323232"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/national_id"
+        android:layout_marginTop="5dp"
+        android:background="#929292">
+
+    </View>
+    <TextView
+        android:id="@+id/dob_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view4"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Date of birth"
+        android:textColor="#aaaaaa"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/dob"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dob_name"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="29-02-1990"
+        android:textColor="#323232"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/dob"
+        android:layout_marginTop="5dp"
+        android:background="#929292">
+
+    </View>
+</RelativeLayout>

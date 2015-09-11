@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -21,16 +22,18 @@ import com.example.grameenphone.R;
 import com.example.grameenphone.adapter.SelectcontactAdapter;
 import com.example.grameenphone.tabs.SlidingTabLayout;
 
-public class SelctContacts extends AppCompatActivity implements android.support.v7.widget.SearchView.OnQueryTextListener {
+public class SelectContactsActivity extends AppCompatActivity implements android.support.v7.widget.SearchView.OnQueryTextListener {
     private ViewPager pager;
     private SlidingTabLayout tabs;
     private Context context;
     private SearchView search;
     ActionBar bar;
+    ImageButton back_icon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selct_contacts);
+
         bar = getSupportActionBar();
         tabs = (SlidingTabLayout) findViewById(R.id.contacts_tabs);
         tabs.setDistributeEvenly(true);
@@ -44,6 +47,13 @@ public class SelctContacts extends AppCompatActivity implements android.support.
         pager = (ViewPager) findViewById(R.id.contacts_viewpager);
         pager.setAdapter(new SelectcontactAdapter(getSupportFragmentManager()));
         tabs.setViewPager(pager);
+        back_icon= (ImageButton) findViewById(R.id.back_btn);
+        back_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     MenuItem searchItem;

@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.grameenphone.fragments.Contacts;
+import com.example.grameenphone.fragments.ContactsDetails;
 import com.example.grameenphone.fragments.Favorites;
 
 /**
@@ -25,7 +25,7 @@ public class SelectcontactAdapter extends FragmentPagerAdapter {
                 return art;
 
             case 1:
-                Contacts dscn=new Contacts();
+                ContactsDetails dscn=new ContactsDetails();
                 return dscn;
         }
         return null;

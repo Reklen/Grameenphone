@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.grameenphone.activity.TransactionOverview">
+    tools:context="com.example.grameenphone.activity.TransactionOverviewActivity">
 
     <include
         android:id="@+id/sign_up_toolbar"
@@ -11,7 +11,10 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:id="@+id/listView"
+        tools:listitem="@layout/transaction_row_layout"
         android:layout_below="@+id/sign_up_toolbar"
         android:layout_centerHorizontal="true" />
 

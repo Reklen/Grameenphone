@@ -51,7 +51,7 @@ public class PinChange extends Fragment {
                 confirmDialog.setContentView(R.layout.pin_chnage_dialog);
                 okbtn = (Button) confirmDialog.findViewById(R.id.ok_btn);
                 confirmDialog.show();
-                confirmDialog.getWindow().setLayout(800, 500);
+                confirmDialog.getWindow().setLayout(600, 400);
                 okbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

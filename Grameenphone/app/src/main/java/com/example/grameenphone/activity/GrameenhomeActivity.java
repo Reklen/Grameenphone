@@ -1,5 +1,6 @@
 package com.example.grameenphone.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 import com.example.grameenphone.R;
 import com.example.grameenphone.fragments.DemoFragment;
@@ -18,13 +20,14 @@ import com.example.grameenphone.fragments.HomePage;
 import com.example.grameenphone.fragments.Logout;
 import com.example.grameenphone.fragments.ManageFavorite;
 import com.example.grameenphone.fragments.PinChange;
-import com.example.grameenphone.fragments.ProFragment;
+import com.example.grameenphone.fragments.ProfileFragment;
 import com.example.grameenphone.fragments.TermsCondition;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
-public class Grameenhome extends AppCompatActivity {
+public class GrameenhomeActivity extends AppCompatActivity {
 
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
@@ -36,6 +39,11 @@ public class Grameenhome extends AppCompatActivity {
     DrawerLayout drawerLayout;
     FragmentTransaction fragmentTransaction;
     Fragment fragment;
+
+    @InjectView(R.id.icon1)
+    ImageButton icon1;
+    @InjectView(R.id.icon2)
+    ImageButton icon2;
 
 
     @Override
@@ -70,13 +78,15 @@ public class Grameenhome extends AppCompatActivity {
                     case R.id.navigation_item_1:
                         fragment = new HomePage();
                         getSupportActionBar().setTitle("Home");
+                        icon1.setVisibility(View.GONE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.container_body, fragment);
                         fragmentTransaction.commit();
                         return true;
                     case R.id.navigation_item_2:
-                        fragment = new ProFragment();
+                        fragment = new ProfileFragment();
                         getSupportActionBar().setTitle("Profile");
+                        icon2.setImageDrawable(getResources().getDrawable(R.drawable.ic_border_color_white));
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.container_body, fragment);
                         fragmentTransaction.commit();
@@ -84,6 +94,8 @@ public class Grameenhome extends AppCompatActivity {
                     case R.id.navigation_item_3:
                         fragment = new ManageFavorite();
                         getSupportActionBar().setTitle("Manage Favorites");
+                        icon1.setVisibility(View.GONE);
+                        icon2.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_white_18dp));
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.container_body, fragment);
                         fragmentTransaction.commit();
@@ -91,6 +103,8 @@ public class Grameenhome extends AppCompatActivity {
                     case R.id.navigation_item_4:
                         fragment = new PinChange();
                         getSupportActionBar().setTitle("Pin Change");
+                        icon1.setVisibility(View.GONE);
+                        icon2.setVisibility(View.GONE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.container_body, fragment);
                         fragmentTransaction.commit();
@@ -98,6 +112,8 @@ public class Grameenhome extends AppCompatActivity {
                     case R.id.navigation_item_5:
                         fragment = new DemoFragment();
                         getSupportActionBar().setTitle("Demo");
+                        icon1.setVisibility(View.GONE);
+                        icon2.setVisibility(View.GONE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.container_body, fragment);
                         fragmentTransaction.commit();
@@ -105,6 +121,8 @@ public class Grameenhome extends AppCompatActivity {
                     case R.id.navigation_item_6:
                         fragment = new TermsCondition();
                         getSupportActionBar().setTitle("Terms & Condition");
+                        icon1.setVisibility(View.GONE);
+                        icon2.setVisibility(View.GONE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.container_body, fragment);
                         fragmentTransaction.commit();
@@ -125,7 +143,7 @@ public class Grameenhome extends AppCompatActivity {
         });
 
         // Initializing Drawer Layout and ActionBarToggle
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(Grameenhome.this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(GrameenhomeActivity.this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
 
             @Override
             public void onDrawerClosed(View drawerView) {
@@ -146,5 +164,23 @@ public class Grameenhome extends AppCompatActivity {
 
         //calling sync state is necessay or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
+    }
+
+
+    @OnClick(R.id.icon2)
+    public void clickIcon2() {
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container_body);
+
+        if (f instanceof ManageFavorite) {
+            startActivity(new Intent(GrameenhomeActivity.this, AddFavoriteContactsActivity.class));
+        }
+        if( f instanceof ProfileFragment){
+            startActivity(new Intent(GrameenhomeActivity.this, EditProfileActivity.class));
+        }
+    }
+
+    @OnClick(R.id.icon1)
+    public void clickIcon1() {
+
     }
 }

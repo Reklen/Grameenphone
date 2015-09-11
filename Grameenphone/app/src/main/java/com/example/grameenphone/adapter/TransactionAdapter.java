@@ -21,7 +21,7 @@ public class TransactionAdapter extends BaseAdapter {
     private static LayoutInflater inflater=null;
     public TransactionAdapter(Context context1) {
         this.context = context1;
-        //transactionArrayList = this.transactionArrayList;
+        transactionArrayList = this.transactionArrayList;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }

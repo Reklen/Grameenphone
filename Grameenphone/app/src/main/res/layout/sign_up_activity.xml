@@ -46,7 +46,7 @@
             <RelativeLayout
                 android:id="@+id/top_container1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_marginTop="10dp">
 
                 <TextView
@@ -64,7 +64,7 @@
                 <View
                     android:layout_width="60dp"
                     android:layout_height="1dp"
-                    android:layout_below="@+id/areacode"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="7dp"
                     android:background="#aaaaaa">
@@ -75,7 +75,7 @@
                     android:id="@+id/phone_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_toRightOf="@+id/areacode">
 
@@ -97,11 +97,11 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@+id/phone_container"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="7dp"
                     android:layout_toRightOf="@+id/areacode"
+                    android:layout_alignParentBottom="true"
                     android:background="#aaaaaa">
 
                 </View>
