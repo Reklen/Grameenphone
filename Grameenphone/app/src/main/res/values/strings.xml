@@ -31,4 +31,42 @@
     <string name="title_home">Home</string>
     <string name="title_activity_selct_contacts">SelctContacts</string>
     <string name="title_activity_select_contacts">SelectContacts</string>
+
+
+
+    <string name="grameenPhone">grameenphone</string>
+    <string name="numberText">+88017</string>
+    <string name="enterPhnnumb">Enter a phone number</string>
+    <string name="accept">I accept to</string>
+    <string name="terms_condition"><u>Terms &amp; Condition</u></string>
+    <string name="create_new_wallet">CREATE A NEW WALLET</string>
+    <string name="Or">OR</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="enter_wallet_pin">Enter wallet PIN</string>
+    <string name="login">LOGIN</string>
+    <string name="setPin">Set PIN</string>
+    <string name="Consecutive">Consecutive &amp; repetitive digits are not allowed </string>
+    <string name="ConfirmPin">Comfirm PIN</string>
+    <string name="enterRefferal">Enter referral code(if any) </string>
+    <string name="signUp">SIGN UP</string>
+    <string name="code_text">6 digit code has been sent to\n
+        +880 9988776655</string>
+    <string name="validating">Validating phone number</string>
+    <string name="resendbtn">RESEND</string>
+    <string name="profile">Profile</string>
+    <string name="skip">SKIP</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email_id">Email ID</string>
+    <string name="national_id">National ID</string>
+    <string name="Date_of_birth">Date of Birth(ddmmyy)</string>
+    <string name="submit">SUBMIT</string>
+    <string name="not_registered">You are not registered with\n
+                                  MobCash wallet. Please cleck create\n
+                                  a new wallet</string>
+    <string name="title_activity_grameenhome">Grameenhome</string>
+    <string name="openDrawer"></string>
+    <string name="closeDrawer"></string>
+    <string name="title_activity_transaction_overview">TransactionOverview</string>
+    <string name="title_activity_transaction_overview_deatils">TransactionOverviewDeatils</string>
 </resources>

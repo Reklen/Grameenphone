@@ -3,25 +3,75 @@ package com.example.grameenphone.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.grameenphone.R;
 import com.example.grameenphone.activity.SelctContacts;
+import com.example.grameenphone.activity.TransactionOverview;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import me.drakeet.materialdialog.MaterialDialog;
 
 /**
  * Created by rajkiran on 09/09/15.
  */
 public class HomePage extends Fragment {
+    @InjectView(R.id.radioprepaid)
+    RadioButton radioprepaid;
+    @InjectView(R.id.radiopostpaid)
+    RadioButton radiopostpaid;
+    @InjectView(R.id.radiogroup)
+    RadioGroup radiogroup;
+    @InjectView(R.id.areacode)
+    TextView areacode;
+    @InjectView(R.id.editphone)
+    EditText editphone;
+    @InjectView(R.id.phone_container)
+    TextInputLayout phoneContainer;
+    @InjectView(R.id.other_flex)
+    TextView otherFlex;
+    @InjectView(R.id.top_container1)
+    RelativeLayout topContainer1;
+    @InjectView(R.id.editamt)
+    EditText editamt;
+    @InjectView(R.id.amount_container)
+    TextInputLayout amountContainer;
+    @InjectView(R.id.billpay)
+    ImageView billpay;
+    @InjectView(R.id.bill_text)
+    TextView billText;
+    @InjectView(R.id.bill_pay)
+    RelativeLayout billPay;
+    @InjectView(R.id.trans_icon)
+    ImageView transIcon;
+    @InjectView(R.id.transc_text)
+    TextView transcText;
+    @InjectView(R.id.transaction_view)
+    RelativeLayout transactionView;
+    @InjectView(R.id.emergencyicon)
+    ImageView emergencyicon;
+    @InjectView(R.id.emergency_text)
+    TextView emergencyText;
+    @InjectView(R.id.emergency)
+    RelativeLayout emergency;
+    @InjectView(R.id.friends)
+    ImageView friends;
+    @InjectView(R.id.friends_text)
+    TextView friendsText;
+    @InjectView(R.id.refer_frnd)
+    RelativeLayout referFrnd;
     private Button flexiBtn;
 
     public HomePage() {
@@ -38,19 +88,19 @@ public class HomePage extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.home_layout, container, false);
-        final ImageView cntcts = (ImageView) rootView.findViewById(R.id.contact_icons);
+        RelativeLayout transactionView1 = (RelativeLayout) rootView.findViewById(R.id.transaction_view);
+        transactionView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), TransactionOverview.class));
+            }
+        });
         TextView flexText = (TextView) rootView.findViewById(R.id.other_flex);
         flexText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), SelctContacts.class));
-                /*cntcts.setVisibility(View.VISIBLE);
-                cntcts.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivity(new Intent(getActivity(),SelctContacts.class));
-                    }
-                });*/
+
             }
         });
         RadioGroup radioGroup = (RadioGroup) rootView.findViewById(R.id.radiogroup);
@@ -75,9 +125,17 @@ public class HomePage extends Fragment {
                 final MaterialDialog materialDialog = new MaterialDialog(getActivity()).setContentView(popupview);
                 materialDialog.setCanceledOnTouchOutside(true);
                 materialDialog.show();
+                Button buttonOk = (Button) popupview.findViewById(R.id.ok_button);
+                buttonOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        materialDialog.dismiss();
+                    }
+                });
             }
         });
         // Inflate the layout for this fragment
+        ButterKnife.inject(this, rootView);
         return rootView;
     }
 
@@ -91,5 +149,11 @@ public class HomePage extends Fragment {
         super.onDetach();
     }
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
 
 }

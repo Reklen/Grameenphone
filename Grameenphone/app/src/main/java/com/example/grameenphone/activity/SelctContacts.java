@@ -8,7 +8,7 @@ import android.speech.RecognizerIntent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +21,7 @@ import com.example.grameenphone.R;
 import com.example.grameenphone.adapter.SelectcontactAdapter;
 import com.example.grameenphone.tabs.SlidingTabLayout;
 
-public class SelctContacts extends ActionBarActivity implements android.support.v7.widget.SearchView.OnQueryTextListener {
+public class SelctContacts extends AppCompatActivity implements android.support.v7.widget.SearchView.OnQueryTextListener {
     private ViewPager pager;
     private SlidingTabLayout tabs;
     private Context context;

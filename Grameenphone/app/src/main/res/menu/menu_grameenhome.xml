@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group_one"
+        android:checkableBehavior="none">
+        <item
+            android:icon="@drawable/ic_home_black_18dp"
+            android:id="@+id/navigation_item_1"
+            android:title="@string/nav_item_home" />
+        <item
+            android:icon="@drawable/ic_favorite_black_18dp"
+            android:id="@+id/navigation_item_2"
+            android:title="@string/nav_item_friends" />
+        <item
+            android:icon="@drawable/ic_favorite_black_18dp"
+            android:id="@+id/navigation_item_3"
+            android:title="@string/nav_item_notifications" />
+    </group>
+    <group
+        android:id="@+id/group_two"
+        android:checkableBehavior="none">
+        <item
+            android:icon="@drawable/ic_vpn_key_black"
+            android:id="@+id/navigation_item_4"
+            android:title="@string/nav_item_pin" />
+        <item
+            android:icon="@drawable/ic_settings_display_black"
+            android:id="@+id/navigation_item_5"
+            android:title="@string/nav_item_demo" />
+        <item
+            android:icon="@drawable/ic_settings_display_black"
+            android:id="@+id/navigation_item_6"
+            android:title="@string/nav_item_tc" />
+    </group>
+    <group
+        android:id="@+id/group_three"
+        android:checkableBehavior="none">
+        <item
+            android:icon="@drawable/ic_settings_power_black"
+            android:id="@+id/navigation_item_7"
+            android:title="@string/nav_item_logout" />
+    </group>
+</menu>
+

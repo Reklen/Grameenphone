@@ -1,0 +1,40 @@
+<android.support.v7.widget.Toolbar
+    android:id="@+id/sign_up_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/actionBarSize"
+    android:background="@color/blue_900"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_icon_back"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_arrow_back_white"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/sign_up"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:id="@+id/text_tool"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            android:layout_toRightOf="@+id/image_icon_back"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.Toolbar>

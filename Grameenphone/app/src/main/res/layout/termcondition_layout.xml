@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nav_item_tc"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal" />
-</LinearLayout>
+        android:layout_gravity="center_horizontal"
+        android:text="kdsfbajdsbiajdfnindfsjinijdfsnjndfjsndfsijndfsjidfsndfjsisdnv
+        ghjdfkbkjbdfkgbdfsbkjbdfskjbkdfkdfjbkjdfvddkbsvsvlbljdsfbb
+        js dj sfldjh jhsdf lhs lh fdhjs hjsd lhjs fdh sjhdf alfbhfbahbfeabhsbfhbhsfd
+        bahsbshdbhsbdfbfsdbsdfbsdfbsdfbf"
+        />
+</RelativeLayout>

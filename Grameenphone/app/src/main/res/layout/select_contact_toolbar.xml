@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
+    android:background="@color/primary"
     android:elevation="0dp">
 
     <RelativeLayout
@@ -20,7 +20,7 @@
             android:layout_centerVertical="true"
             android:background="@null"
             android:onClick="onToolBarBack"
-            android:src="@drawable/icon_back" />
+            android:src="@drawable/ic_arrow_back_white" />
 
         <TextView
             android:id="@+id/parenting_feed_heading_txt"
@@ -32,7 +32,7 @@
             android:layout_toRightOf="@+id/back_btn"
             android:text="Select Contacts"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:textStyle="bold" />
         <ImageButton
             android:id="@+id/search_btn"
@@ -44,7 +44,7 @@
             android:background="@null"
             android:layout_marginRight="10dp"
             android:onClick="onToolBarSearch"
-            android:src="@drawable/icon_search"
+            android:src="@drawable/ic_search_white"
             android:visibility="visible" />
         <!--<SearchView
             android:id="@+id/searchView"
