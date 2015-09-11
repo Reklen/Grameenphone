@@ -29,4 +29,6 @@
     <string name="title_messages">Messages</string>
     <string name="title_friends">Friends</string>
     <string name="title_home">Home</string>
+    <string name="button_stringname">OTHER PAYMENT</string>
+    <string name="button_payselectedbills">PAY SELECTED BILLS</string>
 </resources>
