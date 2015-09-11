@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:layout_marginTop="20dp"
+    >
+
+    <LinearLayout
+        android:id="@+id/notification_firstItem_container"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/exculsive_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Exclusive Offer"
+            android:textSize="17sp"
+            android:textColor="@color/primary"/>
+        <TextView
+            android:id="@+id/today_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Today"
+            android:textSize="14sp"
+            android:gravity="right"
+
+            />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/fulltalk_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Full talktime"
+        android:textSize="17sp"
+        android:textColor="@color/black"/>
+    <TextView
+        android:id="@+id/getFullStatement_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Get_full_talktime"
+        android:textSize="17sp"
+        />
+
+</LinearLayout>
