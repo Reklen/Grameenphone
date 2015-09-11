@@ -82,4 +82,8 @@
                                           You will get association conformation\n
                                           SMS shortly</string>
 
+
+    <string name="button_stringname">OTHER PAYMENT</string>
+    <string name="button_payselectedbills">PAY SELECTED BILLS</string>
+
 </resources>
