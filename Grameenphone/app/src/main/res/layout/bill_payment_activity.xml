@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/abc_action_bar_stacked_max_height"
-        android:background="@color/blue_900"
-        android:minHeight="?attr/actionBarSize">
+        android:background="@color/primary"
+        android:contentInsetLeft="0dp"
+        android:contentInsetStart="0dp"
+        android:minHeight="?attr/actionBarSize"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp">
 
         <RelativeLayout
             android:id="@+id/toolbar_container"
@@ -19,22 +25,35 @@
             android:visibility="visible"
             android:weightSum="1">
 
-            <ImageButton
-                android:id="@+id/image_back"
+            <com.cc.grameenphone.views.RippleView
+                android:id="@+id/backRipple"
+                rv_centered="true"
+                rv_zoom="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:background="@null"
-                android:src="@drawable/ic_arrow_back_white" />
+                android:layout_marginRight="10dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                app:rv_rippleDuration="100">
+
+                <ImageButton
+                    android:id="@+id/image_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:src="@drawable/ic_arrow_back_white" />
+
+            </com.cc.grameenphone.views.RippleView>
 
             <TextView
                 android:id="@+id/toolbar_text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/image_icon_back"
+                android:layout_toRightOf="@+id/backRipple"
                 android:gravity="center_vertical"
                 android:text="Bill Payment"
                 android:textColor="@color/white"
@@ -42,70 +61,64 @@
                 android:textStyle="bold" />
 
 
-
-
         </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
 
     <TextView
-        android:background="#cccccc"
         android:id="@+id/billsbar"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_below="@+id/toolbar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="false"
+        android:layout_below="@+id/toolbar"
         android:layout_marginTop="15dp"
-        android:text="      My Pending Bills"
-        android:textSize="15dp"
+        android:background="#cccccc"
         android:gravity="center_vertical"
+        android:text="      My Pending Bills"
         android:textColor="#030303"
-        />
+        android:textSize="15dp" />
 
     <ListView
         android:id="@+id/recycle_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/billsbar"
-        android:layout_alignParentLeft="false"
-        android:background="#FFFFFF"
-        android:paddingRight="5dp"
+        android:layout_above="@+id/pay_selected_Btn"
         android:layout_alignParentBottom="false"
+        android:layout_alignParentLeft="false"
+        android:layout_below="@+id/billsbar"
         android:layout_centerHorizontal="true"
+        android:background="#FFFFFF"
         android:clickable="false"
-        tools:listitem="@layout/listrow"
         android:paddingBottom="4dp"
-        android:layout_above="@+id/pay_selected_Btn"/>
+        android:paddingRight="5dp"
+        tools:listitem="@layout/listrow" />
+
     <Button
+        android:id="@+id/pay_selected_Btn"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:text="PAY SELECTED BILLS"
-        android:id="@+id/pay_selected_Btn"
-        android:background="@drawable/mybutton"
-        android:textColor="#ffffff"
         android:layout_above="@+id/other_payment_btn"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        />
+        android:background="@drawable/mybutton"
+        android:text="PAY SELECTED BILLS"
+        android:textColor="#ffffff" />
 
 
     <Button
+        android:id="@+id/other_payment_btn"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:text="@string/button_stringname"
-        android:id="@+id/other_payment_btn"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="false"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="@drawable/mybutton"
-        android:textColor="#ffffff"
-        android:layout_alignParentLeft="false"
-        />
-
-
+        android:text="@string/button_stringname"
+        android:textColor="#ffffff" />
 
 
 </RelativeLayout>
