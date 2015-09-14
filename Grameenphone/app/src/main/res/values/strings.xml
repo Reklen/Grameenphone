@@ -77,4 +77,27 @@
     <string name="title_activity_refer_friends">ReferFriendsActivity</string>
     <string name="title_activity_add_favorite_contacts">AddFavoriteContacts</string>
     <string name="title_activity_edit_profile">EditProfileActivity</string>
+    <string name="other_payment">Other Payment</string>
+    <string name="bill_number">Enter bill number</string>
+    <string name="account_number">Enter account number</string>
+    <string name="date_text">04,july 2015</string>
+    <string name="pin_conform">Enter your PIN to confirm</string>
+    
+    <string name="bill_paid_successfully">Your due bill is paid successfully.\n
+                                          You will get payment conformation\n
+                                          SMS shortly</string>
+    <string name="acc_number">Acc. No:</string>
+    <string name="company">Company:</string>
+    
+    <string name="Remove_AccNo">Remove Acc. No: 123432 from\n
+                                DESCO association?</string>
+    <string name="rs_amount"> 230</string>
+    <string name="Get_full_talktime">Get full talktime on top up of \u20B9200 &amp;</string>
+        <string name="association_confrim">Your request is being processed.\n
+                                          You will get association conformation\n
+                                          SMS shortly</string>
+
+
+    <string name="button_stringname">OTHER PAYMENT</string>
+    <string name="button_payselectedbills">PAY SELECTED BILLS</string>
 </resources>

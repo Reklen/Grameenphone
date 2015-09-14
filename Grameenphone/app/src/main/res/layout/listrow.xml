@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:id="@+id/relLayout">
+
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chckBox"
+        android:checked="false"
+        android:layout_below="@+id/first_conatiner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+    <RelativeLayout
+        android:id="@+id/first_conatiner"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/threetext_container">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Acc. No:"
+        android:id="@+id/accountNumber_String"
+        android:textColor="#000000"/>
+    <TextView
+        android:paddingLeft="5dp"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="123432"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/accountNumber"
+        android:layout_toRightOf="@+id/accountNumber_String"
+        android:layout_toEndOf="@+id/accountNumber_String"
+        android:layout_alignBaseline="@id/accountNumber_String"
+        android:textColor="#000000"/>
+
+        <TextView
+            android:id="@+id/ruppesTExt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="\u20B9 1,200"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:id="@+id/threetext_container"
+            android:layout_toRightOf="@+id/chckBox"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/first_conatiner">
+
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bill No: "
+        android:id="@+id/billNumber_String"
+         />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="2834"
+        android:id="@+id/billNumber"
+         /></LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Company: "
+        android:id="@+id/company_String"
+         />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="DESCO"
+        android:id="@+id/company"
+         /></LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Due date: "
+        android:id="@+id/dueDate_String"
+         />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="24, July 2015"
+        android:id="@+id/dueDate"
+         /></LinearLayout>
+
+
+   </LinearLayout>
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="Pay"
+            android:textColor="#FFFFFF"
+            android:id="@+id/paybutton"
+            android:background="@drawable/mybutton"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/first_conatiner"
+
+             />
+
+
+
+
+</RelativeLayout>

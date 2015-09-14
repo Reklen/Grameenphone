@@ -20,6 +20,7 @@ import com.example.grameenphone.R;
 import com.example.grameenphone.activity.ReferFriendsActivity;
 import com.example.grameenphone.activity.SelectContactsActivity;
 import com.example.grameenphone.activity.TransactionOverviewActivity;
+import com.example.grameenphone.rahul_ui.BillpaymentActivity;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -97,6 +98,12 @@ public class HomePage extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), TransactionOverviewActivity.class));
+            }
+        });
+        transactionView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), BillpaymentActivity.class));
             }
         });
         transactionView4.setOnClickListener(new View.OnClickListener() {

@@ -18,7 +18,24 @@ import android.widget.TextView;
 import com.example.grameenphone.R;
 
 /**
+<<<<<<< HEAD
  * Created by rajkiran on 09/09/15.
+=======
+ * To be used with ViewPager to provide a tab indicator component which give constant feedback as to
+ * the user's scroll progress.
+ * <p>
+ * To use the component, simply add it to your view hierarchy. Then in your
+ * {@link android.app.Activity} or {@link android.support.v4.app.Fragment} call
+ * {@link #setViewPager(ViewPager)} providing it the ViewPager this layout is being used for.
+ * <p>
+ * The colors can be customized in two ways. The first and simplest is to provide an array of colors
+ * via {@link #setSelectedIndicatorColors(int...)}. The
+ * alternative is via the {@link TabColorizer} interface which provides you complete control over
+ * which color is used for any individual position.
+ * <p>
+ * The views used as tabs can be customized by calling {@link #setCustomTabView(int, int)},
+ * providing the layout ID of your custom layout.
+>>>>>>> 21f6029ce05804092426da448350c8ed6f3a1174
  */
 public class SlidingTabLayout extends HorizontalScrollView {
     /**
@@ -195,7 +212,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
             if (i == mViewPager.getCurrentItem()) {
                 tabView.setSelected(true);
             }
-            tabTitleView.setTextColor(getResources().getColor(R.color.textColorPrimary));
+            tabTitleView.setTextColor(getResources().getColorStateList(R.color.white));
             tabTitleView.setTextSize(14);
         }
 
@@ -293,6 +310,5 @@ public class SlidingTabLayout extends HorizontalScrollView {
             }
         }
     }
-
 
 }

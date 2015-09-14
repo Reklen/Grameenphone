@@ -1,0 +1,56 @@
+<android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/actionBarSize"
+    android:background="@color/blue_900"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_icon_back"
+            android:layout_weight="0.1"
+            android:src="@drawable/icon_back"
+            />
+        <TextView
+            android:id="@+id/toolbar_text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Bill Payment"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="0.6"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar_icon01"
+            android:layout_weight="0.2"
+            android:src="@drawable/star_on"
+            android:layout_gravity="center"
+            />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar_icon02"
+            android:layout_weight="0.1"
+            android:src="@drawable/star_on"
+            android:layout_gravity="center"
+            />
+
+
+    </LinearLayout>
+
+</android.support.v7.widget.Toolbar>
