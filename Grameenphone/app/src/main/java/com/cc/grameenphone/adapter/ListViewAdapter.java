@@ -39,18 +39,18 @@ public class ListViewAdapter extends ArrayAdapter {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             itemView = inflater.inflate(R.layout.listrow, null);
-            holder.accountNumber_String = (TextView) itemView.findViewById(R.id.accountNumber_String);
+            holder.accountNumber_String = (TextView) itemView.findViewById(R.id.accountNumberText);
             holder.billNumber_String = (TextView) itemView.findViewById(R.id.billNumber_String);
             holder.company_String = (TextView) itemView.findViewById(R.id.company_String);
             holder.dueDate_String = (TextView) itemView.findViewById(R.id.dueDate_String);
-            holder.checkBox = (CheckBox) itemView.findViewById(R.id.chckBox);
+            holder.checkBox = (CheckBox) itemView.findViewById(R.id.billCheckBox);
             holder.accountNumber = (TextView) itemView.findViewById(R.id.accountNumber);
             holder.billNumber = (TextView) itemView.findViewById(R.id.billNumber);
-            holder.company = (TextView) itemView.findViewById(R.id.company);
+            holder.company = (TextView) itemView.findViewById(R.id.companyName);
             holder.dueDate = (TextView) itemView.findViewById(R.id.dueDate);
-            holder.paybutton = (Button) itemView.findViewById(R.id.paybutton);
+            holder.paybutton = (Button) itemView.findViewById(R.id.payButton);
             // holder.inr = (TextView) itemView.findViewById(R.id.inr);
-            holder.value = (TextView) itemView.findViewById(R.id.ruppesTExt);
+            holder.value = (TextView) itemView.findViewById(R.id.totalBillAmount);
 
 
         } else {

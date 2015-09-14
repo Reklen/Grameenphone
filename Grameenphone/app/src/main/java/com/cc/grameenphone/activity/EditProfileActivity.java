@@ -28,7 +28,7 @@ public class EditProfileActivity extends AppCompatActivity {
     Toolbar toolbarWidget;
     @InjectView(R.id.first_text)
     TextView firstText;
-    @InjectView(R.id.frst_name)
+    @InjectView(R.id.first_name)
     EditText frstName;
     @InjectView(R.id.last_text)
     TextView lastText;
@@ -36,7 +36,7 @@ public class EditProfileActivity extends AppCompatActivity {
     EditText lastName;
     @InjectView(R.id.email_text)
     TextView emailText;
-    @InjectView(R.id.emil_name)
+    @InjectView(R.id.email_name)
     EditText emilName;
     @InjectView(R.id.national_name)
     TextView nationalName;

@@ -11,13 +11,17 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
-import com.cc.grameenphone.viewmodels.BillDetailsItems;
 import com.cc.grameenphone.adapter.ListViewAdapter;
+import com.cc.grameenphone.viewmodels.BillDetailsItems;
 
 import java.util.ArrayList;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Created by rahul on 11/09/15.
@@ -27,28 +31,43 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     ListView lv;
     ArrayList<BillDetailsItems> arraylist;
     ListViewAdapter listViewAdapter;
-    Button paySelectedBtn, otherPaymentBtn;
     AppCompatDialog paySelectDialog;
-    Button confrimBtn;
-    Toolbar toolbar;
+    Button confirmButton;
     ImageView toolbarImageIcon01, toobarImageIcon02;
     TextView actionBarText;
     ImageButton backBtn;
+    @InjectView(R.id.image_back)
+    ImageButton imageBack;
+    @InjectView(R.id.toolbar_text)
+    TextView toolbarText;
+    @InjectView(R.id.toolbar_container)
+    RelativeLayout toolbarContainer;
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
+    @InjectView(R.id.billsbar)
+    TextView billsbar;
+    @InjectView(R.id.billsList)
+    ListView recycleView;
+    @InjectView(R.id.selectedPaymentButton)
+    Button paySelectedBtn;
+    @InjectView(R.id.otherPaymentButton)
+    Button otherPaymentBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bill_payment_activity);
+        ButterKnife.inject(this);
         backBtn = (ImageButton) findViewById(R.id.image_back);
         actionBarText = (TextView) findViewById(R.id.toolbar_text);
         actionBarText.setText("Bill Payment");
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         //buttons
-        paySelectedBtn = (Button) findViewById(R.id.pay_selected_Btn);
-        otherPaymentBtn = (Button) findViewById(R.id.other_payment_btn);
+        paySelectedBtn = (Button) findViewById(R.id.selectedPaymentButton);
+        otherPaymentBtn = (Button) findViewById(R.id.otherPaymentButton);
         toolbarImageIcon01 = (ImageView) findViewById(R.id.toolbar_icon01);
         toobarImageIcon02 = (ImageView) findViewById(R.id.toolbar_icon02);
-        lv = (ListView) findViewById(R.id.recycle_view);
+        lv = (ListView) findViewById(R.id.billsList);
         displayarraylist();
         listViewAdapter = new ListViewAdapter(this, arraylist);
         lv.setAdapter(listViewAdapter);
@@ -58,10 +77,10 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             public void onClick(View view) {
                 paySelectDialog = new AppCompatDialog(BillPaymentActivity.this);
                 paySelectDialog.setContentView(R.layout.enterpin_dailogue);
-                confrimBtn = (Button) paySelectDialog.findViewById(R.id.confrimbtn);
+                confirmButton = (Button) paySelectDialog.findViewById(R.id.confrimButton);
                 paySelectDialog.show();
                 paySelectDialog.getWindow().setLayout(650, 500);
-                confrimBtn.setOnClickListener(new View.OnClickListener() {
+                confirmButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 

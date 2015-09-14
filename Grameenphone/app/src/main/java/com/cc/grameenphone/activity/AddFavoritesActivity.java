@@ -41,7 +41,7 @@ public class AddFavoritesActivity extends AppCompatActivity {
                 Toast.makeText(AddFavoritesActivity.this, "Added successfully", Toast.LENGTH_LONG).show();
             }
         });
-        phonetext = (EditText) findViewById(R.id.editphone);
+        phonetext = (EditText) findViewById(R.id.phoneNumber);
         phonetext.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

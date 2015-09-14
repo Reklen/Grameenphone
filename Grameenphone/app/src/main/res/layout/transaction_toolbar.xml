@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="?attr/actionBarSize"
         android:orientation="horizontal"
         >
 
@@ -23,7 +23,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/sign_up"
+            android:text="@string/transaction_tool"
             android:textColor="@color/white"
             android:textSize="17sp"
             android:id="@+id/text_tool"

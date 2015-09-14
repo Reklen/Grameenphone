@@ -16,7 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
 import com.cc.grameenphone.R;
-import com.cc.grameenphone.activity.BillDetailsActivity;
+import com.cc.grameenphone.activity.RegularPayDetails;
 
 
 public class ElectricityTabFragments extends Fragment {
@@ -85,7 +85,7 @@ public class ElectricityTabFragments extends Fragment {
         sumb_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(getActivity(),BillDetailsActivity.class);
+                Intent intent= new Intent(getActivity(),RegularPayDetails.class);
                 startActivity(intent);
             }
         });
@@ -99,7 +99,7 @@ public class ElectricityTabFragments extends Fragment {
                 public void onClick(View view) {
                     confirmDialog = new AppCompatDialog(getActivity());
                     confirmDialog.setContentView(R.layout.association_conformation_dialog);
-                    okay_btn = (Button) confirmDialog.findViewById(R.id.okayBtn);
+                    okay_btn = (Button) confirmDialog.findViewById(R.id.okButton);
                     confirmDialog.show();
                     confirmDialog.getWindow().setLayout(700, 300);
                     okay_btn.setOnClickListener(new View.OnClickListener() {

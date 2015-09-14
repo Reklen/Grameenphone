@@ -30,15 +30,15 @@ import me.drakeet.materialdialog.MaterialDialog;
  * Created by rajkiran on 09/09/15.
  */
 public class HomePage extends Fragment {
-    @InjectView(R.id.radioprepaid)
+    @InjectView(R.id.prepaidOption)
     RadioButton radioprepaid;
-    @InjectView(R.id.radiopostpaid)
+    @InjectView(R.id.postpaidOption)
     RadioButton radiopostpaid;
-    @InjectView(R.id.radiogroup)
+    @InjectView(R.id.radioGroup)
     RadioGroup radiogroup;
-    @InjectView(R.id.areacode)
+    @InjectView(R.id.areaCode)
     TextView areacode;
-    @InjectView(R.id.editphone)
+    @InjectView(R.id.phoneNumber)
     EditText editphone;
     @InjectView(R.id.phone_container)
     TextInputLayout phoneContainer;
@@ -54,25 +54,25 @@ public class HomePage extends Fragment {
     ImageView billpay;
     @InjectView(R.id.bill_text)
     TextView billText;
-    @InjectView(R.id.bill_pay)
+    @InjectView(R.id.billPayment)
     RelativeLayout billPay;
     @InjectView(R.id.trans_icon)
     ImageView transIcon;
     @InjectView(R.id.transc_text)
     TextView transcText;
-    @InjectView(R.id.transaction_view)
+    @InjectView(R.id.transactionOverview)
     RelativeLayout transactionView;
     @InjectView(R.id.emergencyicon)
     ImageView emergencyicon;
     @InjectView(R.id.emergency_text)
     TextView emergencyText;
-    @InjectView(R.id.emergency)
+    @InjectView(R.id.emergencyCall)
     RelativeLayout emergency;
     @InjectView(R.id.friends)
     ImageView friends;
     @InjectView(R.id.friends_text)
     TextView friendsText;
-    @InjectView(R.id.refer_frnd)
+    @InjectView(R.id.referFriends)
     RelativeLayout referFrnd;
     private Button flexiBtn;
 
@@ -90,10 +90,10 @@ public class HomePage extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.home_layout, container, false);
-        RelativeLayout transactionView1 = (RelativeLayout) rootView.findViewById(R.id.transaction_view);
-        RelativeLayout transactionView2 = (RelativeLayout) rootView.findViewById(R.id.bill_pay);
-        RelativeLayout transactionView3 = (RelativeLayout) rootView.findViewById(R.id.emergency);
-        RelativeLayout transactionView4 = (RelativeLayout) rootView.findViewById(R.id.refer_frnd);
+        RelativeLayout transactionView1 = (RelativeLayout) rootView.findViewById(R.id.transactionOverview);
+        RelativeLayout transactionView2 = (RelativeLayout) rootView.findViewById(R.id.billPayment);
+        RelativeLayout transactionView3 = (RelativeLayout) rootView.findViewById(R.id.emergencyCall);
+        RelativeLayout transactionView4 = (RelativeLayout) rootView.findViewById(R.id.referFriends);
         transactionView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,12 +120,12 @@ public class HomePage extends Fragment {
 
             }
         });
-        RadioGroup radioGroup = (RadioGroup) rootView.findViewById(R.id.radiogroup);
+        RadioGroup radioGroup = (RadioGroup) rootView.findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                RadioButton radio_pre = (RadioButton) radioGroup.findViewById(R.id.radioprepaid);
-                RadioButton radio_post = (RadioButton) radioGroup.findViewById(R.id.radiopostpaid);
+                RadioButton radio_pre = (RadioButton) radioGroup.findViewById(R.id.prepaidOption);
+                RadioButton radio_post = (RadioButton) radioGroup.findViewById(R.id.postpaidOption);
                 if (radio_pre.isChecked()) {
 
                 } else if (radio_post.isChecked()) {
@@ -142,7 +142,7 @@ public class HomePage extends Fragment {
                 final MaterialDialog materialDialog = new MaterialDialog(getActivity()).setContentView(popupview);
                 materialDialog.setCanceledOnTouchOutside(true);
                 materialDialog.show();
-                Button buttonOk = (Button) popupview.findViewById(R.id.ok_button);
+                Button buttonOk = (Button) popupview.findViewById(R.id.okButton);
                 buttonOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

@@ -31,13 +31,13 @@ public class SignUpActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up_activity);
-        signUpToolBar= (Toolbar) findViewById(R.id.sign_up_toolbar);
+        signUpToolBar= (Toolbar) findViewById(R.id.transactionToolbar);
         //textView's
         consecutiveText= (TextView) findViewById(R.id.consecutivetext);
         acceptText= (TextView) findViewById(R.id.sign_accept_text01);
         termsText= (TextView) findViewById(R.id.sign_terms_text01);
         //EditText
-        phnNumberEdit= (EditText) findViewById(R.id.editphone);
+        phnNumberEdit= (EditText) findViewById(R.id.phoneNumber);
         conformEdit= (EditText) findViewById(R.id.conformPinEdit);
         setPinEdit= (EditText) findViewById(R.id.setPinEdit);
         enterReferralEdit= (EditText) findViewById(R.id.referralPinEdit);
@@ -49,7 +49,7 @@ public class SignUpActivity extends Activity {
             public void onClick(View view) {
              signUpDialog = new AppCompatDialog(SignUpActivity.this);
                 signUpDialog.setContentView(R.layout.sign_up_dialog);
-               resend_btn= (Button) signUpDialog.findViewById(R.id.resend_btn);
+               resend_btn= (Button) signUpDialog.findViewById(R.id.okButton);
                 signUpDialog.show();
                 signUpDialog.getWindow().setLayout(600,350);
                 resend_btn.setOnClickListener(new View.OnClickListener() {
