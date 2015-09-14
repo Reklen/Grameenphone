@@ -16,7 +16,7 @@ import com.cc.grameenphone.R;
 /**
  * Created by Rajkiran on 9/10/2015.
  */
-public class BillDetailsActivity extends ActionBarActivity {
+public class RegularPayDetails extends ActionBarActivity {
     TextView CompanyText,DESCOTExt,ACNOText,AccNumbText,billNumbText,bNumbText,AmountText,AnumbText,SubchargeText,subNumbText,
              dueDateText,pinConfromText;
     EditText pinNumbEdit;
@@ -52,7 +52,7 @@ public class BillDetailsActivity extends ActionBarActivity {
                 String pinNumber = pinNumbEdit.getText().toString();
                 Log.d("pinNumb", pinNumber);
 
-                confirmDialog = new AppCompatDialog(BillDetailsActivity.this);
+                confirmDialog = new AppCompatDialog(RegularPayDetails.this);
                 confirmDialog.setContentView(R.layout.payment_successfull_dialog);
                 okay_btn = (Button) confirmDialog.findViewById(R.id.okay_btn);
                 confirmDialog.show();
