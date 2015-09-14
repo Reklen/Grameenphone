@@ -1,12 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
 
-    <TextView
-        android:layout_width="wrap_content"
+  <!--  <LinearLayout
+        android:id="@+id/firstName_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Prooo"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal" />
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:padding="5dp"
+        >
+
+   <TextView
+       android:id="@+id/firstName_text"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="First Name"
+       android:textSize="12sp"/>
+        <TextView
+            android:id="@+id/Jhon_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jhon"
+            android:textSize="17sp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background=""/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/lastName_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:padding="5dp"
+        >
+
+        <TextView
+            android:id="@+id/lastName_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last Name"
+            android:textSize="12sp"/>
+        <TextView
+            android:id="@+id/doe_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Doe"
+            android:textSize="17sp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/emailId_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:padding="5dp"
+        >
+
+        <TextView
+            android:id="@+id/eId_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email ID"
+            android:textSize="12sp"/>
+        <TextView
+            android:id="@+id/jhon.doe_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="jhon.doe@exmail.com"
+            android:textSize="17sp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/national_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:padding="5dp"
+        >
+
+        <TextView
+            android:id="@+id/nationalId_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="National ID"
+            android:textSize="12sp"/>
+        <TextView
+            android:id="@+id/naNumber_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2610413965404"
+            android:textSize="17sp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/dateOf_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:padding="5dp"
+        >
+
+        <TextView
+            android:id="@+id/dateOF_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date of birth"
+            android:textSize="12sp"/>
+        <TextView
+            android:id="@+id/zeroSeven_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="19-01-1992"
+            android:textSize="17sp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>-->
 </LinearLayout>

@@ -62,4 +62,28 @@
     <string name="not_registered">You are not registered with\n
                                   MobCash wallet. Please cleck create\n
                                   a new wallet</string>
+    <string name="other_payment">Other Payment</string>
+    <string name="bill_number">Enter bill number</string>
+    <string name="account_number">Enter account number</string>
+    <string name="date_text">04,july 2015</string>
+    <string name="pin_conform">Enter your PIN to confirm</string>
+    
+    <string name="bill_paid_successfully">Your due bill is paid successfully.\n
+                                          You will get payment conformation\n
+                                          SMS shortly</string>
+    <string name="acc_number">Acc. No:</string>
+    <string name="company">Company:</string>
+    
+    <string name="Remove_AccNo">Remove Acc. No: 123432 from\n
+                                DESCO association?</string>
+    <string name="rs_amount"> 230</string>
+    <string name="Get_full_talktime">Get full talktime on top up of \u20B9200 &amp;</string>
+        <string name="association_confrim">Your request is being processed.\n
+                                          You will get association conformation\n
+                                          SMS shortly</string>
+
+
+    <string name="button_stringname">OTHER PAYMENT</string>
+    <string name="button_payselectedbills">PAY SELECTED BILLS</string>
+
 </resources>

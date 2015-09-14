@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include android:id="@+id/toolbar"
+     layout="@layout/bill_payment_toolbar">
+    </include>
+
+    <TextView
+        android:background="#cccccc"
+        android:id="@+id/billsbar"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="false"
+        android:layout_marginTop="15dp"
+        android:text="      My Pending Bills"
+        android:textSize="15dp"
+        android:gravity="center_vertical"
+        android:textColor="#030303"
+        />
+
+    <ListView
+        android:id="@+id/recycle_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/billsbar"
+        android:layout_alignParentStart="false"
+        android:background="#FFFFFF"
+        android:paddingRight="5dp"
+        android:layout_alignParentBottom="false"
+        android:layout_centerHorizontal="true"
+        android:clickable="false"
+        tools:listitem="@layout/listrow"
+        android:layout_above="@+id/pay_selected_Btn"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PAY SELECTED BILLS"
+        android:id="@+id/pay_selected_Btn"
+        android:background="@drawable/mybutton"
+        android:textColor="#ffffff"
+        android:layout_above="@+id/other_payment_btn"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        />
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_stringname"
+        android:id="@+id/other_payment_btn"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/mybutton"
+        android:textColor="#ffffff"
+        android:layout_alignParentStart="false"
+        />
+
+
+
+
+</RelativeLayout>
