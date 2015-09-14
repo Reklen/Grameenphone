@@ -1,17 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:id="@+id/electricity_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    >
 
 
+    <RadioGroup
+        android:id="@+id/custodial_radiogroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
 
-    <TextView
-        android:id="@+id/state_text"
+        <RadioButton
+            android:id="@+id/radioBPDB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="50dp"
+            android:paddingLeft="10dp"
+            android:text="BPDB"
+            android:textColor="#929292"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/radioDESCO"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:drawablePadding="50dp"
+            android:paddingLeft="10dp"
+            android:text="DESCO"
+            android:textColor="#929292"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/radioDPDC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:drawablePadding="50dp"
+            android:paddingLeft="10dp"
+            android:text="DPDC"
+            android:textColor="#929292"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/radioOthers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:drawablePadding="50dp"
+            android:paddingLeft="10dp"
+            android:text="Others"
+            android:textColor="#929292"
+            android:textSize="15sp"
+
+            android:textStyle="bold" />
+    </RadioGroup>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/account_numb_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/custodial_radiogroup"
+        android:layout_marginTop="20dp"
+
+        >
+
+        <EditText
+            android:id="@+id/account_numbEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/account_number"
+            android:inputType="number"
+            android:textSize="15sp" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/bill_numb_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/account_numb_container"
+        android:layout_marginTop="20dp">
+
+        <EditText
+            android:id="@+id/bill_numbEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/bill_number"
+            android:inputType="number"
+            android:textSize="15sp" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/sbmt_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/bill_numb_container"
         android:layout_centerHorizontal="true"
-        android:text="You are in State Tab"
-        android:textSize="15sp"/>
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_button"
+        android:padding="10dp"
+        android:text="@string/submit"
+        android:textColor="@color/white"
+
+        />
 
 </RelativeLayout>

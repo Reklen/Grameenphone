@@ -6,7 +6,7 @@
     <include android:id="@+id/other_tool_bar"
         layout="@layout/other_payment_toolbar"
         />
-    <com.example.grameenphone.tabs.SlidingTabLayout
+    <com.cc.grameenphone.views.tabs.SlidingTabLayout
         android:id="@+id/tabs"
         android:layout_below="@+id/other_tool_bar"
         android:layout_width="match_parent"
@@ -15,8 +15,6 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
         android:layout_below="@+id/tabs"
         android:layout_height="match_parent"
         android:layout_width="match_parent"

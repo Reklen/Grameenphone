@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.grameenphone.activity.ReferFriendsActivity">
+    tools:context="com.cc.grameenphone.activity.ReferFriendsActivity">
     <include
         android:id="@+id/include"
         android:layout_width="match_parent"

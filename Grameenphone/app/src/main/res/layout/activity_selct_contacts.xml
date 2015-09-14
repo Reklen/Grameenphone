@@ -2,12 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.grameenphone.activity.SelectContactsActivity">
+    tools:context="com.cc.grameenphone.activity.SelectContactsActivity">
    <include
         android:id="@+id/sel_toolbar"
         layout="@layout/select_contact_toolbar" />
 
-    <com.example.grameenphone.tabs.SlidingTabLayout
+    <com.cc.grameenphone.views.tabs.SlidingTabLayout
         android:id="@+id/contacts_tabs"
         android:layout_width="match_parent"
         android:layout_height="48dp"
