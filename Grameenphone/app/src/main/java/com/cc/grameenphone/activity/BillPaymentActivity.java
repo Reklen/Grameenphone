@@ -68,7 +68,6 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         ButterKnife.inject(this);
         setupToolbar();
         //buttons
-        lv = (ListView) findViewById(R.id.recycle_view);
         backBtn = (ImageButton) findViewById(R.id.image_back);
         actionBarText = (TextView) findViewById(R.id.toolbar_text);
         actionBarText.setText("Bill Payment");
@@ -84,7 +83,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             public void onClick(View view) {
                 paySelectDialog = new AppCompatDialog(BillPaymentActivity.this);
                 paySelectDialog.setContentView(R.layout.enterpin_dailogue);
-                confirmButton = (Button) paySelectDialog.findViewById(R.id.confrimbtn);
+                confirmButton = (Button) paySelectDialog.findViewById(R.id.confrimButton);
                 paySelectDialog.show();
                 paySelectDialog.getWindow().setLayout(650, 500);
                 confirmButton.setOnClickListener(new View.OnClickListener() {

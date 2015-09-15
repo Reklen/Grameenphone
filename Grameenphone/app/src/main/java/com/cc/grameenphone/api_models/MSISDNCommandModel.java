@@ -5,45 +5,58 @@ package com.cc.grameenphone.api_models;
  */
 public class MSISDNCommandModel {
 
-    private String DEVICEID;
+    private String AUTHTOKEN;
 
-    private String MSISDN;
+    private String TXNID;
+
+    private String TXNSTATUS;
 
     private String TYPE;
 
-    public String getDEVICEID ()
-    {
-        return DEVICEID;
+    private String OTP;
+
+    public String getAUTHTOKEN() {
+        return AUTHTOKEN;
     }
 
-    public void setDEVICEID (String DEVICEID)
-    {
-        this.DEVICEID = DEVICEID;
+    public void setAUTHTOKEN(String AUTHTOKEN) {
+        this.AUTHTOKEN = AUTHTOKEN;
     }
 
-    public String getMSISDN ()
-    {
-        return MSISDN;
+    public String getTXNID() {
+        return TXNID;
     }
 
-    public void setMSISDN (String MSISDN)
-    {
-        this.MSISDN = MSISDN;
+    public void setTXNID(String TXNID) {
+        this.TXNID = TXNID;
     }
 
-    public String getTYPE ()
-    {
+    public String getTXNSTATUS() {
+        return TXNSTATUS;
+    }
+
+    public void setTXNSTATUS(String TXNSTATUS) {
+        this.TXNSTATUS = TXNSTATUS;
+    }
+
+    public String getTYPE() {
         return TYPE;
     }
 
-    public void setTYPE (String TYPE)
-    {
+    public void setTYPE(String TYPE) {
         this.TYPE = TYPE;
     }
 
+    public String getOTP() {
+        return OTP;
+    }
+
+    public void setOTP(String OTP) {
+        this.OTP = OTP;
+    }
+
     @Override
-    public String toString()
-    {
-        return "ClassPojo [DEVICEID = "+DEVICEID+", MSISDN = "+MSISDN+", TYPE = "+TYPE+"]";
+    public String toString() {
+        return "ClassPojo [AUTHTOKEN = " + AUTHTOKEN + ", TXNID = " + TXNID + ", TXNSTATUS = " + TXNSTATUS + ", TYPE = " + TYPE + ", OTP = " + OTP + "]";
     }
 }

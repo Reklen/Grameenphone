@@ -10,7 +10,7 @@ import retrofit.client.OkClient;
  */
 public class ServiceGenerator {
 
-    public static final String BASE_URL = "http://202.56.229.146:8992/GPTxn/CelliciumSelector?LOGIN=Ussd_Bearer1&PASSWORD=U$$d_Int11&REQUEST_GATEWAY_CODE=J2ME&REQUEST_GATEWAY_TYPE=J2ME&requestText=";
+    public static final String BASE_URL = "http://202.56.229.146:8992/";
 
     // No need to instantiate this class.
     private ServiceGenerator() {
