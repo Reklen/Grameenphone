@@ -4,7 +4,7 @@
     android:orientation="vertical">
 
     <RadioGroup
-        android:id="@+id/radiogroup"
+        android:id="@+id/radioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -13,7 +13,7 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/radioprepaid"
+            android:id="@+id/prepaidOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="50dp"
@@ -24,7 +24,7 @@
             android:textStyle="normal" />
 
         <RadioButton
-            android:id="@+id/radiopostpaid"
+            android:id="@+id/postpaidOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -40,11 +40,11 @@
         android:id="@+id/top_container1"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_below="@+id/radiogroup"
+        android:layout_below="@+id/radioGroup"
         android:layout_marginTop="20dp">
 
         <TextView
-            android:id="@+id/areacode"
+            android:id="@+id/areaCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -71,10 +71,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:layout_toRightOf="@+id/areacode">
+            android:layout_toRightOf="@+id/areaCode">
 
             <EditText
-                android:id="@+id/editphone"
+                android:id="@+id/phoneNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -82,7 +82,8 @@
                 android:hint="Phone number"
                 android:inputType="phone"
                 android:maxLength="10"
-                android:textColor="#929292"
+                android:textColor="@color/black_semi_transparent"
+                android:textColorHint="@color/hint_color"
                 android:textSize="15sp"
                 android:textStyle="bold" />
         </android.support.design.widget.TextInputLayout>
@@ -91,11 +92,11 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="7dp"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/areacode"
+            android:layout_toRightOf="@+id/areaCode"
             android:background="#aaaaaa">
 
         </View>
@@ -130,7 +131,8 @@
             android:hint="Enter amount"
             android:inputType="phone"
             android:maxLength="5"
-            android:textColor="#929292"
+            android:textColor="@color/black_semi_transparent"
+            android:textColorHint="@color/hint_color"
             android:textSize="17sp"
             android:textStyle="bold" />
     </android.support.design.widget.TextInputLayout>
@@ -151,7 +153,7 @@
         android:textStyle="bold" />
 
     <RelativeLayout
-        android:id="@+id/bill_pay"
+        android:id="@+id/billPayment"
         android:layout_width="157dp"
         android:layout_height="102dp"
         android:layout_alignParentLeft="true"
@@ -185,7 +187,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/transaction_view"
+        android:id="@+id/transactionOverview"
         android:layout_width="157dp"
         android:layout_height="102dp"
         android:layout_alignParentRight="true"
@@ -219,11 +221,11 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/emergency"
+        android:id="@+id/emergencyCall"
         android:layout_width="157dp"
         android:layout_height="102dp"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/bill_pay"
+        android:layout_below="@+id/billPayment"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="20dp"
@@ -253,11 +255,11 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/refer_frnd"
+        android:id="@+id/referFriends"
         android:layout_width="157dp"
         android:layout_height="102dp"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/transaction_view"
+        android:layout_below="@+id/transactionOverview"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="20dp"

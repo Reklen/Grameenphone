@@ -9,7 +9,7 @@
     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/abc_action_bar_stacked_max_height"
+        android:layout_height="?actionBarSize"
         android:background="@color/primary"
         android:contentInsetLeft="0dp"
         android:contentInsetStart="0dp"
@@ -65,28 +65,37 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/billsbar"
+
+    <RelativeLayout
+        android:id="@+id/billContainer"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="false"
+        android:layout_height="34dp"
         android:layout_below="@+id/toolbar"
-        android:layout_marginTop="15dp"
-        android:background="#cccccc"
-        android:gravity="center_vertical"
-        android:text="      My Pending Bills"
-        android:textColor="#030303"
-        android:textSize="15dp" />
+        android:layout_marginTop="11dp"
+        android:background="#cccccc">
+
+        <TextView
+            android:id="@+id/billsbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="false"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:text="My Pending Bills"
+            android:textColor="#030303"
+            android:textSize="16sp" />
+    </RelativeLayout>
 
     <ListView
-        android:id="@+id/recycle_view"
+        android:id="@+id/billsList"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/pay_selected_Btn"
+        android:layout_above="@+id/selectedPaymentButton"
         android:layout_alignParentBottom="false"
         android:layout_alignParentLeft="false"
-        android:layout_below="@+id/billsbar"
+        android:layout_below="@+id/billContainer"
         android:layout_centerHorizontal="true"
         android:background="#FFFFFF"
         android:clickable="false"
@@ -95,10 +104,10 @@
         tools:listitem="@layout/listrow" />
 
     <Button
-        android:id="@+id/pay_selected_Btn"
+        android:id="@+id/selectedPaymentButton"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:layout_above="@+id/other_payment_btn"
+        android:layout_above="@+id/otherPaymentButton"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
@@ -108,7 +117,7 @@
 
 
     <Button
-        android:id="@+id/other_payment_btn"
+        android:id="@+id/otherPaymentButton"
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:layout_alignParentBottom="true"

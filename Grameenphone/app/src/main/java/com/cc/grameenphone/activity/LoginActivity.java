@@ -2,7 +2,7 @@ package com.cc.grameenphone.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.cc.grameenphone.R;
 
 
-public class LoginActivity extends ActionBarActivity {
+public class LoginActivity extends AppCompatActivity {
     TextView grameenPhone,numberText,iAccept,termsCondition,walletPinText;
     EditText numberEdit,walletPInEditText;
     CheckBox checkBox;
@@ -42,8 +42,8 @@ public class LoginActivity extends ActionBarActivity {
 
 
         //EditText
-        walletPInEditText= (EditText) findViewById(R.id.wallet_pin_edittext);
-        numberEdit= (EditText) findViewById(R.id.editphone);
+        walletPInEditText= (EditText) findViewById(R.id.walletPinNumber);
+        numberEdit= (EditText) findViewById(R.id.phoneNumber);
         numberEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
@@ -87,7 +87,7 @@ public class LoginActivity extends ActionBarActivity {
         grameenIcon= (ImageView) findViewById(R.id.grameen_icon);
 
         //Button
-        createNewWallet= (Button) findViewById(R.id.create_btn);
+        createNewWallet= (Button) findViewById(R.id.createWalletButton);
         createNewWallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +95,7 @@ public class LoginActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-        login= (Button) findViewById(R.id.login_btn);
+        login= (Button) findViewById(R.id.loginButton);
         login.setVisibility(View.GONE);
 
 

@@ -42,6 +42,7 @@
     <string name="create_new_wallet">CREATE A NEW WALLET</string>
     <string name="Or">OR</string>
     <string name="sign_up">Sign Up</string>
+    <string name="transaction_tool">Transaction Overview</string>
     <string name="enter_wallet_pin">Enter wallet PIN</string>
     <string name="login">LOGIN</string>
     <string name="setPin">Set PIN</string>
@@ -88,6 +89,7 @@
                                           SMS shortly</string>
     <string name="acc_number">Acc. No:</string>
     <string name="company">Company:</string>
+    <string name="hintPhone">Phone number</string>
     
     <string name="Remove_AccNo">Remove Acc. No: 123432 from\n
                                 DESCO association?</string>

@@ -46,18 +46,18 @@ public class CancelAssociationAdapter extends ArrayAdapter {
             LayoutInflater inflater =(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
             convertView = inflater.inflate(R.layout.cancel_association_item, parent, false);
             viewHolder = new ViewHolder();
-            viewHolder.accconttxt = (TextView) convertView.findViewById(R.id.account_numb_text);
-            viewHolder.accNumbtext = (TextView) convertView.findViewById(R.id.accNumb_text);
+            viewHolder.accconttxt = (TextView) convertView.findViewById(R.id.accountNoText);
+            viewHolder.accNumbtext = (TextView) convertView.findViewById(R.id.accountNumber);
             viewHolder.compText = (TextView) convertView.findViewById(R.id.comp_text);
-            viewHolder.descText = (TextView) convertView.findViewById(R.id.desc_text);
-            viewHolder.cancelBtn= (Button) convertView.findViewById(R.id.cancel_btn);
+            viewHolder.descText = (TextView) convertView.findViewById(R.id.companyName);
+            viewHolder.cancelBtn= (Button) convertView.findViewById(R.id.cancelButton);
             viewHolder.cancelBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     cancelDialog= new AppCompatDialog(getContext());
                     cancelDialog.setContentView(R.layout.list_item_cancel_dialog);
-                    removeBtn = (Button) cancelDialog.findViewById(R.id.remove_btn);
-                    cancelBtn = (Button) cancelDialog.findViewById(R.id.canceldialog_btn);
+                    removeBtn = (Button) cancelDialog.findViewById(R.id.removeButton);
+                    cancelBtn = (Button) cancelDialog.findViewById(R.id.canceldialogBtn);
                     cancelDialog.show();
                     cancelDialog.getWindow().setLayout(600, 300);
                     removeBtn.setOnClickListener(new View.OnClickListener() {

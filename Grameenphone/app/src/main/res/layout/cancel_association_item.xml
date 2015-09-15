@@ -1,65 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:padding="10dp"
+    android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:layout_height="match_parent">
+    android:padding="10dp">
 
     <LinearLayout
         android:id="@+id/list_container"
         android:layout_width="wrap_content"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
-<LinearLayout
-    android:id="@+id/container_list1"
-    android:orientation="horizontal"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="3dp">
-    <TextView
-        android:id="@+id/account_numb_text"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/acc_number"
-        android:textColor="@color/black"
-        android:textSize="17sp"/>
-    <TextView
-        android:id="@+id/accNumb_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="123432"
-        android:textColor="@color/black"
-        android:textSize="17sp"
-        />
-</LinearLayout>
+        android:orientation="vertical">
+
         <LinearLayout
-            android:id="@+id/container_list2"
-            android:orientation="horizontal"
+            android:id="@+id/container_list1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:padding="3dp">
-    <TextView
-        android:id="@+id/comp_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/company"
 
-        android:textSize="15sp"/>
-    <TextView
-        android:id="@+id/desc_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DESCO"
-        android:textSize="15sp"/></LinearLayout>
+            <TextView
+                android:id="@+id/accountNoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/acc_number"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/accountNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="123432"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/container_list2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="3dp">
+
+            <TextView
+                android:id="@+id/comp_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/company"
+
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/companyName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DESCO"
+                android:textSize="15sp" />
+        </LinearLayout>
     </LinearLayout>
+
     <Button
-        android:id="@+id/cancel_btn"
+        android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CANCEL"
-        android:background="@drawable/login_button"
-        android:textColor="@color/white"
         android:layout_alignParentRight="true"
+        android:background="@drawable/login_button"
+        android:text="CANCEL"
+        android:textColor="@color/white"
 
         />
 

@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/sign_up_toolbar"
+        android:id="@+id/transactionToolbar"
         layout="@layout/sign_up_toolboar" />
 
     <ScrollView
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:paddingBottom="10dp"
-        android:layout_below="@+id/sign_up_toolbar"
+        android:layout_below="@+id/transactionToolbar"
         android:fillViewport="true">
 
         <LinearLayout
@@ -50,7 +50,7 @@
                 android:layout_marginTop="10dp">
 
                 <TextView
-                    android:id="@+id/areacode"
+                    android:id="@+id/areaCode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -77,10 +77,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
-                    android:layout_toRightOf="@+id/areacode">
+                    android:layout_toRightOf="@+id/areaCode">
 
                     <EditText
-                        android:id="@+id/editphone"
+                        android:id="@+id/phoneNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@null"
@@ -100,7 +100,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="7dp"
-                    android:layout_toRightOf="@+id/areacode"
+                    android:layout_toRightOf="@+id/areaCode"
                     android:layout_alignParentBottom="true"
                     android:background="#aaaaaa">
 

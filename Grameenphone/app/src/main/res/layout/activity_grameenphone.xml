@@ -20,8 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/grameen_icon"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
         android:layout_marginTop="10dp"
+        android:gravity="center"
         android:text="@string/grameenPhone"
         android:textColor="#80323232"
         android:textSize="17sp"
@@ -45,7 +45,7 @@
         android:layout_marginTop="20dp">
 
         <TextView
-            android:id="@+id/areacode"
+            android:id="@+id/areaCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -72,18 +72,19 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:layout_toRightOf="@+id/areacode">
+            android:layout_toRightOf="@+id/areaCode">
 
             <EditText
-                android:id="@+id/editphone"
+                android:id="@+id/phoneNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:ems="10"
-                android:hint="Phone number"
+                android:hint="@string/hintPhone"
                 android:inputType="phone"
                 android:maxLength="10"
-                android:textColor="#929292"
+                android:textColor="@color/black_semi_transparent"
+                android:textColorHint="@color/hint_color"
                 android:textSize="15sp"
                 android:textStyle="bold" />
         </android.support.design.widget.TextInputLayout>
@@ -96,7 +97,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="7dp"
-            android:layout_toRightOf="@+id/areacode"
+            android:layout_toRightOf="@+id/areaCode"
             android:background="#aaaaaa">
 
         </View>
@@ -117,11 +118,13 @@
             android:id="@+id/wallet_pin_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:text="@string/enter_wallet_pin" />
+            android:text="@string/enter_wallet_pin"
+            android:textSize="13sp" />
 
         <EditText
-            android:id="@+id/wallet_pin_edittext"
+            android:textColor="@color/black_semi_transparent"
+            android:textColorHint="@color/hint_color"
+            android:id="@+id/walletPinNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberPassword" />
@@ -165,7 +168,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/login_btn"
+        android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkbox_layout"
@@ -179,7 +182,7 @@
         android:id="@+id/view_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/login_btn"
+        android:layout_below="@+id/loginButton"
         android:orientation="horizontal"
         android:padding="10dp"
         android:weightSum="1">
@@ -210,7 +213,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/create_btn"
+        android:id="@+id/createWalletButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/view_layout"

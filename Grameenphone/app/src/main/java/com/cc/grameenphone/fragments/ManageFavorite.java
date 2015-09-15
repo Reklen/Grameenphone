@@ -44,7 +44,7 @@ public class ManageFavorite extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.manage_favorite_layout, container, false);
 
-        SwipeMenuListView listView = (SwipeMenuListView) rootView.findViewById(R.id.listView);
+        SwipeMenuListView listView = (SwipeMenuListView) rootView.findViewById(R.id.transactionList);
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
@@ -75,8 +75,8 @@ public class ManageFavorite extends Fragment {
 
                         confirmDialog = new AppCompatDialog(getActivity());
                         confirmDialog.setContentView(R.layout.manage_favorite_delete_dialog);
-                        cancelbtn = (Button) confirmDialog.findViewById(R.id.cancel_btn);
-                        removeBtn = (Button) confirmDialog.findViewById(R.id.remove_btn);
+                        cancelbtn = (Button) confirmDialog.findViewById(R.id.cancelButton);
+                        removeBtn = (Button) confirmDialog.findViewById(R.id.removeButton);
                         confirmDialog.show();
                         confirmDialog.getWindow().setLayout(650, 350);
                         cancelbtn.setOnClickListener(new View.OnClickListener() {

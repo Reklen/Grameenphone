@@ -70,17 +70,17 @@ public class CancelAssociationItem {
         public static List<CancelAssociationItem> getItem() {
             List<CancelAssociationItem> list=new ArrayList<CancelAssociationItem>();
             list.add(new CancelAssociationItem("ACC. No:",
-                    "123432","Company:","DESCO",R.id.cancel_btn));
+                    "123432","Company:","DESCO",R.id.cancelButton));
             list.add(new CancelAssociationItem("ACC. No:",
-                    "123433","Company:","TITAS",R.id.cancel_btn));
+                    "123433","Company:","TITAS",R.id.cancelButton));
             list.add(new CancelAssociationItem("ACC. No:",
-                    "123422","Company:","KGCL",R.id.cancel_btn));
+                    "123422","Company:","KGCL",R.id.cancelButton));
             list.add(new CancelAssociationItem("ACC. No:",
-                    "123132","Company:","DESCO",R.id.cancel_btn));
+                    "123132","Company:","DESCO",R.id.cancelButton));
             list.add(new CancelAssociationItem("ACC. No:",
-                    "123452","Company:","KGCL",R.id.cancel_btn));
+                    "123452","Company:","KGCL",R.id.cancelButton));
             list.add(new CancelAssociationItem("ACC. No:",
-                    "123467","Company:","TITAS",R.id.cancel_btn));
+                    "123467","Company:","TITAS",R.id.cancelButton));
 
             return list;
         }

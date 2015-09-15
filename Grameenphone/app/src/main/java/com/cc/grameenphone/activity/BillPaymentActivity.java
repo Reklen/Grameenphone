@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+
 /**
  * Created by rahul on 11/09/15.
  */
@@ -32,8 +34,13 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     ArrayList<BillDetailsItems> arraylist;
     ListViewAdapter listViewAdapter;
     AppCompatDialog paySelectDialog;
+    ImageView toolbarImageIcon01, toobarImageIcon02;
+    TextView actionBarText;
+    ImageButton backBtn;
     @InjectView(R.id.image_back)
     ImageButton imageBack;
+    @InjectView(R.id.backRipple)
+    RippleView backRipple;
     @InjectView(R.id.toolbar_text)
     TextView toolbarText;
     @InjectView(R.id.toolbar_container)
@@ -42,31 +49,37 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     Toolbar toolbar;
     @InjectView(R.id.billsbar)
     TextView billsbar;
-    @InjectView(R.id.recycle_view)
-    ListView recycleView;
-    @InjectView(R.id.pay_selected_Btn)
-    Button paySelectedBtn;
-    @InjectView(R.id.other_payment_btn)
-    Button otherPaymentBtn;
-    @InjectView(R.id.backRipple)
-    RippleView backRipple;
+    @InjectView(R.id.billContainer)
+    RelativeLayout billContainer;
+    @InjectView(R.id.billsList)
+    ListView billsList;
+    @InjectView(R.id.selectedPaymentButton)
+    Button selectedPaymentButton;
+    @InjectView(R.id.otherPaymentButton)
+    Button otherPaymentButton;
     private Button confirmButton;
 
+
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bill_payment_activity);
         ButterKnife.inject(this);
         setupToolbar();
         //buttons
-        paySelectedBtn = (Button) findViewById(R.id.pay_selected_Btn);
-        otherPaymentBtn = (Button) findViewById(R.id.other_payment_btn);
         lv = (ListView) findViewById(R.id.recycle_view);
+        backBtn = (ImageButton) findViewById(R.id.image_back);
+        actionBarText = (TextView) findViewById(R.id.toolbar_text);
+        actionBarText.setText("Bill Payment");
+        //buttons
+        //toolbar image icons
+        lv = (ListView) findViewById(R.id.billsList);
         displayarraylist();
         listViewAdapter = new ListViewAdapter(this, arraylist);
         lv.setAdapter(listViewAdapter);
 
-        paySelectedBtn.setOnClickListener(new View.OnClickListener() {
+        selectedPaymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 paySelectDialog = new AppCompatDialog(BillPaymentActivity.this);
@@ -84,7 +97,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                 paySelectDialog.setCanceledOnTouchOutside(true);
             }
         });
-        otherPaymentBtn.setOnClickListener(new View.OnClickListener() {
+        otherPaymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(BillPaymentActivity.this, PaymentActivity.class));

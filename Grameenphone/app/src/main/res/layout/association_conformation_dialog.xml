@@ -6,7 +6,7 @@
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/association_confrimtext"
+        android:id="@+id/associationConfirmationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/association_confrim"
@@ -14,7 +14,7 @@
         android:layout_marginLeft="10dp"/>
 
     <Button
-        android:id="@+id/okayBtn"
+        android:id="@+id/okButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"

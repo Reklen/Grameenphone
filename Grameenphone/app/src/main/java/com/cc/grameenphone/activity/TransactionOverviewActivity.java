@@ -22,9 +22,9 @@ public class TransactionOverviewActivity extends AppCompatActivity {
 
     @InjectView(R.id.image_icon_back)
     ImageView imageIconBack;
-    @InjectView(R.id.sign_up_toolbar)
+    @InjectView(R.id.transactionToolbar)
     Toolbar signUpToolbar;
-    @InjectView(R.id.listView)
+    @InjectView(R.id.transactionList)
     ListView listView;
     TransactionAdapter transactionAdapter;
     TextView tooltext;

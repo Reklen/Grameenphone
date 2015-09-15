@@ -5,11 +5,11 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/cancel_asso_toolbar"
+        android:id="@+id/cancelAssociationToolbar"
         layout="@layout/cancel_association_toolbar"/>
 
     <ListView
-        android:id="@+id/list_view"
+        android:id="@+id/associationList"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"/>
 

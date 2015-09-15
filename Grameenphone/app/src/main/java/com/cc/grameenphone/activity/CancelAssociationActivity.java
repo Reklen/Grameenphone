@@ -21,7 +21,7 @@ public class CancelAssociationActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cancel_association_activity);
-        listView= (ListView) findViewById(R.id.list_view);
+        listView= (ListView) findViewById(R.id.associationList);
         adapter= new CancelAssociationAdapter(this,CancelAssociationItem.ItemList.getItem());
         listView.setAdapter(adapter);
 
