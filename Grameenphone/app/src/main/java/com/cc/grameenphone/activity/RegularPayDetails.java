@@ -29,8 +29,8 @@ public class RegularPayDetails extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bill_details);
-        toolbar= (Toolbar) findViewById(R.id.desco_toolbar);
+        setContentView(R.layout.activity_regular_bills_details);
+        toolbar= (Toolbar) findViewById(R.id.toolbar);
         toolbarContainer= (RelativeLayout) findViewById(R.id.toolbar_container);
         toolbarContainer.setVisibility(View.VISIBLE);
         toolbarText= (TextView) findViewById(R.id.toolbar_text);

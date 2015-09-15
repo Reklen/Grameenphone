@@ -7,14 +7,32 @@ android {
     defaultConfig {
         applicationId "com.cc.grameenphone"
         minSdkVersion 14
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        // Manifest version information!
+        def versionMajor = 1
+        def versionMinor = 0
+        def versionPatch = 0
+        def versionBuild = 0
+        targetSdkVersion 21
+        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}.${versionBuild}"
+        project.ext.set("archivesBaseName", "grameen-" +
+                defaultConfig.versionName);
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        demo {
+            applicationId "com.cc.grameenphone"
+            versionName "1.0-debug"
+        }
+        full {
+            applicationId "com.cc.grameenphone"
+            versionName "1.0"
         }
     }
 }
@@ -24,6 +42,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.support:recyclerview-v7:22.2.+'
     compile 'com.android.support:design:22.2.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+    compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'me.drakeet.materialdialog:library:1.2.2'
     compile project(':contacts')
     compile 'com.jakewharton:butterknife:6.1.0'

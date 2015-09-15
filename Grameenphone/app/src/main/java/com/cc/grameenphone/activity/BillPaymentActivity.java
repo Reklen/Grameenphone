@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.adapter.ListViewAdapter;
 import com.cc.grameenphone.viewmodels.BillDetailsItems;
+import com.cc.grameenphone.views.RippleView;
 
 import java.util.ArrayList;
 
@@ -32,10 +32,6 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     ArrayList<BillDetailsItems> arraylist;
     ListViewAdapter listViewAdapter;
     AppCompatDialog paySelectDialog;
-    Button confirmButton;
-    ImageView toolbarImageIcon01, toobarImageIcon02;
-    TextView actionBarText;
-    ImageButton backBtn;
     @InjectView(R.id.image_back)
     ImageButton imageBack;
     @InjectView(R.id.toolbar_text)
@@ -52,21 +48,19 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     Button paySelectedBtn;
     @InjectView(R.id.other_payment_btn)
     Button otherPaymentBtn;
+    @InjectView(R.id.backRipple)
+    RippleView backRipple;
+    private Button confirmButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bill_payment_activity);
         ButterKnife.inject(this);
-        backBtn = (ImageButton) findViewById(R.id.image_back);
-        actionBarText = (TextView) findViewById(R.id.toolbar_text);
-        actionBarText.setText("Bill Payment");
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setupToolbar();
         //buttons
         paySelectedBtn = (Button) findViewById(R.id.pay_selected_Btn);
         otherPaymentBtn = (Button) findViewById(R.id.other_payment_btn);
-        toolbarImageIcon01 = (ImageView) findViewById(R.id.toolbar_icon01);
-        toobarImageIcon02 = (ImageView) findViewById(R.id.toolbar_icon02);
         lv = (ListView) findViewById(R.id.recycle_view);
         displayarraylist();
         listViewAdapter = new ListViewAdapter(this, arraylist);
@@ -96,6 +90,11 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                 startActivity(new Intent(BillPaymentActivity.this, PaymentActivity.class));
             }
         });
+    }
+
+    private void setupToolbar() {
+        toolbarText.setText("Bill Payment");
+        setSupportActionBar(toolbar);
     }
 
     public void displayarraylist() {

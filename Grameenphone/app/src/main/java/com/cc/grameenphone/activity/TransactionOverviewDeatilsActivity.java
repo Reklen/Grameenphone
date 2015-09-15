@@ -15,7 +15,7 @@ public class TransactionOverviewDeatilsActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transaction_overview_deatils);
+        setContentView(R.layout.activity_transaction_overview_details);
         tooltext = (TextView) findViewById(R.id.text_tool);
         tooltext.setText("TransactionItem Overview");
         back_icon= (ImageView) findViewById(R.id.image_icon_back);

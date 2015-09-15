@@ -32,7 +32,7 @@ public class SelectContactsActivity extends AppCompatActivity implements android
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_selct_contacts);
+        setContentView(R.layout.activity_select_contacts);
 
         bar = getSupportActionBar();
         tabs = (SlidingTabLayout) findViewById(R.id.contacts_tabs);
