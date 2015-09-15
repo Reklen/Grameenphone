@@ -24,7 +24,7 @@ public class EditProfileActivity extends AppCompatActivity {
     View verticalView;
     @InjectView(R.id.button_save)
     Button buttonSave;
-    @InjectView(R.id.tool_bar)
+    @InjectView(R.id.toolbar)
     Toolbar toolbarWidget;
     @InjectView(R.id.first_text)
     TextView firstText;

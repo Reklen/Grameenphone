@@ -65,19 +65,26 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/billsbar"
+    <RelativeLayout
+        android:id="@+id/billContainer"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="false"
+        android:layout_height="34dp"
         android:layout_below="@+id/toolbar"
-        android:layout_marginTop="15dp"
-        android:background="#cccccc"
-        android:gravity="center_vertical"
-        android:text="      My Pending Bills"
-        android:textColor="#030303"
-        android:textSize="15dp" />
+        android:layout_marginTop="11dp"
+        android:background="#cccccc">
+
+        <TextView
+            android:id="@+id/billsbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="false"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:text="My Pending Bills"
+            android:textColor="#030303"
+            android:textSize="16sp" />
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/billsList"
@@ -86,7 +93,7 @@
         android:layout_above="@+id/selectedPaymentButton"
         android:layout_alignParentBottom="false"
         android:layout_alignParentLeft="false"
-        android:layout_below="@+id/billsbar"
+        android:layout_below="@+id/billContainer"
         android:layout_centerHorizontal="true"
         android:background="#FFFFFF"
         android:clickable="false"
