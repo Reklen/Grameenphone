@@ -42,7 +42,7 @@
             android:name="com.cc.grameenphone.activity.SignUpActivity"
             android:label="@string/app_name" />
         <activity
-            android:name="com.cc.grameenphone.activity.GrameenhomeActivity"
+            android:name=".activity.GrameenHomeActivity"
             android:label="@string/title_activity_grameenhome"></activity>
         <activity
             android:name="com.cc.grameenphone.activity.TransactionOverviewActivity"

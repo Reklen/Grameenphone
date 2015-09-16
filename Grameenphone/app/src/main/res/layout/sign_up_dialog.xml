@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
+    android:orientation="vertical"
     android:padding="10dp">
 
     <TextView
         android:id="@+id/code_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/code_text"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        tools:text="@string/code_text" />
 
     <TextView
         android:id="@+id/validating_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="@string/validating"
-        android:textColor="@color/black"
-        android:layout_marginTop="10dp"/>
+        android:textColor="@color/black" />
+
     <Button
-        android:id="@+id/okButton"
+        android:id="@+id/resendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@null"
         android:layout_gravity="end"
-        android:text="@string/resendbtn"
-        android:textColor="@color/blue_900"
         android:layout_marginTop="10dp"
-        />
+        android:background="@null"
+        android:enabled="false"
+        android:text="@string/resendbtn"
+        android:textColor="@color/blue_900" />
 </LinearLayout>

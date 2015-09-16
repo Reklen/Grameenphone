@@ -99,7 +99,7 @@ public class ElectricityTabFragments extends Fragment {
                 public void onClick(View view) {
                     confirmDialog = new AppCompatDialog(getActivity());
                     confirmDialog.setContentView(R.layout.association_conformation_dialog);
-                    okay_btn = (Button) confirmDialog.findViewById(R.id.okButton);
+                    okay_btn = (Button) confirmDialog.findViewById(R.id.resendButton);
                     confirmDialog.show();
                     confirmDialog.getWindow().setLayout(700, 300);
                     okay_btn.setOnClickListener(new View.OnClickListener() {

@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class GrameenhomeActivity extends AppCompatActivity {
+public class GrameenHomeActivity extends AppCompatActivity {
 
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
@@ -143,7 +143,7 @@ public class GrameenhomeActivity extends AppCompatActivity {
         });
 
         // Initializing Drawer Layout and ActionBarToggle
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(GrameenhomeActivity.this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(GrameenHomeActivity.this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
 
             @Override
             public void onDrawerClosed(View drawerView) {
@@ -172,10 +172,10 @@ public class GrameenhomeActivity extends AppCompatActivity {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container_body);
 
         if (f instanceof ManageFavorite) {
-            startActivity(new Intent(GrameenhomeActivity.this, AddFavoriteContactsActivity.class));
+            startActivity(new Intent(GrameenHomeActivity.this, AddFavoriteContactsActivity.class));
         }
         if( f instanceof ProfileFragment){
-            startActivity(new Intent(GrameenhomeActivity.this, EditProfileActivity.class));
+            startActivity(new Intent(GrameenHomeActivity.this, EditProfileActivity.class));
         }
     }
 

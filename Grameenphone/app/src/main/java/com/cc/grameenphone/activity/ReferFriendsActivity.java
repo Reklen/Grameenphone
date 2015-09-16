@@ -18,7 +18,7 @@ public class ReferFriendsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refer_friends);
-        phonetext= (EditText)findViewById(R.id.phoneNumber);
+        phonetext= (EditText)findViewById(R.id.phoneNumberEditText);
         phonetext.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
