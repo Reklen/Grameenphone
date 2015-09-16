@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:layout_marginTop="20dp"
-    android:layout_marginBottom="10dp"
     android:orientation="vertical">
 
     <TextView
@@ -16,15 +16,14 @@
         android:layout_centerHorizontal="true"
         android:text="Flexiload for 500 is processed\nsuccessfully"
         android:textColor="#929292"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textSize="15sp" />
 
     <RelativeLayout
         android:id="@+id/second_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/top_text"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="20dp">
 
         <TextView
             android:id="@+id/mobile_text"
@@ -33,8 +32,7 @@
             android:layout_below="@+id/friends"
             android:text="Mobile Number"
             android:textColor="#929292"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/mobileNumber"
@@ -43,8 +41,7 @@
             android:layout_alignParentRight="true"
             android:text="9998855000"
             android:textColor="#929292"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -52,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/second_top"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="20dp">
 
         <TextView
             android:id="@+id/flxi_text"
@@ -61,8 +58,7 @@
             android:layout_below="@+id/friends"
             android:text="Flexi Amount"
             android:textColor="#929292"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/flxiloadAmount"
@@ -71,8 +67,7 @@
             android:layout_alignParentRight="true"
             android:text="500"
             android:textColor="#929292"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -80,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/third_top"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="20dp">
 
         <TextView
             android:id="@+id/txn_text"
@@ -89,8 +84,7 @@
             android:layout_below="@+id/friends"
             android:text="Transaction ID"
             android:textColor="#929292"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/transactionNumber"
@@ -99,23 +93,22 @@
             android:layout_alignParentRight="true"
             android:text="ASDHD984"
             android:textColor="#929292"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <Button
         android:id="@+id/okButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-       android:layout_below="@+id/fourth_top"
         android:layout_alignParentRight="true"
+        android:layout_below="@+id/fourth_top"
+        android:layout_marginTop="30dp"
         android:background="@null"
-        android:textStyle="bold"
         android:gravity="bottom|right"
-        android:textSize="15sp"
+        android:text="OK"
         android:textColor="#2962ff"
-        android:text="OK" />
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
 
 </RelativeLayout>

@@ -2,7 +2,6 @@ package com.cc.grameenphone.fragments;
 
 import android.app.Activity;
 import android.content.ContextWrapper;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -14,9 +13,6 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -172,38 +168,8 @@ public class ContactsDetailsFragment extends Fragment {
         String photoId;
     }
 
-    @Override
-    public void onCreateOptionsMenu(final Menu menu,MenuInflater inflater)
-    {
-        inflater.inflate(R.menu.menu_home,menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item)
-    {
-        String url=null;
-        switch(item.getItemId())
-        {
-            case R.id.menuItem_all_my_apps:
-                url="https://play.google.com/store/apps/developer?id=AndroidDeveloperLB";
-                break;
-            case R.id.menuItem_all_my_repositories:
-                url="https://github.com/AndroidDeveloperLB";
-                break;
-            case R.id.menuItem_current_repository_website:
-                url="https://github.com/AndroidDeveloperLB/ListViewVariants";
-                break;
-        }
-        if(url==null)
-            return true;
-        final Intent intent=new Intent(Intent.ACTION_VIEW,Uri.parse(url));
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY|Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-        startActivity(intent);
-        return true;
-    }
+
 
     // ////////////////////////////////////////////////////////////
     // ContactsAdapter //

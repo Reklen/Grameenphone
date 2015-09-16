@@ -13,12 +13,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/transactionToolbar"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:text="Date"
-        android:textColor="#929292"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textColor="#87000000"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/enterDate"
@@ -26,20 +25,19 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/transactionToolbar"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
         android:text="27th June 2015"
-        android:textColor="#929292"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textColor="#87000000"
+        android:textSize="16sp" />
 
     <RelativeLayout
         android:id="@+id/second_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/date_text"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="20dp">
 
         <TextView
@@ -47,9 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Service Type"
-            android:textColor="#929292"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textColor="#87000000"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/mobileNumber"
@@ -57,9 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="Utility Bill"
-            android:textColor="#929292"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textColor="#87000000"
+            android:textSize="16sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -67,8 +63,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/second_top"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="20dp">
 
         <TextView
@@ -77,9 +73,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/friends"
             android:text="Company"
-            android:textColor="#929292"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textColor="#87000000"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/companyName"
@@ -87,17 +82,17 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="DESCO"
-            android:textColor="#929292"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textColor="#87000000"
+            android:textSize="16sp" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/fourth_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/third_top"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="20dp">
 
         <TextView
@@ -106,9 +101,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/friends"
             android:text="Amount"
-            android:textColor="#929292"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textColor="#87000000"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/amountPaid"
@@ -116,17 +110,17 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="500"
-            android:textColor="#929292"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textColor="#87000000"
+            android:textSize="16sp" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/fifth_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/fourth_top"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="20dp">
 
         <TextView
@@ -135,9 +129,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/friends"
             android:text="TNX ID"
-            android:textColor="#929292"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textColor="#87000000"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/transactionNumber"
@@ -145,8 +138,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="ASDHD984"
-            android:textColor="#929292"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textColor="#87000000"
+            android:textSize="16sp" />
     </RelativeLayout>
 </RelativeLayout>

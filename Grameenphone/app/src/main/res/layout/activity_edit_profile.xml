@@ -14,9 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="4dp">
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="24dp">
 
         <EditText
             android:id="@+id/first_name"
@@ -25,8 +25,6 @@
             android:hint="@string/first_name"
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color"
-            android:textSize="15sp"
-            android:textStyle="bold"
             tools:text="John" />
 
     </android.support.design.widget.TextInputLayout>
@@ -36,9 +34,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/firstNameTextInputLayout"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="4dp">
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="24dp">
 
 
         <EditText
@@ -47,8 +45,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color"
-            android:textSize="15sp"
-            android:textStyle="bold"
+
             tools:text="Doe" />
     </android.support.design.widget.TextInputLayout>
 
@@ -58,9 +55,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lastNameTextInputLayout"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="4dp">
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="24dp">
 
         <EditText
             android:id="@+id/email_name"
@@ -68,9 +65,7 @@
             android:layout_height="wrap_content"
             android:text="john.doe@example.com"
             android:textColor="@color/black_semi_transparent"
-            android:textColorHint="@color/hint_color"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textColorHint="@color/hint_color" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -80,9 +75,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/emailTextInputLayout"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="4dp">
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="24dp">
 
         <EditText
             android:id="@+id/national_id"
@@ -90,9 +85,7 @@
             android:layout_height="wrap_content"
             android:text="28484848859"
             android:textColor="@color/black_semi_transparent"
-            android:textColorHint="@color/hint_color"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textColorHint="@color/hint_color" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -100,9 +93,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nationalTextInputLayout"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="4dp">
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="24dp">
 
         <EditText
             android:id="@+id/dob"
@@ -110,9 +103,7 @@
             android:layout_height="wrap_content"
             android:text="29-02-1990"
             android:textColor="@color/black_semi_transparent"
-            android:textColorHint="@color/hint_color"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textColorHint="@color/hint_color" />
     </android.support.design.widget.TextInputLayout>
 
 </RelativeLayout>

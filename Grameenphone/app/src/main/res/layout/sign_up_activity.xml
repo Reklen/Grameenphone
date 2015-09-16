@@ -30,7 +30,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="25dp"
                 android:background="@android:color/transparent"
-                android:src="@drawable/homeicon" />
+                android:src="@drawable/logo_grameenphone" />
 
             <TextView
                 android:id="@+id/grameen_text"
@@ -39,6 +39,7 @@
                 android:layout_below="@+id/grameen_icon"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
+                android:visibility="gone"
                 android:text="@string/grameenPhone"
                 android:textColor="@color/black"
                 android:textSize="24sp" />

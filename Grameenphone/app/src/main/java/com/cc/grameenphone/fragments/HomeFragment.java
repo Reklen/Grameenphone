@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,29 +18,32 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
+import com.cc.grameenphone.activity.BillPaymentActivity;
 import com.cc.grameenphone.activity.ReferFriendsActivity;
 import com.cc.grameenphone.activity.SelectContactsActivity;
 import com.cc.grameenphone.activity.TransactionOverviewActivity;
-import com.cc.grameenphone.activity.BillPaymentActivity;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import me.drakeet.materialdialog.MaterialDialog;
 
 /**
  * Created by rajkiran on 09/09/15.
  */
 public class HomeFragment extends Fragment {
+
+
     @InjectView(R.id.prepaidOption)
-    RadioButton radioprepaid;
+    RadioButton prepaidOption;
     @InjectView(R.id.postpaidOption)
-    RadioButton radiopostpaid;
+    RadioButton postpaidOption;
     @InjectView(R.id.radioGroup)
-    RadioGroup radiogroup;
+    RadioGroup radioGroup;
     @InjectView(R.id.areaCode)
-    TextView areacode;
+    TextView areaCode;
     @InjectView(R.id.phoneNumberEditText)
-    EditText editphone;
+    EditText phoneNumberEditText;
     @InjectView(R.id.phone_container)
     TextInputLayout phoneContainer;
     @InjectView(R.id.other_flex)
@@ -50,31 +54,34 @@ public class HomeFragment extends Fragment {
     EditText editamt;
     @InjectView(R.id.amount_container)
     TextInputLayout amountContainer;
+    @InjectView(R.id.flexi_btn)
+    Button flexiBtn;
     @InjectView(R.id.billpay)
     ImageView billpay;
     @InjectView(R.id.bill_text)
     TextView billText;
     @InjectView(R.id.billPayment)
-    RelativeLayout billPay;
+    RelativeLayout billPayment;
     @InjectView(R.id.trans_icon)
     ImageView transIcon;
     @InjectView(R.id.transc_text)
     TextView transcText;
     @InjectView(R.id.transactionOverview)
-    RelativeLayout transactionView;
+    RelativeLayout transactionOverview;
     @InjectView(R.id.emergencyicon)
     ImageView emergencyicon;
     @InjectView(R.id.emergency_text)
     TextView emergencyText;
     @InjectView(R.id.emergencyCall)
-    RelativeLayout emergency;
+    RelativeLayout emergencyCall;
     @InjectView(R.id.friends)
     ImageView friends;
     @InjectView(R.id.friends_text)
     TextView friendsText;
     @InjectView(R.id.referFriends)
-    RelativeLayout referFrnd;
-    private Button flexiBtn;
+    RelativeLayout referFriends;
+
+    int REQCODE = 100;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -90,69 +97,18 @@ public class HomeFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.home_layout, container, false);
-        RelativeLayout transactionView1 = (RelativeLayout) rootView.findViewById(R.id.transactionOverview);
-        RelativeLayout transactionView2 = (RelativeLayout) rootView.findViewById(R.id.billPayment);
-        RelativeLayout transactionView3 = (RelativeLayout) rootView.findViewById(R.id.emergencyCall);
-        RelativeLayout transactionView4 = (RelativeLayout) rootView.findViewById(R.id.referFriends);
-        transactionView1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), TransactionOverviewActivity.class));
-            }
-        });
-        transactionView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), BillPaymentActivity.class));
-            }
-        });
-        transactionView4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), ReferFriendsActivity.class));
-            }
-        });
-        TextView flexText = (TextView) rootView.findViewById(R.id.other_flex);
-        flexText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), SelectContactsActivity.class));
-
-            }
-        });
-        RadioGroup radioGroup = (RadioGroup) rootView.findViewById(R.id.radioGroup);
+        // Inflate the layout for this fragment
+        ButterKnife.inject(this, rootView);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                RadioButton radio_pre = (RadioButton) radioGroup.findViewById(R.id.prepaidOption);
-                RadioButton radio_post = (RadioButton) radioGroup.findViewById(R.id.postpaidOption);
-                if (radio_pre.isChecked()) {
+                if (prepaidOption.isChecked()) {
 
-                } else if (radio_post.isChecked()) {
+                } else if (postpaidOption.isChecked()) {
                 }
 
             }
         });
-        flexiBtn = (Button) rootView.findViewById(R.id.flexi_btn);
-        flexiBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                View popupview = inflater.inflate(R.layout.flexi_dialog_layout, null);
-
-                final MaterialDialog materialDialog = new MaterialDialog(getActivity()).setContentView(popupview);
-                materialDialog.setCanceledOnTouchOutside(true);
-                materialDialog.show();
-                Button buttonOk = (Button) popupview.findViewById(R.id.resendButton);
-                buttonOk.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        materialDialog.dismiss();
-                    }
-                });
-            }
-        });
-        // Inflate the layout for this fragment
-        ButterKnife.inject(this, rootView);
         return rootView;
     }
 
@@ -173,4 +129,66 @@ public class HomeFragment extends Fragment {
         ButterKnife.reset(this);
     }
 
+    @OnClick(R.id.billPayment)
+    void billPaymentClick() {
+        startActivity(new Intent(getActivity(), BillPaymentActivity.class));
+    }
+
+    @OnClick(R.id.transactionOverview)
+    void transactionOverviewClick() {
+        startActivity(new Intent(getActivity(), TransactionOverviewActivity.class));
+    }
+
+    @OnClick(R.id.emergencyCall)
+    void emergencyClick() {
+
+    }
+
+    @OnClick(R.id.referFriends)
+    void referFriendsClick() {
+        startActivity(new Intent(getActivity(), ReferFriendsActivity.class));
+    }
+
+    @OnClick(R.id.flexi_btn)
+    void flexiButtonClick() {
+        View flexiDialog = LayoutInflater.from(getActivity()).inflate(R.layout.flexi_dialog_layout, null);
+
+        final MaterialDialog materialDialog = new MaterialDialog(getActivity()).setContentView(flexiDialog);
+        materialDialog.setCanceledOnTouchOutside(true);
+        materialDialog.show();
+        Button buttonOk = (Button) flexiDialog.findViewById(R.id.okButton);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                materialDialog.dismiss();
+            }
+        });
+    }
+
+    @OnClick(R.id.other_flex)
+    void otherFlexiLoadClick() {
+        otherFlex.setVisibility(View.GONE);
+        phoneNumberEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_add_ppl, 0);
+        phoneNumberEditText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= phoneNumberEditText.getRight() - phoneNumberEditText.getTotalPaddingRight()) {
+                        // your action for drawable click event
+                        startActivityForResult(new Intent(getActivity(), SelectContactsActivity.class), REQCODE);
+                        return true;
+                    }
+                }
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 100) {
+            
+        }
+    }
 }

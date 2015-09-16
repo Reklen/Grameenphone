@@ -86,7 +86,7 @@ public class GrameenHomeActivity extends BaseActivity {
                     case R.id.navigation_item_2:
                         fragment = new ProfileFragment();
                         getSupportActionBar().setTitle("Profile");
-                        icon2.setImageDrawable(getResources().getDrawable(R.drawable.ic_border_color_white));
+                        icon2.setImageDrawable(getResources().getDrawable(R.drawable.icon_edit));
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.container_body, fragment);
                         fragmentTransaction.commit();
@@ -95,7 +95,7 @@ public class GrameenHomeActivity extends BaseActivity {
                         fragment = new ManageFavoriteFragment();
                         getSupportActionBar().setTitle("Manage Favorites");
                         icon1.setVisibility(View.GONE);
-                        icon2.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_white_18dp));
+                        icon2.setImageDrawable(getResources().getDrawable(R.drawable.icon_add));
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.container_body, fragment);
                         fragmentTransaction.commit();
@@ -178,7 +178,7 @@ public class GrameenHomeActivity extends BaseActivity {
             startActivity(new Intent(GrameenHomeActivity.this, AddFavoriteContactsActivity.class));
         }
         if (f instanceof ProfileFragment) {
-            startActivity(new Intent(GrameenHomeActivity.this, EditProfileActivity.class));
+            //startActivity(new Intent(GrameenHomeActivity.this, EditProfileActivity.class));
         }
     }
 
