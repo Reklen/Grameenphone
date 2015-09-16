@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class MSISDNCheckModel {
 
-    @SerializedName("command")
+    @SerializedName("COMMAND")
     private MSISDNCommandModel command;
 
     public MSISDNCommandModel getCOMMAND() {

@@ -15,15 +15,30 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
+import com.cc.grameenphone.api_models.MSISDNCheckModel;
+import com.cc.grameenphone.generator.ServiceGenerator;
+import com.cc.grameenphone.interfaces.MSISDNCheckApi;
+import com.cc.grameenphone.utils.Logger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+import static android.provider.Settings.Secure;
 
 
 public class LoginActivity extends AppCompatActivity {
-    TextView grameenPhone,numberText,iAccept,termsCondition,walletPinText;
-    EditText numberEdit,walletPInEditText;
+    TextView grameenPhone, numberText, iAccept, termsCondition, walletPinText;
+    EditText numberEdit, walletPInEditText;
     CheckBox checkBox;
     ImageView grameenIcon;
-    Button createNewWallet,login;
+    Button createNewWallet, login;
     LinearLayout walletPinLayout;
+    private String android_id;
+    MSISDNCheckApi msisdnCheckApi;
 
 
     @Override
@@ -31,19 +46,48 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grameenphone);
         //textViews
-        grameenPhone= (TextView) findViewById(R.id.grameen_text);
-       // numberText= (TextView) findViewById(R.id.number_text);
-        iAccept= (TextView) findViewById(R.id.accept_text);
-        termsCondition= (TextView) findViewById(R.id.terms_text);
-        walletPinText= (TextView) findViewById(R.id.wallet_pin_text);
+        grameenPhone = (TextView) findViewById(R.id.grameen_text);
+        // numberText= (TextView) findViewById(R.id.number_text);
+        iAccept = (TextView) findViewById(R.id.accept_text);
+        termsCondition = (TextView) findViewById(R.id.terms_text);
+        walletPinText = (TextView) findViewById(R.id.wallet_pin_text);
+        msisdnCheckApi = ServiceGenerator.createService(MSISDNCheckApi.class);
+        android_id = Secure.getString(LoginActivity.this.getContentResolver(),
+                Secure.ANDROID_ID);
+        try {
+            JSONObject jsonObject = new JSONObject();
+            JSONObject innerObject = new JSONObject();
+            innerObject.put("DEVICEID", android_id);
+            innerObject.put("MSISDN", "01719202177");
+            innerObject.put("TYPE", "MSISDNCHK");
 
+            jsonObject.put("COMMAND", innerObject);
+
+
+            Logger.d("sending url", jsonObject.toString());
+            msisdnCheckApi.check(jsonObject, new Callback<MSISDNCheckModel>() {
+                @Override
+                public void success(MSISDNCheckModel msisdnCheckModel, Response response) {
+                    Logger.d("Its msisdn check ", "success " + msisdnCheckModel.toString());
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Logger.d("Its msisdn check ", "failure " + error.getMessage() + " its url is " + error.getUrl());
+                }
+            });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //  msisdnCheckApi.check();
         //LinearLayouts or view's
-        walletPinLayout= (LinearLayout) findViewById(R.id.wallet_pin_layout);
+        walletPinLayout = (LinearLayout) findViewById(R.id.wallet_pin_layout);
 
 
         //EditText
-        walletPInEditText= (EditText) findViewById(R.id.walletPinNumber);
-        numberEdit= (EditText) findViewById(R.id.phoneNumber);
+        walletPInEditText = (EditText) findViewById(R.id.walletPinNumber);
+        numberEdit = (EditText) findViewById(R.id.phoneNumber);
         numberEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
@@ -57,19 +101,19 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length()==10){
+                if (s.length() == 10) {
                     walletPinLayout.setVisibility(View.VISIBLE);
-                  // login.setVisibility(View.VISIBLE);
-                }else {
+                    // login.setVisibility(View.VISIBLE);
+                } else {
                     walletPinLayout.setVisibility(View.GONE);
-                   // login.setVisibility(View.GONE);
+                    // login.setVisibility(View.GONE);
                 }
 
             }
         });
 
         //checkBox
-        checkBox= (CheckBox) findViewById(R.id.check_box);
+        checkBox = (CheckBox) findViewById(R.id.check_box);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -84,20 +128,19 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //igmageView
-        grameenIcon= (ImageView) findViewById(R.id.grameen_icon);
+        grameenIcon = (ImageView) findViewById(R.id.grameen_icon);
 
         //Button
-        createNewWallet= (Button) findViewById(R.id.createWalletButton);
+        createNewWallet = (Button) findViewById(R.id.createWalletButton);
         createNewWallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(LoginActivity.this,SignUpActivity.class);
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(intent);
             }
         });
-        login= (Button) findViewById(R.id.loginButton);
+        login = (Button) findViewById(R.id.loginButton);
         login.setVisibility(View.GONE);
-
 
 
     }

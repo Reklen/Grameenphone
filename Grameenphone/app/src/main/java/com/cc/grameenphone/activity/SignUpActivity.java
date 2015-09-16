@@ -87,15 +87,15 @@ public class SignUpActivity extends Activity {
                 try {
                     JSONObject jsonObject = new JSONObject();
                     JSONObject innerJsonObj = new JSONObject();
-
                     innerJsonObj.put("DEVICEID", deviceId);
                     innerJsonObj.put("PHONENO", phoneNumber.getText().toString());
                     innerJsonObj.put("PINCODE", setPincode.getText().toString());
                     innerJsonObj.put("CONFIRMPIN", confirmPincode.getText().toString());
-                    jsonObject.put("command", innerJsonObj);
+                    jsonObject.put("COMMAND", innerJsonObj);
                     signupApi.check(jsonObject, new Callback<SignupCommandModel>() {
                         @Override
                         public void success(SignupCommandModel signupCommandModel, Response response) {
+                            Logger.d("Its msisdn check ", "success " + signupCommandModel.toString());
                             // Send otp after success signup
                             signUpDialog = new AppCompatDialog(SignUpActivity.this);
                             signUpDialog.setContentView(R.layout.sign_up_dialog);

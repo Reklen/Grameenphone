@@ -21,4 +21,13 @@ public final class PreferenceManager {
         return mSharedPreferences;
     }
 
+    public void setAuthToken(String authToken) {
+        Logger.d("Preference manager ", "Auth token   " + authToken);
+        mSharedPreferences.edit().putString("authToken", authToken).commit();
+    }
+
+    public String getAuthToken() {
+        return mSharedPreferences.getString("authToken", "");
+    }
+
 }
