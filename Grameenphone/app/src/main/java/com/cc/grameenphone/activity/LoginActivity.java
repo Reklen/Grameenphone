@@ -205,6 +205,7 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
                         Logger.d("Its msisdn check ", "success " + model.getCommand().getAUTHTOKEN().toString());
                         preferenceManager.setAuthToken(model.getCommand().getAUTHTOKEN());
                         startActivity(new Intent(LoginActivity.this, GrameenHomeActivity.class));
+                        preferenceManager.setMSISDN(phoneNumberEditText.getText().toString());
                         finish();
                         loadingDialog.dismiss();
                     } else if (model.getCommand().getTXNSTATUS().equalsIgnoreCase("00066")) {

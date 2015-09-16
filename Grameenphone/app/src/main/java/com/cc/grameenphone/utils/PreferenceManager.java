@@ -29,4 +29,13 @@ public final class PreferenceManager {
     public String getAuthToken() {
         return mSharedPreferences.getString("authToken", "");
     }
+
+    public void setMSISDN(String msisdn) {
+        mSharedPreferences.edit().putString("MSISDN", msisdn).commit();
+    }
+
+    public String getMSISDN() {
+        return mSharedPreferences.getString("MSISDN", "");
+    }
+
 }

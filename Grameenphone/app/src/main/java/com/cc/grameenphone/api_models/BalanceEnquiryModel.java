@@ -1,9 +1,13 @@
 package com.cc.grameenphone.api_models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by aditlal on 16/09/15.
  */
 public class BalanceEnquiryModel {
+
+    @SerializedName("COMMAND")
     private BalanceCommandModel balanceCommandModel;
 
     public BalanceCommandModel getCOMMAND() {

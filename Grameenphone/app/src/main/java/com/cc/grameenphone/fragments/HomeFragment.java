@@ -18,15 +18,18 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.activity.BillPaymentActivity;
 import com.cc.grameenphone.activity.ReferFriendsActivity;
 import com.cc.grameenphone.activity.SelectContactsActivity;
 import com.cc.grameenphone.activity.TransactionOverviewActivity;
+import com.cc.grameenphone.api_models.BalanceEnquiryModel;
 import com.cc.grameenphone.api_models.RechargeModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.RechargeApi;
+import com.cc.grameenphone.interfaces.WalletCheckApi;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
 
@@ -101,6 +104,8 @@ public class HomeFragment extends Fragment {
     PreferenceManager preferenceManager;
     MaterialDialog materialDialog;
 
+    WalletCheckApi walletCheckApi;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -117,6 +122,7 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.home_layout, container, false);
         // Inflate the layout for this fragment
         ButterKnife.inject(this, rootView);
+        preferenceManager = new PreferenceManager(getActivity());
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -129,6 +135,40 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        /*
+        {"COMMAND":
+{
+
+"AUTHTOKEN" : "dcda029e9e311578cf648bfa7eca623651e77e1c4f8d276936ebd38c604dc0a0",
+"MSISDN": "01718181818", "TYPE": "CBEREQ", "DEVICEID":"01234567890654321"
+}}
+
+         */
+        walletCheckApi = ServiceGenerator.createService(WalletCheckApi.class);
+        try {
+            JSONObject jsonObject = new JSONObject();
+            JSONObject innerObject = new JSONObject();
+            innerObject.put("DEVICEID", android_id);
+            innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("TYPE", "CBEREQ");
+            jsonObject.put("COMMAND", innerObject);
+            walletCheckApi.checkBalance(jsonObject, new Callback<BalanceEnquiryModel>() {
+                @Override
+                public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
+                    Logger.d("Balance", balanceEnquiryModel.toString());
+
+                    Toast.makeText(getActivity(), "Your wallet balance is : " + balanceEnquiryModel.getCOMMAND().getBALANCE(), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                }
+            });
+        } catch (JSONException e) {
+
+        }
 
         return rootView;
     }
@@ -177,7 +217,7 @@ public class HomeFragment extends Fragment {
         // Recharge psot
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        preferenceManager = new PreferenceManager(getActivity());
+
         rechargeApi = ServiceGenerator.createService(RechargeApi.class);
         /*loadingDialog = new ProgressDialog(getActivity());
         loadingDialog.setMessage("Logging in");
