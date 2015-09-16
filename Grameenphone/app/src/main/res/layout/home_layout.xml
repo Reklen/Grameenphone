@@ -16,6 +16,7 @@
             android:id="@+id/prepaidOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:drawablePadding="50dp"
             android:paddingLeft="10dp"
             android:text="Prepaid"

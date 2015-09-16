@@ -27,6 +27,6 @@ public final class PreferenceManager {
     }
 
     public String getAuthToken() {
-        return mSharedPreferences.getString("authToken", " f");
+        return mSharedPreferences.getString("authToken", "");
     }
 }

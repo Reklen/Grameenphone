@@ -174,7 +174,7 @@ public class GrameenHomeActivity extends AppCompatActivity {
         if (f instanceof ManageFavorite) {
             startActivity(new Intent(GrameenHomeActivity.this, AddFavoriteContactsActivity.class));
         }
-        if( f instanceof ProfileFragment){
+        if (f instanceof ProfileFragment) {
             startActivity(new Intent(GrameenHomeActivity.this, EditProfileActivity.class));
         }
     }

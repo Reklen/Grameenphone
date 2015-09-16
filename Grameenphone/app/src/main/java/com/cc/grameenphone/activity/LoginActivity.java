@@ -1,9 +1,11 @@
 package com.cc.grameenphone.activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.cc.grameenphone.R;
 import com.cc.grameenphone.api_models.LoginModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.LoginApi;
+import com.cc.grameenphone.utils.KeyboardUtil;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.MyPasswordTransformationMethod;
 import com.cc.grameenphone.utils.PreferenceManager;
@@ -36,8 +39,6 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -50,15 +51,13 @@ import static android.provider.Settings.Secure;
 
 public class LoginActivity extends BaseActivity implements ValidationListener {
 
+    static String TAG = LoginActivity.class.getSimpleName();
     @InjectView(R.id.grameen_icon)
     ImageView grameenIcon;
     @InjectView(R.id.grameen_text)
     TextView grameenText;
-    @InjectView(R.id.phnnumb_layout)
-    LinearLayout phnnumbLayout;
     @InjectView(R.id.areaCode)
     TextView areaCode;
-
     @NotEmpty
     @InjectView(R.id.phoneNumberEditText)
     EditText phoneNumberEditText;
@@ -91,24 +90,24 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
     Button createWalletButton;
     @InjectView(R.id.wallet_pin_input_layout)
     TextInputLayout walletPinInputLayout;
-    private String android_id;
     LoginApi loginApi;
 
     Validator validator;
-
-    @Inject
-    PreferenceManager preferenceManager;
+    AlertDialog.Builder errorDialogBuilder;
+    AlertDialog errorDialog;
+    private String android_id;
     private ProgressDialog loadingDialog;
-    static String TAG = LoginActivity.class.getSimpleName();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
+        handleExtras();
         android_id = Secure.getString(LoginActivity.this.getContentResolver(),
                 Secure.ANDROID_ID);
+        preferenceManager = new PreferenceManager(LoginActivity.this);
+        errorDialogBuilder = new AlertDialog.Builder(LoginActivity.this);
         validator = new Validator(this);
         validator.setValidationListener(this);
         loginApi = ServiceGenerator.createService(LoginApi.class);
@@ -129,7 +128,6 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
             public void afterTextChanged(Editable s) {
                 if (s.length() == 8) {
                     walletPinInputLayout.setVisibility(View.VISIBLE);
-                    walletPinInputLayout.requestFocus();
                 }
 
 
@@ -142,9 +140,12 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     loginButton.setVisibility(View.VISIBLE);
+                    KeyboardUtil.hideKeyboard(LoginActivity.this);
                 } else {
                     loginButton.setVisibility(View.GONE);
                 }
+
+
             }
         });
 
@@ -158,6 +159,19 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
         });
         loginButton.setVisibility(View.GONE);
 
+
+    }
+
+    private void handleExtras() {
+        Bundle b = getIntent().getExtras();
+        try {
+            String number = b.getString("mobile_number");
+            phoneNumberEditText.setText(number);
+            walletPinInputLayout.setVisibility(View.VISIBLE);
+            walletPinNumber.requestFocus();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -186,15 +200,27 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
             loginApi.login(jsonObject, new Callback<LoginModel>() {
                 @Override
                 public void success(LoginModel model, Response response) {
-                    Logger.d("Its msisdn check ", "success " + model.toString());
+                    Logger.d("Its msisdn check ", "status " + model.toString());
                     if (model.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
+                        Logger.d("Its msisdn check ", "success " + model.getCommand().getAUTHTOKEN().toString());
                         preferenceManager.setAuthToken(model.getCommand().getAUTHTOKEN());
                         startActivity(new Intent(LoginActivity.this, GrameenHomeActivity.class));
                         loadingDialog.dismiss();
                     } else if (model.getCommand().getTXNSTATUS().equalsIgnoreCase("00066")) {
                         loadingDialog.dismiss();
+                        errorDialogBuilder.setMessage(model.getCommand().getMESSAGE() + "");
+                        errorDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                errorDialog.cancel();
+
+                                startActivity(new Intent(LoginActivity.this, SignUpActivity.class).putExtra("mobile_number", phoneNumberEditText.getText().toString()));
+                                //TODO goto signup
+                            }
+                        });
+                        errorDialog = errorDialogBuilder.create();
+                        errorDialog.show();
                         //TODO chance to message and or dialog
-                        displayToast("Error : " + model.getCommand().getMESSAGE());
 
                     } else if (model.getCommand().getTXNSTATUS().equalsIgnoreCase("00068")) {
                         walletPinNumber.setError("Pin invalid");
@@ -205,6 +231,7 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
                 @Override
                 public void failure(RetrofitError error) {
                     Logger.d("Its msisdn check ", "failure " + error.getMessage() + " its url is " + error.getUrl());
+                    displayToast("Some error occurred");
                     loadingDialog.dismiss();
 
                 }
@@ -214,6 +241,7 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {

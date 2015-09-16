@@ -6,6 +6,7 @@ package com.cc.grameenphone.api_models;
 public class LoginCommand {
     private String MESSAGE;
 
+
     private String AUTHTOKEN;
 
     private String TXNSTATUS;
