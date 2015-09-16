@@ -42,12 +42,12 @@ import lb.library.StringArrayAlphabetIndexer;
 /**
  * Created by rajkiran on 09/09/15.
  */
-public class ContactsDetails extends Fragment {
+public class ContactsDetailsFragment extends Fragment {
     private LayoutInflater mInflater;
     private PinnedHeaderListView mListView;
     private ContactsAdapter mAdapter;
     ContextWrapper contextWrapper;
-    public ContactsDetails() {
+    public ContactsDetailsFragment() {
         // Required empty public constructor
 
     }

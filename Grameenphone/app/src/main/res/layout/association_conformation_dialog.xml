@@ -14,7 +14,7 @@
         android:layout_marginLeft="10dp"/>
 
     <Button
-        android:id="@+id/okButton"
+        android:id="@+id/resendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"

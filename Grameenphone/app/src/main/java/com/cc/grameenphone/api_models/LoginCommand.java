@@ -3,10 +3,11 @@ package com.cc.grameenphone.api_models;
 /**
  * Created by aditlal on 15/09/15.
  */
-public class SignupCommandModel {
+public class LoginCommand {
     private String MESSAGE;
 
-    private String TXNID;
+
+    private String AUTHTOKEN;
 
     private String TXNSTATUS;
 
@@ -20,12 +21,12 @@ public class SignupCommandModel {
         this.MESSAGE = MESSAGE;
     }
 
-    public String getTXNID() {
-        return TXNID;
+    public String getAUTHTOKEN() {
+        return AUTHTOKEN;
     }
 
-    public void setTXNID(String TXNID) {
-        this.TXNID = TXNID;
+    public void setAUTHTOKEN(String AUTHTOKEN) {
+        this.AUTHTOKEN = AUTHTOKEN;
     }
 
     public String getTXNSTATUS() {
@@ -46,16 +47,6 @@ public class SignupCommandModel {
 
     @Override
     public String toString() {
-        return "ClassPojo [MESSAGE = " + MESSAGE + ", TXNID = " + TXNID + ", TXNSTATUS = " + TXNSTATUS + ", TYPE = " + TYPE + "]";
+        return "ClassPojo [MESSAGE = " + MESSAGE + ", AUTHTOKEN = " + AUTHTOKEN + ", TXNSTATUS = " + TXNSTATUS + ", TYPE = " + TYPE + "]";
     }
-
-    /*
-    {"COMMAND": {
-    "MESSAGE": "Your GP MobiCash Account is being created. You will receive confirmation message shortly. If not, please call 1200 for help.",
-    "TXNID": "CUSTREG150916.1121.C00001",
-    "TXNSTATUS": "200",
-    "TYPE": "CUSTREG"
-}}
-
-     */
 }

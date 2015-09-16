@@ -3,7 +3,7 @@ package com.cc.grameenphone.api_models;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by rajkiran on 15/09/15.
+ * Created by aditlal on 15/09/15.
  */
 public class SignupModel {
     @SerializedName("COMMAND")

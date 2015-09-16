@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,18 +15,18 @@ import android.widget.ImageButton;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.fragments.DemoFragment;
-import com.cc.grameenphone.fragments.HomePage;
-import com.cc.grameenphone.fragments.Logout;
-import com.cc.grameenphone.fragments.ManageFavorite;
-import com.cc.grameenphone.fragments.PinChange;
+import com.cc.grameenphone.fragments.HomeFragment;
+import com.cc.grameenphone.fragments.ManageFavoriteFragment;
+import com.cc.grameenphone.fragments.PinChangeFragment;
 import com.cc.grameenphone.fragments.ProfileFragment;
-import com.cc.grameenphone.fragments.TermsCondition;
+import com.cc.grameenphone.fragments.TermsConditionFragment;
+import com.cc.grameenphone.utils.PreferenceManager;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class GrameenhomeActivity extends AppCompatActivity {
+public class GrameenHomeActivity extends BaseActivity {
 
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
@@ -45,6 +44,7 @@ public class GrameenhomeActivity extends AppCompatActivity {
     @InjectView(R.id.icon2)
     ImageButton icon2;
 
+    PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +53,8 @@ public class GrameenhomeActivity extends AppCompatActivity {
         ButterKnife.inject(this);
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         setSupportActionBar(toolbar);
-
-        fragment = new HomePage();
+        preferenceManager = new PreferenceManager(GrameenHomeActivity.this);
+        fragment = new HomeFragment();
         getSupportActionBar().setTitle("Home");
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container_body, fragment);
@@ -76,7 +76,7 @@ public class GrameenhomeActivity extends AppCompatActivity {
                 //Check to see which item was being clicked and perform appropriate action
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_item_1:
-                        fragment = new HomePage();
+                        fragment = new HomeFragment();
                         getSupportActionBar().setTitle("Home");
                         icon1.setVisibility(View.GONE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -92,7 +92,7 @@ public class GrameenhomeActivity extends AppCompatActivity {
                         fragmentTransaction.commit();
                         return true;
                     case R.id.navigation_item_3:
-                        fragment = new ManageFavorite();
+                        fragment = new ManageFavoriteFragment();
                         getSupportActionBar().setTitle("Manage Favorites");
                         icon1.setVisibility(View.GONE);
                         icon2.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_white_18dp));
@@ -101,7 +101,7 @@ public class GrameenhomeActivity extends AppCompatActivity {
                         fragmentTransaction.commit();
                         return true;
                     case R.id.navigation_item_4:
-                        fragment = new PinChange();
+                        fragment = new PinChangeFragment();
                         getSupportActionBar().setTitle("Pin Change");
                         icon1.setVisibility(View.GONE);
                         icon2.setVisibility(View.GONE);
@@ -119,7 +119,7 @@ public class GrameenhomeActivity extends AppCompatActivity {
                         fragmentTransaction.commit();
                         return true;
                     case R.id.navigation_item_6:
-                        fragment = new TermsCondition();
+                        fragment = new TermsConditionFragment();
                         getSupportActionBar().setTitle("Terms & Condition");
                         icon1.setVisibility(View.GONE);
                         icon2.setVisibility(View.GONE);
@@ -128,11 +128,14 @@ public class GrameenhomeActivity extends AppCompatActivity {
                         fragmentTransaction.commit();
                         return true;
                     case R.id.navigation_item_7:
-                        fragment = new Logout();
-                        getSupportActionBar().setTitle("Logout");
+                        preferenceManager.setAuthToken("");
+                        startActivity(new Intent(GrameenHomeActivity.this, LoginActivity.class));
+                        finish();
+                        //fragment = new LogoutFragment();
+                        /*getSupportActionBar().setTitle("Logout");
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.container_body, fragment);
-                        fragmentTransaction.commit();
+                        fragmentTransaction.commit();*/
                         return true;
                     default:
                         return true;
@@ -143,7 +146,7 @@ public class GrameenhomeActivity extends AppCompatActivity {
         });
 
         // Initializing Drawer Layout and ActionBarToggle
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(GrameenhomeActivity.this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(GrameenHomeActivity.this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
 
             @Override
             public void onDrawerClosed(View drawerView) {
@@ -171,11 +174,11 @@ public class GrameenhomeActivity extends AppCompatActivity {
     public void clickIcon2() {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container_body);
 
-        if (f instanceof ManageFavorite) {
-            startActivity(new Intent(GrameenhomeActivity.this, AddFavoriteContactsActivity.class));
+        if (f instanceof ManageFavoriteFragment) {
+            startActivity(new Intent(GrameenHomeActivity.this, AddFavoriteContactsActivity.class));
         }
-        if( f instanceof ProfileFragment){
-            startActivity(new Intent(GrameenhomeActivity.this, EditProfileActivity.class));
+        if (f instanceof ProfileFragment) {
+            startActivity(new Intent(GrameenHomeActivity.this, EditProfileActivity.class));
         }
     }
 

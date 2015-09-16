@@ -29,7 +29,7 @@ import me.drakeet.materialdialog.MaterialDialog;
 /**
  * Created by rajkiran on 09/09/15.
  */
-public class HomePage extends Fragment {
+public class HomeFragment extends Fragment {
     @InjectView(R.id.prepaidOption)
     RadioButton radioprepaid;
     @InjectView(R.id.postpaidOption)
@@ -38,7 +38,7 @@ public class HomePage extends Fragment {
     RadioGroup radiogroup;
     @InjectView(R.id.areaCode)
     TextView areacode;
-    @InjectView(R.id.phoneNumber)
+    @InjectView(R.id.phoneNumberEditText)
     EditText editphone;
     @InjectView(R.id.phone_container)
     TextInputLayout phoneContainer;
@@ -76,7 +76,7 @@ public class HomePage extends Fragment {
     RelativeLayout referFrnd;
     private Button flexiBtn;
 
-    public HomePage() {
+    public HomeFragment() {
         // Required empty public constructor
     }
 
@@ -142,7 +142,7 @@ public class HomePage extends Fragment {
                 final MaterialDialog materialDialog = new MaterialDialog(getActivity()).setContentView(popupview);
                 materialDialog.setCanceledOnTouchOutside(true);
                 materialDialog.show();
-                Button buttonOk = (Button) popupview.findViewById(R.id.okButton);
+                Button buttonOk = (Button) popupview.findViewById(R.id.resendButton);
                 buttonOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

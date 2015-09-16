@@ -34,9 +34,9 @@
                     android:background="?attr/colorPrimary"
                     android:contentInsetLeft="0dp"
                     android:contentInsetStart="0dp"
+                    android:minHeight="?attr/actionBarSize"
                     app:contentInsetLeft="0dp"
                     app:contentInsetStart="0dp"
-                    android:minHeight="?attr/actionBarSize"
                     local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
@@ -48,21 +48,21 @@
                         <ImageButton
                             android:id="@+id/icon1"
                             android:layout_width="wrap_content"
-                            android:layout_marginRight="8dp"
                             android:layout_height="match_parent"
-                            android:padding="8dp"
+                            android:layout_marginRight="8dp"
                             android:layout_toLeftOf="@+id/icon2"
                             android:background="@null"
+                            android:padding="8dp"
                             android:src="@drawable/ic_refresh_white" />
 
                         <ImageButton
                             android:id="@+id/icon2"
-                            android:layout_marginRight="8dp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:padding="8dp"
                             android:layout_alignParentRight="true"
+                            android:layout_marginRight="8dp"
                             android:background="@null"
+                            android:padding="8dp"
 
                             android:src="@drawable/ic_notifications_white" />
                     </RelativeLayout>

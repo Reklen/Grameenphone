@@ -29,5 +29,4 @@ public final class PreferenceManager {
     public String getAuthToken() {
         return mSharedPreferences.getString("authToken", "");
     }
-
 }

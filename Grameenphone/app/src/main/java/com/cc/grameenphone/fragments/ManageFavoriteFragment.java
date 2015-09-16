@@ -22,14 +22,14 @@ import com.cc.grameenphone.R;
 /**
  * Created by rajkiran on 09/09/15.
  */
-public class ManageFavorite extends Fragment {
+public class ManageFavoriteFragment extends Fragment {
     AppCompatDialog confirmDialog;
     Button cancelbtn, removeBtn;
 
     FloatingActionButton addBtn;
     String array[] = {"Tadjdj", "HHHKhkbkdj", "Hjbdkhbkb", "dhjbfbf", "bfkhbsdbd", "cjssdhjjhd", "Tadjdj", "HHHKhkbkdj", "Hjbdkhbkb", "dhjbfbf", "bfkhbsdbd", "cjssdhjjhd"};
 
-    public ManageFavorite() {
+    public ManageFavoriteFragment() {
         // Required empty public constructor
     }
 

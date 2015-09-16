@@ -18,7 +18,7 @@ import butterknife.InjectView;
 /**
  * Created by rajkiran on 09/09/15.
  */
-public class PinChange extends Fragment {
+public class PinChangeFragment extends Fragment {
     @InjectView(R.id.editText)
     EditText editText;
     @InjectView(R.id.editText2)
@@ -29,7 +29,7 @@ public class PinChange extends Fragment {
     Button okbtn,loginBtn;
 
 
-    public PinChange() {
+    public PinChangeFragment() {
         // Required empty public constructor
     }
 

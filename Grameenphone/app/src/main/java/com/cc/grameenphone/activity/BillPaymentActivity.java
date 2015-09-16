@@ -68,16 +68,15 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         ButterKnife.inject(this);
         setupToolbar();
         //buttons
-        /*backBtn = (ImageButton) findViewById(R.id.image_back);
         backBtn = (ImageButton) findViewById(R.id.image_back);
         actionBarText = (TextView) findViewById(R.id.toolbar_text);
         actionBarText.setText("Bill Payment");
-   */     //buttons
+        //buttons
         //toolbar image icons
-       /* lv = (ListView) findViewById(R.id.billsList);
+        lv = (ListView) findViewById(R.id.billsList);
         displayarraylist();
         listViewAdapter = new ListViewAdapter(this, arraylist);
-        lv.setAdapter(listViewAdapter);*/
+        lv.setAdapter(listViewAdapter);
 
         selectedPaymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
