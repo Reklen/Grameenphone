@@ -5,5 +5,4 @@ package com.cc.grameenphone.interfaces;
  */
 public class MinistatementApi {
 
-
 }
