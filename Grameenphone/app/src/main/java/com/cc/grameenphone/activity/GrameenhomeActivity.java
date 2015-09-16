@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.fragments.DemoFragment;
@@ -38,7 +39,8 @@ public class GrameenHomeActivity extends BaseActivity {
     DrawerLayout drawerLayout;
     FragmentTransaction fragmentTransaction;
     Fragment fragment;
-
+@InjectView(R.id.toolbar_text)
+    TextView toolbarTextView;
     @InjectView(R.id.icon1)
     ImageButton icon1;
     @InjectView(R.id.icon2)
@@ -55,7 +57,8 @@ public class GrameenHomeActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         preferenceManager = new PreferenceManager(GrameenHomeActivity.this);
         fragment = new HomeFragment();
-        getSupportActionBar().setTitle("Home");
+        toolbarTextView.setText("Home");
+        getSupportActionBar().setTitle("");
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container_body, fragment);
         fragmentTransaction.commit();
@@ -77,32 +80,44 @@ public class GrameenHomeActivity extends BaseActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_item_1:
                         fragment = new HomeFragment();
-                        getSupportActionBar().setTitle("Home");
-                        icon1.setVisibility(View.GONE);
+                        //getSupportActionBar().setTitle("Home");
+                        toolbarTextView.setText("Home");
+                        icon1.setImageDrawable(getResources().getDrawable(R.drawable.icon_wallet_balance));
+                        icon2.setImageDrawable(getResources().getDrawable(R.drawable.icon_notification));
+                        icon1.setVisibility(View.VISIBLE);
+                        icon2.setVisibility(View.VISIBLE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.container_body, fragment);
                         fragmentTransaction.commit();
                         return true;
                     case R.id.navigation_item_2:
                         fragment = new ProfileFragment();
-                        getSupportActionBar().setTitle("Profile");
+                     //   getSupportActionBar().setTitle("Profile");
+                        toolbarTextView.setText("Profile");
+                        icon1.setImageDrawable(getResources().getDrawable(R.drawable.icon_refresh));
                         icon2.setImageDrawable(getResources().getDrawable(R.drawable.icon_edit));
+                        icon1.setVisibility(View.VISIBLE);
+                        icon2.setVisibility(View.VISIBLE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.container_body, fragment);
                         fragmentTransaction.commit();
                         return true;
                     case R.id.navigation_item_3:
                         fragment = new ManageFavoriteFragment();
-                        getSupportActionBar().setTitle("Manage Favorites");
-                        icon1.setVisibility(View.GONE);
+                      //  getSupportActionBar().setTitle("Manage Favorites");
+                        toolbarTextView.setText("Manage Favorites");
+                       // icon1.setVisibility(View.GONE);
                         icon2.setImageDrawable(getResources().getDrawable(R.drawable.icon_add));
+                        icon1.setVisibility(View.GONE);
+                        icon2.setVisibility(View.VISIBLE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.container_body, fragment);
                         fragmentTransaction.commit();
                         return true;
                     case R.id.navigation_item_4:
                         fragment = new PinChangeFragment();
-                        getSupportActionBar().setTitle("Pin Change");
+                       // getSupportActionBar().setTitle("Pin Change");
+                        toolbarTextView.setText("Pin Change");
                         icon1.setVisibility(View.GONE);
                         icon2.setVisibility(View.GONE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -111,7 +126,10 @@ public class GrameenHomeActivity extends BaseActivity {
                         return true;
                     case R.id.navigation_item_5:
                         fragment = new DemoFragment();
-                        getSupportActionBar().setTitle("Demo");
+                       // getSupportActionBar().setTitle("Demo");
+                        toolbarTextView.setText("Demo");
+                       /* icon1.setImageDrawable(getResources().getDrawable(R.drawable.icon_wallet_balance));
+                        icon2.setImageDrawable(getResources().getDrawable(R.drawable.icon_notification));*/
                         icon1.setVisibility(View.GONE);
                         icon2.setVisibility(View.GONE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -120,7 +138,10 @@ public class GrameenHomeActivity extends BaseActivity {
                         return true;
                     case R.id.navigation_item_6:
                         fragment = new TermsConditionFragment();
-                        getSupportActionBar().setTitle("Terms & Condition");
+                       // getSupportActionBar().setTitle("Terms & Condition");
+                        toolbarTextView.setText("Terms & Condition");
+                        /*icon1.setImageDrawable(getResources().getDrawable(R.drawable.icon_wallet_balance));
+                        icon2.setImageDrawable(getResources().getDrawable(R.drawable.icon_notification));*/
                         icon1.setVisibility(View.GONE);
                         icon2.setVisibility(View.GONE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();

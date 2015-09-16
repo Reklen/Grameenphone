@@ -22,7 +22,7 @@
             android:hint="@string/first_name"
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color"
-            tools:text="John" />
+            android:text="John" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -43,7 +43,7 @@
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color"
 
-            tools:text="Doe" />
+            android:text="Doe" />
     </android.support.design.widget.TextInputLayout>
 
 

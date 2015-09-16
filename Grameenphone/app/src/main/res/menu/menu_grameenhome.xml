@@ -23,10 +23,17 @@
             android:id="@+id/navigation_item_4"
             android:icon="@drawable/icon_pin_change"
             android:title="@string/nav_item_pin" />
+<<<<<<< HEAD
         <item
             android:id="@+id/navigation_item_5"
             android:icon="@drawable/icon_demo"
             android:title="@string/nav_item_demo" />
+=======
+        <item android:icon="@drawable/ic_settings_display_black"
+            android:id="@+id/navigation_item_5"
+            android:title="@string/nav_item_demo"
+            ></item>
+>>>>>>> 0350feadad62456c6b7bdaae884877ae356c1303
         <item
             android:id="@+id/navigation_item_6"
             android:icon="@drawable/icon_t_c"

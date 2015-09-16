@@ -107,6 +107,12 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     private void setupToolbar() {
         toolbarText.setText("Bill Payment");
         setSupportActionBar(toolbar);
+        backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                finish();
+            }
+        });
     }
 
     public void displayarraylist() {
@@ -139,9 +145,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.image_back:
-                finish();
-                break;
+
         }
     }
 }

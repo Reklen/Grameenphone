@@ -14,6 +14,7 @@ public class RechargeCommandModel {
 
     private String TYPE;
 
+
     public String getMESSAGE() {
         return MESSAGE;
     }
@@ -54,7 +55,6 @@ public class RechargeCommandModel {
         this.TYPE = TYPE;
     }
 
-    @Override
     public String toString() {
         return "ClassPojo [MESSAGE = " + MESSAGE + ", TXNID = " + TXNID + ", TRID = " + TRID + ", TXNSTATUS = " + TXNSTATUS + ", TYPE = " + TYPE + "]";
     }

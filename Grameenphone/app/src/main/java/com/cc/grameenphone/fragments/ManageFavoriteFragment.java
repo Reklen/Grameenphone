@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +18,15 @@ import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.cc.grameenphone.R;
 
+import me.drakeet.materialdialog.MaterialDialog;
+
 /**
  * Created by rajkiran on 09/09/15.
  */
 public class ManageFavoriteFragment extends Fragment {
-    AppCompatDialog confirmDialog;
     Button cancelbtn, removeBtn;
 
+    MaterialDialog confirmDialog;
     FloatingActionButton addBtn;
     String array[] = {"Tadjdj", "HHHKhkbkdj", "Hjbdkhbkb", "dhjbfbf", "bfkhbsdbd", "cjssdhjjhd", "Tadjdj", "HHHKhkbkdj", "Hjbdkhbkb", "dhjbfbf", "bfkhbsdbd", "cjssdhjjhd"};
 
@@ -73,24 +74,23 @@ public class ManageFavoriteFragment extends Fragment {
                 switch (index) {
                     case 0:
 
-                        confirmDialog = new AppCompatDialog(getActivity());
-                        confirmDialog.setContentView(R.layout.manage_favorite_delete_dialog);
-                        cancelbtn = (Button) confirmDialog.findViewById(R.id.cancelButton);
-                        removeBtn = (Button) confirmDialog.findViewById(R.id.removeButton);
-                        confirmDialog.show();
-                        confirmDialog.getWindow().setLayout(650, 350);
-                        cancelbtn.setOnClickListener(new View.OnClickListener() {
+                        confirmDialog = new MaterialDialog(getActivity());
+                        confirmDialog.setMessage("Remove Dave Tylor from favorites ?");
+                        confirmDialog.setNegativeButton("CANCEL", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 confirmDialog.dismiss();
                             }
                         });
-                        removeBtn.setOnClickListener(new View.OnClickListener() {
+                        confirmDialog.setPositiveButton("REMOVE", new View.OnClickListener() {
                             @Override
-                            public void onClick(View view) {
+                            public void onClick(View v) {
+                                confirmDialog.dismiss();
+
                             }
                         });
-                        confirmDialog.setCanceledOnTouchOutside(true);
+
+                        confirmDialog.show();
                         break;
 
                 }

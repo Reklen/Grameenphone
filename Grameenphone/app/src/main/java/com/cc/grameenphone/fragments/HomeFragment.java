@@ -1,8 +1,10 @@
 package com.cc.grameenphone.fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,11 +24,22 @@ import com.cc.grameenphone.activity.BillPaymentActivity;
 import com.cc.grameenphone.activity.ReferFriendsActivity;
 import com.cc.grameenphone.activity.SelectContactsActivity;
 import com.cc.grameenphone.activity.TransactionOverviewActivity;
+import com.cc.grameenphone.api_models.RechargeModel;
+import com.cc.grameenphone.generator.ServiceGenerator;
+import com.cc.grameenphone.interfaces.RechargeApi;
+import com.cc.grameenphone.utils.Logger;
+import com.cc.grameenphone.utils.PreferenceManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import me.drakeet.materialdialog.MaterialDialog;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by rajkiran on 09/09/15.
@@ -82,6 +95,11 @@ public class HomeFragment extends Fragment {
     RelativeLayout referFriends;
 
     int REQCODE = 100;
+    ProgressDialog loadingDialog;
+    RechargeApi rechargeApi;
+    private String android_id;
+    PreferenceManager preferenceManager;
+    MaterialDialog materialDialog;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -105,6 +123,7 @@ public class HomeFragment extends Fragment {
                 if (prepaidOption.isChecked()) {
 
                 } else if (postpaidOption.isChecked()) {
+
                 }
 
             }
@@ -151,20 +170,74 @@ public class HomeFragment extends Fragment {
         startActivity(new Intent(getActivity(), ReferFriendsActivity.class));
     }
 
+    MaterialDialog errorDialog;
+
     @OnClick(R.id.flexi_btn)
     void flexiButtonClick() {
-        View flexiDialog = LayoutInflater.from(getActivity()).inflate(R.layout.flexi_dialog_layout, null);
+        // Recharge psot
+        android_id = Settings.Secure.getString(getActivity().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        preferenceManager = new PreferenceManager(getActivity());
+        rechargeApi = ServiceGenerator.createService(RechargeApi.class);
+        /*loadingDialog = new ProgressDialog(getActivity());
+        loadingDialog.setMessage("Logging in");
+        loadingDialog.setCanceledOnTouchOutside(false);
+        loadingDialog.show();*/
+        try {
+            JSONObject jsonObject = new JSONObject();
+            JSONObject innerObject = new JSONObject();
+            innerObject.put("DEVICEID", android_id);
+            innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+            innerObject.put("MSISDN", "017" + phoneNumberEditText.getText().toString());
+            innerObject.put("TYPE", "CTMMREQ");
+            innerObject.put("RCTYPE", "PREPAID");
+            innerObject.put("AMOUNT", editamt.getText().toString());
+            jsonObject.put("COMMAND", innerObject);
 
-        final MaterialDialog materialDialog = new MaterialDialog(getActivity()).setContentView(flexiDialog);
-        materialDialog.setCanceledOnTouchOutside(true);
-        materialDialog.show();
-        Button buttonOk = (Button) flexiDialog.findViewById(R.id.okButton);
-        buttonOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                materialDialog.dismiss();
-            }
-        });
+            rechargeApi.recharge(jsonObject, new Callback<RechargeModel>() {
+                @Override
+                public void success(RechargeModel rechargeModel, Response response) {
+                    Logger.d("Its msisdn check ", "status " + rechargeModel.toString());
+                    if (rechargeModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                        View flexiDialog = LayoutInflater.from(getActivity()).inflate(R.layout.flexi_dialog_layout, null);
+
+                        materialDialog = new MaterialDialog(getActivity()).setContentView(flexiDialog);
+                        materialDialog.setCanceledOnTouchOutside(true);
+                        ((TextView) flexiDialog.findViewById(R.id.top_text)).setText(rechargeModel.getCOMMAND().getMESSAGE() + "");
+                        ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText("017" + phoneNumberEditText.getText().toString() + "");
+                        ((TextView) flexiDialog.findViewById(R.id.transactionNumber)).setText("\n" + rechargeModel.getCOMMAND().getTXNID() + "");
+
+                        ((TextView) flexiDialog.findViewById(R.id.flxiloadAmount)).setText(editamt.getText().toString() + "");
+                        materialDialog.show();
+                        Button buttonOk = (Button) flexiDialog.findViewById(R.id.okButton);
+                        buttonOk.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                materialDialog.dismiss();
+                            }
+                        });
+                    } else {
+                        errorDialog = new MaterialDialog(getActivity());
+                        errorDialog.setMessage(rechargeModel.getCOMMAND().getMESSAGE() + "");
+                        errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                errorDialog.dismiss();
+                            }
+                        });
+                        errorDialog.show();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                }
+            });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @OnClick(R.id.other_flex)
@@ -190,7 +263,7 @@ public class HomeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 100) {
-            
+
         }
     }
 }
