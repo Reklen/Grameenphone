@@ -9,13 +9,13 @@
         layout="@layout/transaction_toolbar" />
 
     <ListView
+        android:id="@+id/transactionList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:id="@+id/transactionList"
-        tools:listitem="@layout/transaction_row_layout"
         android:layout_below="@+id/transactionToolbar"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        tools:listitem="@layout/transaction_row_layout" />
 
 </RelativeLayout>

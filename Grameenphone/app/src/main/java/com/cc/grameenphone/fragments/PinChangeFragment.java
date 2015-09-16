@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.cc.grameenphone.R;
+import com.cc.grameenphone.utils.MyPasswordTransformationMethod;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -18,18 +19,21 @@ import butterknife.InjectView;
 /**
  * Created by rajkiran on 09/09/15.
  */
-public class PinChange extends Fragment {
-    @InjectView(R.id.editText)
-    EditText editText;
-    @InjectView(R.id.editText2)
-    EditText editText2;
-    @InjectView(R.id.editText3)
-    EditText editText3;
+public class PinChangeFragment extends Fragment {
+
     AppCompatDialog confirmDialog;
-    Button okbtn,loginBtn;
+    Button okbtn;
+    @InjectView(R.id.oldPinEditText)
+    EditText oldPinEditText;
+    @InjectView(R.id.newPineditText)
+    EditText newPineditText;
+    @InjectView(R.id.confirmPinEditText)
+    EditText confirmPinEditText;
+    @InjectView(R.id.confirmButton)
+    Button confirmButton;
 
 
-    public PinChange() {
+    public PinChangeFragment() {
         // Required empty public constructor
     }
 
@@ -42,9 +46,10 @@ public class PinChange extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.pin_change, container, false);
-        loginBtn = (Button)rootView.findViewById(R.id.cnfm_btn);
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        ButterKnife.inject(this, rootView);
+        confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 confirmDialog = new AppCompatDialog(getActivity());
@@ -62,7 +67,9 @@ public class PinChange extends Fragment {
             }
         });
         // Inflate the layout for this fragment
-        ButterKnife.inject(this, rootView);
+        oldPinEditText.setTransformationMethod(new MyPasswordTransformationMethod());
+        newPineditText.setTransformationMethod(new MyPasswordTransformationMethod());
+        confirmPinEditText.setTransformationMethod(new MyPasswordTransformationMethod());
         return rootView;
     }
 

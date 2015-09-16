@@ -7,7 +7,7 @@
 
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/oldPinEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -18,33 +18,33 @@
         android:inputType="textPassword" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/newPineditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/oldPinEditText"
         android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="Set new pin"
         android:inputType="textPassword" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/confirmPinEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/newPineditText"
         android:ems="10"
         android:hint="Confirm new pin"
         android:layout_marginTop="30dp"
         android:inputType="textPassword" />
     <Button
-        android:id="@+id/cnfm_btn"
+        android:id="@+id/confirmButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText3"
+        android:layout_below="@+id/confirmPinEditText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:background="@drawable/login_button"

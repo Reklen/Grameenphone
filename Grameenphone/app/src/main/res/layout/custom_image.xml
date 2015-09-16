@@ -18,5 +18,5 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
         android:layout_alignParentTop="true"
-        android:src="@drawable/ic_border_color_white" />
+        android:src="@drawable/icon_edit" />
 </RelativeLayout>

@@ -6,7 +6,7 @@
     android:layout_width="50dp"
     android:textColor="@color/colorAccent"
     android:layout_height="50dp"
-    android:background="@null"
+    android:background="@color/white"
     android:text="A"
     android:textSize="25sp"
     tools:ignore="HardcodedText"/>

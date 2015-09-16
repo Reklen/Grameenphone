@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.cc.grameenphone.fragments.ContactsDetails;
-import com.cc.grameenphone.fragments.Favorites;
+import com.cc.grameenphone.fragments.ContactsDetailsFragment;
+import com.cc.grameenphone.fragments.FavoritesFragment;
 
 /**
  * Created by rajkiran on 09/09/15.
@@ -21,11 +21,11 @@ public class SelectcontactAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                Favorites art=new Favorites();
+                FavoritesFragment art=new FavoritesFragment();
                 return art;
 
             case 1:
-                ContactsDetails dscn=new ContactsDetails();
+                ContactsDetailsFragment dscn=new ContactsDetailsFragment();
                 return dscn;
         }
         return null;

@@ -12,8 +12,8 @@ import com.cc.grameenphone.R;
 /**
  * Created by rajkiran on 09/09/15.
  */
-public class TermsCondition extends Fragment {
-    public TermsCondition() {
+public class FavoritesFragment extends Fragment {
+    public FavoritesFragment() {
         // Required empty public constructor
     }
 
@@ -26,7 +26,7 @@ public class TermsCondition extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.termcondition_layout, container, false);
+        View rootView = inflater.inflate(R.layout.favorites_layout, container, false);
 
 
         // Inflate the layout for this fragment

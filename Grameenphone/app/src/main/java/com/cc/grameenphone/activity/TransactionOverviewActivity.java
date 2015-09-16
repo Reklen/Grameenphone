@@ -16,45 +16,44 @@ import com.cc.grameenphone.adapter.TransactionAdapter;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class TransactionOverviewActivity extends AppCompatActivity {
 
 
-    @InjectView(R.id.image_icon_back)
-    ImageView imageIconBack;
-    @InjectView(R.id.transactionToolbar)
-    Toolbar signUpToolbar;
-    @InjectView(R.id.transactionList)
-    ListView listView;
     TransactionAdapter transactionAdapter;
     TextView tooltext;
     String array[] = {"Tadjdj", "HHHKhkbkdj", "Hjbdkhbkb", "dhjbfbf", "bfkhbsdbd", "cjssdhjjhd", "Tadjdj", "HHHKhkbkdj", "Hjbdkhbkb", "dhjbfbf", "bfkhbsdbd", "cjssdhjjhd"};
 
     ImageView back_icon;
+    @InjectView(R.id.image_icon_back)
+    ImageView imageIconBack;
+    @InjectView(R.id.text_tool)
+    TextView textTool;
+    @InjectView(R.id.transactionToolbar)
+    Toolbar transactionToolbar;
+    @InjectView(R.id.transactionList)
+    ListView transactionList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_overview);
         ButterKnife.inject(this);
-        tooltext = (TextView)findViewById(R.id.text_tool);
-        tooltext.setText("Transaction Overview");
+        textTool.setText("Transaction Overview");
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, array);
-        listView.setAdapter(arrayAdapter);
+        transactionList.setAdapter(arrayAdapter);
         //listView.setAdapter(transactionAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        transactionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 startActivity(new Intent(TransactionOverviewActivity.this, TransactionOverviewDeatilsActivity.class));
             }
         });
-        back_icon= (ImageView) findViewById(R.id.image_icon_back);
-        back_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
     }
-
+    @OnClick(R.id.image_icon_back)
+    void backClick(){
+        finish();
+    }
 
 }

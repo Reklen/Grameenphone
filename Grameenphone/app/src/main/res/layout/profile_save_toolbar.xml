@@ -19,7 +19,7 @@
             android:layout_centerVertical="true"
             android:background="@null"
             android:layout_marginRight="5dp"
-            android:drawableLeft="@drawable/ic_cancel_white_18dp"
+            android:drawableLeft="@drawable/icon_cancel"
             android:text="CANCEL"
             android:textColor="@color/white" />
 
@@ -39,8 +39,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
             android:background="@null"
-            android:drawableLeft="@drawable/ic_check_white"
+            android:drawableLeft="@drawable/icon_done"
             android:text="DONE"
             android:textColor="@color/white" />
 
