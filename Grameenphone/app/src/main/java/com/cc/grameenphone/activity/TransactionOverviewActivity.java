@@ -13,10 +13,10 @@ import android.widget.TextView;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.adapter.TransactionAdapter;
+import com.cc.grameenphone.views.RippleView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 
 public class TransactionOverviewActivity extends AppCompatActivity {
 
@@ -34,6 +34,8 @@ public class TransactionOverviewActivity extends AppCompatActivity {
     Toolbar transactionToolbar;
     @InjectView(R.id.transactionList)
     ListView transactionList;
+    @InjectView(R.id.backRipple)
+    RippleView backRipple;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,12 @@ public class TransactionOverviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_transaction_overview);
         ButterKnife.inject(this);
         textTool.setText("Transaction Overview");
+        backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                finish();
+            }
+        });
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, array);
         transactionList.setAdapter(arrayAdapter);
         //listView.setAdapter(transactionAdapter);
@@ -51,9 +59,6 @@ public class TransactionOverviewActivity extends AppCompatActivity {
             }
         });
     }
-    @OnClick(R.id.image_icon_back)
-    void backClick(){
-        finish();
-    }
+
 
 }

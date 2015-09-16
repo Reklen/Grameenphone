@@ -47,7 +47,7 @@
 
         <activity
             android:name=".activity.GrameenHomeActivity"
-            android:label="@string/title_activity_grameenhome"></activity>
+            android:label="@string/app_name"></activity>
         <activity
             android:name="com.cc.grameenphone.activity.TransactionOverviewActivity"
             android:label="@string/title_activity_transaction_overview"></activity>

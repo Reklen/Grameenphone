@@ -23,10 +23,10 @@
             android:icon="@drawable/icon_pin_change"
             android:id="@+id/navigation_item_4"
             android:title="@string/nav_item_pin" />
-        <item
-            android:icon="@drawable/icon_demo"
+        <item android:icon="@drawable/ic_settings_display_black"
             android:id="@+id/navigation_item_5"
-            android:title="@string/nav_item_demo" />
+            android:title="@string/nav_item_demo"
+            ></item>
         <item
             android:icon="@drawable/icon_t_c"
             android:id="@+id/navigation_item_6"

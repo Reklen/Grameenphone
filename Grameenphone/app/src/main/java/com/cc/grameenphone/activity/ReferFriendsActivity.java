@@ -8,7 +8,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,16 +16,11 @@ import com.cc.grameenphone.views.RippleView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 
 public class ReferFriendsActivity extends AppCompatActivity {
 
-    @InjectView(R.id.image_icon_back)
-    ImageView imageIconBack;
     @InjectView(R.id.backRipple)
     RippleView backRipple;
-    @InjectView(R.id.text_tool)
-    TextView textTool;
     @InjectView(R.id.refer_text)
     TextView referText;
     @InjectView(R.id.refer_code)
@@ -49,6 +43,12 @@ public class ReferFriendsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refer_friends);
         ButterKnife.inject(this);
+        backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                finish();
+            }
+        });
         phoneNumberEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -67,8 +67,4 @@ public class ReferFriendsActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.image_icon_back)
-    void backClick(){
-        finish();
-    }
 }

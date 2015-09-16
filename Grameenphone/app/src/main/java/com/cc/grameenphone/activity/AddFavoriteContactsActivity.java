@@ -48,15 +48,13 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_favorite_contacts);
-        back_icon= (ImageView) findViewById(R.id.image_icon_back);
+        back_icon= (ImageView) findViewById(R.id.image_back);
         back_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-        tooltext = (TextView)findViewById(R.id.text_tool);
-        tooltext.setText("Add Favorites");
         contextWrapper = new ContextWrapper(this);
         mInflater = LayoutInflater.from(this);
         final ArrayList<Contact> contacts = getContacts();

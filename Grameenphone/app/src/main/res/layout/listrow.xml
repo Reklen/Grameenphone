@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_gravity="end"
-            android:text="\u20B9 1,200" />
+            android:text="\u09f3 1,200" />
     </RelativeLayout>
 
     <LinearLayout
@@ -125,7 +125,7 @@
         android:id="@+id/payButton"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="60dp"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/first_conatiner"
         android:layout_centerHorizontal="true"

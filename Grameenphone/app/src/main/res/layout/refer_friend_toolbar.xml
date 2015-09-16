@@ -1,15 +1,22 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/transactionToolbar"
+    android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/blue_900"
-    android:minHeight="?attr/actionBarSize">
+    android:layout_height="?actionBarSize"
+    android:background="@color/primary"
+    android:contentInsetLeft="0dp"
+    android:contentInsetStart="0dp"
+    android:minHeight="?attr/actionBarSize"
+    app:contentInsetLeft="0dp"
+    app:contentInsetStart="0dp">
 
     <RelativeLayout
+        android:id="@+id/toolbar_container"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        android:weightSum="1">
 
         <com.cc.grameenphone.views.RippleView
             android:id="@+id/backRipple"
@@ -18,30 +25,34 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
             android:paddingLeft="6dp"
             android:paddingRight="6dp"
             app:rv_rippleDuration="100">
 
-            <ImageView
-                android:id="@+id/image_icon_back"
+            <ImageButton
+                android:id="@+id/image_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
+                android:background="@null"
                 android:src="@drawable/icon_back" />
+
         </com.cc.grameenphone.views.RippleView>
 
         <TextView
-            android:id="@+id/text_tool"
+            android:id="@+id/toolbar_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_marginLeft="24dp"
             android:layout_toRightOf="@+id/backRipple"
             android:gravity="center_vertical"
-            android:text="Refer friends"
-            android:textColor="@color/white" />
+            android:text="Refer Friends"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
 
     </RelativeLayout>
 
