@@ -127,7 +127,7 @@ public class PinChangeFragment extends Fragment {
                 oldPinEditText.requestFocus();
             }
             jsonObject.put("COMMAND", innerObject);
-
+            Logger.d("PinChange", jsonObject.toString());
             pinchnageApi.pinchange(jsonObject, new Callback<PinChangeModel>() {
                 @Override
                 public void success(PinChangeModel pinChangeModel, Response response) {
@@ -139,6 +139,9 @@ public class PinChangeFragment extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 successSignupDialog.dismiss();
+                                oldPinEditText.setText("");
+                                newPineditText.setText("");
+                                confirmPinEditText.setText("");
 
                             }
                         });

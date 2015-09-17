@@ -39,7 +39,8 @@
                 android:id="@+id/last_nameEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/last_name" />
+                android:hint="@string/last_name"
+                android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -52,7 +53,8 @@
                 android:id="@+id/email_idEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/email_id" />
+                android:hint="@string/email_id"
+                android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -78,20 +80,22 @@
                 android:id="@+id/date_of_birthEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/Date_of_birth" />
+                android:hint="@string/Date_of_birth"
+                android:inputType="number" />
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/sign_up_btn"
+            android:id="@+id/submitButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:background="@drawable/login_button"
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/submit"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
     </LinearLayout>
 </LinearLayout>

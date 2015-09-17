@@ -22,6 +22,7 @@ import com.cc.grameenphone.fragments.PinChangeFragment;
 import com.cc.grameenphone.fragments.ProfileFragment;
 import com.cc.grameenphone.fragments.TermsConditionFragment;
 import com.cc.grameenphone.utils.PreferenceManager;
+import com.cc.grameenphone.views.RippleView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -39,7 +40,7 @@ public class GrameenHomeActivity extends BaseActivity {
     DrawerLayout drawerLayout;
     FragmentTransaction fragmentTransaction;
     Fragment fragment;
-@InjectView(R.id.toolbar_text)
+    @InjectView(R.id.toolbar_text)
     TextView toolbarTextView;
     @InjectView(R.id.icon1)
     ImageButton icon1;
@@ -47,6 +48,12 @@ public class GrameenHomeActivity extends BaseActivity {
     ImageButton icon2;
 
     PreferenceManager preferenceManager;
+    @InjectView(R.id.walletLabel)
+    TextView walletLabel;
+    @InjectView(R.id.icon1Ripple)
+    RippleView icon1Ripple;
+    @InjectView(R.id.icon2Ripple)
+    RippleView icon2Ripple;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,66 +91,66 @@ public class GrameenHomeActivity extends BaseActivity {
                         toolbarTextView.setText("Home");
                         icon1.setImageDrawable(getResources().getDrawable(R.drawable.icon_wallet_balance));
                         icon2.setImageDrawable(getResources().getDrawable(R.drawable.icon_notification));
-                        icon1.setVisibility(View.VISIBLE);
-                        icon2.setVisibility(View.VISIBLE);
+                        icon1Ripple.setVisibility(View.VISIBLE);
+                        icon2Ripple.setVisibility(View.VISIBLE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.container_body, fragment);
                         fragmentTransaction.commit();
                         return true;
                     case R.id.navigation_item_2:
                         fragment = new ProfileFragment();
-                     //   getSupportActionBar().setTitle("Profile");
+                        //   getSupportActionBar().setTitle("Profile");
                         toolbarTextView.setText("Profile");
                         icon1.setImageDrawable(getResources().getDrawable(R.drawable.icon_refresh));
                         icon2.setImageDrawable(getResources().getDrawable(R.drawable.icon_edit));
-                        icon1.setVisibility(View.VISIBLE);
-                        icon2.setVisibility(View.VISIBLE);
+                        icon1Ripple.setVisibility(View.VISIBLE);
+                        icon2Ripple.setVisibility(View.VISIBLE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.container_body, fragment);
                         fragmentTransaction.commit();
                         return true;
                     case R.id.navigation_item_3:
                         fragment = new ManageFavoriteFragment();
-                      //  getSupportActionBar().setTitle("Manage Favorites");
+                        //  getSupportActionBar().setTitle("Manage Favorites");
                         toolbarTextView.setText("Manage Favorites");
-                       // icon1.setVisibility(View.GONE);
+                        // icon1.setVisibility(View.GONE);
                         icon2.setImageDrawable(getResources().getDrawable(R.drawable.icon_add));
-                        icon1.setVisibility(View.GONE);
-                        icon2.setVisibility(View.VISIBLE);
+                        icon1Ripple.setVisibility(View.GONE);
+                        icon2Ripple.setVisibility(View.VISIBLE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.container_body, fragment);
                         fragmentTransaction.commit();
                         return true;
                     case R.id.navigation_item_4:
                         fragment = new PinChangeFragment();
-                       // getSupportActionBar().setTitle("Pin Change");
+                        // getSupportActionBar().setTitle("Pin Change");
                         toolbarTextView.setText("Pin Change");
-                        icon1.setVisibility(View.GONE);
-                        icon2.setVisibility(View.GONE);
+                        icon1Ripple.setVisibility(View.GONE);
+                        icon2Ripple.setVisibility(View.GONE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.container_body, fragment);
                         fragmentTransaction.commit();
                         return true;
                     case R.id.navigation_item_5:
                         fragment = new DemoFragment();
-                       // getSupportActionBar().setTitle("Demo");
+                        // getSupportActionBar().setTitle("Demo");
                         toolbarTextView.setText("Demo");
                        /* icon1.setImageDrawable(getResources().getDrawable(R.drawable.icon_wallet_balance));
                         icon2.setImageDrawable(getResources().getDrawable(R.drawable.icon_notification));*/
-                        icon1.setVisibility(View.GONE);
-                        icon2.setVisibility(View.GONE);
+                        icon1Ripple.setVisibility(View.GONE);
+                        icon2Ripple.setVisibility(View.GONE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.container_body, fragment);
                         fragmentTransaction.commit();
                         return true;
                     case R.id.navigation_item_6:
                         fragment = new TermsConditionFragment();
-                       // getSupportActionBar().setTitle("Terms & Condition");
+                        // getSupportActionBar().setTitle("Terms & Condition");
                         toolbarTextView.setText("Terms & Condition");
                         /*icon1.setImageDrawable(getResources().getDrawable(R.drawable.icon_wallet_balance));
                         icon2.setImageDrawable(getResources().getDrawable(R.drawable.icon_notification));*/
-                        icon1.setVisibility(View.GONE);
-                        icon2.setVisibility(View.GONE);
+                        icon1Ripple.setVisibility(View.GONE);
+                        icon2Ripple.setVisibility(View.GONE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.container_body, fragment);
                         fragmentTransaction.commit();
@@ -151,6 +158,7 @@ public class GrameenHomeActivity extends BaseActivity {
                     case R.id.navigation_item_7:
                         preferenceManager.setAuthToken("");
                         startActivity(new Intent(GrameenHomeActivity.this, LoginActivity.class));
+                        preferenceManager.setMSISDN("");
                         finish();
                         //fragment = new LogoutFragment();
                         /*getSupportActionBar().setTitle("Logout");

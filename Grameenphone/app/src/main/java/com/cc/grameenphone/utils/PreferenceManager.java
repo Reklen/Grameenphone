@@ -30,6 +30,7 @@ public final class PreferenceManager {
         return mSharedPreferences.getString("authToken", "");
     }
 
+
     public void setMSISDN(String msisdn){
         mSharedPreferences.edit().putString("MSISDN", msisdn).commit();
     }

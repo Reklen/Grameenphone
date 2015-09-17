@@ -59,7 +59,7 @@
     <string name="last_name">Last Name</string>
     <string name="email_id">Email ID</string>
     <string name="national_id">National ID</string>
-    <string name="Date_of_birth">Date of Birth(ddmmyy)</string>
+    <string name="Date_of_birth">DOB</string>
     <string name="submit">SUBMIT</string>
     <string name="not_registered">You are not registered with\n
                                   MobCash wallet. Please cleck create\n

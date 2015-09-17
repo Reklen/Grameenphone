@@ -44,7 +44,9 @@
         <activity
             android:name="com.cc.grameenphone.activity.SignUpActivity"
             android:label="@string/app_name" />
-
+        <activity
+            android:name="com.cc.grameenphone.activity.ProfileUpdateActivity"
+            android:label="@string/app_name" />
         <activity
             android:name=".activity.GrameenHomeActivity"
             android:label="@string/app_name"></activity>

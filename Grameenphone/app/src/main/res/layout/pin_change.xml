@@ -16,7 +16,7 @@
         android:ems="4"
         android:maxLength="4"
         android:hint="Enter old pin"
-        android:inputType="textPassword" />
+        android:inputType="numberPassword" />
 
     <EditText
         android:id="@+id/newPineditText"
@@ -29,7 +29,7 @@
         android:ems="4"
         android:maxLength="4"
         android:hint="Set new pin"
-        android:inputType="textPassword" />
+        android:inputType="numberPassword" />
 
     <EditText
         android:id="@+id/confirmPinEditText"
@@ -38,11 +38,12 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/newPineditText"
-        android:ems="4"
-        android:maxLength="4"
         android:hint="Confirm new pin"
         android:layout_marginTop="30dp"
-        android:inputType="textPassword" />
+        android:ems="4"
+        android:maxLength="4"
+        android:inputType="numberPassword" />
+
     <Button
         android:id="@+id/confirmButton"
         android:layout_width="wrap_content"
@@ -52,6 +53,5 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/login_button"
         android:text="Confirm"
-        android:textColor="@color/white"
-        />
+        android:textColor="@color/white" />
 </RelativeLayout>
