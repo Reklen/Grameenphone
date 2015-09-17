@@ -44,11 +44,12 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
     ContextWrapper contextWrapper;
     TextView tooltext;
     ImageView back_icon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_favorite_contacts);
-        back_icon= (ImageView) findViewById(R.id.image_back);
+        back_icon = (ImageView) findViewById(R.id.image_back);
         back_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,7 +73,7 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
         mListView = (PinnedHeaderListView) findViewById(android.R.id.list);
         mAdapter = new ContactsAdapter(contacts);
 
-        int pinnedHeaderBackgroundColor = getResources().getColor(getResIdFromAttribute(AddFavoriteContactsActivity.this, android.R.attr.colorBackground));
+        int pinnedHeaderBackgroundColor = getResources().getColor(R.color.white);
         mAdapter.setPinnedHeaderBackgroundColor(pinnedHeaderBackgroundColor);
         mAdapter.setPinnedHeaderTextColor(getResources().getColor(R.color.pinned_header_text));
         mListView.setPinnedHeaderView(mInflater.inflate(R.layout.pinned_header_listview_side_header, mListView, false));

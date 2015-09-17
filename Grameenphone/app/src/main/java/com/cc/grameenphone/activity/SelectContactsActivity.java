@@ -5,19 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.adapter.SelectcontactAdapter;
+import com.cc.grameenphone.utils.SearchViewStyle;
+import com.cc.grameenphone.views.RippleView;
 import com.cc.grameenphone.views.tabs.SlidingTabLayout;
 
 import butterknife.ButterKnife;
@@ -34,36 +34,35 @@ public class SelectContactsActivity extends AppCompatActivity implements SearchV
     SlidingTabLayout contactsTabs;
     @InjectView(R.id.contacts_viewpager)
     ViewPager contactsViewpager;
-    private ViewPager pager;
-    private SlidingTabLayout tabs;
+    @InjectView(R.id.backRipple)
+    RippleView backRipple;
     private Context context;
     SearchView searchView;
-    ActionBar bar;
-    ImageButton back_icon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_contacts);
         ButterKnife.inject(this);
+        setupToolBar();
+
+    }
+
+    private void setupToolBar() {
         setSupportActionBar(toolbar);
-        bar = getSupportActionBar();
-        tabs = (SlidingTabLayout) findViewById(R.id.contacts_tabs);
-        tabs.setDistributeEvenly(true);
-        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+        contactsTabs.setDistributeEvenly(true);
+        contactsTabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
 
                 return getResources().getColor(R.color.textColorPrimary);
             }
         });
-        pager = (ViewPager) findViewById(R.id.contacts_viewpager);
-        pager.setAdapter(new SelectcontactAdapter(getSupportFragmentManager()));
-        tabs.setViewPager(pager);
-        back_icon = (ImageButton) findViewById(R.id.back_btn);
-        back_icon.setOnClickListener(new View.OnClickListener() {
+        contactsViewpager.setAdapter(new SelectcontactAdapter(getSupportFragmentManager()));
+        contactsTabs.setViewPager(contactsViewpager);
+        backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
-            public void onClick(View view) {
+            public void onComplete(RippleView rippleView) {
                 finish();
             }
         });
@@ -97,12 +96,14 @@ public class SelectContactsActivity extends AppCompatActivity implements SearchV
     }
 
     private void setupSearchView(MenuItem searchItem) {
+        SearchViewStyle.on(searchView);
         searchView.setIconifiedByDefault(true);
         // searchView.setOnQueryTextListener(this);
         searchView.setSubmitButtonEnabled(false);
 
         searchItem.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        // | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW
+        // Setting the textview default behaviour properties
+
     }
 
 

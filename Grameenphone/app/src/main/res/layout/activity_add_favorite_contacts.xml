@@ -57,9 +57,7 @@
                 android:layout_toRightOf="@+id/backRipple"
                 android:gravity="center_vertical"
                 android:text="Add Favorite"
-                android:textColor="@color/white"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+                android:textColor="@color/white" />
 
 
         </RelativeLayout>
@@ -74,9 +72,9 @@
         android:cacheColorHint="@android:color/transparent"
         android:divider="@null"
         android:dividerHeight="0px"
-        android:fadeScrollbars="false"
+        android:fadeScrollbars="true"
         android:fastScrollEnabled="true"
-        android:listSelector="@drawable/listview_selector"
-        android:scrollingCache="false"
+        android:listSelector="@drawable/rowbackgroundselector"
+        android:scrollingCache="true"
         tools:listitem="@layout/listview_item" />
 </RelativeLayout>

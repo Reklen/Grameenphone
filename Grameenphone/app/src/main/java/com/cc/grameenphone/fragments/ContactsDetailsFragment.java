@@ -76,7 +76,7 @@ public class ContactsDetailsFragment extends Fragment {
         mListView=(PinnedHeaderListView)rootView.findViewById(android.R.id.list);
         mAdapter=new ContactsAdapter(contacts);
 
-        int pinnedHeaderBackgroundColor=getResources().getColor(getResIdFromAttribute(getActivity(),android.R.attr.colorBackground));
+        int pinnedHeaderBackgroundColor = getResources().getColor(R.color.white);
         mAdapter.setPinnedHeaderBackgroundColor(pinnedHeaderBackgroundColor);
         mAdapter.setPinnedHeaderTextColor(getResources().getColor(R.color.pinned_header_text));
         mListView.setPinnedHeaderView(mInflater.inflate(R.layout.pinned_header_listview_side_header,mListView,false));
