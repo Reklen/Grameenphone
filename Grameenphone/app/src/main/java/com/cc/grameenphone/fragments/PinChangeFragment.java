@@ -105,12 +105,27 @@ public class PinChangeFragment extends Fragment {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
-            innerObject.put("NEWPIN", newPineditText.getText().toString());
+            if ((newPineditText.getText().toString().length()) == 4) {
+                innerObject.put("NEWPIN", newPineditText.getText().toString());
+            } else {
+                newPineditText.setError("Pin code must be four digits");
+                newPineditText.requestFocus();
+            }
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
             innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
-            innerObject.put("CONFIRMPIN", confirmPinEditText.getText().toString());
+            if ((confirmPinEditText.getText().toString().length()) == 4) {
+                innerObject.put("CONFIRMPIN", confirmPinEditText.getText().toString());
+            } else {
+                confirmPinEditText.setError("Pin code must be four digits");
+                confirmPinEditText.requestFocus();
+            }
             innerObject.put("TYPE", "CCPNREQ");
-            innerObject.put("PIN", oldPinEditText.getText().toString());
+            if ((oldPinEditText.getText().toString().length()) == 4) {
+                innerObject.put("PIN", oldPinEditText.getText().toString());
+            } else {
+                oldPinEditText.setError("Pin code must be four digits");
+                oldPinEditText.requestFocus();
+            }
             jsonObject.put("COMMAND", innerObject);
 
             pinchnageApi.pinchange(jsonObject, new Callback<PinChangeModel>() {
