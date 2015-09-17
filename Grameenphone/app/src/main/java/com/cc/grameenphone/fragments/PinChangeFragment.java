@@ -112,7 +112,7 @@ public class PinChangeFragment extends Fragment {
             innerObject.put("TYPE", "CCPNREQ");
             innerObject.put("PIN", oldPinEditText.getText().toString());
             jsonObject.put("COMMAND", innerObject);
-
+            Logger.d("PinChange", jsonObject.toString());
             pinchnageApi.pinchange(jsonObject, new Callback<PinChangeModel>() {
                 @Override
                 public void success(PinChangeModel pinChangeModel, Response response) {
@@ -124,6 +124,9 @@ public class PinChangeFragment extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 successSignupDialog.dismiss();
+                                oldPinEditText.setText("");
+                                newPineditText.setText("");
+                                confirmPinEditText.setText("");
 
                             }
                         });

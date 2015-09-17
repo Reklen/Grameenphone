@@ -16,10 +16,10 @@
             android:id="@+id/prepaidOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:drawablePadding="50dp"
             android:paddingLeft="8dp"
             android:text="Prepaid"
-            android:checked="true"
             android:textColor="#D9000000"
             android:textSize="17sp"
             android:textStyle="normal" />
@@ -134,10 +134,9 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="15dp"
             android:layout_marginRight="20dp"
-            android:textSize="12sp"
             android:text="OTHER FLEXILOAD"
             android:textColor="@color/primary"
-             />
+            android:textSize="12sp" />
 
     </RelativeLayout>
 
@@ -154,10 +153,8 @@
             android:id="@+id/editamt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:hint="Enter amount"
-            android:inputType="phone"
-            android:maxLength="10"
+            android:inputType="numberDecimal"
             android:textColor="@color/black_semi_transparent"
             android:textColorHighlight="@color/hint_color"
             android:textColorHint="@color/hint_color" />

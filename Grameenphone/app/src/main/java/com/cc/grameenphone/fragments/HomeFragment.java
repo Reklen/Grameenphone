@@ -123,6 +123,8 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         ButterKnife.inject(this, rootView);
         preferenceManager = new PreferenceManager(getActivity());
+        android_id = Settings.Secure.getString(getActivity().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -144,6 +146,7 @@ public class HomeFragment extends Fragment {
 }}
 
          */
+
         walletCheckApi = ServiceGenerator.createService(WalletCheckApi.class);
         try {
             JSONObject jsonObject = new JSONObject();
@@ -153,6 +156,7 @@ public class HomeFragment extends Fragment {
             innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CBEREQ");
             jsonObject.put("COMMAND", innerObject);
+            Logger.d("wallet request ", jsonObject.toString());
             walletCheckApi.checkBalance(jsonObject, new Callback<BalanceEnquiryModel>() {
                 @Override
                 public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
