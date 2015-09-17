@@ -262,7 +262,6 @@ public class HomeFragment extends Fragment {
                         ((TextView) flexiDialog.findViewById(R.id.top_text)).setText(rechargeModel.getCOMMAND().getMESSAGE() + "");
                         ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText("017" + phoneNumberEditText.getText().toString() + "");
                         ((TextView) flexiDialog.findViewById(R.id.transactionNumber)).setText("\n" + rechargeModel.getCOMMAND().getTXNID() + "");
-
                         ((TextView) flexiDialog.findViewById(R.id.flxiloadAmount)).setText(editamt.getText().toString() + "");
                         materialDialog.show();
                         Button buttonOk = (Button) flexiDialog.findViewById(R.id.okButton);
@@ -270,6 +269,7 @@ public class HomeFragment extends Fragment {
                             @Override
                             public void onClick(View view) {
                                 materialDialog.dismiss();
+                                editamt.setText("50");
                             }
                         });
                     } else {
@@ -280,6 +280,7 @@ public class HomeFragment extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 errorDialog.dismiss();
+                                editamt.setText("50");
                             }
                         });
                         errorDialog.show();
@@ -301,6 +302,7 @@ public class HomeFragment extends Fragment {
     void otherFlexiLoadClick() {
         otherFlex.setVisibility(View.GONE);
         phoneNumberEditText.setText("");
+        editamt.setText("50");
         phoneNumberEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_add_ppl, 0);
         phoneNumberEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
