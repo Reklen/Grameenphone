@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.api_models.ProfileUpdateModel;
@@ -55,7 +56,7 @@ public class ProfileUpdateActivity extends Activity {
     @InjectView(R.id.submitButton)
     Button signUpBtn;
     @InjectView(R.id.skipButton)
-     Button skipButton;
+    Button skipButton;
 
     ProfileUpdateApi profileUpdateApi;
     MaterialDialog otpDialog, successSignupDialog, errorDialog;
@@ -82,7 +83,12 @@ public class ProfileUpdateActivity extends Activity {
             innerObject.put("DEVICEID", android_id);
             innerObject.put("FNAME", firstNameEdit.getText().toString());
             innerObject.put("LNAME", lastNameEdit.getText().toString());
-            innerObject.put("EMAIL", emailIdEdit.getText().toString());
+            if (isValidEmail(emailIdEdit.getText().toString())) {
+                innerObject.put("EMAIL", emailIdEdit.getText().toString());
+            } else {
+                Toast.makeText(this, "Invalid email id", Toast.LENGTH_LONG).show();
+                emailIdEdit.requestFocus();
+            }
             innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
             innerObject.put("DOB", dateOfBirthEdit.getText().toString());
             innerObject.put("IDNO", nationalIdEdit.getText().toString());
@@ -129,8 +135,17 @@ public class ProfileUpdateActivity extends Activity {
             e.printStackTrace();
         }
     }
+
     @OnClick(R.id.skipButton)
-    void skipClick(){
+    void skipClick() {
         startActivity(new Intent(ProfileUpdateActivity.this, GrameenHomeActivity.class));
+    }
+
+    public final static boolean isValidEmail(CharSequence target) {
+        if (target == null) {
+            return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        }
     }
 }
