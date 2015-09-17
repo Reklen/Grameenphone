@@ -1,15 +1,11 @@
 package com.cc.grameenphone.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,19 +13,14 @@ import android.widget.TextView;
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.adapter.BillsListAdapter;
 import com.cc.grameenphone.api_models.BillListModel;
-import com.cc.grameenphone.api_models.SignupModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.BillspaymentApi;
-import com.cc.grameenphone.interfaces.ProfileUpdateApi;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
-import com.cc.grameenphone.viewmodels.BillDetailsItems;
 import com.cc.grameenphone.views.RippleView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -42,7 +33,7 @@ import retrofit.client.Response;
 /**
  * Created by rahul on 11/09/15.
  */
-public class BillPaymentActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+public class BillPaymentActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
 
     @InjectView(R.id.backRipple)
@@ -109,8 +100,8 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             e.printStackTrace();
         }
 
-        listViewAdapter = new BillsListAdapter(this, arraylist);
-        billsList.setAdapter(listViewAdapter);
+       /* listViewAdapter = new BillsListAdapter(this, arraylist);
+        billsList.setAdapter(listViewAdapter);*/
 
         /*selectedPaymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,15 +142,15 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
 
 
 
-   /* @Override
+   @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         int pos = billsList.getPositionForView(buttonView);
         if (pos != ListView.INVALID_POSITION) {
-            BillDetailsItems l = arraylist.get(pos);
-            l.setSelected(isChecked);
+           /* BillDetailsItems l = arraylist.get(pos);
+            l.setSelected(isChecked);*/
 
         }
-    }*/
+    }
 
 
 }
