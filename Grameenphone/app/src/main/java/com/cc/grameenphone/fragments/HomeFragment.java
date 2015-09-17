@@ -18,20 +18,20 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.activity.BillPaymentActivity;
 import com.cc.grameenphone.activity.ReferFriendsActivity;
 import com.cc.grameenphone.activity.SelectContactsActivity;
 import com.cc.grameenphone.activity.TransactionOverviewActivity;
-import com.cc.grameenphone.api_models.BalanceEnquiryModel;
 import com.cc.grameenphone.api_models.RechargeModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.RechargeApi;
 import com.cc.grameenphone.interfaces.WalletCheckApi;
+import com.cc.grameenphone.utils.KeyboardUtil;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
+import com.cc.grameenphone.views.RippleView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -100,6 +100,20 @@ public class HomeFragment extends Fragment {
     int REQCODE = 100;
     ProgressDialog loadingDialog;
     RechargeApi rechargeApi;
+    @InjectView(R.id.flexi_Ripple)
+    RippleView flexiRipple;
+    @InjectView(R.id.divider)
+    View divider;
+    @InjectView(R.id.centerview)
+    View centerview;
+    @InjectView(R.id.billPayRipple)
+    RippleView billPayRipple;
+    @InjectView(R.id.transactionOverviewRipple)
+    RippleView transactionOverviewRipple;
+    @InjectView(R.id.emergencyCallRipple)
+    RippleView emergencyCallRipple;
+    @InjectView(R.id.referFriendsRipple)
+    RippleView referFriendsRipple;
     private String android_id;
     PreferenceManager preferenceManager;
     MaterialDialog materialDialog;
@@ -125,6 +139,8 @@ public class HomeFragment extends Fragment {
         preferenceManager = new PreferenceManager(getActivity());
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
+
+        phoneNumberEditText.setText(preferenceManager.getMSISDN() + "");
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -137,44 +153,46 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        /*
-        {"COMMAND":
-{
+        handleRipple();
 
-"AUTHTOKEN" : "dcda029e9e311578cf648bfa7eca623651e77e1c4f8d276936ebd38c604dc0a0",
-"MSISDN": "01718181818", "TYPE": "CBEREQ", "DEVICEID":"01234567890654321"
-}}
-
-         */
-
-        walletCheckApi = ServiceGenerator.createService(WalletCheckApi.class);
-        try {
-            JSONObject jsonObject = new JSONObject();
-            JSONObject innerObject = new JSONObject();
-            innerObject.put("DEVICEID", android_id);
-            innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
-            innerObject.put("TYPE", "CBEREQ");
-            jsonObject.put("COMMAND", innerObject);
-            Logger.d("wallet request ", jsonObject.toString());
-            walletCheckApi.checkBalance(jsonObject, new Callback<BalanceEnquiryModel>() {
-                @Override
-                public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
-                    Logger.d("Balance", balanceEnquiryModel.toString());
-
-                    Toast.makeText(getActivity(), "Your wallet balance is : " + balanceEnquiryModel.getCOMMAND().getBALANCE(), Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-
-                }
-            });
-        } catch (JSONException e) {
-
-        }
 
         return rootView;
+    }
+
+    private void handleRipple() {
+        flexiRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                flexiButtonClick();
+
+            }
+        });
+
+        billPayRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                billPaymentClick();
+            }
+        });
+
+        transactionOverviewRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                transactionOverviewClick();
+            }
+        });
+        emergencyCallRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                emergencyClick();
+            }
+        });
+        referFriendsRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                referFriendsClick();
+            }
+        });
     }
 
     @Override
@@ -194,34 +212,29 @@ public class HomeFragment extends Fragment {
         ButterKnife.reset(this);
     }
 
-    @OnClick(R.id.billPayment)
     void billPaymentClick() {
         startActivity(new Intent(getActivity(), BillPaymentActivity.class));
     }
 
-    @OnClick(R.id.transactionOverview)
     void transactionOverviewClick() {
         startActivity(new Intent(getActivity(), TransactionOverviewActivity.class));
     }
 
-    @OnClick(R.id.emergencyCall)
     void emergencyClick() {
 
     }
 
-    @OnClick(R.id.referFriends)
     void referFriendsClick() {
         startActivity(new Intent(getActivity(), ReferFriendsActivity.class));
     }
 
     MaterialDialog errorDialog;
 
-    @OnClick(R.id.flexi_btn)
     void flexiButtonClick() {
         // Recharge psot
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-
+        KeyboardUtil.hideKeyboard(getActivity());
         rechargeApi = ServiceGenerator.createService(RechargeApi.class);
         /*loadingDialog = new ProgressDialog(getActivity());
         loadingDialog.setMessage("Logging in");
@@ -241,10 +254,9 @@ public class HomeFragment extends Fragment {
             rechargeApi.recharge(jsonObject, new Callback<RechargeModel>() {
                 @Override
                 public void success(RechargeModel rechargeModel, Response response) {
-                    Logger.d("Its msisdn check ", "status " + rechargeModel.toString());
                     if (rechargeModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                         View flexiDialog = LayoutInflater.from(getActivity()).inflate(R.layout.flexi_dialog_layout, null);
-
+                        Logger.d("Its msisdn check ", "status " + rechargeModel.toString());
                         materialDialog = new MaterialDialog(getActivity()).setContentView(flexiDialog);
                         materialDialog.setCanceledOnTouchOutside(true);
                         ((TextView) flexiDialog.findViewById(R.id.top_text)).setText(rechargeModel.getCOMMAND().getMESSAGE() + "");
@@ -261,6 +273,7 @@ public class HomeFragment extends Fragment {
                             }
                         });
                     } else {
+                        Logger.e("Its msisdn check ", "status " + rechargeModel.toString());
                         errorDialog = new MaterialDialog(getActivity());
                         errorDialog.setMessage(rechargeModel.getCOMMAND().getMESSAGE() + "");
                         errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
@@ -287,6 +300,7 @@ public class HomeFragment extends Fragment {
     @OnClick(R.id.other_flex)
     void otherFlexiLoadClick() {
         otherFlex.setVisibility(View.GONE);
+        phoneNumberEditText.setText("");
         phoneNumberEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_add_ppl, 0);
         phoneNumberEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override

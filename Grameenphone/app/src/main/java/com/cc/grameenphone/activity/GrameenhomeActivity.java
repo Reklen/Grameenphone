@@ -2,6 +2,7 @@ package com.cc.grameenphone.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,18 +16,27 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
+import com.cc.grameenphone.api_models.BalanceEnquiryModel;
 import com.cc.grameenphone.fragments.DemoFragment;
 import com.cc.grameenphone.fragments.HomeFragment;
 import com.cc.grameenphone.fragments.ManageFavoriteFragment;
 import com.cc.grameenphone.fragments.PinChangeFragment;
 import com.cc.grameenphone.fragments.ProfileFragment;
 import com.cc.grameenphone.fragments.TermsConditionFragment;
+import com.cc.grameenphone.generator.ServiceGenerator;
+import com.cc.grameenphone.interfaces.WalletCheckApi;
+import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
 import com.cc.grameenphone.views.RippleView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class GrameenHomeActivity extends BaseActivity {
 
@@ -54,6 +64,8 @@ public class GrameenHomeActivity extends BaseActivity {
     RippleView icon1Ripple;
     @InjectView(R.id.icon2Ripple)
     RippleView icon2Ripple;
+    private String android_id;
+    private WalletCheckApi walletCheckApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +81,8 @@ public class GrameenHomeActivity extends BaseActivity {
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container_body, fragment);
         fragmentTransaction.commit();
+
+        getWalletBalance();
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             // This method will trigger on item Click of navigation menu
@@ -103,6 +117,7 @@ public class GrameenHomeActivity extends BaseActivity {
                         toolbarTextView.setText("Profile");
                         icon1.setImageDrawable(getResources().getDrawable(R.drawable.icon_refresh));
                         icon2.setImageDrawable(getResources().getDrawable(R.drawable.icon_edit));
+                        walletLabel.setVisibility(View.GONE);
                         icon1Ripple.setVisibility(View.VISIBLE);
                         icon2Ripple.setVisibility(View.VISIBLE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -196,23 +211,59 @@ public class GrameenHomeActivity extends BaseActivity {
 
         //calling sync state is necessay or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
+
+
+        handleRipple();
     }
 
+    private void handleRipple() {
+        icon2Ripple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                Fragment f = getSupportFragmentManager().findFragmentById(R.id.container_body);
 
-    @OnClick(R.id.icon2)
-    public void clickIcon2() {
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container_body);
+                if (f instanceof ManageFavoriteFragment) {
+                    startActivity(new Intent(GrameenHomeActivity.this, AddFavoriteContactsActivity.class));
+                }
+                if (f instanceof ProfileFragment) {
+                    //startActivity(new Intent(GrameenHomeActivity.this, EditProfileActivity.class));
+                }
+            }
+        });
+    }
 
-        if (f instanceof ManageFavoriteFragment) {
-            startActivity(new Intent(GrameenHomeActivity.this, AddFavoriteContactsActivity.class));
+    private void getWalletBalance() {
+        walletCheckApi = ServiceGenerator.createService(WalletCheckApi.class);
+        android_id = Settings.Secure.getString(GrameenHomeActivity.this.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        try {
+            JSONObject jsonObject = new JSONObject();
+            JSONObject innerObject = new JSONObject();
+            innerObject.put("DEVICEID", android_id);
+            innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("TYPE", "CBEREQ");
+            jsonObject.put("COMMAND", innerObject);
+            Logger.d("wallet request ", jsonObject.toString());
+            walletCheckApi.checkBalance(jsonObject, new Callback<BalanceEnquiryModel>() {
+                @Override
+                public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
+                    if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                        Logger.d("Balance", balanceEnquiryModel.toString());
+                        walletLabel.setText("৳ " + balanceEnquiryModel.getCOMMAND().getBALANCE());
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Logger.e("Balance", error.getMessage());
+                }
+            });
+        } catch (JSONException e) {
+
         }
-        if (f instanceof ProfileFragment) {
-            //startActivity(new Intent(GrameenHomeActivity.this, EditProfileActivity.class));
-        }
     }
 
-    @OnClick(R.id.icon1)
-    public void clickIcon1() {
 
-    }
+
 }
