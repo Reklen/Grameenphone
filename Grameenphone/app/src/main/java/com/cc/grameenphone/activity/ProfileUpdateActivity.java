@@ -54,6 +54,8 @@ public class ProfileUpdateActivity extends Activity {
     TextInputLayout dateOfBirthContainer;
     @InjectView(R.id.submitButton)
     Button signUpBtn;
+    @InjectView(R.id.skipButton)
+     Button skipButton;
 
     ProfileUpdateApi profileUpdateApi;
     MaterialDialog otpDialog, successSignupDialog, errorDialog;
@@ -126,5 +128,9 @@ public class ProfileUpdateActivity extends Activity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+    @OnClick(R.id.skipButton)
+    void skipClick(){
+        startActivity(new Intent(ProfileUpdateActivity.this, GrameenHomeActivity.class));
     }
 }
