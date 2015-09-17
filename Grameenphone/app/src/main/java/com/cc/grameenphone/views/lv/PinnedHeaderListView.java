@@ -1,4 +1,4 @@
-package lb.library;
+package com.cc.grameenphone.views.lv;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -49,7 +49,7 @@ public class PinnedHeaderListView extends ListView
      * @param position position of the first visible list item.
      * @param alpha    fading of the header view, between 0 and 255.
      */
-    void configurePinnedHeader(View header,int position,int alpha);
+    void configurePinnedHeader(View header, int position, int alpha);
     }
 
   private static final int MAX_ALPHA=255;

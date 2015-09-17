@@ -10,11 +10,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
 
+import com.cc.grameenphone.BuildConfig;
+
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import lb.library.BuildConfig;
 
 /**
  * Created by rajkiran on 11/09/15.

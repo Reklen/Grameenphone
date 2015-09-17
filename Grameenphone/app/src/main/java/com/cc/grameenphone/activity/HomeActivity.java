@@ -34,11 +34,12 @@ import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class GrameenHomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity {
 
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
@@ -66,6 +67,7 @@ public class GrameenHomeActivity extends BaseActivity {
     RippleView icon2Ripple;
     private String android_id;
     private WalletCheckApi walletCheckApi;
+    MaterialDialog logoutDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,7 @@ public class GrameenHomeActivity extends BaseActivity {
         ButterKnife.inject(this);
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         setSupportActionBar(toolbar);
-        preferenceManager = new PreferenceManager(GrameenHomeActivity.this);
+        preferenceManager = new PreferenceManager(HomeActivity.this);
         fragment = new HomeFragment();
         toolbarTextView.setText("Home");
         getSupportActionBar().setTitle("");
@@ -105,6 +107,7 @@ public class GrameenHomeActivity extends BaseActivity {
                         toolbarTextView.setText("Home");
                         icon1.setImageDrawable(getResources().getDrawable(R.drawable.icon_wallet_balance));
                         icon2.setImageDrawable(getResources().getDrawable(R.drawable.icon_notification));
+                        walletLabel.setVisibility(View.VISIBLE);
                         icon1Ripple.setVisibility(View.VISIBLE);
                         icon2Ripple.setVisibility(View.VISIBLE);
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -171,15 +174,29 @@ public class GrameenHomeActivity extends BaseActivity {
                         fragmentTransaction.commit();
                         return true;
                     case R.id.navigation_item_7:
-                        preferenceManager.setAuthToken("");
-                        startActivity(new Intent(GrameenHomeActivity.this, LoginActivity.class));
-                        preferenceManager.setMSISDN("");
-                        finish();
-                        //fragment = new LogoutFragment();
-                        /*getSupportActionBar().setTitle("Logout");
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.container_body, fragment);
-                        fragmentTransaction.commit();*/
+
+                        logoutDialog = new MaterialDialog(HomeActivity.this);
+                        logoutDialog.setTitle("Logout");
+                        logoutDialog.setMessage("Are you sure ?");
+                        logoutDialog.setPositiveButton("Yes", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                preferenceManager.setAuthToken("");
+                                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                                preferenceManager.setMSISDN("");
+                                finish();
+                            }
+                        });
+                        logoutDialog.setNegativeButton("Cancel", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                logoutDialog.dismiss();
+                            }
+                        });
+
+                        logoutDialog.show();
+
+
                         return true;
                     default:
                         return true;
@@ -190,7 +207,7 @@ public class GrameenHomeActivity extends BaseActivity {
         });
 
         // Initializing Drawer Layout and ActionBarToggle
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(GrameenHomeActivity.this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(HomeActivity.this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
 
             @Override
             public void onDrawerClosed(View drawerView) {
@@ -223,7 +240,7 @@ public class GrameenHomeActivity extends BaseActivity {
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.container_body);
 
                 if (f instanceof ManageFavoriteFragment) {
-                    startActivity(new Intent(GrameenHomeActivity.this, AddFavoriteContactsActivity.class));
+                    startActivity(new Intent(HomeActivity.this, AddFavoriteContactsActivity.class));
                 }
                 if (f instanceof ProfileFragment) {
                     //startActivity(new Intent(GrameenHomeActivity.this, EditProfileActivity.class));
@@ -234,7 +251,7 @@ public class GrameenHomeActivity extends BaseActivity {
 
     private void getWalletBalance() {
         walletCheckApi = ServiceGenerator.createService(WalletCheckApi.class);
-        android_id = Settings.Secure.getString(GrameenHomeActivity.this.getContentResolver(),
+        android_id = Settings.Secure.getString(HomeActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         try {
             JSONObject jsonObject = new JSONObject();
@@ -263,7 +280,6 @@ public class GrameenHomeActivity extends BaseActivity {
 
         }
     }
-
 
 
 }

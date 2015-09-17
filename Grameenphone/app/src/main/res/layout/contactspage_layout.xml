@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:layout_height="match_parent">
 
-    <lb.library.PinnedHeaderListView
+    <com.cc.grameenphone.views.lv.PinnedHeaderListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

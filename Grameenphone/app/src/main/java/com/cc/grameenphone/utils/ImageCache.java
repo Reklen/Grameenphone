@@ -5,7 +5,7 @@ import android.os.Build;
 import android.support.v4.util.LruCache;
 import android.util.Log;
 
-import lb.library.BuildConfig;
+import com.cc.grameenphone.BuildConfig;
 
 /**
  * Created by rajkiran on 11/09/15.

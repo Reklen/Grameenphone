@@ -16,7 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
 import com.cc.grameenphone.R;
-import com.cc.grameenphone.activity.RegularPayDetails;
+import com.cc.grameenphone.activity.RegularPayDetailsActivity;
 
 
 public class ElectricityTabFragments extends Fragment {
@@ -85,7 +85,7 @@ public class ElectricityTabFragments extends Fragment {
         sumb_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(getActivity(),RegularPayDetails.class);
+                Intent intent= new Intent(getActivity(),RegularPayDetailsActivity.class);
                 startActivity(intent);
             }
         });

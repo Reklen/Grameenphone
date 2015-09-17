@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.cc.grameenphone.utils.PreferenceManager;
 
 
-public class SplashScreenActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
 
 
     PreferenceManager preferenceManager;
@@ -15,11 +15,11 @@ public class SplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        preferenceManager = new PreferenceManager(SplashScreenActivity.this);
+        preferenceManager = new PreferenceManager(SplashActivity.this);
         if (preferenceManager.getAuthToken().isEmpty())
-            startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
         else
-            startActivity(new Intent(SplashScreenActivity.this, GrameenHomeActivity.class));
+            startActivity(new Intent(SplashActivity.this, HomeActivity.class));
 
         finish();
 

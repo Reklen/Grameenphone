@@ -24,6 +24,9 @@ import com.cc.grameenphone.utils.ContactsQuery;
 import com.cc.grameenphone.utils.ImageCache;
 import com.cc.grameenphone.utils.async_task_thread_pool.AsyncTaskEx;
 import com.cc.grameenphone.utils.async_task_thread_pool.AsyncTaskThreadPool;
+import com.cc.grameenphone.views.lv.PinnedHeaderListView;
+import com.cc.grameenphone.views.lv.SearchablePinnedHeaderListViewAdapter;
+import com.cc.grameenphone.views.lv.StringArrayAlphabetIndexer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,10 +34,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-
-import lb.library.PinnedHeaderListView;
-import lb.library.SearchablePinnedHeaderListViewAdapter;
-import lb.library.StringArrayAlphabetIndexer;
 /**
  * Created by rajkiran on 09/09/15.
  */

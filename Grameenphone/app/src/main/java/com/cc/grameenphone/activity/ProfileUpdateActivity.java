@@ -101,7 +101,7 @@ public class ProfileUpdateActivity extends Activity {
                             @Override
                             public void onClick(View v) {
                                 successSignupDialog.dismiss();
-                                startActivity(new Intent(ProfileUpdateActivity.this, GrameenHomeActivity.class));
+                                startActivity(new Intent(ProfileUpdateActivity.this, HomeActivity.class));
 
                             }
                         });
@@ -131,6 +131,6 @@ public class ProfileUpdateActivity extends Activity {
     }
     @OnClick(R.id.skipButton)
     void skipClick(){
-        startActivity(new Intent(ProfileUpdateActivity.this, GrameenHomeActivity.class));
+        startActivity(new Intent(ProfileUpdateActivity.this, HomeActivity.class));
     }
 }
