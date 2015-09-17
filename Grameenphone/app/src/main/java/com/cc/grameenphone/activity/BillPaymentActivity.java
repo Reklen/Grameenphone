@@ -1,44 +1,41 @@
 package com.cc.grameenphone.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
-import com.cc.grameenphone.adapter.ListViewAdapter;
-import com.cc.grameenphone.viewmodels.BillDetailsItems;
+import com.cc.grameenphone.adapter.BillsListAdapter;
+import com.cc.grameenphone.api_models.BillListModel;
+import com.cc.grameenphone.generator.ServiceGenerator;
+import com.cc.grameenphone.interfaces.BillspaymentApi;
+import com.cc.grameenphone.utils.Logger;
+import com.cc.grameenphone.utils.PreferenceManager;
 import com.cc.grameenphone.views.RippleView;
 
-import java.util.ArrayList;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import me.drakeet.materialdialog.MaterialDialog;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 /**
  * Created by rahul on 11/09/15.
  */
-public class BillPaymentActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+public class BillPaymentActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
-    ListView lv;
-    ArrayList<BillDetailsItems> arraylist;
-    ListViewAdapter listViewAdapter;
-    AppCompatDialog paySelectDialog;
-    ImageView toolbarImageIcon01, toobarImageIcon02;
-    TextView actionBarText;
-    ImageButton backBtn;
-    @InjectView(R.id.image_back)
-    ImageButton imageBack;
+
     @InjectView(R.id.backRipple)
     RippleView backRipple;
     @InjectView(R.id.toolbar_text)
@@ -57,8 +54,11 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     Button selectedPaymentButton;
     @InjectView(R.id.otherPaymentButton)
     Button otherPaymentButton;
-    private Button confirmButton;
-
+    BillsListAdapter listViewAdapter;
+    BillspaymentApi billspaymentApi;
+    MaterialDialog otpDialog, successSignupDialog, errorDialog;
+    private String android_id;
+    PreferenceManager preferenceManager;
 
     @Override
 
@@ -67,18 +67,43 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         setContentView(R.layout.bill_payment_activity);
         ButterKnife.inject(this);
         setupToolbar();
-        //buttons
-        backBtn = (ImageButton) findViewById(R.id.image_back);
-        actionBarText = (TextView) findViewById(R.id.toolbar_text);
-        actionBarText.setText("Bill Payment");
-        //buttons
-        //toolbar image icons
-        lv = (ListView) findViewById(R.id.billsList);
-        displayarraylist();
-        listViewAdapter = new ListViewAdapter(this, arraylist);
-        lv.setAdapter(listViewAdapter);
+        //TODO Listing total number of bills
 
-        selectedPaymentButton.setOnClickListener(new View.OnClickListener() {
+        android_id = Settings.Secure.getString(BillPaymentActivity.this.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        preferenceManager = new PreferenceManager(BillPaymentActivity.this);
+        billspaymentApi = ServiceGenerator.createService(BillspaymentApi.class);
+        try {
+            JSONObject jsonObject = new JSONObject();
+            JSONObject innerObject = new JSONObject();
+            innerObject.put("DEVICEID", android_id);
+            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("TYPE", "SAPLBPREQ");
+            innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+            jsonObject.put("COMMAND", innerObject);
+            Logger.d("ProfileUpdates", jsonObject.toString());
+            //TODO Checking API Calls
+            billspaymentApi.billsPay(jsonObject, new Callback<BillListModel>() {
+                @Override
+                public void success(BillListModel billListModel, Response response) {
+
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                }
+            });
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+       /* listViewAdapter = new BillsListAdapter(this, arraylist);
+        billsList.setAdapter(listViewAdapter);*/
+
+        /*selectedPaymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 paySelectDialog = new AppCompatDialog(BillPaymentActivity.this);
@@ -101,7 +126,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             public void onClick(View view) {
                 startActivity(new Intent(BillPaymentActivity.this, PaymentActivity.class));
             }
-        });
+        });*/
     }
 
     private void setupToolbar() {
@@ -115,37 +140,17 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         });
     }
 
-    public void displayarraylist() {
-        arraylist = new ArrayList<BillDetailsItems>();
-        arraylist.add(new BillDetailsItems(1234567, 2834, "DESCO", "24/8/2015", false, 1200));
-        arraylist.add(new BillDetailsItems(1234567, 2834, "DESCO", "24/8/2015", false, 1200));
-        arraylist.add(new BillDetailsItems(1234567, 2834, "DESCO", "24/8/2015", false, 1200));
-        arraylist.add(new BillDetailsItems(1234567, 2834, "DESCO", "24/8/2015", false, 1200));
-        arraylist.add(new BillDetailsItems(1234567, 2834, "DESCO", "24/8/2015", false, 1200));
-        arraylist.add(new BillDetailsItems(1234567, 2834, "DESCO", "24/8/2015", false, 1200));
-        arraylist.add(new BillDetailsItems(1234567, 2834, "DESCO", "24/8/2015", false, 1200));
-        arraylist.add(new BillDetailsItems(1234567, 2834, "DESCO", "24/8/2015", false, 1200));
-        arraylist.add(new BillDetailsItems(1234567, 2834, "DESCO", "24/8/2015", false, 1200));
-        arraylist.add(new BillDetailsItems(1234567, 2834, "DESCO", "24/8/2015", false, 1200));
-        arraylist.add(new BillDetailsItems(1234567, 2834, "DESCO", "24/8/2015", false, 1200));
-        arraylist.add(new BillDetailsItems(1234567, 2834, "DESCO", "24/8/2015", false, 1200));
 
-    }
 
-    @Override
+   @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        int pos = lv.getPositionForView(buttonView);
+        int pos = billsList.getPositionForView(buttonView);
         if (pos != ListView.INVALID_POSITION) {
-            BillDetailsItems l = arraylist.get(pos);
-            l.setSelected(isChecked);
+           /* BillDetailsItems l = arraylist.get(pos);
+            l.setSelected(isChecked);*/
 
         }
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
 
-        }
-    }
 }

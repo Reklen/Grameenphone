@@ -355,9 +355,11 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
                             @Override
                             public void onClick(View v) {
                                 preferenceManager.setAuthToken(authTokenString);
-                                startActivity(new Intent(SignUpActivity.this, GrameenHomeActivity.class));
+
+                                preferenceManager.setMSISDN(phoneNumberEditText.getText().toString());
                                 successSignupDialog.dismiss();
                                 preferenceManager.setMSISDN(phoneNumberEditText.getText().toString());
+                                startActivity(new Intent(SignUpActivity.this, ProfileUpdateActivity.class));
                                 finish();
 
                             }

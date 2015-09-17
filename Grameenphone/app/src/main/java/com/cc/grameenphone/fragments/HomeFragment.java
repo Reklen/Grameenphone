@@ -310,6 +310,7 @@ public class HomeFragment extends Fragment {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (event.getRawX() >= phoneNumberEditText.getRight() - phoneNumberEditText.getTotalPaddingRight()) {
                         // your action for drawable click event
+                        //
                         startActivityForResult(new Intent(getActivity(), SelectContactsActivity.class), REQCODE);
                         return true;
                     }
