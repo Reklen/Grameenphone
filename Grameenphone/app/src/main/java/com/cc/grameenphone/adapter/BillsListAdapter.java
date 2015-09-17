@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by rahul on 09/09/15.
  */
-public class ListViewAdapter extends ArrayAdapter {
+public class BillsListAdapter extends ArrayAdapter {
 
     private List<BillDetailsItems> listitemslist;
     private Context mContext;
@@ -26,7 +26,7 @@ public class ListViewAdapter extends ArrayAdapter {
     // LayoutInflater inflater = LayoutInflater inflater; (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     LayoutInflater inflater;
 
-    public ListViewAdapter(Context context, List<BillDetailsItems> Objects) {
+    public BillsListAdapter(Context context, List<BillDetailsItems> Objects) {
         super(context, R.layout.listrow, Objects);
         this.mContext = context;
         this.listitemslist = Objects;
