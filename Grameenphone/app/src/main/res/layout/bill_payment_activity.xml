@@ -92,43 +92,77 @@
         android:id="@+id/billsList"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/selectedPaymentButton"
-        android:layout_alignParentBottom="false"
-        android:layout_alignParentLeft="false"
+        android:layout_above="@+id/selectedPayRippleView"
         android:layout_below="@+id/billContainer"
         android:layout_centerHorizontal="true"
         android:background="#FFFFFF"
         android:clickable="false"
-        android:paddingBottom="4dp"
-        android:paddingRight="5dp"
+        android:padding="8dp"
         tools:listitem="@layout/listrow" />
 
-    <Button
-        android:id="@+id/selectedPaymentButton"
+    <com.cc.grameenphone.views.RippleView
+        android:id="@+id/selectedPayRippleView"
+        rv_centered="true"
+        rv_zoom="true"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:layout_above="@+id/otherPaymentButton"
+        android:layout_above="@+id/quickPayRippleView"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:background="@drawable/mybutton"
-        android:text="PAY SELECTED BILLS"
-        android:textColor="#ffffff"
-        android:visibility="gone" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:visibility="gone"
+        app:rv_rippleDuration="100">
 
+        <Button
+            android:id="@+id/selectedPaymentButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/mybutton"
+            android:text="PAY SELECTED BILLS"
+            android:textColor="#ffffff" />
+    </com.cc.grameenphone.views.RippleView>
 
-    <Button
-        android:id="@+id/otherPaymentButton"
+    <com.cc.grameenphone.views.RippleView
+        android:id="@+id/quickPayRippleView"
+        rv_centered="true"
+        rv_zoom="true"
         android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_above="@+id/otherPayRippleView"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:rv_rippleDuration="100">
+
+        <Button
+            android:id="@+id/quickpayButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/mybutton"
+            android:text="QUICK PAY"
+            android:textColor="#ffffff" />
+    </com.cc.grameenphone.views.RippleView>
+
+    <com.cc.grameenphone.views.RippleView
+        android:id="@+id/otherPayRippleView"
+        rv_centered="true"
+        rv_zoom="true"
+        android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="false"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:background="@drawable/mybutton"
-        android:text="@string/button_stringname"
-        android:textColor="#ffffff" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:rv_rippleDuration="100">
 
+        <Button
+            android:id="@+id/otherPaymentButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/mybutton"
+            android:text="@string/button_stringname"
+            android:textColor="#ffffff" />
+    </com.cc.grameenphone.views.RippleView>
 
 </RelativeLayout>

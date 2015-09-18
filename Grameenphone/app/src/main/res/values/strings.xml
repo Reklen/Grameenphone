@@ -127,6 +127,7 @@ egestas</string>
 ing elit. Morbi commodo,ipsum sed pharetra gravi-\n
 da, orci magna rhoncus neque id pulvinar odio\n
 lorem non turpis. Nullam sit amet enim</string>
+    <string name="title_activity_quickpay">QuickpayActivity</string>
 
 
 </resources>

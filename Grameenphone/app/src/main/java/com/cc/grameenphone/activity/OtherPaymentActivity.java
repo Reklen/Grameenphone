@@ -15,7 +15,7 @@ import com.cc.grameenphone.views.tabs.SlidingTabLayout;
 /**
  * Created by Rajkiran on 9/10/2015.
  */
-public class PaymentActivity extends AppCompatActivity implements View.OnClickListener {
+public class OtherPaymentActivity extends AppCompatActivity implements View.OnClickListener {
 
     BillPaymentViewPagerAdapter adapter;
     ViewPager pager;

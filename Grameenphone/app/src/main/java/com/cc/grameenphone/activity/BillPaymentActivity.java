@@ -1,5 +1,6 @@
 package com.cc.grameenphone.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,6 +44,8 @@ import retrofit.client.Response;
 public class BillPaymentActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
 
+    @InjectView(R.id.quickpayButton)
+    Button qquickpayButton;
     @InjectView(R.id.backRipple)
     RippleView backRipple;
     @InjectView(R.id.toolbar_text)
@@ -63,6 +67,14 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     BillsListAdapter listViewAdapter;
     BillspaymentApi billspaymentApi;
     MaterialDialog otpDialog, successSignupDialog, errorDialog;
+    @InjectView(R.id.image_back)
+    ImageButton imageBack;
+    @InjectView(R.id.selectedPayRippleView)
+    RippleView selectedPayRippleView;
+    @InjectView(R.id.quickPayRippleView)
+    RippleView quickPayRippleView;
+    @InjectView(R.id.otherPayRippleView)
+    RippleView otherPayRippleView;
     private String android_id;
     PreferenceManager preferenceManager;
     List<BillsCompanyListModel> billsCompanyListModels;
@@ -77,8 +89,8 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         setupToolbar();
         //TODO Listing total number of bills
         billsCompanyListModels = new ArrayList<>();
-        View emptyView  = LayoutInflater.from(BillPaymentActivity.this).inflate(R.layout.empty_bills_list,null);
-        listViewAdapter = new BillsListAdapter(BillPaymentActivity.this,billsCompanyListModels);
+        View emptyView = LayoutInflater.from(BillPaymentActivity.this).inflate(R.layout.empty_bills_list, null);
+        listViewAdapter = new BillsListAdapter(BillPaymentActivity.this, billsCompanyListModels);
         billsListView.setAdapter(listViewAdapter);
         billsListView.setEmptyView(emptyView);
         android_id = Settings.Secure.getString(BillPaymentActivity.this.getContentResolver(),
@@ -98,10 +110,10 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             billspaymentApi.billsPay(jsonObject, new Callback<BillListModel>() {
                 @Override
                 public void success(BillListModel billListModel, Response response) {
-                    Logger.d("BILLS response",billListModel.toString());
-                    if(billListModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                    Logger.d("BILLS response", billListModel.toString());
+                    if (billListModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
 
-                        if (billListModel.getCOMMAND().getMessage().getComapny()!=null) {
+                        if (billListModel.getCOMMAND().getMessage().getComapny() != null) {
                             Logger.d("BILLS response", billListModel.getCOMMAND().getMessage().getComapny().toString());
                             List<BillsCompanyListModel> bills = billListModel.getCOMMAND().getMessage().getComapny();
                             billsCompanyListModels.addAll(bills);
@@ -110,8 +122,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                             //dontknwo
                         }
 
-                    }
-                    else{
+                    } else {
 
                     }
 
@@ -179,5 +190,29 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         }
     }
 
+    void setupRipples() {
+
+        selectedPayRippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+
+            }
+        });
+
+        quickPayRippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                startActivity(new Intent(BillPaymentActivity.this, QuickpayActivity.class));
+            }
+        });
+        otherPayRippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+
+                startActivity(new Intent(BillPaymentActivity.this, OtherPaymentActivity.class));
+            }
+        });
+
+    }
 
 }
