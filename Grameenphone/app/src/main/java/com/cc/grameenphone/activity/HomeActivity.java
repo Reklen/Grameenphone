@@ -242,7 +242,21 @@ public class HomeActivity extends BaseActivity {
                     startActivity(new Intent(HomeActivity.this, AddFavoriteContactsActivity.class));
                 }
                 if (f instanceof ProfileFragment) {
-                    //startActivity(new Intent(GrameenHomeActivity.this, EditProfileActivity.class));
+                    //
+                    icon2Ripple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+                        @Override
+                        public void onComplete(RippleView rippleView) {
+                            startActivity(new Intent(HomeActivity.this, EditProfileActivity.class));
+                        }
+                    });
+                }
+                if(f instanceof HomeFragment){
+                    icon2Ripple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+                        @Override
+                        public void onComplete(RippleView rippleView) {
+                            startActivity(new Intent(HomeActivity.this, NotificationActivity.class));
+                        }
+                    });
                 }
             }
         });
@@ -266,7 +280,7 @@ public class HomeActivity extends BaseActivity {
                 public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
                     if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                         Logger.d("Balance", balanceEnquiryModel.toString());
-                        walletLabel.setText("৳ " + balanceEnquiryModel.getCOMMAND().getBALANCE());
+                        walletLabel.setText("  ৳ " + balanceEnquiryModel.getCOMMAND().getBALANCE());
                     }
                 }
 

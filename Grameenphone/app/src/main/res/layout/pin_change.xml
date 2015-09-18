@@ -2,53 +2,76 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
+    android:layout_margin="16dp"
     android:orientation="vertical">
 
-
-    <EditText
-        android:id="@+id/oldPinEditText"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/oldPinEditTextLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:ems="4"
-        android:maxLength="4"
-        android:hint="Enter old pin"
-        android:inputType="numberPassword" />
+        android:layout_marginTop="24dp">
 
-    <EditText
-        android:id="@+id/newPineditText"
+        <EditText
+            android:id="@+id/oldPinEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="4"
+            android:hint="Enter old pin"
+            android:inputType="numberPassword"
+            android:maxLength="4"
+            android:textColor="@color/black_semi_transparent"
+            android:textColorHint="@color/hint_color" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/newPineditTextLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/oldPinEditText"
-        android:layout_marginTop="30dp"
-        android:ems="4"
-        android:maxLength="4"
-        android:hint="Set new pin"
-        android:inputType="numberPassword" />
+        android:layout_below="@+id/oldPinEditTextLayout"
+        android:layout_marginTop="24dp">
 
-    <EditText
-        android:id="@+id/confirmPinEditText"
+        <EditText
+            android:id="@+id/newPineditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/oldPinEditText"
+            android:layout_marginTop="30dp"
+            android:ems="4"
+            android:hint="Set new pin"
+            android:inputType="numberPassword"
+            android:maxLength="4"
+            android:textColor="@color/black_semi_transparent"
+            android:textColorHint="@color/hint_color" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/confirmPinEditTextLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/newPineditText"
-        android:hint="Confirm new pin"
-        android:layout_marginTop="30dp"
-        android:ems="4"
-        android:maxLength="4"
-        android:inputType="numberPassword" />
+        android:layout_below="@+id/newPineditTextLayout"
+        android:layout_marginTop="24dp">
+
+
+        <EditText
+            android:id="@+id/confirmPinEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/newPineditText"
+            android:layout_marginTop="30dp"
+            android:ems="4"
+            android:hint="Confirm new pin"
+            android:inputType="numberPassword"
+            android:maxLength="4"
+            android:textColor="@color/black_semi_transparent"
+            android:textColorHint="@color/hint_color" />
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/confirmButton"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
-        android:layout_below="@+id/confirmPinEditText"
+        android:layout_below="@+id/confirmPinEditTextLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:background="@drawable/login_button"

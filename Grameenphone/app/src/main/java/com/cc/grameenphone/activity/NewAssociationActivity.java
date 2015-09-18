@@ -47,7 +47,7 @@ public class NewAssociationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.payment_activity);
+        setContentView(R.layout.other_payment_activity);
         ButterKnife.inject(this);
         toolbarText.setText("New Association");
         backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {

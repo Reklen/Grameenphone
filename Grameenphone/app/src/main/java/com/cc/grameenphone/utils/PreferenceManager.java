@@ -43,4 +43,10 @@ public final class PreferenceManager {
     public String getReferCode() {
         return mSharedPreferences.getString("REFER", "");
     }
+    public void setPINCode(String pinCode){
+        mSharedPreferences.edit().putString("PIN", pinCode).commit();
+    }
+    public String getPINCode() {
+        return mSharedPreferences.getString("PIN", "");
+    }
 }

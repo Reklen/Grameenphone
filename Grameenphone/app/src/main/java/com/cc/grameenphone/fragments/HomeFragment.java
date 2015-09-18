@@ -24,9 +24,14 @@ import com.cc.grameenphone.activity.BillPaymentActivity;
 import com.cc.grameenphone.activity.ReferFriendsActivity;
 import com.cc.grameenphone.activity.SelectContactsActivity;
 import com.cc.grameenphone.activity.TransactionOverviewActivity;
-import com.cc.grameenphone.api_models.RechargeModel;
+import com.cc.grameenphone.api_models.OtherPostpaidModel;
+import com.cc.grameenphone.api_models.SelfPostpaidModel;
+import com.cc.grameenphone.api_models.SelfPrepaidModel;
+import com.cc.grameenphone.api_models.OtherPrepaidModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
+import com.cc.grameenphone.interfaces.OtherPostpaidApi;
 import com.cc.grameenphone.interfaces.RechargeApi;
+import com.cc.grameenphone.interfaces.SelfPrepaidApi;
 import com.cc.grameenphone.interfaces.WalletCheckApi;
 import com.cc.grameenphone.utils.Constants;
 import com.cc.grameenphone.utils.IntentUtils;
@@ -121,6 +126,9 @@ public class HomeFragment extends Fragment {
     MaterialDialog materialDialog;
 
     WalletCheckApi walletCheckApi;
+    SelfPrepaidApi selfPrepaidApi;
+    OtherPostpaidApi otherPostpaidApi;
+    boolean otherFlexi = false;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -138,6 +146,7 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.home_layout, container, false);
         // Inflate the layout for this fragment
         ButterKnife.inject(this, rootView);
+
         preferenceManager = new PreferenceManager(getActivity());
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
@@ -149,7 +158,6 @@ public class HomeFragment extends Fragment {
                 if (prepaidOption.isChecked()) {
 
                 } else if (postpaidOption.isChecked()) {
-
                 }
 
             }
@@ -238,11 +246,262 @@ public class HomeFragment extends Fragment {
                 Settings.Secure.ANDROID_ID);
         KeyboardUtil.hideKeyboard(getActivity());
         rechargeApi = ServiceGenerator.createService(RechargeApi.class);
+
+        selfPrepaidApi = ServiceGenerator.createService(SelfPrepaidApi.class);
+        otherPostpaidApi = ServiceGenerator.createService(OtherPostpaidApi.class);
+        if ((prepaidOption.isChecked()) && otherFlexi) {
+            //TODO implement other prepaid recharge
+            try {
+                JSONObject jsonObject = new JSONObject();
+                JSONObject innerObject = new JSONObject();
+                innerObject.put("DEVICEID", android_id);
+                innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+                innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+                innerObject.put("MSISDN2", "017" + phoneNumberEditText.getText().toString());
+                innerObject.put("TYPE", "OCTMMREQ");
+                innerObject.put("RCTYPE", "PREPAID");
+                innerObject.put("PIN", preferenceManager.getPINCode());
+                innerObject.put("AMOUNT", editamt.getText().toString());
+                jsonObject.put("COMMAND", innerObject);
+                Logger.d("Balance", jsonObject.toString());
+                selfPrepaidApi.selfPrepaidOther(jsonObject, new Callback<OtherPrepaidModel>() {
+                    @Override
+                    public void success(OtherPrepaidModel selfPrepaidModel, Response response) {
+                        if (selfPrepaidModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                            View flexiDialog = LayoutInflater.from(getActivity()).inflate(R.layout.flexi_dialog_layout, null);
+                            Logger.d("Its prepaid other check ", "status " + selfPrepaidModel.toString());
+                            materialDialog = new MaterialDialog(getActivity()).setContentView(flexiDialog);
+                            materialDialog.setCanceledOnTouchOutside(true);
+                            ((TextView) flexiDialog.findViewById(R.id.top_text)).setText(selfPrepaidModel.getCOMMAND().getMESSAGE() + "");
+                            ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText("017" + phoneNumberEditText.getText().toString() + "");
+                            ((TextView) flexiDialog.findViewById(R.id.transactionNumber)).setText("\n" + selfPrepaidModel.getCOMMAND().getTXNID() + "");
+                            ((TextView) flexiDialog.findViewById(R.id.flxiloadAmount)).setText(editamt.getText().toString() + "");
+                            materialDialog.show();
+                            Button buttonOk = (Button) flexiDialog.findViewById(R.id.okButton);
+                            buttonOk.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    materialDialog.dismiss();
+                                    editamt.setText("50");
+                                }
+                            });
+                        } else {
+                            Logger.e("Its other prepaid check ", "status " + selfPrepaidModel.toString());
+                            errorDialog = new MaterialDialog(getActivity());
+                            errorDialog.setMessage(selfPrepaidModel.getCOMMAND().getMESSAGE() + "");
+                            errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    errorDialog.dismiss();
+                                    editamt.setText("50");
+                                }
+                            });
+                            errorDialog.show();
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else if ((prepaidOption.isChecked()) && (otherFlexi == false)) {
+            //TODO implement prepaid for self
+
+            try {
+                JSONObject jsonObject = new JSONObject();
+                JSONObject innerObject = new JSONObject();
+                innerObject.put("DEVICEID", android_id);
+                innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+                innerObject.put("MSISDN", "017" + phoneNumberEditText.getText().toString());
+                innerObject.put("TYPE", "CTMMREQ");
+                innerObject.put("RCTYPE", "PREPAID");
+                innerObject.put("AMOUNT", editamt.getText().toString());
+                jsonObject.put("COMMAND", innerObject);
+                Logger.d("Balance", jsonObject.toString());
+                selfPrepaidApi.selfPrepaid(jsonObject, new Callback<SelfPrepaidModel>() {
+                    @Override
+                    public void success(SelfPrepaidModel selfPrepaidModel, Response response) {
+                        if (selfPrepaidModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                            View flexiDialog = LayoutInflater.from(getActivity()).inflate(R.layout.flexi_dialog_layout, null);
+                            Logger.d("Its msisdn check ", "status " + selfPrepaidModel.toString());
+                            materialDialog = new MaterialDialog(getActivity()).setContentView(flexiDialog);
+                            materialDialog.setCanceledOnTouchOutside(true);
+                            ((TextView) flexiDialog.findViewById(R.id.top_text)).setText(selfPrepaidModel.getCOMMAND().getMESSAGE() + "");
+                            ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText("017" + phoneNumberEditText.getText().toString() + "");
+                            ((TextView) flexiDialog.findViewById(R.id.transactionNumber)).setText("\n" + selfPrepaidModel.getCOMMAND().getTXNID() + "");
+                            ((TextView) flexiDialog.findViewById(R.id.flxiloadAmount)).setText(editamt.getText().toString() + "");
+                            materialDialog.show();
+                            Button buttonOk = (Button) flexiDialog.findViewById(R.id.okButton);
+                            buttonOk.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    materialDialog.dismiss();
+                                    editamt.setText("50");
+                                }
+                            });
+                        } else {
+                            Logger.e("Its msisdn check ", "status " + selfPrepaidModel.toString());
+                            errorDialog = new MaterialDialog(getActivity());
+                            errorDialog.setMessage(selfPrepaidModel.getCOMMAND().getMESSAGE() + "");
+                            errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    errorDialog.dismiss();
+                                    editamt.setText("50");
+                                }
+                            });
+                            errorDialog.show();
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else if ((postpaidOption.isChecked()) && otherFlexi) {
+            //TODO implement other postpaid recharge
+
+            try {
+                JSONObject jsonObject = new JSONObject();
+                JSONObject innerObject = new JSONObject();
+                innerObject.put("DEVICEID", android_id);
+                innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+                innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+                innerObject.put("MSISDN2", "017" + phoneNumberEditText.getText().toString());
+                innerObject.put("TYPE", "OCTMMREQ");
+                innerObject.put("RCTYPE", "POSTPAID");
+                innerObject.put("PIN", preferenceManager.getPINCode());
+                innerObject.put("AMOUNT", editamt.getText().toString());
+                jsonObject.put("COMMAND", innerObject);
+                Logger.d("Balance", jsonObject.toString());
+                otherPostpaidApi.otherPostpaid(jsonObject, new Callback<OtherPostpaidModel>() {
+                    @Override
+                    public void success(OtherPostpaidModel otherPostpaidModel, Response response) {
+                        if (otherPostpaidModel.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
+                            View flexiDialog = LayoutInflater.from(getActivity()).inflate(R.layout.flexi_dialog_layout, null);
+                            Logger.d("Its postpaid other check ", "status " + otherPostpaidModel.toString());
+                            materialDialog = new MaterialDialog(getActivity()).setContentView(flexiDialog);
+                            materialDialog.setCanceledOnTouchOutside(true);
+                            ((TextView) flexiDialog.findViewById(R.id.top_text)).setText(otherPostpaidModel.getCommand().getMESSAGE() + "");
+                            ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText("017" + phoneNumberEditText.getText().toString() + "");
+                            ((TextView) flexiDialog.findViewById(R.id.transactionNumber)).setText("\n" + otherPostpaidModel.getCommand().getTXNID() + "");
+                            ((TextView) flexiDialog.findViewById(R.id.flxiloadAmount)).setText(editamt.getText().toString() + "");
+                            materialDialog.show();
+                            Button buttonOk = (Button) flexiDialog.findViewById(R.id.okButton);
+                            buttonOk.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    materialDialog.dismiss();
+                                    editamt.setText("50");
+                                }
+                            });
+                        } else {
+                            Logger.e("Its other postpaid check ", "status " + otherPostpaidModel.toString());
+                            errorDialog = new MaterialDialog(getActivity());
+                            errorDialog.setMessage(otherPostpaidModel.getCommand().getMESSAGE() + "");
+                            errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    errorDialog.dismiss();
+                                    editamt.setText("50");
+                                }
+                            });
+                            errorDialog.show();
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        } else if ((postpaidOption.isChecked()) && (otherFlexi == false)) {
+            //TODO implement self postpaid recharge
+
+            try {
+                JSONObject jsonObject = new JSONObject();
+                JSONObject innerObject = new JSONObject();
+                innerObject.put("DEVICEID", android_id);
+                innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+                innerObject.put("MSISDN", "017" + phoneNumberEditText.getText().toString());
+                innerObject.put("TYPE", "CTMMREQ");
+                innerObject.put("RCTYPE", "POSTPAID");
+                innerObject.put("AMOUNT", editamt.getText().toString());
+                jsonObject.put("COMMAND", innerObject);
+                Logger.d("Balance", jsonObject.toString());
+                otherPostpaidApi.selfPostpaid(jsonObject, new Callback<SelfPostpaidModel>() {
+                    @Override
+                    public void success(SelfPostpaidModel selfPostpaidModel, Response response) {
+                        if (selfPostpaidModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                            View flexiDialog = LayoutInflater.from(getActivity()).inflate(R.layout.flexi_dialog_layout, null);
+                            Logger.d("Its self postpaid check ", "status " + selfPostpaidModel.toString());
+                            materialDialog = new MaterialDialog(getActivity()).setContentView(flexiDialog);
+                            materialDialog.setCanceledOnTouchOutside(true);
+                            ((TextView) flexiDialog.findViewById(R.id.top_text)).setText(selfPostpaidModel.getCOMMAND().getMESSAGE() + "");
+                            ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText("017" + phoneNumberEditText.getText().toString() + "");
+                            ((TextView) flexiDialog.findViewById(R.id.transactionNumber)).setText("\n" + selfPostpaidModel.getCOMMAND().getTXNID() + "");
+                            ((TextView) flexiDialog.findViewById(R.id.flxiloadAmount)).setText(editamt.getText().toString() + "");
+                            materialDialog.show();
+                            Button buttonOk = (Button) flexiDialog.findViewById(R.id.okButton);
+                            buttonOk.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    materialDialog.dismiss();
+                                    editamt.setText("50");
+                                }
+                            });
+                        } else {
+                            Logger.e("Its self postpaid check ", "status " + selfPostpaidModel.toString());
+                            errorDialog = new MaterialDialog(getActivity());
+                            errorDialog.setMessage(selfPostpaidModel.getCOMMAND().getMESSAGE() + "");
+                            errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    errorDialog.dismiss();
+                                    editamt.setText("50");
+                                }
+                            });
+                            errorDialog.show();
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
+
+
+
         /*loadingDialog = new ProgressDialog(getActivity());
         loadingDialog.setMessage("Logging in");
         loadingDialog.setCanceledOnTouchOutside(false);
         loadingDialog.show();*/
-        try {
+       /*try {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
@@ -256,14 +515,14 @@ public class HomeFragment extends Fragment {
             rechargeApi.recharge(jsonObject, new Callback<RechargeModel>() {
                 @Override
                 public void success(RechargeModel rechargeModel, Response response) {
-                    if (rechargeModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                    if (rechargeModel.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
                         View flexiDialog = LayoutInflater.from(getActivity()).inflate(R.layout.flexi_dialog_layout, null);
                         Logger.d("Its msisdn check ", "status " + rechargeModel.toString());
                         materialDialog = new MaterialDialog(getActivity()).setContentView(flexiDialog);
                         materialDialog.setCanceledOnTouchOutside(true);
-                        ((TextView) flexiDialog.findViewById(R.id.top_text)).setText(rechargeModel.getCOMMAND().getMESSAGE() + "");
+                        ((TextView) flexiDialog.findViewById(R.id.top_text)).setText(rechargeModel.getCommand().getMESSAGE() + "");
                         ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText("017" + phoneNumberEditText.getText().toString() + "");
-                        ((TextView) flexiDialog.findViewById(R.id.transactionNumber)).setText("\n" + rechargeModel.getCOMMAND().getTXNID() + "");
+                        ((TextView) flexiDialog.findViewById(R.id.transactionNumber)).setText("\n" + rechargeModel.getCommand().getTXNID() + "");
                         ((TextView) flexiDialog.findViewById(R.id.flxiloadAmount)).setText(editamt.getText().toString() + "");
                         materialDialog.show();
                         Button buttonOk = (Button) flexiDialog.findViewById(R.id.okButton);
@@ -277,7 +536,7 @@ public class HomeFragment extends Fragment {
                     } else {
                         Logger.e("Its msisdn check ", "status " + rechargeModel.toString());
                         errorDialog = new MaterialDialog(getActivity());
-                        errorDialog.setMessage(rechargeModel.getCOMMAND().getMESSAGE() + "");
+                        errorDialog.setMessage(rechargeModel.getCommand().getMESSAGE() + "");
                         errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -297,11 +556,12 @@ public class HomeFragment extends Fragment {
 
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @OnClick(R.id.other_flex)
     void otherFlexiLoadClick() {
+        otherFlexi = true;
         otherFlex.setVisibility(View.GONE);
         phoneNumberEditText.setText("");
         editamt.setText("50");
@@ -313,7 +573,7 @@ public class HomeFragment extends Fragment {
                     if (event.getRawX() >= phoneNumberEditText.getRight() - phoneNumberEditText.getTotalPaddingRight()) {
                         // your action for drawable click event
                         //
-                      startActivityForResult(new Intent(getActivity(), SelectContactsActivity.class), REQCODE);
+                        startActivityForResult(new Intent(getActivity(), SelectContactsActivity.class), REQCODE);
                         return true;
                     }
                 }
@@ -328,10 +588,12 @@ public class HomeFragment extends Fragment {
         if (requestCode == REQCODE) {
             try {
                 Logger.d("Return Contact", "contacts " + ((String) data.getExtras().get(Constants.RETURN_RESULT)));
-                phoneNumberEditText.setText(""+((String) data.getExtras().get(Constants.RETURN_RESULT)) );
+                phoneNumberEditText.setText("" + ((String) data.getExtras().get(Constants.RETURN_RESULT)));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
+
+
 }

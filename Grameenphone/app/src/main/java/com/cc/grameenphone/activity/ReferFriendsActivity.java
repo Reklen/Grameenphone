@@ -99,6 +99,7 @@ public class ReferFriendsActivity extends AppCompatActivity {
             try {
                 Logger.d("Return Contact", "contacts " + ((String) data.getExtras().get(Constants.RETURN_RESULT)));
                 phoneNumberEditText.setText("" + ((String) data.getExtras().get(Constants.RETURN_RESULT)));
+               // PhoneNumberUtils.formatNumber(phoneNumberEditText, int defaultFormattingType);
             } catch (Exception e) {
                 e.printStackTrace();
             }

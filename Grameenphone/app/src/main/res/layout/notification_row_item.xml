@@ -1,49 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp"
-    android:layout_marginTop="20dp"
-    >
+    android:layout_height="83dp"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/notification_firstItem_container"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/exculsive_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:fontFamily="Roboto Medium"
             android:text="Exclusive Offer"
-            android:textSize="17sp"
-            android:textColor="@color/primary"/>
+            android:textColor="@color/primary"
+            android:textSize="16dp" />
+
         <TextView
             android:id="@+id/today_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Today"
-            android:textSize="14sp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="Roboto light"
             android:gravity="right"
-
-            />
+            android:text="Today"
+            android:textColor="#8C000000"
+            android:textSize="14dp" />
 
     </LinearLayout>
+
     <TextView
         android:id="@+id/fulltalk_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:fontFamily="Roboto Regular"
         android:text="Full talktime"
-        android:textSize="17sp"
-        android:textColor="@color/black"/>
+        android:textColor="#212121"
+        android:textSize="16dp" />
+
     <TextView
         android:id="@+id/getFullStatement_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:fontFamily="Roboto Light"
         android:text="@string/Get_full_talktime"
-        android:textSize="17sp"
-        />
+        android:textColor="#757575"
+        android:textSize="16dp" />
 
 </LinearLayout>
