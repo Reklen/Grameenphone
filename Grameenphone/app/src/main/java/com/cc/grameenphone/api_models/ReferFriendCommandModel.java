@@ -1,28 +1,16 @@
 package com.cc.grameenphone.api_models;
 
 /**
- * Created by aditlal on 15/09/15.
+ * Created by rajkiran on 18/09/15.
  */
-public class LoginCommand {
-    private String RFRCODE;
-
+public class ReferFriendCommandModel {
     private String MESSAGE;
 
-    private String AUTHTOKEN;
+    private String TXNID;
 
     private String TXNSTATUS;
 
     private String TYPE;
-
-    public String getRFRCODE ()
-    {
-        return RFRCODE;
-    }
-
-    public void setRFRCODE (String RFRCODE)
-    {
-        this.RFRCODE = RFRCODE;
-    }
 
     public String getMESSAGE ()
     {
@@ -34,14 +22,14 @@ public class LoginCommand {
         this.MESSAGE = MESSAGE;
     }
 
-    public String getAUTHTOKEN ()
+    public String getTXNID ()
     {
-        return AUTHTOKEN;
+        return TXNID;
     }
 
-    public void setAUTHTOKEN (String AUTHTOKEN)
+    public void setTXNID (String TXNID)
     {
-        this.AUTHTOKEN = AUTHTOKEN;
+        this.TXNID = TXNID;
     }
 
     public String getTXNSTATUS ()
@@ -67,7 +55,6 @@ public class LoginCommand {
     @Override
     public String toString()
     {
-        return "ClassPojo [RFRCODE = "+RFRCODE+", MESSAGE = "+MESSAGE+", AUTHTOKEN = "+AUTHTOKEN+", TXNSTATUS = "+TXNSTATUS+", TYPE = "+TYPE+"]";
+        return "ClassPojo [MESSAGE = "+MESSAGE+", TXNID = "+TXNID+", TXNSTATUS = "+TXNSTATUS+", TYPE = "+TYPE+"]";
     }
-
 }

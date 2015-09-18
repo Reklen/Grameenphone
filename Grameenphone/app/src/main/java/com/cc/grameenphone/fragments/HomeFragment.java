@@ -326,8 +326,12 @@ public class HomeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQCODE) {
-            Logger.d("Return Contact","contacts " + data.getExtras().getString(Constants.RETURN_RESULT));
-            phoneNumberEditText.setText("" + ((ContactsDetailsFragment.Contact)data.getExtras().getString(Constants.RETURN_RESULT)));
+            try {
+                Logger.d("Return Contact", "contacts " + ((String) data.getExtras().get(Constants.RETURN_RESULT)));
+                phoneNumberEditText.setText(""+((String) data.getExtras().get(Constants.RETURN_RESULT)) );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

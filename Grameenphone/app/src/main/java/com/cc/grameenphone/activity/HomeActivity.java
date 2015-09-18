@@ -25,7 +25,6 @@ import com.cc.grameenphone.fragments.ProfileFragment;
 import com.cc.grameenphone.fragments.TermsConditionFragment;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.WalletCheckApi;
-import com.cc.grameenphone.utils.Constants;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
 import com.cc.grameenphone.views.RippleView;
@@ -284,6 +283,6 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Logger.d("Return Contact", "contacts " + data.getExtras().getString(Constants.RETURN_RESULT));
+        //Logger.d("Return Contact", "contacts " + data.getExtras().getString(Constants.RETURN_RESULT));
     }
 }

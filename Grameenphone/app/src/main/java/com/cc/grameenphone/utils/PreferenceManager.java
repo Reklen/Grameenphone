@@ -37,4 +37,10 @@ public final class PreferenceManager {
     public String getMSISDN() {
         return mSharedPreferences.getString("MSISDN", "");
     }
+    public void setReferCode(String referCode){
+        mSharedPreferences.edit().putString("REFER", referCode).commit();
+    }
+    public String getReferCode() {
+        return mSharedPreferences.getString("REFER", "");
+    }
 }

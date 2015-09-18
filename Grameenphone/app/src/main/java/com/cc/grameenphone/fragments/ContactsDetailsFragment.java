@@ -32,6 +32,7 @@ import com.cc.grameenphone.views.lv.PinnedHeaderListView;
 import com.cc.grameenphone.views.lv.SearchablePinnedHeaderListViewAdapter;
 import com.cc.grameenphone.views.lv.StringArrayAlphabetIndexer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -91,7 +92,7 @@ public class ContactsDetailsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent d = new Intent();
-                d.putExtra(Constants.RETURN_RESULT,mAdapter.getItem(i).toString());
+                d.putExtra(Constants.RETURN_RESULT, mAdapter.getItem(i).number);
                 getActivity().setResult(getActivity().RESULT_OK, d);
                 getActivity().finish();
             }
@@ -174,7 +175,7 @@ public class ContactsDetailsFragment extends Fragment {
         mAdapter.mAsyncTaskThreadPool.cancelAllTasks(true);
     }
 
-    public static class Contact
+    public  class Contact implements Serializable
     {
         long contactId;
         Uri contactUri;
