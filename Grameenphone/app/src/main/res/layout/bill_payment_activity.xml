@@ -60,7 +60,40 @@
                 android:textSize="17sp"
                 android:textStyle="bold" />
 
+            <com.cc.grameenphone.views.RippleView
+                android:id="@+id/icon1Ripple"
+                rv_centered="true"
+                rv_zoom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="4dp"
+                android:padding="8dp"
+                app:rv_rippleDuration="100">
 
+                <ImageButton
+                    android:id="@+id/icon1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:src="@drawable/icon_wallet_balance" />
+
+                <TextView
+                    android:id="@+id/walletLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_centerInParent="true"
+                    android:layout_toRightOf="@+id/icon1"
+                    android:background="#8d000000"
+                    android:gravity="center"
+                    android:paddingLeft="4dp"
+                    android:text="৳ 0.00 "
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+            </com.cc.grameenphone.views.RippleView>
         </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>

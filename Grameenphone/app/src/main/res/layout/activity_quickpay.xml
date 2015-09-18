@@ -10,19 +10,17 @@
         xmlns:local="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:layout_height="?actionBarSize"
+        android:background="@color/primary"
         android:contentInsetLeft="0dp"
         android:contentInsetStart="0dp"
         android:minHeight="?attr/actionBarSize"
         app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
-        local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        app:contentInsetStart="0dp">
 
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <com.cc.grameenphone.views.RippleView
@@ -82,13 +80,13 @@
                     android:id="@+id/walletLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="16dp"
+                    android:layout_centerInParent="true"
                     android:layout_marginTop="16dp"
                     android:layout_toRightOf="@+id/icon1"
                     android:background="#8d000000"
                     android:gravity="center"
                     android:paddingLeft="4dp"
-                    android:text="৳ 0.0"
+                    android:text="৳ 0.07  "
                     android:textColor="@color/white"
                     android:textSize="10sp"
                     android:textStyle="bold" />

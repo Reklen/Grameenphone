@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="16dp">
 
     <LinearLayout
         android:id="@+id/list_container"
@@ -23,16 +23,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/acc_number"
-                android:textColor="@color/black"
-                android:textSize="17sp" />
+                android:textColor="@color/black_semi_transparent"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/accountNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="123432"
-                android:textColor="@color/black"
-                android:textSize="17sp" />
+                android:textColor="@color/black_semi_transparent"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -47,22 +47,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/company"
-
-                android:textSize="15sp" />
+                android:textColor="@color/black_semi_transparent"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/companyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DESCO"
-                android:textSize="15sp" />
+                android:textColor="@color/black_semi_transparent"
+                android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
 
     <Button
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:layout_alignParentRight="true"
         android:background="@drawable/login_button"
         android:text="CANCEL"

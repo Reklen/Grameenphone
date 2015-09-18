@@ -4,35 +4,55 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.adapter.BillPaymentViewPagerAdapter;
+import com.cc.grameenphone.views.RippleView;
 import com.cc.grameenphone.views.tabs.SlidingTabLayout;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Created by Rajkiran on 9/10/2015.
  */
-public class OtherPaymentActivity extends AppCompatActivity implements View.OnClickListener {
+public class OtherPaymentActivity extends AppCompatActivity {
 
     BillPaymentViewPagerAdapter adapter;
-    ViewPager pager;
-    SlidingTabLayout tabs;
+
     CharSequence Titles[] = {"ELECTRICITY", "GAS", "INSURANCE", "TICKETING", "INTERNET"};
     int NumOfTabs = 5;
-    Toolbar otherToolbar;
-    RelativeLayout toolbarContainer;
-    ImageButton backBtn;
+
+    @InjectView(R.id.toolbar_text)
+    TextView toolbarText;
+    @InjectView(R.id.tabs)
+    SlidingTabLayout tabs;
+    @InjectView(R.id.pager)
+    ViewPager pager;
+    @InjectView(R.id.backRipple)
+    RippleView backRipple;
+    @InjectView(R.id.icon1)
+    ImageButton icon1;
+    @InjectView(R.id.walletLabel)
+    TextView walletLabel;
+    @InjectView(R.id.icon1Ripple)
+    RippleView icon1Ripple;
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.payment_activity);
-        otherToolbar = (Toolbar) findViewById(R.id.other_tool_bar);
-        toolbarContainer = (RelativeLayout) findViewById(R.id.toolbar_container);
-        backBtn = (ImageButton) findViewById(R.id.image_back);
+        ButterKnife.inject(this);
+        backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                finish();
+            }
+        });
 
         adapter = new BillPaymentViewPagerAdapter(getSupportFragmentManager(), Titles, NumOfTabs, 0);
 
@@ -53,13 +73,6 @@ public class OtherPaymentActivity extends AppCompatActivity implements View.OnCl
 
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.image_back:
-                finish();
-                break;
-        }
-    }
+
 }
 

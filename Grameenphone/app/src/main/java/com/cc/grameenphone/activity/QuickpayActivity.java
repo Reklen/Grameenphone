@@ -1,22 +1,53 @@
 package com.cc.grameenphone.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.widget.Toolbar;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.fragments.BillPaymentFragment;
 import com.cc.grameenphone.fragments.QuickPayFragment;
+import com.cc.grameenphone.views.RippleView;
 
-public class QuickpayActivity extends AppCompatActivity implements QuickPayFragment.TopFragmentListener{
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
+public class QuickPayActivity extends AppCompatActivity implements QuickPayFragment.TopFragmentListener {
+
+    @InjectView(R.id.image_back)
+    ImageButton imageBack;
+    @InjectView(R.id.backRipple)
+    RippleView backRipple;
+    @InjectView(R.id.toolbar_text)
+    TextView toolbarText;
+    @InjectView(R.id.icon1)
+    ImageButton icon1;
+    @InjectView(R.id.walletLabel)
+    TextView walletLabel;
+    @InjectView(R.id.icon1Ripple)
+    RippleView icon1Ripple;
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
+    @InjectView(R.id.container)
+    FrameLayout container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quickpay);
+
+        ButterKnife.inject(this);
+
+        backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                finish();
+            }
+        });
         QuickPayFragment qf = new QuickPayFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, qf);
@@ -24,35 +55,10 @@ public class QuickpayActivity extends AppCompatActivity implements QuickPayFragm
     }
 
     //Need to edit! The paycode is passed over here!
-    public void onclickQuickPay_QuickPayFragment(String paycode)
-    {
-        Intent i = new Intent (this,QuickpayActivity.class);
-        startActivity(i);
+    public void onclickQuickPay_QuickPayFragment(String paycode) {
         BillPaymentFragment qf = new BillPaymentFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, qf);
         transaction.commit();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_quickpay, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

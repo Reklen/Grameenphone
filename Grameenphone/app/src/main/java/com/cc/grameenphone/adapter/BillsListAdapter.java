@@ -84,7 +84,7 @@ public class BillsListAdapter extends BaseAdapter {
         holder.billNumber.setText("" + "" + listitemslist.get(position).getBILLNUM());
         holder.company.setText("" + listitemslist.get(position).getCOMPANYNAME());
         holder.dueDate.setText("" + listitemslist.get(position).getDUEDATE());
-        holder.value.setText("\u09f3 " + listitemslist.get(position).getAMOUNT());
+        holder.value.setText("৳ " + listitemslist.get(position).getAMOUNT());
         holder.categoryType.setText("" + listitemslist.get(position).getCATEGORYNAME());
 //        holder.inr.setText("");
        /* // BillDetailsItems l = listitemslist.get(position);
