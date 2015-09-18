@@ -6,6 +6,9 @@ import com.cc.grameenphone.interfaces.ApplicationComponent;
 import com.cc.grameenphone.interfaces.DaggerApplicationComponent;
 import com.cc.grameenphone.utils.Logger;
 
+import co.uk.rushorm.android.AndroidInitializeConfig;
+import co.uk.rushorm.core.RushCore;
+
 /**
  * Created by aditlal on 14/09/15.
  */
@@ -21,6 +24,12 @@ public class MainApplication extends Application {
         application = this;
         Logger.init("gp");
         initializeInjector();
+        initializeDB();
+    }
+
+    private void initializeDB() {
+        AndroidInitializeConfig config = new AndroidInitializeConfig(getApplicationContext());
+        RushCore.initialize(config);
     }
 
     private void initializeInjector() {
