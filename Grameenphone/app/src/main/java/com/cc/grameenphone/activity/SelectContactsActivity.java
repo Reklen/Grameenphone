@@ -63,6 +63,7 @@ public class SelectContactsActivity extends AppCompatActivity implements SearchV
         backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
+
                 finish();
             }
         });

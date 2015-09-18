@@ -14,7 +14,7 @@ public interface ContactsQuery {
     final static int QUERY_ID=1;
 
     // A content URI for the Contacts table
-     static Uri CONTENT_URI= ContactsContract.Contacts.CONTENT_URI;
+     static Uri CONTENT_URI= ContactsContract.CommonDataKinds.Phone.CONTENT_URI;;
 
     // The search/filter query Uri
     final static Uri FILTER_URI= ContactsContract.Contacts.CONTENT_FILTER_URI;
@@ -63,6 +63,8 @@ public interface ContactsQuery {
 
             // The sort order column for the returned Cursor, used by the AlphabetIndexer
             SORT_ORDER,
+
+            ContactsContract.CommonDataKinds.Phone.NUMBER,
     };
 
     // The query column numbers which map to each value in the projection
@@ -71,4 +73,5 @@ public interface ContactsQuery {
     final static int DISPLAY_NAME=2;
     final static int PHOTO_THUMBNAIL_DATA=3;
     final static int SORT_KEY=4;
+    final static int PHONE_NUMBER=5;
 }

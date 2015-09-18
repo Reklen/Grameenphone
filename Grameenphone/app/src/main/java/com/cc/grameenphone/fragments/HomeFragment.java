@@ -28,6 +28,8 @@ import com.cc.grameenphone.api_models.RechargeModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.RechargeApi;
 import com.cc.grameenphone.interfaces.WalletCheckApi;
+import com.cc.grameenphone.utils.Constants;
+import com.cc.grameenphone.utils.IntentUtils;
 import com.cc.grameenphone.utils.KeyboardUtil;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
@@ -97,7 +99,7 @@ public class HomeFragment extends Fragment {
     @InjectView(R.id.referFriends)
     RelativeLayout referFriends;
 
-    int REQCODE = 100;
+    int REQCODE = IntentUtils.SELECT_CONTACT_REQ;
     ProgressDialog loadingDialog;
     RechargeApi rechargeApi;
     @InjectView(R.id.flexi_Ripple)
@@ -311,7 +313,7 @@ public class HomeFragment extends Fragment {
                     if (event.getRawX() >= phoneNumberEditText.getRight() - phoneNumberEditText.getTotalPaddingRight()) {
                         // your action for drawable click event
                         //
-                        startActivityForResult(new Intent(getActivity(), SelectContactsActivity.class), REQCODE);
+                      startActivityForResult(new Intent(getActivity(), SelectContactsActivity.class), REQCODE);
                         return true;
                     }
                 }
@@ -323,8 +325,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 100) {
-
+        if (requestCode == REQCODE) {
+            Logger.d("Return Contact","contacts " + data.getExtras().getString(Constants.RETURN_RESULT));
+            phoneNumberEditText.setText("" + ((ContactsDetailsFragment.Contact)data.getExtras().getString(Constants.RETURN_RESULT)));
         }
     }
 }
