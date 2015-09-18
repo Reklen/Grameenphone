@@ -227,6 +227,9 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
                     } else if (model.getCommand().getTXNSTATUS().equalsIgnoreCase("00068")) {
                         walletPinNumber.setError("Pin invalid");
                         loadingDialog.dismiss();
+                    } else if (model.getCommand().getTXNSTATUS().equalsIgnoreCase("00210")) {
+                        walletPinNumber.setError("" + model.getCommand().getMESSAGE());
+                        loadingDialog.dismiss();
                     }
                 }
 

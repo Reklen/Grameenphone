@@ -72,7 +72,7 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
         mListView = (PinnedHeaderListView) findViewById(android.R.id.list);
         mAdapter = new ContactsAdapter(contacts);
 
-        int pinnedHeaderBackgroundColor = getResources().getColor(R.color.white);
+        int pinnedHeaderBackgroundColor = getResources().getColor(R.color.transparent);
         mAdapter.setPinnedHeaderBackgroundColor(pinnedHeaderBackgroundColor);
         mAdapter.setPinnedHeaderTextColor(getResources().getColor(R.color.pinned_header_text));
         mListView.setPinnedHeaderView(mInflater.inflate(R.layout.pinned_header_listview_side_header, mListView, false));
@@ -105,6 +105,7 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
                         cursor.getString(ContactsQuery.LOOKUP_KEY));
                 contact.displayName = cursor.getString(ContactsQuery.DISPLAY_NAME);
                 contact.photoId = cursor.getString(ContactsQuery.PHOTO_THUMBNAIL_DATA);
+                contact.number = cursor.getString(ContactsQuery.NUMBER);
                 result.add(contact);
             }
 
@@ -153,6 +154,7 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
         Uri contactUri;
         String displayName;
         String photoId;
+        String number;
     }
 /*
     @Override
@@ -232,6 +234,7 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
                 holder.friendProfileCircularContactView.getTextView().setTextColor(0xFFffffff);
                 holder.friendName = (TextView) rootView
                         .findViewById(R.id.listview_item__friendNameTextView);
+                holder.friendNumber = (TextView) rootView.findViewById(R.id.listview_item__friendNumberTextView);
                 holder.headerView = (TextView) rootView.findViewById(R.id.header_text);
                 rootView.setTag(holder);
             } else {
@@ -240,6 +243,12 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
             }
             final Contact contact = getItem(position);
             final String displayName = contact.displayName;
+            try {
+                final String number = contact.number;
+                holder.friendNumber.setText("" + number);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             holder.friendName.setText(displayName);
             boolean hasPhoto = !TextUtils.isEmpty(contact.photoId);
             if (holder.updateTask != null && !holder.updateTask.isCancelled())
@@ -309,7 +318,7 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
     // /////////////
     private static class ViewHolder {
         public CircularContactView friendProfileCircularContactView;
-        TextView friendName, headerView;
+        TextView friendName, headerView, friendNumber;
         public AsyncTaskEx<Void, Void, Bitmap> updateTask;
     }
 
