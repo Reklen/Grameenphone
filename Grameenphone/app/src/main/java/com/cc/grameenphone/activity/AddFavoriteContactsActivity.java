@@ -25,6 +25,9 @@ import com.cc.grameenphone.utils.ContactsQuery;
 import com.cc.grameenphone.utils.ImageCache;
 import com.cc.grameenphone.utils.async_task_thread_pool.AsyncTaskEx;
 import com.cc.grameenphone.utils.async_task_thread_pool.AsyncTaskThreadPool;
+import com.cc.grameenphone.views.lv.PinnedHeaderListView;
+import com.cc.grameenphone.views.lv.SearchablePinnedHeaderListViewAdapter;
+import com.cc.grameenphone.views.lv.StringArrayAlphabetIndexer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,10 +36,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-import lb.library.PinnedHeaderListView;
-import lb.library.SearchablePinnedHeaderListViewAdapter;
-import lb.library.StringArrayAlphabetIndexer;
-
 public class AddFavoriteContactsActivity extends AppCompatActivity {
     private LayoutInflater mInflater;
     private PinnedHeaderListView mListView;
@@ -44,11 +43,12 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
     ContextWrapper contextWrapper;
     TextView tooltext;
     ImageView back_icon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_favorite_contacts);
-        back_icon= (ImageView) findViewById(R.id.image_back);
+        back_icon = (ImageView) findViewById(R.id.image_back);
         back_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,7 +72,7 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
         mListView = (PinnedHeaderListView) findViewById(android.R.id.list);
         mAdapter = new ContactsAdapter(contacts);
 
-        int pinnedHeaderBackgroundColor = getResources().getColor(getResIdFromAttribute(AddFavoriteContactsActivity.this, android.R.attr.colorBackground));
+        int pinnedHeaderBackgroundColor = getResources().getColor(R.color.white);
         mAdapter.setPinnedHeaderBackgroundColor(pinnedHeaderBackgroundColor);
         mAdapter.setPinnedHeaderTextColor(getResources().getColor(R.color.pinned_header_text));
         mListView.setPinnedHeaderView(mInflater.inflate(R.layout.pinned_header_listview_side_header, mListView, false));

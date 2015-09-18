@@ -57,16 +57,14 @@
                 android:layout_toRightOf="@+id/backRipple"
                 android:gravity="center_vertical"
                 android:text="Add Favorite"
-                android:textColor="@color/white"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+                android:textColor="@color/white" />
 
 
         </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
 
-    <lb.library.PinnedHeaderListView
+    <com.cc.grameenphone.views.lv.PinnedHeaderListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -74,9 +72,8 @@
         android:cacheColorHint="@android:color/transparent"
         android:divider="@null"
         android:dividerHeight="0px"
-        android:fadeScrollbars="false"
+        android:fadeScrollbars="true"
         android:fastScrollEnabled="true"
-        android:listSelector="@drawable/listview_selector"
-        android:scrollingCache="false"
+        android:scrollingCache="true"
         tools:listitem="@layout/listview_item" />
 </RelativeLayout>
