@@ -57,7 +57,6 @@ public class HomeActivity extends BaseActivity {
     ImageButton icon1;
     @InjectView(R.id.icon2)
     ImageButton icon2;
-
     PreferenceManager preferenceManager;
     @InjectView(R.id.walletLabel)
     TextView walletLabel;
