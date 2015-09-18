@@ -1,9 +1,13 @@
 package com.cc.grameenphone.api_models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by rajkiran on 17/09/15.
  */
 public class BillsCommandModel {
+
+    @SerializedName("MESSAGE")
     private BillMessageModel message;
 
     private String TXNSTATUS;

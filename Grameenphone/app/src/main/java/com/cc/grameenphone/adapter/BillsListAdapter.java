@@ -4,13 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
-import com.cc.grameenphone.viewmodels.BillDetailsItems;
+import com.cc.grameenphone.api_models.BillsCompanyListModel;
 import com.cc.grameenphone.viewmodels.BillDetailsViewHolder;
 
 import java.util.List;
@@ -18,20 +18,33 @@ import java.util.List;
 /**
  * Created by rahul on 09/09/15.
  */
-public class BillsListAdapter extends ArrayAdapter {
+public class BillsListAdapter extends BaseAdapter {
 
-    private List<BillDetailsItems> listitemslist;
+    private List<BillsCompanyListModel> listitemslist;
     private Context mContext;
     private int focuseditem = 0;
     // LayoutInflater inflater = LayoutInflater inflater; (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     LayoutInflater inflater;
 
-    public BillsListAdapter(Context context, List<BillDetailsItems> Objects) {
-        super(context, R.layout.listrow, Objects);
-        this.mContext = context;
-        this.listitemslist = Objects;
 
-        inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public BillsListAdapter(Context context, List<BillsCompanyListModel> list) {
+        this.mContext = context;
+        this.listitemslist = list;
+    }
+
+    @Override
+    public int getCount() {
+        return listitemslist.size();
+    }
+
+    @Override
+    public BillsCompanyListModel getItem(int i) {
+        return listitemslist.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return 0;
     }
 
     BillDetailsViewHolder holder;
@@ -39,7 +52,7 @@ public class BillsListAdapter extends ArrayAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View itemView = null;
-
+        inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
 
             itemView = inflater.inflate(R.layout.listrow, null);
@@ -53,6 +66,7 @@ public class BillsListAdapter extends ArrayAdapter {
             holder.accountNumber = (TextView) itemView.findViewById(R.id.accountNumber);
             holder.billNumber = (TextView) itemView.findViewById(R.id.billNumber);
             holder.company = (TextView) itemView.findViewById(R.id.companyName);
+            holder.categoryType = (TextView) itemView.findViewById(R.id.categoryCompany);
             holder.dueDate = (TextView) itemView.findViewById(R.id.dueDate);
             holder.paybutton = (Button) itemView.findViewById(R.id.payButton);
             // holder.inr = (TextView) itemView.findViewById(R.id.inr);
@@ -63,17 +77,15 @@ public class BillsListAdapter extends ArrayAdapter {
             itemView = convertView;
         }
         BillDetailsViewHolder holder = (BillDetailsViewHolder) itemView.getTag();
-        holder.accountNumber_String.setText("" + listitemslist.get(position).getAccountNumber_String());
-        holder.billNumber_String.setText("" + listitemslist.get(position).getBillNumber_String());
-        holder.company_String.setText("" + listitemslist.get(position).getCompany_String());
-        holder.dueDate_String.setText("" + listitemslist.get(position).getDueDate_String());
+
 //        holder.checkBox.setChecked(l.isSelected());
 //        holder.checkBox.setTag(l);
-        holder.accountNumber.setText("" + listitemslist.get(position).getAccountNumber());
-        holder.billNumber.setText("" + "" + listitemslist.get(position).getBillNumber());
-        holder.company.setText("" + listitemslist.get(position).getCompany());
-        holder.dueDate.setText("" + listitemslist.get(position).getDueDate());
-        holder.value.setText("" + listitemslist.get(position).getValue());
+        holder.accountNumber.setText("" + listitemslist.get(position).getACCOUNTNUM());
+        holder.billNumber.setText("" + "" + listitemslist.get(position).getBILLNUM());
+        holder.company.setText("" + listitemslist.get(position).getCOMPANYNAME());
+        holder.dueDate.setText("" + listitemslist.get(position).getDUEDATE());
+        holder.value.setText("\u09f3 " + listitemslist.get(position).getAMOUNT());
+        holder.categoryType.setText("" + listitemslist.get(position).getCATEGORYNAME());
 //        holder.inr.setText("");
        /* // BillDetailsItems l = listitemslist.get(position);
         if (convertView != null) {

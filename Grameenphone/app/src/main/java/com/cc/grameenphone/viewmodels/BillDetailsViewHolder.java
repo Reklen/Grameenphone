@@ -21,6 +21,7 @@ public class BillDetailsViewHolder {
     public Button paybutton;
     public TextView inr;
     public TextView value;
+    public TextView categoryType;
     public RelativeLayout relativeLayout;
 //    public BillDetailsViewHolder(View itemView) {
 //        this.accountNumber_String=(TextView) itemView.findViewById(R.id.accountNumber_String);

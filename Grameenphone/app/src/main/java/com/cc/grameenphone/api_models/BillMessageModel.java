@@ -1,19 +1,24 @@
 package com.cc.grameenphone.api_models;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 /**
  * Created by rajkiran on 17/09/15.
  */
 public class BillMessageModel {
-    private BillsCompanyListModel[] comapny;
+    @SerializedName("COMPANY")
+    private List<BillsCompanyListModel> comapny;
 
     private String BILLCOUNT;
 
-    public BillsCompanyListModel[] getComapny()
+    public List<BillsCompanyListModel> getComapny()
     {
         return comapny;
     }
 
-    public void setComapny(BillsCompanyListModel[] comapny)
+    public void setComapny(List<BillsCompanyListModel> comapny)
     {
         this.comapny = comapny;
     }

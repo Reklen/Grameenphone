@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.adapter.BillsListAdapter;
 import com.cc.grameenphone.api_models.BillListModel;
+import com.cc.grameenphone.api_models.BillsCompanyListModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.BillspaymentApi;
 import com.cc.grameenphone.utils.Logger;
@@ -21,6 +24,9 @@ import com.cc.grameenphone.views.RippleView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -49,7 +55,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     @InjectView(R.id.billContainer)
     RelativeLayout billContainer;
     @InjectView(R.id.billsList)
-    ListView billsList;
+    ListView billsListView;
     @InjectView(R.id.selectedPaymentButton)
     Button selectedPaymentButton;
     @InjectView(R.id.otherPaymentButton)
@@ -59,6 +65,8 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     MaterialDialog otpDialog, successSignupDialog, errorDialog;
     private String android_id;
     PreferenceManager preferenceManager;
+    List<BillsCompanyListModel> billsCompanyListModels;
+
 
     @Override
 
@@ -68,7 +76,11 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         ButterKnife.inject(this);
         setupToolbar();
         //TODO Listing total number of bills
-
+        billsCompanyListModels = new ArrayList<>();
+        View emptyView  = LayoutInflater.from(BillPaymentActivity.this).inflate(R.layout.empty_bills_list,null);
+        listViewAdapter = new BillsListAdapter(BillPaymentActivity.this,billsCompanyListModels);
+        billsListView.setAdapter(listViewAdapter);
+        billsListView.setEmptyView(emptyView);
         android_id = Settings.Secure.getString(BillPaymentActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         preferenceManager = new PreferenceManager(BillPaymentActivity.this);
@@ -86,6 +98,22 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             billspaymentApi.billsPay(jsonObject, new Callback<BillListModel>() {
                 @Override
                 public void success(BillListModel billListModel, Response response) {
+                    Logger.d("BILLS response",billListModel.toString());
+                    if(billListModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+
+                        if (billListModel.getCOMMAND().getMessage().getComapny()!=null) {
+                            Logger.d("BILLS response", billListModel.getCOMMAND().getMessage().getComapny().toString());
+                            List<BillsCompanyListModel> bills = billListModel.getCOMMAND().getMessage().getComapny();
+                            billsCompanyListModels.addAll(bills);
+                            listViewAdapter.notifyDataSetChanged();
+                        } else {
+                            //dontknwo
+                        }
+
+                    }
+                    else{
+
+                    }
 
                 }
 
@@ -100,8 +128,6 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             e.printStackTrace();
         }
 
-       /* listViewAdapter = new BillsListAdapter(this, arraylist);
-        billsList.setAdapter(listViewAdapter);*/
 
         /*selectedPaymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,10 +167,9 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     }
 
 
-
-   @Override
+    @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        int pos = billsList.getPositionForView(buttonView);
+        int pos = billsListView.getPositionForView(buttonView);
         if (pos != ListView.INVALID_POSITION) {
            /* BillDetailsItems l = arraylist.get(pos);
             l.setSelected(isChecked);*/
