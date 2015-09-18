@@ -239,24 +239,31 @@ public class HomeActivity extends BaseActivity {
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.container_body);
 
                 if (f instanceof ManageFavoriteFragment) {
-                    startActivity(new Intent(HomeActivity.this, AddFavoriteContactsActivity.class));
+
+                            startActivity(new Intent(HomeActivity.this, AddFavoriteContactsActivity.class));
+
                 }
                 if (f instanceof ProfileFragment) {
-                    //
-                    icon2Ripple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-                        @Override
-                        public void onComplete(RippleView rippleView) {
+
                             startActivity(new Intent(HomeActivity.this, EditProfileActivity.class));
-                        }
-                    });
+
                 }
                 if(f instanceof HomeFragment){
-                    icon2Ripple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-                        @Override
-                        public void onComplete(RippleView rippleView) {
+
                             startActivity(new Intent(HomeActivity.this, NotificationActivity.class));
-                        }
-                    });
+
+                }
+            }
+        });
+        icon1Ripple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                Fragment f = getSupportFragmentManager().findFragmentById(R.id.container_body);
+                if(f instanceof HomeFragment){
+                    preferenceManager.setAuthToken("");
+                    startActivity(new Intent(HomeActivity.this, SignUpActivity.class));
+                    finish();
+
                 }
             }
         });

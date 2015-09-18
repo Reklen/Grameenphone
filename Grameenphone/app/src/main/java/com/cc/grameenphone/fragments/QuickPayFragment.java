@@ -9,8 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.cc.grameenphone.R;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * Created by rajkiran on 18/09/15.
@@ -19,16 +25,31 @@ public class QuickPayFragment extends Fragment {
     TopFragmentListener activityCommander;
 
     private static EditText payCode;
-    public interface TopFragmentListener{
+    @InjectView(R.id.textView2)
+    TextView textView2;
+    @InjectView(R.id.editTextQuickPayCode)
+    EditText editTextQuickPayCode;
+    @InjectView(R.id.submitbutton)
+    Button submitbutton;
+    @InjectView(R.id.quickPayFragment)
+    LinearLayout quickPayFragment;
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+
+    public interface TopFragmentListener {
         public void onclickQuickPay_QuickPayFragment(String PayCode);
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try{
+        try {
             activityCommander = (TopFragmentListener) activity;
-        }catch(ClassCastException e){
+        } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString());
         }
     }
@@ -36,23 +57,14 @@ public class QuickPayFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_quickpay_entercode,container, false);
-        payCode = (EditText) view.findViewById(R.id.editTextQuickPayCode);
-        Button submitbutton = (Button) view.findViewById(R.id.submitbutton);
-        submitbutton.setOnClickListener
-                (
-                        new View.OnClickListener()
-                        {
-                            public void onClick(View v)
-                            {
-                                buttonClicked(v);
-                            };
-                        }
-                );
+        View view = inflater.inflate(R.layout.fragment_quickpay_entercode, container, false);
+        ButterKnife.inject(this, view);
+
         return view;
     }
-    public void buttonClicked(View v)
-    {
-        activityCommander.onclickQuickPay_QuickPayFragment(payCode.getText().toString());
+
+    @OnClick(R.id.submitbutton)
+    void submitbuttonClicked() {
+        activityCommander.onclickQuickPay_QuickPayFragment(editTextQuickPayCode.getText().toString());
     }
 }
