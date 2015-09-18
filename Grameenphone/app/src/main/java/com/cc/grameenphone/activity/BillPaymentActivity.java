@@ -169,6 +169,8 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+        selectedPaymentButton.setVisibility(View.VISIBLE);
         int pos = billsListView.getPositionForView(buttonView);
         if (pos != ListView.INVALID_POSITION) {
            /* BillDetailsItems l = arraylist.get(pos);

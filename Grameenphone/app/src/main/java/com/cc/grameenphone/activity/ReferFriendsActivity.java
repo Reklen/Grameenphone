@@ -64,10 +64,11 @@ public class ReferFriendsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refer_friends);
         ButterKnife.inject(this);
-        if (preferenceManager.getReferCode() != null)
-            referCode.setText("" + preferenceManager.getReferCode());
-        else
-            referCode.setText("No ReferCode Available");
+        // Refercode availability check
+        preferenceManager = new PreferenceManager(ReferFriendsActivity.this);
+        referCode.setText("" + preferenceManager.getReferCode());
+
+
         backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
@@ -106,7 +107,7 @@ public class ReferFriendsActivity extends AppCompatActivity {
 
     @OnClick(R.id.confirm_btn)
     void confirmClick() {
-        preferenceManager = new PreferenceManager(ReferFriendsActivity.this);
+
         android_id = Settings.Secure.getString(ReferFriendsActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         referFriendsApi = ServiceGenerator.createService(ReferFriendsApi.class);
