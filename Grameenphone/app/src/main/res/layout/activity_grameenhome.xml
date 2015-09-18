@@ -82,13 +82,13 @@
                                 android:layout_marginBottom="16dp"
                                 android:layout_marginTop="16dp"
                                 android:layout_toRightOf="@+id/icon1"
-                                android:background="#8d000000"
+                                android:background="@drawable/wallet_text_bg"
                                 android:gravity="center"
                                 android:paddingLeft="4dp"
+                                android:paddingRight="4dp"
                                 android:text="৳ 0.0"
                                 android:textColor="@color/white"
-                                android:textSize="10sp"
-                                android:textStyle="bold" />
+                                android:textSize="10sp" />
 
                         </com.cc.grameenphone.views.RippleView>
 
@@ -98,9 +98,9 @@
                             rv_zoom="true"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:padding="1dp"
                             android:layout_alignParentRight="true"
                             android:layout_marginRight="8dp"
+                            android:padding="1dp"
                             app:rv_rippleDuration="100">
 
                             <ImageButton
