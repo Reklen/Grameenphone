@@ -57,9 +57,7 @@
                 android:layout_toRightOf="@+id/backRipple"
                 android:gravity="center_vertical"
                 android:text="Add Favorite"
-                android:textColor="@color/white"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+                android:textColor="@color/white" />
 
 
         </RelativeLayout>

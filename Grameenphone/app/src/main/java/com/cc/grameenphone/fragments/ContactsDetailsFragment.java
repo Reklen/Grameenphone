@@ -2,6 +2,7 @@ package com.cc.grameenphone.fragments;
 
 import android.app.Activity;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -15,20 +16,24 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.utils.CircularContactView;
+import com.cc.grameenphone.utils.Constants;
 import com.cc.grameenphone.utils.ContactImageUtil;
 import com.cc.grameenphone.utils.ContactsQuery;
 import com.cc.grameenphone.utils.ImageCache;
 import com.cc.grameenphone.utils.Logger;
+import com.cc.grameenphone.utils.PhoneUtils;
 import com.cc.grameenphone.utils.async_task_thread_pool.AsyncTaskEx;
 import com.cc.grameenphone.utils.async_task_thread_pool.AsyncTaskThreadPool;
 import com.cc.grameenphone.views.lv.PinnedHeaderListView;
 import com.cc.grameenphone.views.lv.SearchablePinnedHeaderListViewAdapter;
 import com.cc.grameenphone.views.lv.StringArrayAlphabetIndexer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -59,7 +64,7 @@ public class ContactsDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.contactspage_layout, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_contacts, container, false);
         setHasOptionsMenu(true);
         contextWrapper = new ContextWrapper(getActivity());
         mInflater = LayoutInflater.from(getActivity());
@@ -84,8 +89,17 @@ public class ContactsDetailsFragment extends Fragment {
         mListView.setPinnedHeaderView(mInflater.inflate(R.layout.pinned_header_listview_side_header, mListView, false));
         mListView.setAdapter(mAdapter);
         mListView.setOnScrollListener(mAdapter);
-        mListView.setEnableHeaderTransparencyChanges(false);
+        mListView.setEnableHeaderTransparencyChanges(true);
 
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent d = new Intent();
+                d.putExtra(Constants.RETURN_RESULT, mAdapter.getItem(i).number);
+                getActivity().setResult(getActivity().RESULT_OK, d);
+                getActivity().finish();
+            }
+        });
         // Inflate the layout for this fragment
         return rootView;
     }
@@ -112,12 +126,8 @@ public class ContactsDetailsFragment extends Fragment {
                         cursor.getString(ContactsQuery.LOOKUP_KEY));
                 contact.displayName = cursor.getString(ContactsQuery.DISPLAY_NAME);
                 contact.photoId = cursor.getString(ContactsQuery.PHOTO_THUMBNAIL_DATA);
-                try {
-                    contact.number = cursor.getString(ContactsQuery.NUMBER);
-                    Logger.d("Contacts", cursor.getString(ContactsQuery.NUMBER) + "");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                contact.number = cursor.getString(ContactsQuery.PHONE_NUMBER);
+                Logger.d("Number" + contact.number);
                 result.add(contact);
             }
 
@@ -161,7 +171,7 @@ public class ContactsDetailsFragment extends Fragment {
         mAdapter.mAsyncTaskThreadPool.cancelAllTasks(true);
     }
 
-    private static class Contact {
+    public class Contact implements Serializable {
         long contactId;
         Uri contactUri;
         String displayName;
@@ -211,13 +221,14 @@ public class ContactsDetailsFragment extends Fragment {
             final View rootView;
             if (convertView == null) {
                 holder = new ViewHolder();
-                rootView = mInflater.inflate(R.layout.listview_item, parent, false);
+                rootView = mInflater.inflate(R.layout.adapter_item_contact, parent, false);
                 holder.friendProfileCircularContactView = (CircularContactView) rootView
                         .findViewById(R.id.listview_item__friendPhotoImageView);
                 holder.friendProfileCircularContactView.getTextView().setTextColor(0xFFffffff);
                 holder.friendName = (TextView) rootView
                         .findViewById(R.id.listview_item__friendNameTextView);
                 holder.headerView = (TextView) rootView.findViewById(R.id.header_text);
+                holder.numberTextView = (TextView) rootView.findViewById(R.id.listview_item__friendNumberTextView);
                 rootView.setTag(holder);
             } else {
                 rootView = convertView;
@@ -226,6 +237,8 @@ public class ContactsDetailsFragment extends Fragment {
             final Contact contact = getItem(position);
             final String displayName = contact.displayName;
             holder.friendName.setText(displayName);
+            String num = PhoneUtils.normalizeNum(contact.number);
+            holder.numberTextView.setText(num);
             boolean hasPhoto = !TextUtils.isEmpty(contact.photoId);
             if (holder.updateTask != null && !holder.updateTask.isCancelled())
                 holder.updateTask.cancel(true);
@@ -294,7 +307,7 @@ public class ContactsDetailsFragment extends Fragment {
     // /////////////
     private static class ViewHolder {
         public CircularContactView friendProfileCircularContactView;
-        TextView friendName, headerView;
+        TextView friendName, headerView, numberTextView;
         public AsyncTaskEx<Void, Void, Bitmap> updateTask;
     }
 

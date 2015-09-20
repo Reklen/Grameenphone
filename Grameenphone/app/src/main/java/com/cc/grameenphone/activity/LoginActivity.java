@@ -204,6 +204,11 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
                     if (model.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
                         Logger.d("Its msisdn check ", "success " + model.getCommand().getAUTHTOKEN().toString());
                         preferenceManager.setAuthToken(model.getCommand().getAUTHTOKEN());
+                        preferenceManager.setPINCode(walletPinNumber.getText().toString());
+                        if (model.getCommand().getRFRCODE() != null)
+                            preferenceManager.setReferCode(model.getCommand().getRFRCODE());
+                        else
+                            preferenceManager.setReferCode("No Refercode Available");
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                         preferenceManager.setMSISDN(phoneNumberEditText.getText().toString());
                         finish();

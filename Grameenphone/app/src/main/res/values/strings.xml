@@ -7,7 +7,7 @@
     <string name="action_search">Search</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
-
+    <string name="accessibility_overflow">overflow</string>
     <string name="nav_item_home">Home</string>
     <string name="nav_item_friends">Profile</string>
     <string name="nav_item_notifications">Manage Favorites</string>
@@ -127,6 +127,8 @@ egestas</string>
 ing elit. Morbi commodo,ipsum sed pharetra gravi-\n
 da, orci magna rhoncus neque id pulvinar odio\n
 lorem non turpis. Nullam sit amet enim</string>
+    <string name="title_activity_quickpay">QuickpayActivity</string>
+    <string name="title_activity_ansbvs">ANSBVS</string>
 
 
 </resources>

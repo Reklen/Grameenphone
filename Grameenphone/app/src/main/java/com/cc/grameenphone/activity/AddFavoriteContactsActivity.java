@@ -105,7 +105,7 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
                         cursor.getString(ContactsQuery.LOOKUP_KEY));
                 contact.displayName = cursor.getString(ContactsQuery.DISPLAY_NAME);
                 contact.photoId = cursor.getString(ContactsQuery.PHOTO_THUMBNAIL_DATA);
-                contact.number = cursor.getString(ContactsQuery.NUMBER);
+                contact.number = cursor.getString(ContactsQuery.PHONE_NUMBER);
                 result.add(contact);
             }
 
@@ -228,7 +228,7 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
             final View rootView;
             if (convertView == null) {
                 holder = new ViewHolder();
-                rootView = mInflater.inflate(R.layout.listview_item, parent, false);
+                rootView = mInflater.inflate(R.layout.adapter_item_contact, parent, false);
                 holder.friendProfileCircularContactView = (CircularContactView) rootView
                         .findViewById(R.id.listview_item__friendPhotoImageView);
                 holder.friendProfileCircularContactView.getTextView().setTextColor(0xFFffffff);

@@ -43,7 +43,7 @@ public class ManageFavoriteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.manage_favorite_layout, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_manage_favs, container, false);
 
         SwipeMenuListView listView = (SwipeMenuListView) rootView.findViewById(R.id.transactionList);
 

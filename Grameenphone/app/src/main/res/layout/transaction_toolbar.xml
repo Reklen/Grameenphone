@@ -1,5 +1,4 @@
-<android.support.v7.widget.Toolbar
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/transactionToolbar"
     android:layout_width="match_parent"
@@ -8,7 +7,6 @@
     android:contentInsetLeft="0dp"
     android:contentInsetStart="0dp"
     android:minHeight="?attr/actionBarSize"
-
     app:contentInsetLeft="0dp"
     app:contentInsetStart="0dp">
 
@@ -39,6 +37,7 @@
 
         <TextView
             android:id="@+id/text_tool"
+            style="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
@@ -47,9 +46,7 @@
             android:layout_toRightOf="@+id/backRipple"
             android:gravity="center_vertical"
             android:text="@string/transaction_tool"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            android:textStyle="bold" />
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 

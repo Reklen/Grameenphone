@@ -74,6 +74,7 @@
         android:dividerHeight="0px"
         android:fadeScrollbars="true"
         android:fastScrollEnabled="true"
+        android:listSelector="@drawable/rowbackgroundselector"
         android:scrollingCache="true"
         tools:listitem="@layout/listview_item" />
 </RelativeLayout>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="16dp">
 
     <LinearLayout
         android:id="@+id/list_container"
@@ -22,17 +22,18 @@
                 android:id="@+id/accountNoText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/acc_number"
-                android:textColor="@color/black"
-                android:textSize="17sp" />
+                android:text="Acc. No    :"
+                android:textColor="@color/black_semi_transparent"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/accountNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="123432"
-                android:textColor="@color/black"
-                android:textSize="17sp" />
+                android:layout_marginLeft="16dp"
+                android:textColor="@color/black_semi_transparent"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -46,28 +47,30 @@
                 android:id="@+id/comp_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/company"
-
-                android:textSize="15sp" />
+                android:text="Company :"
+                android:textColor="@color/black_semi_transparent"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/companyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DESCO"
-                android:textSize="15sp" />
+                android:layout_marginLeft="16dp"
+                android:textColor="@color/black_semi_transparent"
+                android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
 
     <Button
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
+        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:background="@drawable/login_button"
-        android:text="CANCEL"
-        android:textColor="@color/white"
-
-        />
+        android:focusable="false"
+        android:text="Cancel"
+        android:textColor="@color/white" />
 
 </RelativeLayout>

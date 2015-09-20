@@ -19,7 +19,7 @@
             android:id="@+id/firstName_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp">
+            android:layout_marginTop="20dp">
 
             <EditText
                 android:id="@+id/first_nameEdit"
@@ -33,7 +33,7 @@
             android:id="@+id/lastName_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp">
+            android:layout_marginTop="20dp">
 
             <EditText
                 android:id="@+id/last_nameEdit"
@@ -47,7 +47,7 @@
             android:id="@+id/emailid_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp">
+            android:layout_marginTop="20dp">
 
             <EditText
                 android:id="@+id/email_idEdit"
@@ -61,7 +61,7 @@
             android:id="@+id/nationalId_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp">
+            android:layout_marginTop="20dp">
 
             <EditText
                 android:id="@+id/national_idEdit"
@@ -74,7 +74,7 @@
             android:id="@+id/dateOfBirth_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp">
+            android:layout_marginTop="20dp">
 
             <EditText
                 android:id="@+id/date_of_birthEdit"

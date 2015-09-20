@@ -1,26 +1,41 @@
 package com.cc.grameenphone.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.adapter.BillsListAdapter;
+import com.cc.grameenphone.api_models.BalanceEnquiryModel;
 import com.cc.grameenphone.api_models.BillListModel;
+import com.cc.grameenphone.api_models.UserBillsModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.BillspaymentApi;
+import com.cc.grameenphone.interfaces.WalletCheckApi;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
+import com.cc.grameenphone.utils.ToolBarUtils;
 import com.cc.grameenphone.views.RippleView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -36,6 +51,8 @@ import retrofit.client.Response;
 public class BillPaymentActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
 
+    @InjectView(R.id.quickpayButton)
+    Button qquickpayButton;
     @InjectView(R.id.backRipple)
     RippleView backRipple;
     @InjectView(R.id.toolbar_text)
@@ -49,7 +66,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     @InjectView(R.id.billContainer)
     RelativeLayout billContainer;
     @InjectView(R.id.billsList)
-    ListView billsList;
+    ListView billsListView;
     @InjectView(R.id.selectedPaymentButton)
     Button selectedPaymentButton;
     @InjectView(R.id.otherPaymentButton)
@@ -57,18 +74,42 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     BillsListAdapter listViewAdapter;
     BillspaymentApi billspaymentApi;
     MaterialDialog otpDialog, successSignupDialog, errorDialog;
+    @InjectView(R.id.image_back)
+    ImageButton imageBack;
+    @InjectView(R.id.selectedPayRippleView)
+    RippleView selectedPayRippleView;
+    @InjectView(R.id.quickPayRippleView)
+    RippleView quickPayRippleView;
+    @InjectView(R.id.otherPayRippleView)
+    RippleView otherPayRippleView;
+    @InjectView(R.id.icon1)
+    ImageButton icon1;
+    @InjectView(R.id.walletLabel)
+    TextView walletLabel;
+    @InjectView(R.id.icon1Ripple)
+    RippleView icon1Ripple;
     private String android_id;
     PreferenceManager preferenceManager;
+    List<UserBillsModel> userBillsModels;
+    private WalletCheckApi walletCheckApi;
+    List<String> billsSelectedList;
+
+    MaterialDialog walletBalanceDialog;
 
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bill_payment_activity);
+        setContentView(R.layout.activity_bill_payment);
         ButterKnife.inject(this);
         setupToolbar();
         //TODO Listing total number of bills
-
+        userBillsModels = new ArrayList<>();
+        billsSelectedList = new ArrayList<>();
+        View emptyView = LayoutInflater.from(BillPaymentActivity.this).inflate(R.layout.empty_bills_list, null);
+        listViewAdapter = new BillsListAdapter(BillPaymentActivity.this, userBillsModels);
+        billsListView.setAdapter(listViewAdapter);
+        billsListView.setEmptyView(emptyView);
         android_id = Settings.Secure.getString(BillPaymentActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         preferenceManager = new PreferenceManager(BillPaymentActivity.this);
@@ -86,6 +127,21 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             billspaymentApi.billsPay(jsonObject, new Callback<BillListModel>() {
                 @Override
                 public void success(BillListModel billListModel, Response response) {
+                    Logger.d("BILLS response", billListModel.toString());
+                    if (billListModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+
+                        if (billListModel.getCOMMAND().getMessage().getComapny() != null) {
+                            Logger.d("BILLS response", billListModel.getCOMMAND().getMessage().getComapny().toString());
+                            List<UserBillsModel> bills = billListModel.getCOMMAND().getMessage().getComapny();
+                            userBillsModels.addAll(bills);
+                            listViewAdapter.notifyDataSetChanged();
+                        } else {
+                            //dontknwo
+                        }
+
+                    } else {
+
+                    }
 
                 }
 
@@ -99,11 +155,10 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-       /* listViewAdapter = new BillsListAdapter(this, arraylist);
-        billsList.setAdapter(listViewAdapter);*/
-
-        /*selectedPaymentButton.setOnClickListener(new View.OnClickListener() {
+        setupListViewItemClick();
+        setupRipples();
+        getWalletBalance();
+       /* selectedPaymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 paySelectDialog = new AppCompatDialog(BillPaymentActivity.this);
@@ -129,6 +184,71 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         });*/
     }
 
+    private void setupListViewItemClick() {
+        billsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CheckBox checkBox = (CheckBox) view.findViewById(R.id.billCheckBox);
+                UserBillsModel userBillsModel = (UserBillsModel) listViewAdapter.getItem(position);
+                if (billsSelectedList.contains(position + "")) {
+                    billsSelectedList.remove(position + "");
+                    checkBox.setChecked(false);
+                    userBillsModel.setIsSelected(false);
+                } else {
+                    billsSelectedList.add(position + "");
+                    checkBox.setChecked(true);
+                    userBillsModel.setIsSelected(true);
+                }
+
+                if (billsSelectedList.size() == 0) {
+                    listViewAdapter.togglePayButton(true);
+                    selectedPayRippleView.setVisibility(View.GONE);
+                    quickPayRippleView.setVisibility(View.VISIBLE);
+                    otherPayRippleView.setVisibility(View.VISIBLE);
+                } else {
+                    listViewAdapter.togglePayButton(false);
+                    selectedPayRippleView.setVisibility(View.VISIBLE);
+                    quickPayRippleView.setVisibility(View.GONE);
+                    otherPayRippleView.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    private void getWalletBalance() {
+
+        walletCheckApi = ServiceGenerator.createService(WalletCheckApi.class);
+        android_id = Settings.Secure.getString(BillPaymentActivity.this.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        try {
+            JSONObject jsonObject = new JSONObject();
+            JSONObject innerObject = new JSONObject();
+            innerObject.put("DEVICEID", android_id);
+            innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("TYPE", "CBEREQ");
+            jsonObject.put("COMMAND", innerObject);
+            Logger.d("wallet request ", jsonObject.toString());
+            walletCheckApi.checkBalance(jsonObject, new Callback<BalanceEnquiryModel>() {
+                @Override
+                public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
+                    if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                        Logger.d("Balance", balanceEnquiryModel.toString());
+                        walletLabel.setText("  ৳ " + balanceEnquiryModel.getCOMMAND().getBALANCE());
+                        walletLabel.setTag(balanceEnquiryModel);
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Logger.e("Balance", error.getMessage());
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void setupToolbar() {
         toolbarText.setText("Bill Payment");
         setSupportActionBar(toolbar);
@@ -138,18 +258,92 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                 finish();
             }
         });
+
+        walletBalanceDialog = new MaterialDialog(BillPaymentActivity.this);
+        icon1Ripple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                BalanceEnquiryModel md = (BalanceEnquiryModel) walletLabel.getTag();
+                if (md != null) {
+                    walletBalanceDialog.setMessage(md.getCOMMAND().getMESSAGE());
+                    walletBalanceDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            walletBalanceDialog.dismiss();
+                        }
+                    });
+                    walletBalanceDialog.show();
+                }
+
+            }
+        });
     }
 
 
-
-   @Override
+    @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        int pos = billsList.getPositionForView(buttonView);
+
+        selectedPaymentButton.setVisibility(View.VISIBLE);
+        int pos = billsListView.getPositionForView(buttonView);
         if (pos != ListView.INVALID_POSITION) {
            /* BillDetailsItems l = arraylist.get(pos);
             l.setSelected(isChecked);*/
 
         }
+    }
+
+    void setupRipples() {
+
+        selectedPayRippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+
+            }
+        });
+
+        quickPayRippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                startActivity(new Intent(BillPaymentActivity.this, QuickPayActivity.class));
+            }
+        });
+        otherPayRippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+
+                startActivity(new Intent(BillPaymentActivity.this, OtherPaymentActivity.class));
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.bill_payment_menu, menu);
+        int srcColor = 0xFFFFFFFF;
+        ToolBarUtils.colorizeToolbar(toolbar, srcColor, BillPaymentActivity.this);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.newAssociation) {
+            startActivity(new Intent(BillPaymentActivity.this, NewAssociationActivity.class));
+            return true;
+        }
+        if (id == R.id.cancelAssociation) {
+            startActivity(new Intent(BillPaymentActivity.this, CancelAssociationActivity.class));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 

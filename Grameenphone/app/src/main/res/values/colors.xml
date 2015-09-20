@@ -5,14 +5,14 @@
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
-    <color name="colorAccent">#0089ad</color>
+    <color name="colorAccent">#007ae0</color>
+    <color name="colorListSelector">#330089ad</color>
     <color name="black_semi_transparent">#B2000000</color>
     <color name="black_35_percent">#59000000</color>
     <color name="black_75_percent">#BF000000</color>
     <color name="hint_color">#d2d2d2</color>
     <color name="color_error">#f44336</color>
     <color name="color_success">#3CCD88</color>
-
 
 
     <!-- used as background colors for contacts that don't have photos -->

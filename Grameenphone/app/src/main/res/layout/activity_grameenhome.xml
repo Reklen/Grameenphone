@@ -47,15 +47,15 @@
 
                         <TextView
                             android:id="@+id/toolbar_text"
+                            style="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Title"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
+                            android:layout_marginLeft="6dp"
                             android:layout_toRightOf="@+id/backRipple"
                             android:gravity="center_vertical"
-                            android:text=""
-                            android:textColor="@color/white"
-                            android:textSize="17sp"
-                            android:textStyle="bold" />
+                            android:text="Grameenphone"
+                            android:textColor="@color/white" />
 
                         <com.cc.grameenphone.views.RippleView
                             android:id="@+id/icon1Ripple"
@@ -127,6 +127,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
+            app:headerLayout="@layout/nav_drawer_header"
             app:menu="@menu/menu_grameenhome" />
     </android.support.v4.widget.DrawerLayout>
 

@@ -1,16 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <include
-        android:id="@+id/notification_toolbar"
-        layout="@layout/other_payment_toolbar"/>
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:contentInsetLeft="0dp"
+        android:contentInsetStart="0dp"
+        android:minHeight="?attr/actionBarSize"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        tools:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        tools:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <com.cc.grameenphone.views.RippleView
+                android:id="@+id/backRipple"
+                rv_centered="true"
+                rv_zoom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="10dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                app:rv_rippleDuration="100">
+
+                <ImageButton
+                    android:id="@+id/image_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:src="@drawable/icon_back" />
+
+            </com.cc.grameenphone.views.RippleView>
+
+            <TextView
+                android:id="@+id/toolbar_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_toRightOf="@+id/backRipple"
+                android:gravity="center_vertical"
+                android:text="Notification"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
     <ListView
-        android:id="@+id/notifi_list_view"
+        android:id="@+id/notificationList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/notification_row_item"/>
+        tools:listitem="@layout/notification_row_item" />
 
 </LinearLayout>

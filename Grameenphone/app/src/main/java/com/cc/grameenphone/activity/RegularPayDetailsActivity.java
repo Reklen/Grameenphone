@@ -45,7 +45,7 @@ public class RegularPayDetailsActivity extends AppCompatActivity {
         pinNumbEdit= (EditText) findViewById(R.id.pinNumbEdit);
 
         //Button
-        confrim_btn= (Button) findViewById(R.id.conform_btn);
+        confrim_btn= (Button) findViewById(R.id.confirm_btn);
         confrim_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatDialog;
 import android.view.LayoutInflater;
@@ -19,13 +20,13 @@ import com.cc.grameenphone.interfaces.PinchangeApi;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.MyPasswordTransformationMethod;
 import com.cc.grameenphone.utils.PreferenceManager;
+import com.cc.grameenphone.views.RippleView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -49,6 +50,14 @@ public class PinChangeFragment extends Fragment {
 
     ProgressDialog loadingDialog;
     PinchangeApi pinchnageApi;
+    @InjectView(R.id.oldPinEditTextLayout)
+    TextInputLayout oldPinEditTextLayout;
+    @InjectView(R.id.newPineditTextLayout)
+    TextInputLayout newPineditTextLayout;
+    @InjectView(R.id.confirmPinEditTextLayout)
+    TextInputLayout confirmPinEditTextLayout;
+    @InjectView(R.id.confirmRipple)
+    RippleView confirmRipple;
     private String android_id;
     PreferenceManager preferenceManager;
     MaterialDialog successSignupDialog, errorDialog;
@@ -74,6 +83,13 @@ public class PinChangeFragment extends Fragment {
         oldPinEditText.setTransformationMethod(new MyPasswordTransformationMethod());
         newPineditText.setTransformationMethod(new MyPasswordTransformationMethod());
         confirmPinEditText.setTransformationMethod(new MyPasswordTransformationMethod());
+
+        confirmRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+               confirmClick();
+            }
+        });
         return rootView;
     }
 
@@ -93,7 +109,6 @@ public class PinChangeFragment extends Fragment {
         ButterKnife.reset(this);
     }
 
-    @OnClick(R.id.confirmButton)
     void confirmClick() {
 
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),

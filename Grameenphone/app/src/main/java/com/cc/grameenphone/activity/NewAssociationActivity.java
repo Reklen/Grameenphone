@@ -1,78 +1,126 @@
 package com.cc.grameenphone.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.adapter.BillPaymentViewPagerAdapter;
+import com.cc.grameenphone.api_models.CompanyListModel;
+import com.cc.grameenphone.generator.ServiceGenerator;
+import com.cc.grameenphone.interfaces.ManageAssociationApi;
+import com.cc.grameenphone.utils.Logger;
+import com.cc.grameenphone.utils.PreferenceManager;
+import com.cc.grameenphone.views.RippleView;
 import com.cc.grameenphone.views.tabs.SlidingTabLayout;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by Rajkiran on 9/11/2015.
  */
-public class NewAssociationActivity extends ActionBarActivity {
-    Toolbar toolbar;
-    LinearLayout toolbarLayout;
-    TextView toolbarText;
-    ImageView toolbarIcon;
+public class NewAssociationActivity extends AppCompatActivity {
+
 
     BillPaymentViewPagerAdapter adapter;
-    ViewPager pager;
+
+    CharSequence titles[] = {"ELECTRICITY", "GAS", "INSURANCE", "TICKETING", "INTERNET"};
+    int numOfTabs = 5;
+    Toolbar otherToolbar;
+    @InjectView(R.id.image_back)
+    ImageButton imageBack;
+    @InjectView(R.id.backRipple)
+    RippleView backRipple;
+    @InjectView(R.id.toolbar_text)
+    TextView toolbarText;
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
+    @InjectView(R.id.tabs)
     SlidingTabLayout tabs;
-    CharSequence Titles[]={"ELECTRICITY","GAS","INSURANCE","TICKETING","INTERNET"};
-    int NumOfTabs=5;
-    RelativeLayout electricityTabLayout;
-    EditText enterBillNumbEdit;
-    Button confrmBtn;
+    @InjectView(R.id.pager)
+    ViewPager pager;
 
-
+    ManageAssociationApi associationApi;
+    ProgressDialog loadingDialog;
+    private String android_id;
+    private PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.payment_activity);
-        toolbar= (Toolbar) findViewById(R.id.other_tool_bar);
-        toolbarLayout= (LinearLayout) findViewById(R.id.toolbar_container);
-        toolbarLayout.setVisibility(View.VISIBLE);
-        toolbarText= (TextView) findViewById(R.id.toolbar_text);
+        setContentView(R.layout.activity_new_association);
+        ButterKnife.inject(this);
+        android_id = Settings.Secure.getString(NewAssociationActivity.this.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        preferenceManager = new PreferenceManager(NewAssociationActivity.this);
+        loadingDialog = new ProgressDialog(NewAssociationActivity.this);
+        loadingDialog.setMessage("Loading ..");
         toolbarText.setText("New Association");
-        toolbarIcon= (ImageView) findViewById(R.id.toolbar_icon);
-        toolbarIcon.setVisibility(View.GONE);
+        associationApi = ServiceGenerator.createService(ManageAssociationApi.class);
+        fetchList();
+        backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                finish();
+            }
+        });
+        adapter = new BillPaymentViewPagerAdapter(getSupportFragmentManager(), titles, numOfTabs, 1);
 
-            adapter=new BillPaymentViewPagerAdapter(getSupportFragmentManager(),Titles,NumOfTabs,1);
+        pager = (ViewPager) findViewById(R.id.pager);
+        pager.setAdapter(adapter);
 
-            pager= (ViewPager) findViewById(R.id.pager);
-            pager.setAdapter(adapter);
+        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
+        tabs.setDistributeEvenly(true);
 
-            tabs= (SlidingTabLayout) findViewById(R.id.tabs);
-            tabs.setDistributeEvenly(true);
+        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.white);
+            }
+        });
+        tabs.setViewPager(pager);
 
-            tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+
+    }
+
+    private void fetchList() {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            JSONObject innerObject = new JSONObject();
+            innerObject.put("DEVICEID", android_id);
+            innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("TYPE", "FBILASCREQ");
+            jsonObject.put("COMMAND", innerObject);
+            Logger.d("sending json", jsonObject.toString());
+            associationApi.fetchAssociaition(jsonObject, new Callback<CompanyListModel>() {
                 @Override
-                public int getIndicatorColor(int position) {
-                    return getResources().getColor(R.color.white);
+                public void success(CompanyListModel companyListModel, Response response) {
+                    Logger.d("Companyies ", companyListModel.toString());
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
                 }
             });
-            tabs.setViewPager(pager);
-
-        /*   electricityTabLayout= (RelativeLayout) findViewById(R.id.electricity_container);
-        electricityTabLayout.setVisibility(View.VISIBLE);
-        enterBillNumbEdit= (EditText) findViewById(R.id.bill_numbEdit);
-      // enterBillNumbEdit.setVisibility(View.GONE);
-        confrmBtn= (Button) findViewById(R.id.sbmt_btn);*/
-       // confrmBtn.setText("Confirm");
-
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 
-    }
+}
 

@@ -5,6 +5,7 @@ package com.cc.grameenphone.utils;
  */
 public class IntentUtils {
 
+public  static int SELECT_CONTACT_REQ =01;
 
 
 

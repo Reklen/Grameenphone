@@ -14,8 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/transactionToolbar"
         android:layout_centerHorizontal="true"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        tools:listitem="@layout/transaction_row_layout" />
+        android:listSelector="@drawable/rowbackgroundselector"
+        tools:listitem="@layout/adapter_item_transaction" />
 
 </RelativeLayout>
