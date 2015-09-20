@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -17,7 +16,14 @@ import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.cc.grameenphone.R;
+import com.cc.grameenphone.adapter.ManageFavAdapter;
+import com.cc.grameenphone.api_models.ContactModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import co.uk.rushorm.core.RushSearch;
+import co.uk.rushorm.core.RushSearchCallback;
 import me.drakeet.materialdialog.MaterialDialog;
 
 /**
@@ -28,7 +34,8 @@ public class ManageFavoriteFragment extends Fragment {
 
     MaterialDialog confirmDialog;
     FloatingActionButton addBtn;
-    String array[] = {"Tadjdj", "HHHKhkbkdj", "Hjbdkhbkb", "dhjbfbf", "bfkhbsdbd", "cjssdhjjhd", "Tadjdj", "HHHKhkbkdj", "Hjbdkhbkb", "dhjbfbf", "bfkhbsdbd", "cjssdhjjhd"};
+    ManageFavAdapter adapter;
+    List<ContactModel> contactModelList;
 
     public ManageFavoriteFragment() {
         // Required empty public constructor
@@ -45,7 +52,7 @@ public class ManageFavoriteFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_manage_favs, container, false);
 
-        SwipeMenuListView listView = (SwipeMenuListView) rootView.findViewById(R.id.transactionList);
+        final SwipeMenuListView listView = (SwipeMenuListView) rootView.findViewById(R.id.transactionList);
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
@@ -70,7 +77,7 @@ public class ManageFavoriteFragment extends Fragment {
         listView.setMenuCreator(creator);
         listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
-            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+            public boolean onMenuItemClick(final int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
 
@@ -86,6 +93,12 @@ public class ManageFavoriteFragment extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 confirmDialog.dismiss();
+                          /*  listView.getAdapter().getItem(position).delete(new RushCallback() {
+                                    @Override
+                                    public void complete() {
+                                        ((ManageFavAdapter) listView.getAdapter()).remove(position);
+                                    }
+                                });*/
 
                             }
                         });
@@ -101,10 +114,37 @@ public class ManageFavoriteFragment extends Fragment {
 
         // Left
         listView.setSwipeDirection(SwipeMenuListView.DIRECTION_LEFT);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, array);
-        listView.setAdapter(arrayAdapter);
+        contactModelList = new ArrayList<>();
+        adapter = new ManageFavAdapter(contactModelList, getActivity());
+        listView.setAdapter(adapter);
+
+        fetchList();
 
         return rootView;
+    }
+
+    private void fetchList() {
+        new RushSearch()
+                .find(ContactModel.class, new RushSearchCallback<ContactModel>() {
+                    @Override
+                    public void complete(List<ContactModel> list) {
+                        contactModelList.clear();
+                        contactModelList.addAll(list);
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+
+                    }
+                });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        fetchList();
     }
 
     @Override

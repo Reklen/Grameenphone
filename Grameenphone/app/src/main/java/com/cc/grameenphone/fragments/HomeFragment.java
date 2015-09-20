@@ -182,8 +182,14 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (editamt.getText().charAt(editamt.length() - 1) == '৳') {
+                try {
+                    if (editamt.getText().charAt(editamt.length() - 1) == '৳') {
+                        editamt.setText("৳ ");
+                        editamt.setSelection(editamt.getText().length());
+                    }
+                } catch (Exception e) {
                     editamt.setText("৳ ");
+                    editamt.setSelection(editamt.getText().length());
                 }
             }
 

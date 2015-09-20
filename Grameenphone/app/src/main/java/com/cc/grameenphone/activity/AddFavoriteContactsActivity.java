@@ -15,14 +15,17 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
+import com.cc.grameenphone.api_models.ContactModel;
 import com.cc.grameenphone.utils.CircularContactView;
 import com.cc.grameenphone.utils.ContactImageUtil;
 import com.cc.grameenphone.utils.ContactsQuery;
 import com.cc.grameenphone.utils.ImageCache;
+import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.async_task_thread_pool.AsyncTaskEx;
 import com.cc.grameenphone.utils.async_task_thread_pool.AsyncTaskThreadPool;
 import com.cc.grameenphone.views.lv.PinnedHeaderListView;
@@ -35,6 +38,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+
+import co.uk.rushorm.core.RushCallback;
 
 public class AddFavoriteContactsActivity extends AppCompatActivity {
     private LayoutInflater mInflater;
@@ -79,6 +84,24 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
         mListView.setAdapter(mAdapter);
         mListView.setOnScrollListener(mAdapter);
         mListView.setEnableHeaderTransparencyChanges(false);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Contact contact = ((ContactsAdapter) mListView.getAdapter()).getItem(position);
+                final ContactModel contactModel = new ContactModel();
+                contactModel.setName(contact.displayName);
+                contactModel.setNumber(contact.number);
+                contactModel.setPhotoId(contact.photoId);
+                contactModel.save(new RushCallback() {
+                    @Override
+                    public void complete() {
+                        Logger.d("Contact adding to fav", contactModel.getId() + "");
+                        finish();
+                    }
+                });
+            }
+        });
 
         // Inflate the layout for this fragment
     }
@@ -310,7 +333,10 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
             return mContacts;
         }
 
-
+        @Override
+        public Contact getItem(int position) {
+            return mContacts.get(position);
+        }
     }
 
     // /////////////////////////////////////////////////////////////////////////////////////
