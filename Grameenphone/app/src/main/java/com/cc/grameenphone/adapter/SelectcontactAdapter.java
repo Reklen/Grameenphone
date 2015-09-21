@@ -5,14 +5,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.cc.grameenphone.fragments.ContactsDetailsFragment;
-import com.cc.grameenphone.fragments.FavoritesFragment;
+import com.cc.grameenphone.fragments.ManageFavoriteFragment;
 
 /**
  * Created by rajkiran on 09/09/15.
  */
 public class SelectcontactAdapter extends FragmentPagerAdapter {
 
-    String tabs[] = {"Favorites","Contacts"};
+    String tabs[] = {"Favorites", "Contacts"};
+
     public SelectcontactAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -21,15 +22,16 @@ public class SelectcontactAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                FavoritesFragment art=new FavoritesFragment();
+                ManageFavoriteFragment art = new ManageFavoriteFragment();
                 return art;
 
             case 1:
-                ContactsDetailsFragment dscn=new ContactsDetailsFragment();
+                ContactsDetailsFragment dscn = new ContactsDetailsFragment();
                 return dscn;
         }
         return null;
     }
+
     @Override
     public CharSequence getPageTitle(int position) {
         return tabs[position];

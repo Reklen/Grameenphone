@@ -1,12 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:local="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -16,8 +15,8 @@
         android:minHeight="?attr/actionBarSize"
         app:contentInsetLeft="0dp"
         app:contentInsetStart="0dp"
-        local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
 
         <RelativeLayout
@@ -77,6 +76,7 @@
                     android:background="@null"
                     android:src="@drawable/icon_wallet_balance" />
 
+
                 <TextView
                     android:id="@+id/walletLabel"
                     android:layout_width="wrap_content"
@@ -84,13 +84,13 @@
                     android:layout_centerInParent="true"
                     android:layout_marginTop="16dp"
                     android:layout_toRightOf="@+id/icon1"
-                    android:background="#8d000000"
+                    android:background="@drawable/wallet_text_bg"
                     android:gravity="center"
                     android:paddingLeft="4dp"
-                    android:text=" ৳ 0.07  "
+                    android:paddingRight="4dp"
+                    android:text="৳ 0.0"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
+                    android:textSize="10sp" />
 
             </com.cc.grameenphone.views.RippleView>
 

@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ import com.cc.grameenphone.interfaces.ReferFriendsApi;
 import com.cc.grameenphone.utils.Constants;
 import com.cc.grameenphone.utils.IntentUtils;
 import com.cc.grameenphone.utils.Logger;
+import com.cc.grameenphone.utils.PhoneUtils;
 import com.cc.grameenphone.utils.PreferenceManager;
 import com.cc.grameenphone.views.RippleView;
 
@@ -27,7 +30,6 @@ import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -53,11 +55,22 @@ public class ReferFriendsActivity extends AppCompatActivity {
     RelativeLayout topContainer1;
     @InjectView(R.id.confirm_btn)
     Button confirmBtn;
+    @InjectView(R.id.image_back)
+    ImageButton imageBack;
+    @InjectView(R.id.toolbar_text)
+    TextView toolbarText;
+    @InjectView(R.id.toolbar_container)
+    RelativeLayout toolbarContainer;
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
+    @InjectView(R.id.confirmRipple)
+    RippleView confirmRipple;
     private String android_id;
     PreferenceManager preferenceManager;
     MaterialDialog successDialog, errorDialog;
 
     ReferFriendsApi referFriendsApi;
+    private String last8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +86,12 @@ public class ReferFriendsActivity extends AppCompatActivity {
             @Override
             public void onComplete(RippleView rippleView) {
                 finish();
+            }
+        });
+        confirmRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                confirmClick();
             }
         });
         phoneNumberEditText.setOnTouchListener(new View.OnTouchListener() {
@@ -98,15 +117,24 @@ public class ReferFriendsActivity extends AppCompatActivity {
         if (requestCode == IntentUtils.SELECT_CONTACT_REQ) {
             try {
                 Logger.d("Return Contact", "contacts " + ((String) data.getExtras().get(Constants.RETURN_RESULT)));
-                phoneNumberEditText.setText("" + ((String) data.getExtras().get(Constants.RETURN_RESULT)));
-               // PhoneNumberUtils.formatNumber(phoneNumberEditText, int defaultFormattingType);
+
+                String num = PhoneUtils.normalizeNum(((String) data.getExtras().get(Constants.RETURN_RESULT)));
+                num = num.replace("+", "");
+                String upToNCharacters = num.substring(0, Math.min(num.length(), 5));
+                if (upToNCharacters.equalsIgnoreCase("88017")) {
+                    last8 = num.substring(5, Math.min(num.length(), num.length()));
+                } else {
+                    last8 = num;
+                }
+
+
+                phoneNumberEditText.setText("" + last8);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    @OnClick(R.id.confirm_btn)
     void confirmClick() {
 
         android_id = Settings.Secure.getString(ReferFriendsActivity.this.getContentResolver(),
@@ -118,7 +146,7 @@ public class ReferFriendsActivity extends AppCompatActivity {
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
             innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
-            innerObject.put("MSISDN2", "017" + "18181819"/*+ phoneNumberEditText.getText().toString()*/);
+            innerObject.put("MSISDN2", "017" + phoneNumberEditText.getText().toString());
             innerObject.put("TYPE", "RFRFRDREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("pp", jsonObject.toString());
@@ -132,6 +160,7 @@ public class ReferFriendsActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 successDialog.dismiss();
+                                phoneNumberEditText.setText("");
                             }
                         });
                         successDialog.show();

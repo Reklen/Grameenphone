@@ -9,16 +9,16 @@ import java.util.List;
  */
 public class BillMessageModel {
     @SerializedName("COMPANY")
-    private List<BillsCompanyListModel> comapny;
+    private List<UserBillsModel> comapny;
 
     private String BILLCOUNT;
 
-    public List<BillsCompanyListModel> getComapny()
+    public List<UserBillsModel> getComapny()
     {
         return comapny;
     }
 
-    public void setComapny(List<BillsCompanyListModel> comapny)
+    public void setComapny(List<UserBillsModel> comapny)
     {
         this.comapny = comapny;
     }

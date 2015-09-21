@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="16dp"
@@ -19,6 +20,7 @@
             android:hint="Enter old pin"
             android:inputType="numberPassword"
             android:maxLength="4"
+            android:focusable="true"
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color" />
     </android.support.design.widget.TextInputLayout>
@@ -35,11 +37,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/oldPinEditText"
-            android:layout_marginTop="30dp"
             android:ems="4"
             android:hint="Set new pin"
             android:inputType="numberPassword"
             android:maxLength="4"
+            android:focusable="true"
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color" />
     </android.support.design.widget.TextInputLayout>
@@ -58,23 +60,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/newPineditText"
-            android:layout_marginTop="30dp"
             android:ems="4"
             android:hint="Confirm new pin"
             android:inputType="numberPassword"
             android:maxLength="4"
+            android:focusable="true"
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color" />
     </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/confirmButton"
+    <com.cc.grameenphone.views.RippleView
+        android:id="@+id/confirmRipple"
+        rv_centered="true"
+        rv_zoom="true"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:layout_below="@+id/confirmPinEditTextLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:background="@drawable/login_button"
-        android:text="Confirm"
-        android:textColor="@color/white" />
+        android:padding="1dp"
+        app:rv_rippleDuration="100">
+
+        <Button
+            android:id="@+id/confirmButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/login_button"
+            android:text="Confirm"
+            android:textColor="@color/white" />
+
+    </com.cc.grameenphone.views.RippleView>
 </RelativeLayout>

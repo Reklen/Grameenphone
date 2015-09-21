@@ -10,7 +10,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
-import com.cc.grameenphone.api_models.BillsCompanyListModel;
+import com.cc.grameenphone.api_models.UserBillsModel;
 import com.cc.grameenphone.viewmodels.BillDetailsViewHolder;
 
 import java.util.List;
@@ -20,15 +20,17 @@ import java.util.List;
  */
 public class BillsListAdapter extends BaseAdapter {
 
-    private List<BillsCompanyListModel> listitemslist;
+    private List<UserBillsModel> listitemslist;
     private Context mContext;
     private int focuseditem = 0;
     // LayoutInflater inflater = LayoutInflater inflater; (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     LayoutInflater inflater;
+    boolean isPayButtonVisible = true;
 
 
-    public BillsListAdapter(Context context, List<BillsCompanyListModel> list) {
+    public BillsListAdapter(Context context, List<UserBillsModel> list) {
         this.mContext = context;
+        inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.listitemslist = list;
     }
 
@@ -38,7 +40,7 @@ public class BillsListAdapter extends BaseAdapter {
     }
 
     @Override
-    public BillsCompanyListModel getItem(int i) {
+    public UserBillsModel getItem(int i) {
         return listitemslist.get(i);
     }
 
@@ -47,17 +49,16 @@ public class BillsListAdapter extends BaseAdapter {
         return 0;
     }
 
-    BillDetailsViewHolder holder;
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View itemView = null;
-        inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         if (convertView == null) {
 
-            itemView = inflater.inflate(R.layout.listrow, null);
+            itemView = inflater.inflate(R.layout.adapter_item_bill, null);
 
-            holder = new BillDetailsViewHolder();
+            BillDetailsViewHolder holder = new BillDetailsViewHolder();
             holder.accountNumber_String = (TextView) itemView.findViewById(R.id.accountNumberText);
             holder.billNumber_String = (TextView) itemView.findViewById(R.id.billNumber_String);
             holder.company_String = (TextView) itemView.findViewById(R.id.company_String);
@@ -71,10 +72,21 @@ public class BillsListAdapter extends BaseAdapter {
             holder.paybutton = (Button) itemView.findViewById(R.id.payButton);
             // holder.inr = (TextView) itemView.findViewById(R.id.inr);
             holder.value = (TextView) itemView.findViewById(R.id.totalBillAmount);
+            if (!isPayButtonVisible)
+                holder.paybutton.setVisibility(View.INVISIBLE);
+            else
+                holder.paybutton.setVisibility(View.VISIBLE);
+
             itemView.setTag(holder);
+            holder.checkBox.setTag(getItem(position));
 
         } else {
             itemView = convertView;
+            ((BillDetailsViewHolder) itemView.getTag()).checkBox.setTag(getItem(position));
+            if (!isPayButtonVisible)
+                ((BillDetailsViewHolder) itemView.getTag()).paybutton.setVisibility(View.INVISIBLE);
+            else
+                ((BillDetailsViewHolder) itemView.getTag()).paybutton.setVisibility(View.VISIBLE);
         }
         BillDetailsViewHolder holder = (BillDetailsViewHolder) itemView.getTag();
 
@@ -86,6 +98,8 @@ public class BillsListAdapter extends BaseAdapter {
         holder.dueDate.setText("" + listitemslist.get(position).getDUEDATE());
         holder.value.setText("৳ " + listitemslist.get(position).getAMOUNT());
         holder.categoryType.setText("" + listitemslist.get(position).getCATEGORYNAME());
+        holder.checkBox.setChecked(getItem(position).isSelected());
+
 //        holder.inr.setText("");
        /* // BillDetailsItems l = listitemslist.get(position);
         if (convertView != null) {
@@ -95,4 +109,8 @@ public class BillsListAdapter extends BaseAdapter {
 
     }
 
+    public void togglePayButton(boolean b) {
+        isPayButtonVisible = b;
+        notifyDataSetInvalidated();
+    }
 }

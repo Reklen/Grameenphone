@@ -16,7 +16,9 @@ import android.widget.TextView;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.adapter.SelectcontactAdapter;
-import com.cc.grameenphone.utils.SearchViewStyle;
+import com.cc.grameenphone.utils.Logger;
+import com.cc.grameenphone.utils.ToolBarUtils;
+import com.cc.grameenphone.views.MySearchView;
 import com.cc.grameenphone.views.RippleView;
 import com.cc.grameenphone.views.tabs.SlidingTabLayout;
 
@@ -38,6 +40,7 @@ public class SelectContactsActivity extends AppCompatActivity implements SearchV
     RippleView backRipple;
     private Context context;
     SearchView searchView;
+    private SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,11 @@ public class SelectContactsActivity extends AppCompatActivity implements SearchV
     }
 
     private void setupToolBar() {
+
+        int srcColor = 0xFFFFFFFF;
+        ToolBarUtils.colorizeToolbar(toolbar, srcColor, SelectContactsActivity.this);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         contactsTabs.setDistributeEvenly(true);
         contactsTabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
@@ -72,15 +79,37 @@ public class SelectContactsActivity extends AppCompatActivity implements SearchV
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.dashboard, menu);
+        inflater.inflate(R.menu.menu_select_contacts, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchView = (SearchView) searchItem.getActionView();
+        mSearchView = MySearchView.getSearchView(SelectContactsActivity.this, "");
         setupSearchView(searchItem);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+       /* searchView = (SearchView) searchItem.getActionView();
+
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));*/
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                if (item.isActionViewExpanded()) {
+                    item.collapseActionView();
+                    Logger.d(("Closing Group Search"));
+
+
+                } else {
+                    item.expandActionView();
+                    Logger.d(("Opening Group Search"));
+                }
+
+                return true;
+            default:
+                return true;
+        }
+    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -97,12 +126,27 @@ public class SelectContactsActivity extends AppCompatActivity implements SearchV
     }
 
     private void setupSearchView(MenuItem searchItem) {
-        SearchViewStyle.on(searchView);
+        searchItem.setActionView(mSearchView);
+        SearchView.OnQueryTextListener mOnQueryTextListener = new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                //adapter.getFilter().filter(s);
+                Logger.d("Text is", s);
+                return true;
+            }
+        };
+        mSearchView.setOnQueryTextListener(mOnQueryTextListener);
+       /* SearchViewStyle.on(searchView);
         searchView.setIconifiedByDefault(true);
         // searchView.setOnQueryTextListener(this);
         searchView.setSubmitButtonEnabled(false);
 
-        searchItem.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        searchItem.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);*/
         // Setting the textview default behaviour properties
 
     }

@@ -124,20 +124,18 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
     RippleView backRipple;
     @InjectView(R.id.grameen_icon)
     ImageView grameenIcon;
-    private String android_id;
-
     View otpView;
-
     SignupApi signupApi;
-    private String otpString, authTokenString;
     MaterialDialog otpDialog, successSignupDialog, errorDialog;
+    private String android_id;
+    private String otpString, authTokenString;
 
     // ImageView back_icon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sign_up_activity);
+        setContentView(R.layout.activity_signup);
         ButterKnife.inject(this);
         setUpToolBar();
         validator = new Validator(this);
@@ -145,8 +143,6 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
         msisdnCheckApi = ServiceGenerator.createService(MSISDNCheckApi.class);
 
         handleExtras();
-
-        getApplicationComponent().inject(this);
         android_id = Settings.Secure.getString(SignUpActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         preferenceManager = new PreferenceManager(SignUpActivity.this);

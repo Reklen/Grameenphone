@@ -1,100 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cc.grameenphone" >
+    package="com.cc.grameenphone">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/MyMaterialTheme" >
+        android:theme="@style/MyMaterialTheme">
 
         <!--
              <activity
              android:name=".payment.NewAssociationActivity"
-             android:label="@string/app_name"/>
+             android:label="@string/app_nameapp_name"/>
         -->
         <activity
             android:name=".activity.LoginActivity"
-            android:label="@string/app_name"
-            android:windowSoftInputMode="adjustPan" >
-        </activity>
-        <activity
-            android:name=".activity.SplashActivity"
-            android:label="@string/title_activity_home" >
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.SelectContactsActivity"
-            android:label="@string/title_activity_selct_contacts" >
-        </activity>
-        <activity
-            android:name=".activity.SignUpActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".activity.ProfileUpdateActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".activity.HomeActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".activity.TransactionOverviewActivity"
-            android:label="@string/title_activity_transaction_overview" />
-        <activity
-            android:name=".activity.BillPaymentActivity"
-            android:label="@string/title_activity_transaction_overview" />
-        <activity
-            android:name=".activity.TransactionOverviewDeatilsActivity"
-            android:label="@string/title_activity_transaction_overview_deatils" />
-        <activity
-            android:name=".activity.AddFavoritesActivity"
-            android:label="@string/title_activity_add_favorites" />
-        <activity
-            android:name=".activity.ReferFriendsActivity"
-            android:label="@string/title_activity_refer_friends" />
-        <activity
-            android:name=".activity.AddFavoriteContactsActivity"
-            android:label="@string/title_activity_add_favorite_contacts" />
-        <activity
-            android:name=".activity.EditProfileActivity"
-            android:label="@string/title_activity_edit_profile" />
-        <activity
-            android:name=".sign_up.SignUpActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".activity.RegularPayDetailsActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".activity.CancelAssociationActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".activity.OtherPaymentActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".activity.NewAssociationActivity"
-            android:label="@string/app_name" />
+        <activity android:name=".activity.SelectContactsActivity" />
+        <activity android:name=".activity.SignUpActivity" />
+        <activity android:name=".activity.ProfileUpdateActivity" />
+        <activity android:name=".activity.HomeActivity" />
+        <activity android:name=".activity.TransactionOverviewActivity" />
+        <activity android:name=".activity.BillPaymentActivity" />
+        <activity android:name=".activity.TransactionOverviewDeatilsActivity" />
+        <activity android:name=".activity.AddFavoritesActivity" />
+        <activity android:name=".activity.ReferFriendsActivity" />
+        <activity android:name=".activity.AddFavoriteContactsActivity" />
+        <activity android:name=".activity.EditProfileActivity" />
+        <activity android:name=".sign_up.SignUpActivity" />
+        <activity android:name=".activity.RegularPayDetailsActivity" />
+        <activity android:name=".activity.CancelAssociationActivity" />
+        <activity android:name=".activity.OtherPaymentActivity" />
+        <activity android:name=".activity.NewAssociationActivity" />
+
+
+        <activity android:name=".activity.QuickPayActivity"></activity>
+        <activity android:name=".activity.NotificationActivity" />
+
 
         <service
             android:name=".SmsRadarService"
-            android:exported="false"
-            android:label="@string/app_name" />
+            android:exported="false" />
 
-        <activity
-            android:name=".activity.QuickPayActivity"
-            android:label="@string/title_activity_quickpay" >
-        </activity>
-        <activity
-            android:name=".activity.NotificationActivity"
-            android:label="@string/app_name" >
-        </activity>
+        <!-- Updating this will cause a database upgrade -->
+        <meta-data
+            android:name="Rush_db_version"
+            android:value="1" />
+
+        <!-- Database name -->
+        <meta-data
+            android:name="Rush_db_name"
+            android:value="gp.db" />
+
+        <!-- Setting this to true will cause a migration to happen every launch,
+        this is very handy during development although could cause data loss -->
+        <meta-data
+            android:name="Rush_debug"
+            android:value="false" />
+
+        <!-- Setting this to true mean that tables will only be created of classes that
+        extend RushObject and are annotated with @RushTableAnnotation -->
+        <meta-data
+            android:name="Rush_requires_table_annotation"
+            android:value="false" />
+
+        <!-- Turning on logging can be done by settings this value to true -->
+        <meta-data
+            android:name="Rush_log"
+            android:value="false" />
     </application>
 
 </manifest>

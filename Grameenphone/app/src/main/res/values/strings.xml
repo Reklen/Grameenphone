@@ -7,7 +7,7 @@
     <string name="action_search">Search</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
-
+    <string name="accessibility_overflow">overflow</string>
     <string name="nav_item_home">Home</string>
     <string name="nav_item_friends">Profile</string>
     <string name="nav_item_notifications">Manage Favorites</string>

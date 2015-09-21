@@ -14,10 +14,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
+import com.cc.grameenphone.views.RippleView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 import me.drakeet.materialdialog.MaterialDialog;
 
 /**
@@ -25,6 +25,8 @@ import me.drakeet.materialdialog.MaterialDialog;
  */
 public class BillPaymentFragment extends Fragment {
 
+
+    MaterialDialog confirmDialog;
     @InjectView(R.id.company_text)
     TextView companyText;
     @InjectView(R.id.DESCO_text)
@@ -65,29 +67,33 @@ public class BillPaymentFragment extends Fragment {
     TextView dateText;
     @InjectView(R.id.container_six)
     LinearLayout containerSix;
-    @InjectView(R.id.pinConform_text)
-    TextView pinConformText;
     @InjectView(R.id.pinNumbEdit)
     EditText pinNumbEdit;
     @InjectView(R.id.PinConform_container)
     TextInputLayout PinConformContainer;
-    @InjectView(R.id.conform_btn)
-    Button conformBtn;
+    @InjectView(R.id.confirm_btn)
+    Button confirmBtn;
+    @InjectView(R.id.confirmRipple)
+    RippleView confirmRipple;
     @InjectView(R.id.billPaymentLayout)
     LinearLayout billPaymentLayout;
-
-    MaterialDialog confirmDialog;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.quickpay_billpayment, container, false);
+        View view = inflater.inflate(R.layout.fragment_bill_pay, container, false);
         ButterKnife.inject(this, view);
+        pinNumbEdit.requestFocus();
+        confirmRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                confirmClick();
+            }
+        });
         return view;
     }
 
-    @OnClick(R.id.conform_btn)
     void confirmClick() {
 
         confirmDialog = new MaterialDialog(getActivity());

@@ -22,9 +22,8 @@ import butterknife.OnClick;
  * Created by rajkiran on 18/09/15.
  */
 public class QuickPayFragment extends Fragment {
-    TopFragmentListener activityCommander;
-
     private static EditText payCode;
+    TopFragmentListener activityCommander;
     @InjectView(R.id.textView2)
     TextView textView2;
     @InjectView(R.id.editTextQuickPayCode)
@@ -38,10 +37,6 @@ public class QuickPayFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
-    }
-
-    public interface TopFragmentListener {
-        public void onclickQuickPay_QuickPayFragment(String PayCode);
     }
 
     @Override
@@ -66,5 +61,9 @@ public class QuickPayFragment extends Fragment {
     @OnClick(R.id.submitbutton)
     void submitbuttonClicked() {
         activityCommander.onclickQuickPay_QuickPayFragment(editTextQuickPayCode.getText().toString());
+    }
+
+    public interface TopFragmentListener {
+        public void onclickQuickPay_QuickPayFragment(String PayCode);
     }
 }

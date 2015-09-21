@@ -5,11 +5,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.cc.grameenphone.fragments.ElectricityTabFragments;
-import com.cc.grameenphone.fragments.GasTabFragment;
-import com.cc.grameenphone.fragments.InsuranceTabFragment;
-import com.cc.grameenphone.fragments.InternetTabFragments;
-import com.cc.grameenphone.fragments.TicketingTabFragment;
+import com.cc.grameenphone.fragments.OtherPaymentElectricityFragment;
+import com.cc.grameenphone.fragments.OtherPaymentGasFragment;
+import com.cc.grameenphone.fragments.OtherPaymentInsuranceFragment;
+import com.cc.grameenphone.fragments.OtherPaymentInternetFragment;
+import com.cc.grameenphone.fragments.OtherPaymentTicketingFragment;
 
 /**
  * Created by Rajkiran on 7/3/2015.
@@ -19,7 +19,7 @@ public class BillPaymentViewPagerAdapter extends FragmentStatePagerAdapter {
     CharSequence Titles[];
     int NumbOTabs;
     int type;
-
+    Fragment tabFragment;
     Bundle bundle;
 
     public BillPaymentViewPagerAdapter(FragmentManager fm, CharSequence Titles[], int NumOfTabs, int type) {
@@ -37,17 +37,34 @@ public class BillPaymentViewPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 bundle = new Bundle();
                 bundle.putInt("type", type);
-                ElectricityTabFragments tab = ElectricityTabFragments.newInstance(bundle);
+                tabFragment = OtherPaymentElectricityFragment.newInstance(bundle);
 
-                return tab;
+                return tabFragment;
             case 1:
-                return new GasTabFragment();
+                bundle = new Bundle();
+                bundle.putInt("type", type);
+                tabFragment = OtherPaymentGasFragment.newInstance(bundle);
+
+                return tabFragment;
             case 2:
-                return new InternetTabFragments();
+                bundle = new Bundle();
+                bundle.putInt("type", type);
+                tabFragment = OtherPaymentInsuranceFragment.newInstance(bundle);
+
+                return tabFragment;
             case 3:
-                return new InsuranceTabFragment();
+                bundle = new Bundle();
+                bundle.putInt("type", type);
+                tabFragment = OtherPaymentTicketingFragment.newInstance(bundle);
+
+                return tabFragment;
             case 4:
-                return new TicketingTabFragment();
+
+                bundle = new Bundle();
+                bundle.putInt("type", type);
+                tabFragment = OtherPaymentInternetFragment.newInstance(bundle);
+
+                return tabFragment;
         }
         return null;
     }

@@ -14,7 +14,7 @@ public interface ContactsQuery {
     final static int QUERY_ID=1;
 
     // A content URI for the Contacts table
-     static Uri CONTENT_URI= ContactsContract.CommonDataKinds.Phone.CONTENT_URI;;
+    static Uri CONTENT_URI= ContactsContract.CommonDataKinds.Phone.CONTENT_URI;;
 
     // The search/filter query Uri
     final static Uri FILTER_URI= ContactsContract.Contacts.CONTENT_FILTER_URI;
