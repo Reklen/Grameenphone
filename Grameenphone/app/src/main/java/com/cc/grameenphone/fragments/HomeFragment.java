@@ -283,6 +283,8 @@ public class HomeFragment extends Fragment {
                                 public void onClick(View view) {
                                     materialDialog.dismiss();
                                     editamt.setText("50");
+                                    otherFlexi = false;
+                                    phoneNumberEditText.setText("");
                                 }
                             });
                         } else {
@@ -403,6 +405,8 @@ public class HomeFragment extends Fragment {
                                 public void onClick(View view) {
                                     materialDialog.dismiss();
                                     editamt.setText("50");
+                                    otherFlexi = false;
+                                    phoneNumberEditText.setText("");
                                 }
                             });
                         } else {
@@ -561,7 +565,7 @@ public class HomeFragment extends Fragment {
 
     @OnClick(R.id.other_flex)
     void otherFlexiLoadClick() {
-        otherFlexi = true;
+
         otherFlex.setVisibility(View.GONE);
         phoneNumberEditText.setText("");
         editamt.setText("50");
@@ -588,7 +592,10 @@ public class HomeFragment extends Fragment {
         if (requestCode == REQCODE) {
             try {
                 Logger.d("Return Contact", "contacts " + ((String) data.getExtras().get(Constants.RETURN_RESULT)));
+                if (((String) data.getExtras().get(Constants.RETURN_RESULT)) != null)
+                    otherFlexi = true;
                 phoneNumberEditText.setText("" + ((String) data.getExtras().get(Constants.RETURN_RESULT)));
+                Logger.d("Return Contact", "contacts " + otherFlexi);
             } catch (Exception e) {
                 e.printStackTrace();
             }
