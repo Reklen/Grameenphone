@@ -8,7 +8,7 @@
     <ScrollView
         android:id="@+id/companyRadioGroupScroll"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="15dp">
@@ -68,8 +68,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:layout_below="@+id/companyRadioGroupScroll">
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/companyRadioGroupScroll"
+        android:layout_marginBottom="15dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -115,55 +116,12 @@
                     android:textColorHint="@color/hint_color" />
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/amountTextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/bill_numb_container"
-                android:layout_marginLeft="16dp"
-                android:visibility="gone"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="24dp"
-
-                >
-
-                <EditText
-                    android:id="@+id/amountEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Amount"
-                    android:inputType="number"
-                    android:textColor="@color/black_semi_transparent"
-                    android:textColorHint="@color/hint_color" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/surchargeTextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/amountTextInputLayout"
-                android:layout_marginLeft="16dp"
-                android:visibility="gone"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="24dp"
-
-                >
-
-                <EditText
-                    android:id="@+id/surchargeEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Surcharge Amount"
-                    android:inputType="number"
-                    android:textColor="@color/black_semi_transparent"
-                    android:textColorHint="@color/hint_color" />
-            </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/sbmt_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
-                android:layout_below="@+id/surchargeTextInputLayout"
+                android:layout_below="@+id/bill_numb_container"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/login_button"

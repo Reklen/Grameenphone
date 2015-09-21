@@ -1,6 +1,5 @@
 package com.cc.grameenphone.fragments;
 
-import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -19,11 +18,9 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.cc.grameenphone.R;
-import com.cc.grameenphone.api_models.CompanyListModel;
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
 import com.cc.grameenphone.api_models.OtherPaymentModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
-import com.cc.grameenphone.interfaces.ManageAssociationApi;
 import com.cc.grameenphone.interfaces.OtherPaymentApi;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
@@ -43,15 +40,10 @@ import retrofit.client.Response;
 /**
  * Created by rajkiran on 21/09/15.
  */
-public class NewAssociationElectricFragment extends BaseTabFragment {
+public class NewAssociationGasFragment extends BaseTabFragment {
 
-
-    ManageAssociationApi associationApi;
-    ProgressDialog loadingDialog;
     @InjectView(R.id.custodial_radiogroup)
     RadioGroup custodialRadiogroup;
-    @InjectView(R.id.companyRadioGroupScroll)
-    ScrollView companyRadioGroupScroll;
     @InjectView(R.id.account_numbEdit)
     EditText accountNumbEdit;
     @InjectView(R.id.account_numb_container)
@@ -64,6 +56,9 @@ public class NewAssociationElectricFragment extends BaseTabFragment {
     Button sbmtBtn;
     @InjectView(R.id.electricity_container)
     RelativeLayout electricityContainer;
+    @InjectView(R.id.companyRadioGroupScroll)
+    ScrollView companyRadioGroupScroll;
+    private int type;
     private String android_id;
     private PreferenceManager preferenceManager;
     private OtherPaymentApi otherPaymentApi;
@@ -75,10 +70,10 @@ public class NewAssociationElectricFragment extends BaseTabFragment {
     RadioGroup rg;
     String selectedCompany;
 
-    public static NewAssociationElectricFragment newInstance(Bundle b) {
-        NewAssociationElectricFragment electricityTab = new NewAssociationElectricFragment();
-        electricityTab.setArguments(b);
-        return electricityTab;
+    public static NewAssociationGasFragment newInstance(Bundle b) {
+        NewAssociationGasFragment gasTabFragment = new NewAssociationGasFragment();
+        gasTabFragment.setArguments(b);
+        return gasTabFragment;
     }
 
     @Nullable
@@ -87,10 +82,7 @@ public class NewAssociationElectricFragment extends BaseTabFragment {
         View v = inflater.inflate(R.layout.new_association_frament, container, false);
         ButterKnife.inject(this, v);
         getCompaniesDetails();
-
         return v;
-
-
     }
 
     private void getCompaniesDetails() {
@@ -219,31 +211,5 @@ public class NewAssociationElectricFragment extends BaseTabFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
-    }
-
-    private void fetchList() {
-        try {
-            JSONObject jsonObject = new JSONObject();
-            JSONObject innerObject = new JSONObject();
-            innerObject.put("DEVICEID", android_id);
-            innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
-            innerObject.put("TYPE", "FBILASCREQ");
-            jsonObject.put("COMMAND", innerObject);
-            Logger.d("sending json", jsonObject.toString());
-            associationApi.fetchAssociaition(jsonObject, new Callback<CompanyListModel>() {
-                @Override
-                public void success(CompanyListModel companyListModel, Response response) {
-                    Logger.d("Companyies ", companyListModel.toString());
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-
-                }
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 }
