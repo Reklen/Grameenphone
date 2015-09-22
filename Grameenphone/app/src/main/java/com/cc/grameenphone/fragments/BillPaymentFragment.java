@@ -1,5 +1,6 @@
 package com.cc.grameenphone.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
+import com.cc.grameenphone.activity.BillPaymentActivity;
 import com.cc.grameenphone.api_models.QuickPayConfirmModel;
 import com.cc.grameenphone.api_models.QuickPayModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
@@ -107,10 +109,12 @@ public class BillPaymentFragment extends Fragment {
 
     //TODO Implement Quickpay
     public void getQuickPayDetails() {
+
         preferenceManager = new PreferenceManager(getActivity());
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         quickPayApi = ServiceGenerator.createService(QuickPayApi.class);
+        String quickPayCode = getArguments().getString("QUICKPAYCODE");
         try {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
@@ -118,7 +122,7 @@ public class BillPaymentFragment extends Fragment {
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
             innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
             innerObject.put("TYPE", "QCKBILLDEL");
-            innerObject.put("BILLCODE", "09201194");
+            innerObject.put("BILLCODE", quickPayCode);
             jsonObject.put("COMMAND", innerObject);
             Logger.d("Qickpay Bill Fragment", jsonObject.toString());
             quickPayApi.quickPay(jsonObject, new Callback<QuickPayModel>() {
@@ -153,7 +157,6 @@ public class BillPaymentFragment extends Fragment {
 
                             }
                         });
-                        totalAmountEditText.setText(""+quickPayModel.getCOMMAND().getMESSAGE().getAMOUNT());
                         surchargeAmountEditText.addTextChangedListener(new TextWatcher() {
                             @Override
                             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -178,7 +181,9 @@ public class BillPaymentFragment extends Fragment {
 
                             }
                         });
-                        surchargeAmountEditText.setText("" + surchargeAmountEditText.getText().toString());
+                        totalAmountEditText.setText("৳ " + quickPayModel.getCOMMAND().getMESSAGE().getAMOUNT());
+
+                        surchargeAmountEditText.setText("৳ " + surchargeAmountEditText.getText().toString());
                         dueDate.setText("" + quickPayModel.getCOMMAND().getMESSAGE().getDUEDATE());
 
                         //Confirm payment
@@ -193,7 +198,7 @@ public class BillPaymentFragment extends Fragment {
                                     innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
                                     innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
                                     innerObject.put("TYPE", "CPMBCBREQ");
-                                    innerObject.put("BILLCODE", quickPayModel.getCOMMAND().getMESSAGE().getCOMPNAME());
+                                    innerObject.put("BILLCCODE", quickPayModel.getCOMMAND().getMESSAGE().getCOMPNAME().toUpperCase());
                                     innerObject.put("BILLANO", quickPayModel.getCOMMAND().getMESSAGE().getACCNUM());
                                     innerObject.put("AMOUNT", quickPayModel.getCOMMAND().getMESSAGE().getAMOUNT());
                                     innerObject.put("BILLNO", quickPayModel.getCOMMAND().getMESSAGE().getBILLNUM());
@@ -212,6 +217,10 @@ public class BillPaymentFragment extends Fragment {
                                                     @Override
                                                     public void onClick(View v) {
                                                         confirmDialog.dismiss();
+                                                        pinNumbEdit.setText("");
+                                                        totalAmountEditText.setText("");
+                                                        startActivity(new Intent(getActivity(), BillPaymentActivity.class));
+                                                        getActivity().finish();
                                                     }
                                                 });
                                                 confirmDialog.show();
@@ -244,9 +253,9 @@ public class BillPaymentFragment extends Fragment {
                             }
                         });
 
-                    } else {
+                    } else if (quickPayModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("00066")) {
                         Logger.e("Quick pay not success ", "status " + quickPayModel.toString());
-                       /* errorDialog = new MaterialDialog(getActivity());
+                        errorDialog = new MaterialDialog(getActivity());
                         errorDialog.setMessage(quickPayModel.getCOMMAND().getMESSAGE() + "");
                         errorDialog.setPositiveButton("OK", new View.OnClickListener() {
                             @Override
@@ -254,14 +263,17 @@ public class BillPaymentFragment extends Fragment {
                                 errorDialog.dismiss();
                             }
                         });
-                        errorDialog.show();*/
+                        errorDialog.show();
                     }
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-
-                    Logger.d("Failuare" + error.toString());
+                    if (error.getKind() == RetrofitError.Kind.NETWORK) {
+                        Logger.e("Failuare", error.getMessage());
+                    } else {
+                        Logger.e("Failuare", error.getKind() + " " + error.getUrl() + " " + error.getBody() + " " + error.getResponse() + " " + error.getMessage());
+                    }
                 }
             });
 
