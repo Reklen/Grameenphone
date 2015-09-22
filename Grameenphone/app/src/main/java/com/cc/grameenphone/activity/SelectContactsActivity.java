@@ -42,6 +42,8 @@ public class SelectContactsActivity extends AppCompatActivity implements SearchV
     SearchView searchView;
     private SearchView mSearchView;
 
+    SelectcontactAdapter selectcontactAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,7 @@ public class SelectContactsActivity extends AppCompatActivity implements SearchV
         int srcColor = 0xFFFFFFFF;
         ToolBarUtils.colorizeToolbar(toolbar, srcColor, SelectContactsActivity.this);
         setSupportActionBar(toolbar);
+        selectcontactAdapter = new SelectcontactAdapter(getSupportFragmentManager());
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         contactsTabs.setDistributeEvenly(true);
         contactsTabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
@@ -65,7 +68,7 @@ public class SelectContactsActivity extends AppCompatActivity implements SearchV
                 return getResources().getColor(R.color.textColorPrimary);
             }
         });
-        contactsViewpager.setAdapter(new SelectcontactAdapter(getSupportFragmentManager()));
+        contactsViewpager.setAdapter(selectcontactAdapter);
         contactsTabs.setViewPager(contactsViewpager);
         backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
@@ -159,6 +162,7 @@ public class SelectContactsActivity extends AppCompatActivity implements SearchV
 
     @Override
     public boolean onQueryTextChange(String s) {
+        selectcontactAdapter.contactsDetailsFragment.getFilterContacts(s);
         return false;
     }
 }
