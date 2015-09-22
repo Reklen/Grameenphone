@@ -56,8 +56,8 @@
                 android:gravity="center_vertical"
                 android:text="Notification"
                 android:textColor="@color/white"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+                android:textSize="20dp"
+                />
 
 
         </RelativeLayout>

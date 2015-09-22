@@ -81,7 +81,7 @@ public class ManageFavoriteFragment extends Fragment {
                     case 0:
 
                         confirmDialog = new MaterialDialog(getActivity());
-                        confirmDialog.setMessage("Remove Dave Tylor from favorites ?");
+                        confirmDialog.setMessage("Remove" + " " + contactModelList.get(position).toString() + " " + "from favorites ?");
                         confirmDialog.setNegativeButton("CANCEL", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -96,12 +96,6 @@ public class ManageFavoriteFragment extends Fragment {
                                 adapter.getItem(position).delete();
                                 adapter.remove(position);
 
-                          /*  listView.getAdapter().getItem(position).delete(new RushCallback() {
-                                    @Override
-                                    public void complete() {
-                                        ((ManageFavAdapter) listView.getAdapter()).remove(position);
-                                    }
-                                });*/
 
                             }
                         });

@@ -61,9 +61,11 @@ public class QuickPayFragment extends Fragment {
     @OnClick(R.id.submitbutton)
     void submitbuttonClicked() {
         activityCommander.onclickQuickPay_QuickPayFragment(editTextQuickPayCode.getText().toString());
+
     }
 
     public interface TopFragmentListener {
         public void onclickQuickPay_QuickPayFragment(String PayCode);
+
     }
 }

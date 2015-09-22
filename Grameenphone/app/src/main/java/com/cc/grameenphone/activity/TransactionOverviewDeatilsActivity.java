@@ -26,7 +26,7 @@ public class TransactionOverviewDeatilsActivity extends AppCompatActivity {
     TextView textTool;
     @InjectView(R.id.transactionToolbar)
     Toolbar transactionToolbar;
-    @InjectView(R.id.date_text)
+    @InjectView(R.id.dueDate)
     TextView dateText;
     @InjectView(R.id.enterDate)
     TextView enterDate;

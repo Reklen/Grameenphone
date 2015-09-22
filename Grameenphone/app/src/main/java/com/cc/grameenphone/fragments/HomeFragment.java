@@ -55,6 +55,7 @@ import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.http.HEAD;
 
 /**
  * Created by rajkiran on 09/09/15.
@@ -330,6 +331,8 @@ public class HomeFragment extends Fragment {
                                 @Override
                                 public void onClick(View view) {
                                     materialDialog.dismiss();
+                                    otherFlexi = false;
+                                    phoneNumberEditText.setText("");
                                     editamt.setText("৳ 50");
                                     Logger.d("WalletCheck ", "again 1");
                                     mCallback.fetchBalanceAgain();
@@ -460,6 +463,8 @@ public class HomeFragment extends Fragment {
                                 @Override
                                 public void onClick(View view) {
                                     materialDialog.dismiss();
+                                    otherFlexi = false;
+                                    phoneNumberEditText.setText("");
                                     editamt.setText("৳ 50");
                                 }
                             });
@@ -622,7 +627,7 @@ public class HomeFragment extends Fragment {
 
     @OnClick(R.id.other_flex)
     void otherFlexiLoadClick() {
-        otherFlexi = true;
+
         otherFlex.setVisibility(View.GONE);
         phoneNumberEditText.setText("");
         editamt.setText("৳ 50");
@@ -651,6 +656,10 @@ public class HomeFragment extends Fragment {
         if (requestCode == REQCODE) {
             try {
                 Logger.d("Return Contact", "contacts " + ((String) data.getExtras().get(Constants.RETURN_RESULT)));
+                if (((String) data.getExtras().get(Constants.RETURN_RESULT)) != null)
+                    otherFlexi = true;
+                phoneNumberEditText.setText("" + ((String) data.getExtras().get(Constants.RETURN_RESULT)));
+                Logger.d("Return Contact", "contacts " + otherFlexi);
 
                 String num = PhoneUtils.normalizeNum(((String) data.getExtras().get(Constants.RETURN_RESULT)));
                 num = num.replace("+", "");

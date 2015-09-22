@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp">
+    android:layout_height="wrap_content"
+    android:padding="16dp">
 
 
     <CheckBox
@@ -12,47 +12,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:focusable="false"
+        android:layout_centerVertical="true"
+        android:checked="false"
         android:clickable="false"
-        android:layout_below="@+id/first_conatiner"
-        android:checked="false" />
+        android:focusable="false" />
 
 
     <RelativeLayout
         android:id="@+id/first_conatiner"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/threetext_container"
+        android:layout_marginLeft="24dp"
+        android:layout_toRightOf="@+id/billCheckBox"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/accountNumberText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Acc. No:"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#000000" />
+            android:text="Acc. No : "
+            android:textColor="#000000"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/accountNumber"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/accountNumberText"
-            android:layout_toEndOf="@+id/accountNumberText"
             android:layout_toRightOf="@+id/accountNumberText"
             android:paddingLeft="5dp"
             android:text="123432"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#000000" />
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/totalBillAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="end"
-            android:text="\u09f3 1,200" />
+
     </RelativeLayout>
 
     <LinearLayout
@@ -60,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/first_conatiner"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="24dp"
         android:layout_toRightOf="@+id/billCheckBox"
         android:orientation="vertical">
 
@@ -73,14 +65,17 @@
                 android:id="@+id/billNumber_String"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bill No: " />
+                android:text="Bill No : "
+                android:textColor="@color/black_eighty_seven"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/billNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2834"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textColor="@color/black_eighty_seven"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -92,14 +87,18 @@
                 android:id="@+id/company_String"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Company: " />
+                android:text="Company : "
+                android:textColor="@color/black_eighty_seven"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/companyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DESCO"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/black_eighty_seven"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -111,14 +110,18 @@
                 android:id="@+id/dueDate_String"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Due date: " />
+                android:text="Due date : "
+                android:textColor="@color/black_eighty_seven"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/dueDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="24, July 2015"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/black_eighty_seven"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -130,17 +133,31 @@
                 android:id="@+id/category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Category :" />
+                android:text="Category : "
+                android:textColor="@color/black_eighty_seven"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/categoryCompany"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="GAS"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/black_eighty_seven"
+                android:textSize="16sp" />
         </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/totalBillAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="end"
+        android:text="\u09f3 1,200"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
 
     <com.cc.grameenphone.views.RippleView
         android:id="@+id/payRipple"
@@ -149,8 +166,7 @@
         android:layout_width="60dp"
         android:layout_height="36dp"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/first_conatiner"
-        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         app:rv_rippleDuration="100">
 
         <Button

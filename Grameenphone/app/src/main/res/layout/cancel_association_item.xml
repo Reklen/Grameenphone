@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="16dp">
+    android:layout_height="72dp"
+    android:orientation="horizontal">
 
     <LinearLayout
         android:id="@+id/list_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_centerVertical="true"
         android:orientation="vertical">
 
         <LinearLayout
@@ -23,16 +24,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Acc. No    :"
-                android:textColor="@color/black_semi_transparent"
+                android:fontFamily="RobotoRegular"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/accountNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="123432"
                 android:layout_marginLeft="16dp"
-                android:textColor="@color/black_semi_transparent"
+                android:text="123432"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -48,16 +50,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Company :"
-                android:textColor="@color/black_semi_transparent"
+                android:textColor="@color/black_eighty_seven"
                 android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/companyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DESCO"
                 android:layout_marginLeft="16dp"
-                android:textColor="@color/black_semi_transparent"
+                android:text="DESCO"
+                android:textColor="@color/black_eighty_seven"
                 android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
@@ -66,11 +68,12 @@
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
-        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:background="@drawable/login_button"
         android:focusable="false"
         android:text="Cancel"
+        android:layout_marginRight="16dp"
         android:textColor="@color/white" />
 
 </RelativeLayout>

@@ -87,7 +87,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/DESCO_text"
+                android:id="@+id/companyName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
@@ -113,7 +113,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/Anumb_text"
+                android:id="@+id/accountNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
@@ -139,7 +139,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/Bnumb_text"
+                android:id="@+id/billNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
@@ -166,11 +166,11 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/ruppes_text"
+                android:id="@+id/ammountTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:layout_toLeftOf="@+id/amtNumb_text"
+                android:layout_toLeftOf="@+id/totalAmount"
                 android:gravity="right"
                 android:paddingRight="2dp"
                 android:text="\u20B9"
@@ -178,7 +178,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/amtNumb_text"
+                android:id="@+id/totalAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -211,14 +211,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:layout_toLeftOf="@+id/subAmt_text"
+                android:layout_toLeftOf="@+id/surchargeAmount"
                 android:paddingRight="2dp"
                 android:text="\u20B9"
                 android:textColor="#929292"
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/subAmt_text"
+                android:id="@+id/surchargeAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -244,7 +244,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/date_text"
+                android:id="@+id/dueDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"

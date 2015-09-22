@@ -50,6 +50,7 @@
             android:layout_toRightOf="@+id/backRipple"
             android:gravity="center_vertical"
             android:text="Refer Friends"
+            android:textSize="20dp"
             android:textColor="@color/white" />
 
 

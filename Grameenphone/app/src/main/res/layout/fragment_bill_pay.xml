@@ -20,15 +20,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Company"
-            android:textColor="#D9000000" />
+            android:textColor="@color/black_semi_transparent"
+            android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/DESCO_text"
+            android:id="@+id/companyName"
+            android:textAllCaps="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:text="DESCO"
-            android:textColor="#D9000000" />
+            android:text=""
+            android:textColor="@color/black_semi_transparent"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -44,15 +47,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="A/C NO"
-            android:textColor="#D9000000" />
+            android:textColor="@color/black_semi_transparent"
+            android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/Anumb_text"
+            android:id="@+id/accountNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:text="123432"
-            android:textColor="#D9000000" />
+            android:text=""
+            android:textColor="@color/black_semi_transparent"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -68,87 +73,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bill No"
-            android:textColor="#D9000000" />
+            android:textColor="@color/black_semi_transparent"
+            android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/Bnumb_text"
+            android:id="@+id/billNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:text="2343"
-            android:textColor="#D9000000" />
+            android:text=""
+            android:textColor="@color/black_semi_transparent"
+            android:textSize="16sp" />
 
     </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/container_four"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
-        android:orientation="horizontal"
-        android:weightSum="1">
-
-        <TextView
-            android:id="@+id/amount_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Amount"
-            android:textColor="#D9000000" />
-
-        <TextView
-            android:id="@+id/ruppes_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_toLeftOf="@+id/amtNumb_text"
-            android:gravity="right"
-            android:paddingRight="2dp"
-            android:text="\u20B9"
-            android:textColor="#D9000000" />
-
-        <TextView
-            android:id="@+id/amtNumb_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="@string/rs_amount"
-            android:textColor="#D9000000" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/container_five"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:weightSum="1">
-
-        <TextView
-            android:id="@+id/subcharge_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Subcharge"
-            android:textColor="#D9000000" />
-
-        <TextView
-            android:id="@+id/ruppes02_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_toLeftOf="@+id/subAmt_text"
-            android:paddingRight="2dp"
-            android:text="\u20B9"
-            android:textColor="#D9000000" />
-
-        <TextView
-            android:id="@+id/subAmt_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:gravity="right"
-            android:text="43"
-            android:textColor="#D9000000" />
-    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/container_six"
@@ -162,17 +99,63 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Due Date"
-            android:textColor="#D9000000" />
+            android:textColor="@color/black_semi_transparent"
+            android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/date_text"
+            android:id="@+id/dueDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:text="@string/date_text"
-            android:textColor="#D9000000" />
+            android:text=""
+            android:textColor="@color/black_semi_transparent"
+            android:textSize="16sp" />
     </LinearLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/amount_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:id="@+id/totalAmountEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Amount"
+            android:inputType="number"
+            android:textColorHighlight="@color/black_eighty_seven"
+            android:textColorHint="@color/hint_color" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/surcharge_amount_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:id="@+id/surchargeAmountEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Surcharge"
+            android:inputType="number"
+            android:textColorHighlight="@color/black_eighty_seven"
+            android:textColorHint="@color/hint_color" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <TextView
+        android:id="@+id/enter_pin_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="left"
+        android:text="@string/pin_conform"
+        android:textColor="@color/black_semi_transparent"
+        android:textSize="16sp" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/PinConform_container"
@@ -185,8 +168,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="@string/pin_conform"
-            android:inputType="numberPassword" />
+            android:hint="Enter pin"
+            android:inputType="numberPassword"
+            android:textColorHighlight="@color/black_eighty_seven"
+            android:textColorHint="@color/hint_color" />
     </android.support.design.widget.TextInputLayout>
 
     <com.cc.grameenphone.views.RippleView
@@ -205,7 +190,8 @@
             android:layout_height="match_parent"
             android:background="@drawable/login_button"
             android:text="CONFIRM"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
     </com.cc.grameenphone.views.RippleView>
 

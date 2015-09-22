@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
-import com.cc.grameenphone.adapter.BillPaymentViewPagerAdapter;
+import com.cc.grameenphone.adapter.NewAssociationAdapter;
 import com.cc.grameenphone.api_models.CompanyListModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.ManageAssociationApi;
@@ -34,7 +34,7 @@ import retrofit.client.Response;
 public class NewAssociationActivity extends AppCompatActivity {
 
 
-    BillPaymentViewPagerAdapter adapter;
+    NewAssociationAdapter newAssociationAdapter;
 
     CharSequence titles[] = {"ELECTRICITY", "GAS", "INSURANCE", "TICKETING", "INTERNET"};
     int numOfTabs = 5;
@@ -76,10 +76,10 @@ public class NewAssociationActivity extends AppCompatActivity {
                 finish();
             }
         });
-        adapter = new BillPaymentViewPagerAdapter(getSupportFragmentManager(), titles, numOfTabs, 1);
+        newAssociationAdapter = new NewAssociationAdapter(getSupportFragmentManager(), titles, numOfTabs, 1);
 
         pager = (ViewPager) findViewById(R.id.pager);
-        pager.setAdapter(adapter);
+        pager.setAdapter(newAssociationAdapter);
 
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
         tabs.setDistributeEvenly(true);

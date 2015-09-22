@@ -19,6 +19,7 @@ public class ServiceGenerator {
     public static <S> S createService(Class<S> serviceClass) {
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(BASE_URL)
+
                 .setClient(new OkClient(new OkHttpClient()));
 
         RestAdapter adapter = builder.build();

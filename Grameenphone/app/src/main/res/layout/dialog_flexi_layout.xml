@@ -15,15 +15,15 @@
         android:layout_below="@+id/friends"
         android:layout_centerHorizontal="true"
         android:text="Flexiload for 500 is processed\nsuccessfully"
-        android:textColor="#929292"
-        android:textSize="15sp" />
+        android:textColor="@color/black_eighty_seven"
+        android:textSize="14sp" />
 
     <RelativeLayout
         android:id="@+id/second_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/top_text"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="25dp">
 
         <TextView
             android:id="@+id/mobile_text"
@@ -31,8 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/friends"
             android:text="Mobile Number"
-            android:textColor="#929292"
-            android:textSize="15sp" />
+            android:textColor="@color/black_eighty_seven"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/mobileNumber"
@@ -40,8 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="9998855000"
-            android:textColor="#929292"
-            android:textSize="15sp" />
+            android:textColor="@color/black_eighty_seven"
+            android:textSize="14sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -49,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/second_top"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="25dp">
 
         <TextView
             android:id="@+id/flxi_text"
@@ -57,8 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/friends"
             android:text="Flexi Amount"
-            android:textColor="#929292"
-            android:textSize="15sp" />
+            android:textColor="@color/black_eighty_seven"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/flxiloadAmount"
@@ -66,8 +66,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="500"
-            android:textColor="#929292"
-            android:textSize="15sp" />
+            android:textColor="@color/black_eighty_seven"
+            android:textSize="14sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -75,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/third_top"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="25dp">
 
         <TextView
             android:id="@+id/txn_text"
@@ -83,8 +83,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/friends"
             android:text="Transaction ID"
-            android:textColor="#929292"
-            android:textSize="15sp" />
+            android:textColor="@color/black_eighty_seven"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/transactionNumber"
@@ -92,8 +92,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="ASDHD984"
-            android:textColor="#929292"
-            android:textSize="15sp" />
+            android:textColor="@color/black_eighty_seven"
+            android:textSize="14sp" />
     </RelativeLayout>
 
     <Button
@@ -106,8 +106,8 @@
         android:background="@null"
         android:gravity="bottom|right"
         android:text="OK"
-        android:textColor="#2962ff"
-        android:textSize="15sp"
+        android:textColor="@color/primary"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
 

@@ -115,7 +115,11 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayFragm
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.addToBackStack("qf");
         bf = new BillPaymentFragment();
+        Bundle args = new Bundle();
+        args.putString("QUICKPAYCODE", paycode);
+        bf.setArguments(args);
         transaction.replace(R.id.container, bf);
+
         transaction.commit();
     }
 

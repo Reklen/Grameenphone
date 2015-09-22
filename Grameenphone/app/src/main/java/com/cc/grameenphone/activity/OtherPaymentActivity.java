@@ -56,6 +56,7 @@ public class OtherPaymentActivity extends AppCompatActivity {
     @InjectView(R.id.image_back)
     ImageButton imageBack;
     private WalletCheckApi walletCheckApi;
+
     private String android_id;
     private PreferenceManager preferenceManager;
 
@@ -64,6 +65,7 @@ public class OtherPaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.other_payment_activity);
         ButterKnife.inject(this);
+
         backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
@@ -88,7 +90,9 @@ public class OtherPaymentActivity extends AppCompatActivity {
         tabs.setViewPager(pager);
         getWalletBalance();
 
+
     }
+
 
 
     private void getWalletBalance() {

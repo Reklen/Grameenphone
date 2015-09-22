@@ -1,5 +1,6 @@
 package com.cc.grameenphone.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -93,7 +94,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     List<UserBillsModel> userBillsModels;
     private WalletCheckApi walletCheckApi;
     List<String> billsSelectedList;
-
+    ProgressDialog loadingDialog;
     MaterialDialog walletBalanceDialog;
 
     @Override
@@ -104,6 +105,8 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         ButterKnife.inject(this);
         setupToolbar();
         //TODO Listing total number of bills
+        loadingDialog = new ProgressDialog(BillPaymentActivity.this);
+        loadingDialog.setMessage("Loading due bills..");
         userBillsModels = new ArrayList<>();
         billsSelectedList = new ArrayList<>();
         View emptyView = LayoutInflater.from(BillPaymentActivity.this).inflate(R.layout.empty_bills_list, null);
@@ -114,6 +117,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                 Settings.Secure.ANDROID_ID);
         preferenceManager = new PreferenceManager(BillPaymentActivity.this);
         billspaymentApi = ServiceGenerator.createService(BillspaymentApi.class);
+        loadingDialog.show();
         try {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
@@ -129,7 +133,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                 public void success(BillListModel billListModel, Response response) {
                     Logger.d("BILLS response", billListModel.toString());
                     if (billListModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
-
+                        loadingDialog.dismiss();
                         if (billListModel.getCOMMAND().getMessage().getComapny() != null) {
                             Logger.d("BILLS response", billListModel.getCOMMAND().getMessage().getComapny().toString());
                             List<UserBillsModel> bills = billListModel.getCOMMAND().getMessage().getComapny();
@@ -137,6 +141,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                             listViewAdapter.notifyDataSetChanged();
                         } else {
                             //dontknwo
+                            loadingDialog.dismiss();
                         }
 
                     } else {

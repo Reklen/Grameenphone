@@ -5,16 +5,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.cc.grameenphone.fragments.OtherPaymentElectricityFragment;
-import com.cc.grameenphone.fragments.OtherPaymentGasFragment;
-import com.cc.grameenphone.fragments.OtherPaymentInsuranceFragment;
-import com.cc.grameenphone.fragments.OtherPaymentInternetFragment;
-import com.cc.grameenphone.fragments.OtherPaymentTicketingFragment;
+import com.cc.grameenphone.fragments.NewAssociationElectricFragment;
+import com.cc.grameenphone.fragments.NewAssociationGasFragment;
+import com.cc.grameenphone.fragments.NewAssociationInsuranceFragment;
+import com.cc.grameenphone.fragments.NewAssociationInternetFragment;
+import com.cc.grameenphone.fragments.NewAssociationTicketingFragment;
 
 /**
- * Created by Rajkiran on 7/3/2015.
+ * Created by rajkiran on 21/09/15.
  */
-public class BillPaymentViewPagerAdapter extends FragmentStatePagerAdapter {
+public class NewAssociationAdapter extends FragmentStatePagerAdapter {
 
     CharSequence Titles[];
     int NumbOTabs;
@@ -22,7 +22,7 @@ public class BillPaymentViewPagerAdapter extends FragmentStatePagerAdapter {
     Fragment tabFragment;
     Bundle bundle;
 
-    public BillPaymentViewPagerAdapter(FragmentManager fm, CharSequence Titles[], int NumOfTabs, int type) {
+    public NewAssociationAdapter(FragmentManager fm, CharSequence Titles[], int NumOfTabs, int type) {
         super(fm);
         this.Titles = Titles;
         this.NumbOTabs = NumOfTabs;
@@ -37,32 +37,32 @@ public class BillPaymentViewPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 bundle = new Bundle();
                 bundle.putInt("type", type);
-                tabFragment = OtherPaymentElectricityFragment.newInstance(bundle);
+                tabFragment = NewAssociationElectricFragment.newInstance(bundle);
 
                 return tabFragment;
             case 1:
                 bundle = new Bundle();
                 bundle.putInt("type", type);
-                tabFragment = OtherPaymentGasFragment.newInstance(bundle);
+                tabFragment = NewAssociationGasFragment.newInstance(bundle);
 
                 return tabFragment;
             case 2:
                 bundle = new Bundle();
                 bundle.putInt("type", type);
-                tabFragment = OtherPaymentInsuranceFragment.newInstance(bundle);
+                tabFragment = NewAssociationInsuranceFragment.newInstance(bundle);
 
                 return tabFragment;
             case 3:
                 bundle = new Bundle();
                 bundle.putInt("type", type);
-                tabFragment = OtherPaymentTicketingFragment.newInstance(bundle);
+                tabFragment = NewAssociationTicketingFragment.newInstance(bundle);
 
                 return tabFragment;
             case 4:
 
                 bundle = new Bundle();
                 bundle.putInt("type", type);
-                tabFragment = OtherPaymentInternetFragment.newInstance(bundle);
+                tabFragment = NewAssociationInternetFragment.newInstance(bundle);
 
                 return tabFragment;
         }
