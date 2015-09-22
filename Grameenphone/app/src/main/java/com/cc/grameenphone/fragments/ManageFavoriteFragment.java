@@ -22,8 +22,6 @@ import com.cc.grameenphone.api_models.ContactModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.uk.rushorm.core.RushCallback;
-import co.uk.rushorm.core.RushCore;
 import co.uk.rushorm.core.RushSearch;
 import co.uk.rushorm.core.RushSearchCallback;
 import me.drakeet.materialdialog.MaterialDialog;
@@ -96,12 +94,6 @@ public class ManageFavoriteFragment extends Fragment {
                             public void onClick(View v) {
                                 confirmDialog.dismiss();
 
-                                RushCore.getInstance().delete(contactModelList, new RushCallback() {
-                                    @Override
-                                    public void complete() {
-                                        ((ManageFavAdapter) listView.getAdapter()).remove(position);
-                                    }
-                                });
                             /*listView.getAdapter().getItem(position).delete(new RushCallback() {
                                     @Override
                                     public void complete() {
