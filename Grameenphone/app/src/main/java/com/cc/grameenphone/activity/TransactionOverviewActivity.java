@@ -36,10 +36,6 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class TransactionOverviewActivity extends AppCompatActivity {
-
-
-    TextView tooltext;
-
     ImageView back_icon;
     @InjectView(R.id.image_icon_back)
     ImageView imageIconBack;

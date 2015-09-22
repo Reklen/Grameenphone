@@ -79,7 +79,11 @@ public class ReferFriendsActivity extends AppCompatActivity {
         ButterKnife.inject(this);
         // Refercode availability check
         preferenceManager = new PreferenceManager(ReferFriendsActivity.this);
-        referCode.setText("" + preferenceManager.getReferCode());
+        if (preferenceManager.getReferCode().equals("null"))
+
+            referCode.setText("No Refer Code Available");
+        else
+            referCode.setText("" + preferenceManager.getReferCode());
 
 
         backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
