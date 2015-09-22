@@ -1,16 +1,12 @@
 package com.cc.grameenphone;
 
-import android.app.Application;
-
 import com.cc.grameenphone.utils.Logger;
-
-import co.uk.rushorm.android.AndroidInitializeConfig;
-import co.uk.rushorm.core.RushCore;
+import com.orm.SugarApp;
 
 /**
  * Created by aditlal on 14/09/15.
  */
-public class MainApplication extends Application {
+public class MainApplication extends SugarApp {
 
 
     public static MainApplication application;
@@ -24,8 +20,8 @@ public class MainApplication extends Application {
     }
 
     private void initializeDB() {
-       AndroidInitializeConfig config = new AndroidInitializeConfig(this);
-       RushCore.initialize(config);
+        //   AndroidInitializeConfig config = new AndroidInitializeConfig(getApplicationContext());
+        // RushAndroid.initialize(config);
     }
 
 

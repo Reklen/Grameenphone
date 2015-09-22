@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.cc.grameenphone">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -12,7 +13,8 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/MyMaterialTheme">
+        android:theme="@style/MyMaterialTheme"
+        tools:replace="android:icon">
 
         <!--
              <activity
@@ -55,32 +57,10 @@
             android:name=".SmsRadarService"
             android:exported="false" />
 
-        <!-- Updating this will cause a database upgrade -->
-        <meta-data
-            android:name="Rush_db_version"
-            android:value="1" />
-
-        <!-- Database name -->
-        <meta-data
-            android:name="Rush_db_name"
-            android:value="gp.db" />
-
-        <!-- Setting this to true will cause a migration to happen every launch,
-        this is very handy during development although could cause data loss -->
-        <meta-data
-            android:name="Rush_debug"
-            android:value="false" />
-
-        <!-- Setting this to true mean that tables will only be created of classes that
-        extend RushObject and are annotated with @RushTableAnnotation -->
-        <meta-data
-            android:name="Rush_requires_table_annotation"
-            android:value="false" />
-
-        <!-- Turning on logging can be done by settings this value to true -->
-        <meta-data
-            android:name="Rush_log"
-            android:value="false" />
+        <meta-data android:name="DATABASE" android:value="gp_android.db" />
+        <meta-data android:name="VERSION" android:value="1" />
+        <meta-data android:name="QUERY_LOG" android:value="true" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.cc.grameenphone" />
     </application>
 
 </manifest>
