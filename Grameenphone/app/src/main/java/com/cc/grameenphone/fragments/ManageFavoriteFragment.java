@@ -18,6 +18,7 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.adapter.ManageFavAdapter;
 import com.cc.grameenphone.api_models.ContactModel;
+import com.cc.grameenphone.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +92,10 @@ public class ManageFavoriteFragment extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 confirmDialog.dismiss();
+                                Logger.d("Delte fav", "position is " + position);
+                                adapter.getItem(position).delete();
+                                adapter.remove(position);
+
                           /*  listView.getAdapter().getItem(position).delete(new RushCallback() {
                                     @Override
                                     public void complete() {
