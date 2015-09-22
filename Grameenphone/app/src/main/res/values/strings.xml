@@ -93,9 +93,7 @@
                                 DESCO association?</string>
     <string name="rs_amount"> 230</string>
     <string name="Get_full_talktime">Get full talktime on top up of \u20B9200 &amp;</string>
-        <string name="association_confrim">Your request is being processed.\n
-                                          You will get association conformation\n
-                                          SMS shortly</string>
+        <string name="association_confrim">Your request is being processed.\nYou will get association conformation\nSMS shortly</string>
 
 
     <string name="button_stringname">OTHER PAYMENT</string>

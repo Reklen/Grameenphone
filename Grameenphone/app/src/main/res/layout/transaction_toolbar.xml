@@ -46,7 +46,8 @@
             android:layout_toRightOf="@+id/backRipple"
             android:gravity="center_vertical"
             android:text="@string/transaction_tool"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 

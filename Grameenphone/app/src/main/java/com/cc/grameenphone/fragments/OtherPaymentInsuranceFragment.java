@@ -1,5 +1,6 @@
 package com.cc.grameenphone.fragments;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -75,6 +76,7 @@ public class OtherPaymentInsuranceFragment extends BaseTabFragment {
     private List<OtherPaymentCompanyModel> companyList;
     private int numberOfCompany;
     RadioGroup rg;
+    ProgressDialog loadingDialog;
     String selectedCompany;
     public static OtherPaymentInsuranceFragment newInstance(Bundle b) {
         OtherPaymentInsuranceFragment insuranceTabFragment = new OtherPaymentInsuranceFragment();
@@ -118,7 +120,9 @@ public class OtherPaymentInsuranceFragment extends BaseTabFragment {
     }
     private void getCompaniesDetails() {
         //TODO implement other bills details
-
+        loadingDialog = new ProgressDialog(getActivity());
+        loadingDialog.setMessage("Loading companies..");
+        loadingDialog.show();
 
         otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
@@ -183,8 +187,7 @@ public class OtherPaymentInsuranceFragment extends BaseTabFragment {
                             }
                         });
 
-
-                        //TODO Submitting amount, surcharge amount
+                        loadingDialog.dismiss();
                         //TODO Submitting amount, surcharge amount
                         sbmtBtn.setOnClickListener(new View.OnClickListener() {
                             @Override

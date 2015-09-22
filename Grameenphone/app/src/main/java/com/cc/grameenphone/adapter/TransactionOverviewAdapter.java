@@ -69,7 +69,7 @@ public class TransactionOverviewAdapter extends BaseAdapter {
 //        holder.checkBox.setChecked(l.isSelected());
 //        holder.checkBox.setTag(l);
         holder.service_type.setText("" + getItem(position).getSERVICE());
-        holder.amountTextView.setText("" + getItem(position).getTXNAMT());
+        holder.amountTextView.setText("৳  " + getItem(position).getTXNAMT());
 //        holder.inr.setText("");
        /* // BillDetailsItems l = listitemslist.get(position);
         if (convertView != null) {

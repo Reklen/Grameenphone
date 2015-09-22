@@ -14,7 +14,7 @@
         android:layout_margin="16dp"
         android:text="Enter your PIN to confirm"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#030303" />
+        android:textColor="@color/black_eighty_seven" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/enterPin_container"
@@ -45,6 +45,6 @@
         android:text="CONFIRM"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/primary"
-        android:textSize="17sp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 </RelativeLayout>

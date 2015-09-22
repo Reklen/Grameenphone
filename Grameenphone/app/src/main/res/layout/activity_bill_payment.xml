@@ -132,7 +132,7 @@
         android:background="#FFFFFF"
         android:clickable="false"
         android:padding="8dp"
-        tools:listitem="@layout/listrow" />
+       />
 
     <com.cc.grameenphone.views.RippleView
         android:id="@+id/selectedPayRippleView"

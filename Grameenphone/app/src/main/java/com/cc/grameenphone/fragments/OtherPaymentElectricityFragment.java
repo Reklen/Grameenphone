@@ -103,7 +103,9 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment {
     private void getCompaniesDetails() {
         //TODO implement other bills details
 
-
+        loadingDialog = new ProgressDialog(getActivity());
+        loadingDialog.setMessage("Loading companies..");
+        loadingDialog.show();
         otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
@@ -167,7 +169,7 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment {
                                 }
                             }
                         });
-
+                        loadingDialog.dismiss();
                         //
                         //TODO Submitting amount, surcharge amount
                         sbmtBtn.setOnClickListener(new View.OnClickListener() {
@@ -323,7 +325,7 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment {
             associationApi.fetchAssociaition(jsonObject, new Callback<CompanyListModel>() {
                 @Override
                 public void success(CompanyListModel companyListModel, Response response) {
-                    Logger.d("Companyies ", companyListModel.toString());
+                    Logger.d("Companies ", companyListModel.toString());
                 }
 
                 @Override
