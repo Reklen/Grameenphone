@@ -52,9 +52,9 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayFragm
     private WalletCheckApi walletCheckApi;
     private String android_id;
     private PreferenceManager preferenceManager;
-    private MaterialDialog walletBalanceDialog;
-    QuickPayFragment qf;
-    QuickBillPayFragment bf;
+    private MaterialDialog walletBalanceDialog, successDialog;
+    QuickPayFragment quickCodeFragment;
+    QuickBillPayFragment quickBillFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +66,9 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayFragm
         preferenceManager = new PreferenceManager(QuickPayActivity.this);
 
 
-        qf = new QuickPayFragment();
+        quickCodeFragment = new QuickPayFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, qf);
+        transaction.replace(R.id.container, quickCodeFragment);
         transaction.commit();
         getWalletBalance();
     }
@@ -110,16 +110,28 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayFragm
 
     //Need to edit! The paycode is passed over here!
     public void onclickQuickPay_QuickPayFragment(String paycode) {
-
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.addToBackStack("qf");
-        bf = new QuickBillPayFragment();
+       // transaction.addToBackStack("quickCodeFragment");
+        quickBillFragment = new QuickBillPayFragment();
+        quickCodeFragment = new QuickPayFragment();
         Bundle args = new Bundle();
         args.putString("QUICKPAYCODE", paycode);
-        bf.setArguments(args);
-        transaction.replace(R.id.container, bf);
-
+        quickBillFragment.setArguments(args);
+        Logger.d("PAYCODE" + paycode);
+        if (paycode.equals("")) {
+            transaction.replace(R.id.container, quickCodeFragment);
+            successDialog = new MaterialDialog(QuickPayActivity.this);
+            successDialog.setMessage("You must enter a valid quick pay code");
+            successDialog.setPositiveButton("OK", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    successDialog.dismiss();
+                }
+            });
+            successDialog.show();
+        } else {
+            transaction.replace(R.id.container, quickBillFragment);
+        }
         transaction.commit();
     }
 

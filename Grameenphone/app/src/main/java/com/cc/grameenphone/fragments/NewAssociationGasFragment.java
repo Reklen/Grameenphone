@@ -1,11 +1,11 @@
 package com.cc.grameenphone.fragments;
 
 import android.app.ProgressDialog;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +16,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import com.cc.grameenphone.R;
+import com.cc.grameenphone.api_models.BillConfirmationModel;
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
 import com.cc.grameenphone.api_models.OtherPaymentModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
@@ -44,7 +44,7 @@ import retrofit.client.Response;
 public class NewAssociationGasFragment extends BaseTabFragment {
 
     @InjectView(R.id.customRadioGroupLayout)
-    RadioGroup custodialRadiogroup;
+    LinearLayout custodialRadiogroup;
     @InjectView(R.id.account_numbEdit)
     EditText accountNumbEdit;
     @InjectView(R.id.account_numb_container)
@@ -63,7 +63,7 @@ public class NewAssociationGasFragment extends BaseTabFragment {
     private String android_id;
     private PreferenceManager preferenceManager;
     private OtherPaymentApi otherPaymentApi;
-    MaterialDialog confirmationDialog;
+    MaterialDialog confirmationDialog,errorDialog;
     LinearLayout ll;
     RadioButton comapanyOptions;
     private List<OtherPaymentCompanyModel> companyList;
@@ -71,7 +71,7 @@ public class NewAssociationGasFragment extends BaseTabFragment {
     RadioGroup rg;
     ProgressDialog loadingDialog;
     String selectedCompany;
-
+    int selectedSurchargePos;
     public static NewAssociationGasFragment newInstance(Bundle b) {
         NewAssociationGasFragment gasTabFragment = new NewAssociationGasFragment();
         gasTabFragment.setArguments(b);
@@ -110,7 +110,7 @@ public class NewAssociationGasFragment extends BaseTabFragment {
 
             otherPaymentApi.otherPayment(jsonObject, new Callback<OtherPaymentModel>() {
                 @Override
-                public void success(OtherPaymentModel otherPaymentModel, Response response) {
+                public void success(final OtherPaymentModel otherPaymentModel, Response response) {
 
                     if (otherPaymentModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
 
@@ -120,21 +120,31 @@ public class NewAssociationGasFragment extends BaseTabFragment {
                         // Number of company will be passed as per response
                         numberOfCompany = Integer.valueOf(otherPaymentModel.getCOMMAND().getNOOFCOM().toString());
                         companyList = otherPaymentModel.getCOMMAND().getCOMPANYDET();
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        int margins = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                                (float) 16, getResources().getDisplayMetrics());
+                        int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                                (float) 10, getResources().getDisplayMetrics());
+
+                        int compoundDrawablePadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                                (float) 50, getResources().getDisplayMetrics());
+                        layoutParams.setMargins(margins, 0, margins, 0);
                         for (int k = 0; k < 1; k++) {
                             final RadioButton[] rb = new RadioButton[numberOfCompany];
                             rg = new RadioGroup(getActivity());
                             rg.setOrientation(RadioGroup.VERTICAL);
                             for (int i = 0; i < numberOfCompany; i++) {
                                 rb[i] = new RadioButton(getActivity());
-                                rg.addView(rb[i]);
-                                rb[i].setPadding(10, 0, 0, 0);
-                                rb[i].setCompoundDrawablePadding(50);
+                                rg.addView(rb[i], layoutParams);
+                                rb[i].setPadding(padding, padding, 0, padding);
+                                rb[i].setCompoundDrawablePadding(compoundDrawablePadding);
                                 rb[i].setTextSize(15);
                                 rb[i].setAllCaps(true);
-                                rb[i].setTextColor(Color.parseColor("#666666"));
+                                rb[i].setTextColor(getActivity().getResources().getColor(R.color.black_semi_transparent));
                                 rb[i].setText(companyList.get(i).getCOMPCODE());
 
                             }
+
                             custodialRadiogroup.addView(rg);
                         }
 
@@ -148,35 +158,109 @@ public class NewAssociationGasFragment extends BaseTabFragment {
                                 for (int i = 0; i < rg.getChildCount(); i++) {
                                     RadioButton btn = (RadioButton) rg.getChildAt(i);
                                     if (btn.getId() == pos) {
-                                        Toast.makeText(getActivity(), "Selected company" + btn.getText(), Toast.LENGTH_LONG).show();
+                                        selectedSurchargePos = pos;
+                                        // Toast.makeText(getActivity(), "Selected company" + btn.getText(), Toast.LENGTH_LONG).show();
                                         selectedCompany = btn.getText().toString();
                                         return;
                                     }
                                 }
                             }
                         });
-
                         loadingDialog.dismiss();
+                        companyRadioGroupScroll.fullScroll(ScrollView.FOCUS_UP);
                         //TODO Submitting amount, surcharge amount
-                        /*sbmtBtn.setOnClickListener(new View.OnClickListener() {
+                        sbmtBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
 
-                                View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.confirmation_dialog, null);
-                                confirmationDialog = new MaterialDialog(getActivity());
-                                confirmationDialog.setView(dialogView);
+                                try {
+                                    JSONObject jsonObject = new JSONObject();
+                                    JSONObject innerObject = new JSONObject();
+                                    innerObject.put("DEVICEID", android_id);
+                                    innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+                                    innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+                                    innerObject.put("TYPE", "CPMBREQ");
+                                    innerObject.put("BILLCCODE", selectedCompany);
+                                    if (accountNumbEdit.getText().toString() != null)
+                                        innerObject.put("BILLANO", accountNumbEdit.getText().toString());//coomented for testing
+                                    else
+                                        accountNumbEdit.setError("Account number is empty");
+                                    if (billNumbEdit.getText().toString() != null)
+                                        innerObject.put("BILLNO", billNumbEdit.getText().toString());
+                                    else
+                                        billNumbEdit.setError("Bill number is empty");
+                                    innerObject.put("BPROVIDER", "101");
+                                    //if (otherPaymentModel.getCOMMAND().getCOMPANYDET().get(selectedSurchargePos).getSURCREQ().equalsIgnoreCase("Y"))
+                                    innerObject.put("SURCHARGE", "1"/*surchargeEditText.getText().toString()*/);
+                                    // else
+                                    // innerObject.put("SURCHARGE", "0");
+                                    innerObject.put("PIN", preferenceManager.getPINCode());
+                                    jsonObject.put("COMMAND", innerObject);
+                                    Logger.d("confirmaing bill payment ", jsonObject.toString());
+                                    otherPaymentApi.billConfirmation(jsonObject, new Callback<BillConfirmationModel>() {
+                                        @Override
+                                        public void success(BillConfirmationModel billConfirmationModel, Response response) {
+                                            if (billConfirmationModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                                                View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.confirmation_dialog, null);
+                                                confirmationDialog = new MaterialDialog(getActivity());
+                                                confirmationDialog.setView(dialogView);
 
-                                Button confirmButton = (Button) dialogView.findViewById(R.id.confirmDialogButton);
-                                confirmButton.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
+                                                Button confirmButton = (Button) dialogView.findViewById(R.id.confirmDialogButton);
+                                                confirmButton.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
 
-                                        confirmationDialog.dismiss();
-                                    }
-                                });
-                                confirmationDialog.show();
+                                                        confirmationDialog.dismiss();
+                                                    }
+                                                });
+                                                confirmationDialog.show();
+                                            } else if (billConfirmationModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("00292")) {
+                                                errorDialog = new MaterialDialog(getActivity());
+                                                errorDialog.setMessage(billConfirmationModel.getCOMMAND().getMESSAGE());
+                                                errorDialog.setPositiveButton("OK", new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        errorDialog.dismiss();
+                                                    }
+                                                });
+                                                errorDialog.show();
+                                            } else if (billConfirmationModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("00351")) {
+                                                errorDialog = new MaterialDialog(getActivity());
+                                                errorDialog.setMessage(billConfirmationModel.getCOMMAND().getMESSAGE());
+                                                errorDialog.setPositiveButton("OK", new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        errorDialog.dismiss();
+                                                    }
+                                                });
+                                                errorDialog.show();
+                                            } else {
+                                                errorDialog = new MaterialDialog(getActivity());
+                                                errorDialog.setMessage(billConfirmationModel.getCOMMAND().getMESSAGE());
+                                                errorDialog.setPositiveButton("OK", new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        errorDialog.dismiss();
+                                                    }
+                                                });
+                                                errorDialog.show();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void failure(RetrofitError error) {
+
+                                        }
+                                    });
+
+
+                                } catch (JSONException e) {
+
+                                }
+
+
                             }
-                        });*/
+                        });
                     }
                 }
 
