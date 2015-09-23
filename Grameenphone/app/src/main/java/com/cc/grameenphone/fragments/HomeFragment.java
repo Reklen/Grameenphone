@@ -613,6 +613,9 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+        else{
+            phoneNumberEditText.setText("" + preferenceManager.getMSISDN());
+        }
     }
 
 

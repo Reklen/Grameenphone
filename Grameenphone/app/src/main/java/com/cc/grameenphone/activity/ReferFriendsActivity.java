@@ -139,6 +139,9 @@ public class ReferFriendsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        else{
+            phoneNumberEditText.setText("" + preferenceManager.getMSISDN());
+        }
     }
 
     void confirmClick() {

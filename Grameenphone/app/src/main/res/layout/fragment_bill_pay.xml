@@ -125,7 +125,7 @@
             android:layout_marginTop="8dp"
             android:hint="Amount"
             android:editable="false"
-            android:inputType="number"
+            android:inputType="none"
             android:textColorHighlight="@color/black_eighty_seven"
             android:textColorHint="@color/hint_color" />
     </android.support.design.widget.TextInputLayout>
@@ -143,7 +143,7 @@
             android:layout_marginTop="8dp"
             android:hint="Surcharge"
             android:editable="false"
-            android:inputType="number"
+            android:inputType="none"
             android:textColorHighlight="@color/black_eighty_seven"
             android:textColorHint="@color/hint_color" />
     </android.support.design.widget.TextInputLayout>
