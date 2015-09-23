@@ -65,7 +65,6 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayFragm
         setupToolbar();
         preferenceManager = new PreferenceManager(QuickPayActivity.this);
 
-
         qf = new QuickPayFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, qf);
