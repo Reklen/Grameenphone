@@ -55,7 +55,6 @@ import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.http.HEAD;
 
 /**
  * Created by rajkiran on 09/09/15.
@@ -557,72 +556,6 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-
-
-
-
-
-
-        /*loadingDialog = new ProgressDialog(getActivity());
-        loadingDialog.setMessage("Logging in");
-        loadingDialog.setCanceledOnTouchOutside(false);
-        loadingDialog.show();*/
-       /*try {
-            JSONObject jsonObject = new JSONObject();
-            JSONObject innerObject = new JSONObject();
-            innerObject.put("DEVICEID", android_id);
-            innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + phoneNumberEditText.getText().toString());
-            innerObject.put("TYPE", "CTMMREQ");
-            innerObject.put("RCTYPE", "PREPAID");
-            innerObject.put("AMOUNT", editamt.getText().toString());
-            jsonObject.put("COMMAND", innerObject);
-
-            rechargeApi.recharge(jsonObject, new Callback<RechargeModel>() {
-                @Override
-                public void success(RechargeModel rechargeModel, Response response) {
-                    if (rechargeModel.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
-                        View flexiDialog = LayoutInflater.from(getActivity()).inflate(R.layout.flexi_dialog_layout, null);
-                        Logger.d("Its msisdn check ", "status " + rechargeModel.toString());
-                        materialDialog = new MaterialDialog(getActivity()).setContentView(flexiDialog);
-                        materialDialog.setCanceledOnTouchOutside(true);
-                        ((TextView) flexiDialog.findViewById(R.id.top_text)).setText(rechargeModel.getCommand().getMESSAGE() + "");
-                        ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText("017" + phoneNumberEditText.getText().toString() + "");
-                        ((TextView) flexiDialog.findViewById(R.id.transactionNumber)).setText("\n" + rechargeModel.getCommand().getTXNID() + "");
-                        ((TextView) flexiDialog.findViewById(R.id.flxiloadAmount)).setText(editamt.getText().toString() + "");
-                        materialDialog.show();
-                        Button buttonOk = (Button) flexiDialog.findViewById(R.id.okButton);
-                        buttonOk.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                materialDialog.dismiss();
-                                editamt.setText("50");
-                            }
-                        });
-                    } else {
-                        Logger.e("Its msisdn check ", "status " + rechargeModel.toString());
-                        errorDialog = new MaterialDialog(getActivity());
-                        errorDialog.setMessage(rechargeModel.getCommand().getMESSAGE() + "");
-                        errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                errorDialog.dismiss();
-                                editamt.setText("50");
-                            }
-                        });
-                        errorDialog.show();
-                    }
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-
-                }
-            });
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
     }
 
     @OnClick(R.id.other_flex)

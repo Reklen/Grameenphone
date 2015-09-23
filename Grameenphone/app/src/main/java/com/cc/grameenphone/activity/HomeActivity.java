@@ -342,7 +342,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
                         Logger.d("Balance", balanceEnquiryModel.toString());
                         sessionDialog = new MaterialDialog(HomeActivity.this);
                         sessionDialog.setMessage("Session expired , please login again");
-                        sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                        sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 preferenceManager.setAuthToken("");
