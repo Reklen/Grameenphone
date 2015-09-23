@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             android:hint="Enter quick pay code"
             android:inputType="numberDecimal"
+            android:imeOptions="actionDone"
             android:textColor="@color/black_semi_transparent"
             android:textColorHighlight="@color/hint_color"
             android:textColorHint="@color/hint_color" />

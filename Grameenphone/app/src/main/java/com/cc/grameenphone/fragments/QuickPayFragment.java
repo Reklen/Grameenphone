@@ -4,15 +4,18 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
+import com.cc.grameenphone.interfaces.QuickPayInterface;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -23,7 +26,7 @@ import butterknife.OnClick;
  */
 public class QuickPayFragment extends Fragment {
     private static EditText payCode;
-    TopFragmentListener activityCommander;
+    QuickPayInterface quickPayInterface;
     @InjectView(R.id.textView2)
     TextView textView2;
     @InjectView(R.id.editTextQuickPayCode)
@@ -43,7 +46,7 @@ public class QuickPayFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            activityCommander = (TopFragmentListener) activity;
+            quickPayInterface = (QuickPayInterface) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString());
         }
@@ -54,17 +57,27 @@ public class QuickPayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_quickpay_entercode, container, false);
         ButterKnife.inject(this, view);
+        editTextQuickPayCode.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (keyCode == EditorInfo.IME_ACTION_DONE)) {
+                    submitbuttonClicked();
+                }
+                return false;
+            }
+        });
         return view;
     }
 
     @OnClick(R.id.submitbutton)
     void submitbuttonClicked() {
-        activityCommander.onclickQuickPay_QuickPayFragment(editTextQuickPayCode.getText().toString());
+        quickPayInterface.onQuickCodeSubmit(editTextQuickPayCode.getText().toString() + "");
 
     }
 
-    public interface TopFragmentListener {
-        public void onclickQuickPay_QuickPayFragment(String PayCode);
-
+    public void clearCodeFromET() {
+        editTextQuickPayCode.setText("");
     }
+
+
 }
