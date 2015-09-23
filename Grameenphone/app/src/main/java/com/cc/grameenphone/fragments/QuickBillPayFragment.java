@@ -40,7 +40,7 @@ import retrofit.client.Response;
 /**
  * Created by rajkiran on 18/09/15.
  */
-public class BillPaymentFragment extends Fragment {
+public class QuickBillPayFragment extends Fragment {
 
 
     MaterialDialog confirmDialog;

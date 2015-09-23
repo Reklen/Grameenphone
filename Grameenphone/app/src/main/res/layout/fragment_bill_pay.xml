@@ -124,6 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:hint="Amount"
+            android:editable="false"
             android:inputType="number"
             android:textColorHighlight="@color/black_eighty_seven"
             android:textColorHint="@color/hint_color" />
@@ -141,6 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:hint="Surcharge"
+            android:editable="false"
             android:inputType="number"
             android:textColorHighlight="@color/black_eighty_seven"
             android:textColorHint="@color/hint_color" />

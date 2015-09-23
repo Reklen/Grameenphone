@@ -1,6 +1,7 @@
 package com.cc.grameenphone.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -18,6 +20,7 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.adapter.ManageFavAdapter;
 import com.cc.grameenphone.api_models.ContactModel;
+import com.cc.grameenphone.utils.Constants;
 import com.cc.grameenphone.utils.Logger;
 
 import java.util.ArrayList;
@@ -114,7 +117,15 @@ public class ManageFavoriteFragment extends Fragment {
         contactModelList = new ArrayList<>();
         adapter = new ManageFavAdapter(contactModelList, getActivity());
         listView.setAdapter(adapter);
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent d = new Intent();
+                d.putExtra(Constants.RETURN_RESULT, adapter.getItem(i).getNumber());
+                getActivity().setResult(getActivity().RESULT_OK, d);
+                getActivity().finish();
+            }
+        });
         fetchList();
 
         return rootView;

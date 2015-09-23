@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.api_models.BalanceEnquiryModel;
-import com.cc.grameenphone.fragments.BillPaymentFragment;
+import com.cc.grameenphone.fragments.QuickBillPayFragment;
 import com.cc.grameenphone.fragments.QuickPayFragment;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.WalletCheckApi;
@@ -54,7 +54,7 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayFragm
     private PreferenceManager preferenceManager;
     private MaterialDialog walletBalanceDialog;
     QuickPayFragment qf;
-    BillPaymentFragment bf;
+    QuickBillPayFragment bf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +114,7 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayFragm
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.addToBackStack("qf");
-        bf = new BillPaymentFragment();
+        bf = new QuickBillPayFragment();
         Bundle args = new Bundle();
         args.putString("QUICKPAYCODE", paycode);
         bf.setArguments(args);
