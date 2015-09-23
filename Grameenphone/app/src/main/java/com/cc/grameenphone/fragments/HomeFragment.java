@@ -55,7 +55,6 @@ import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.http.HEAD;
 
 /**
  * Created by rajkiran on 09/09/15.
@@ -312,7 +311,7 @@ public class HomeFragment extends Fragment {
                 amt = amt.replace(" ", "");
                 innerObject.put("AMOUNT", amt);
                 jsonObject.put("COMMAND", innerObject);
-                Logger.d("Balance", jsonObject.toString());
+                Logger.d("Flexiload", jsonObject.toString());
                 selfPrepaidApi.selfPrepaidOther(jsonObject, new Callback<OtherPrepaidModel>() {
                     @Override
                     public void success(OtherPrepaidModel selfPrepaidModel, Response response) {

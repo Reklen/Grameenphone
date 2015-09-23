@@ -23,6 +23,8 @@ import com.cc.grameenphone.utils.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.uk.rushorm.core.RushSearch;
+import co.uk.rushorm.core.RushSearchCallback;
 import me.drakeet.materialdialog.MaterialDialog;
 
 /**
@@ -121,17 +123,8 @@ public class ManageFavoriteFragment extends Fragment {
     }
 
     private void fetchList() {
-        List<ContactModel> list = ContactModel.listAll(ContactModel.class);
-        contactModelList.clear();
-        contactModelList.addAll(list);
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
 
-                adapter.notifyDataSetChanged();
-            }
-        });
-     /*   new RushSearch()
+        new RushSearch()
                 .find(ContactModel.class, new RushSearchCallback<ContactModel>() {
                     @Override
                     public void complete(List<ContactModel> list) {
@@ -145,7 +138,7 @@ public class ManageFavoriteFragment extends Fragment {
                         });
 
                     }
-                });*/
+                });
     }
 
     @Override

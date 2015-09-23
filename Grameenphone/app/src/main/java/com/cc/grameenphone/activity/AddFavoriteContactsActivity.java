@@ -39,6 +39,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import co.uk.rushorm.core.RushCallback;
+
 public class AddFavoriteContactsActivity extends AppCompatActivity {
     private LayoutInflater mInflater;
     private PinnedHeaderListView mListView;
@@ -91,16 +93,15 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
                 contactModel.setName(contact.displayName);
                 contactModel.setNumber(contact.number);
                 contactModel.setPhotoId(contact.photoId);
-                contactModel.save();
-                Logger.d("Contact adding to fav", contactModel.getId() + "");
-                finish();
-                /*contactModel.save(new RushCallback() {
+                contactModel.save(new RushCallback() {
                     @Override
                     public void complete() {
                         Logger.d("Contact adding to fav", contactModel.getId() + "");
                         finish();
                     }
-                });*/
+                });
+
+
             }
         });
 
