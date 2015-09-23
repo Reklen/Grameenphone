@@ -38,7 +38,6 @@ public class BillPaymentViewPagerAdapter extends FragmentStatePagerAdapter {
                 bundle = new Bundle();
                 bundle.putInt("type", type);
                 tabFragment = OtherPaymentElectricityFragment.newInstance(bundle);
-
                 return tabFragment;
             case 1:
                 bundle = new Bundle();
@@ -68,6 +67,7 @@ public class BillPaymentViewPagerAdapter extends FragmentStatePagerAdapter {
         }
         return null;
     }
+
 
     @Override
     public int getCount() {

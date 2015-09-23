@@ -16,7 +16,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/black_eighty_seven" />
 
-    <android.support.design.widget.TextInputLayout
+    <com.cc.grameenphone.views.CustomTextInputLayout
         android:id="@+id/enterPin_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             android:inputType="text"
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color" />
-    </android.support.design.widget.TextInputLayout>
+    </com.cc.grameenphone.views.CustomTextInputLayout>
 
     <Button
         android:id="@+id/confirmDialogButton"

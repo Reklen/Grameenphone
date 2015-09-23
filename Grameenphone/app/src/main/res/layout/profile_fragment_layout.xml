@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
 
-    <android.support.design.widget.TextInputLayout
+    <com.cc.grameenphone.views.CustomTextInputLayout
         android:id="@+id/firstNameTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,9 +24,9 @@
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color" />
 
-    </android.support.design.widget.TextInputLayout>
+    </com.cc.grameenphone.views.CustomTextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.cc.grameenphone.views.CustomTextInputLayout
         android:id="@+id/lastNameTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,10 +44,10 @@
             android:text="Doe"
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color" />
-    </android.support.design.widget.TextInputLayout>
+    </com.cc.grameenphone.views.CustomTextInputLayout>
 
 
-    <android.support.design.widget.TextInputLayout
+    <com.cc.grameenphone.views.CustomTextInputLayout
         android:id="@+id/emailTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,10 +65,10 @@
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color" />
 
-    </android.support.design.widget.TextInputLayout>
+    </com.cc.grameenphone.views.CustomTextInputLayout>
 
 
-    <android.support.design.widget.TextInputLayout
+    <com.cc.grameenphone.views.CustomTextInputLayout
         android:id="@+id/nationalTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -85,9 +85,9 @@
             android:text="28484848859"
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color" />
-    </android.support.design.widget.TextInputLayout>
+    </com.cc.grameenphone.views.CustomTextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.cc.grameenphone.views.CustomTextInputLayout
         android:id="@+id/dobTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -104,6 +104,6 @@
             android:text="29-02-1990"
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color" />
-    </android.support.design.widget.TextInputLayout>
+    </com.cc.grameenphone.views.CustomTextInputLayout>
 
 </RelativeLayout>

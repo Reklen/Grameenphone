@@ -65,7 +65,7 @@
 
         <!-- Setting this to true will cause a migration to happen every launch,
         this is very handy during development although could cause data loss -->
-        <meta-data android:name="Rush_debug" android:value="false" />
+        <meta-data android:name="Rush_debug" android:value="true" />
 
         <!-- Setting this to true mean that tables will only be created of classes that
         extend RushObject and are annotated with @RushTableAnnotation -->

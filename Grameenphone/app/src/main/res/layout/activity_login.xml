@@ -43,7 +43,7 @@
         android:layout_below="@+id/grameen_text"
         android:layout_marginTop="24dp">
 
-        <!--  <android.support.design.widget.TextInputLayout
+        <!--  <com.cc.grameenphone.views.CustomTextInputLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
@@ -54,7 +54,7 @@
                   android:hint="@string/hint_email"
                   android:inputType="textEmailAddress" />
 
-          </android.support.design.widget.TextInputLayout>
+          </com.cc.grameenphone.views.CustomTextInputLayout>
   -->
 
         <EditText
@@ -91,7 +91,7 @@
 
     </View>-->
 
-        <android.support.design.widget.TextInputLayout
+        <com.cc.grameenphone.views.CustomTextInputLayout
             android:id="@+id/phone_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
                 android:textColor="@color/black_semi_transparent"
                 android:textColorHighlight="@color/hint_color"
                 android:textColorHint="@color/hint_color" />
-        </android.support.design.widget.TextInputLayout>
+        </com.cc.grameenphone.views.CustomTextInputLayout>
 
 
         <!--  <View
@@ -140,7 +140,7 @@
         android:orientation="vertical"
         tools:visibility="visible">
 
-        <android.support.design.widget.TextInputLayout
+        <com.cc.grameenphone.views.CustomTextInputLayout
             android:id="@+id/wallet_pin_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -158,7 +158,7 @@
                 android:textColorHighlight="@color/hint_color"
                 android:textColorHint="@color/hint_color" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.cc.grameenphone.views.CustomTextInputLayout>
 
     </LinearLayout>
 

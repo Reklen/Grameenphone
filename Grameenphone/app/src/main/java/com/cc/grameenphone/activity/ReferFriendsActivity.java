@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.api_models.ReferFriendModel;
+import com.cc.grameenphone.async.SessionClearTask;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.ReferFriendsApi;
 import com.cc.grameenphone.utils.Constants;
@@ -71,6 +72,7 @@ public class ReferFriendsActivity extends AppCompatActivity {
 
     ReferFriendsApi referFriendsApi;
     private String last8;
+    private MaterialDialog sessionDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,8 +180,22 @@ public class ReferFriendsActivity extends AppCompatActivity {
                             }
                         });
                         errorDialog.show();
+                    } else if (referFriendModel.getCommand().getTXNSTATUS().equalsIgnoreCase("MA907")) {
+                        Logger.d("Balance", referFriendModel.toString());
+                        sessionDialog = new MaterialDialog(ReferFriendsActivity.this);
+                        sessionDialog.setMessage("Session expired , please login again");
+                        sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                SessionClearTask sessionClearTask = new SessionClearTask(ReferFriendsActivity.this);
+                                sessionClearTask.execute();
+
+                            }
+                        });
+                        sessionDialog.setCanceledOnTouchOutside(false);
+                        sessionDialog.show();
                     } else {
-                        Logger.d("Error", referFriendModel.toString());
+                        Logger.e("Error", referFriendModel.toString());
                     }
                 }
 

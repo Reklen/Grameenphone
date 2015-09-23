@@ -17,6 +17,7 @@ import com.cc.grameenphone.R;
 import com.cc.grameenphone.adapter.TransactionOverviewAdapter;
 import com.cc.grameenphone.api_models.TransactionOverviewData;
 import com.cc.grameenphone.api_models.TransactionOverviewModel;
+import com.cc.grameenphone.async.SessionClearTask;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.TransactionOverviewApi;
 import com.cc.grameenphone.utils.Logger;
@@ -31,6 +32,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -53,6 +55,8 @@ public class TransactionOverviewActivity extends AppCompatActivity {
     private String android_id;
     private PreferenceManager preferenceManager;
     TransactionOverviewApi transactionOverviewApi;
+    private MaterialDialog sessionDialog;
+    private MaterialDialog errorDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,10 +109,34 @@ public class TransactionOverviewActivity extends AppCompatActivity {
                         listItemsList.addAll(transactionOverviewModel.getCOMMAND().getDATA());
                         adapter.notifyDataSetChanged();
                         loadingDialog.cancel();
-                    } else {
-                        Logger.e("TO", transactionOverviewModel.getCOMMAND().getMESSAGE().toString() + " ");
+                    } else if (transactionOverviewModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA903")) {
                         loadingDialog.cancel();
-                        Toast.makeText(TransactionOverviewActivity.this, "Some Error Occured", Toast.LENGTH_SHORT).show();
+                        errorDialog = new MaterialDialog(TransactionOverviewActivity.this);
+                        errorDialog.setMessage(transactionOverviewModel.getCOMMAND().getMESSAGE() + "");
+                        errorDialog.setPositiveButton("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                errorDialog.dismiss();
+                            }
+                        });
+                        errorDialog.show();
+                    } else if (transactionOverviewModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
+                        Logger.d("Balance", transactionOverviewModel.toString());
+                        loadingDialog.cancel();
+                        sessionDialog = new MaterialDialog(TransactionOverviewActivity.this);
+                        sessionDialog.setMessage("Session expired , please login again");
+                        sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                SessionClearTask sessionClearTask = new SessionClearTask(TransactionOverviewActivity.this);
+                                sessionClearTask.execute();
+
+                            }
+                        });
+                        sessionDialog.setCanceledOnTouchOutside(false);
+                        sessionDialog.show();
+                    } else {
+                        Logger.e("Error", transactionOverviewModel.toString());
                     }
 
                 }

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.api_models.ProfileUpdateModel;
+import com.cc.grameenphone.async.SessionClearTask;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.ProfileUpdateApi;
 import com.cc.grameenphone.utils.Logger;
@@ -62,6 +63,7 @@ public class ProfileUpdateActivity extends Activity {
     MaterialDialog otpDialog, successSignupDialog, errorDialog;
     private String android_id;
     PreferenceManager preferenceManager;
+    private MaterialDialog sessionDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +124,22 @@ public class ProfileUpdateActivity extends Activity {
                             }
                         });
                         errorDialog.show();
+                    } else if (profileUpdateModel.getCommand().getTXNSTATUS().equalsIgnoreCase("MA907")) {
+                        Logger.d("Balance", profileUpdateModel.toString());
+                        sessionDialog = new MaterialDialog(ProfileUpdateActivity.this);
+                        sessionDialog.setMessage("Session expired , please login again");
+                        sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                SessionClearTask sessionClearTask = new SessionClearTask(ProfileUpdateActivity.this);
+                                sessionClearTask.execute();
+
+                            }
+                        });
+                        sessionDialog.setCanceledOnTouchOutside(false);
+                        sessionDialog.show();
+                    } else {
+                        Logger.d("Balance", profileUpdateModel.toString());
                     }
                 }
 
@@ -137,8 +155,7 @@ public class ProfileUpdateActivity extends Activity {
     }
 
     @OnClick(R.id.skipButton)
-
-    void skipClick(){
+    void skipClick() {
         startActivity(new Intent(ProfileUpdateActivity.this, HomeActivity.class));
 
     }

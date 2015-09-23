@@ -20,6 +20,6 @@ public class TransactionOverviewModel {
 
     @Override
     public String toString() {
-        return "ClassPojo [COMMAND = " + command + "]";
+        return "ClassPojo [COMMAND = " + command.toString() + "]";
     }
 }

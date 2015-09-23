@@ -16,7 +16,7 @@
         android:textColor="@color/black_semi_transparent"
         android:textSize="16sp" />
 
-    <android.support.design.widget.TextInputLayout
+    <com.cc.grameenphone.views.CustomTextInputLayout
         android:id="@+id/amount_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             android:textColor="@color/black_semi_transparent"
             android:textColorHighlight="@color/hint_color"
             android:textColorHint="@color/hint_color" />
-    </android.support.design.widget.TextInputLayout>
+    </com.cc.grameenphone.views.CustomTextInputLayout>
 
 
     <com.cc.grameenphone.views.RippleView

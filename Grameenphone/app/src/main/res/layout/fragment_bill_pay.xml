@@ -112,7 +112,7 @@
             android:textSize="16sp" />
     </LinearLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.cc.grameenphone.views.CustomTextInputLayout
         android:id="@+id/amount_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -127,9 +127,9 @@
             android:inputType="number"
             android:textColorHighlight="@color/black_eighty_seven"
             android:textColorHint="@color/hint_color" />
-    </android.support.design.widget.TextInputLayout>
+    </com.cc.grameenphone.views.CustomTextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.cc.grameenphone.views.CustomTextInputLayout
         android:id="@+id/surcharge_amount_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -144,7 +144,7 @@
             android:inputType="number"
             android:textColorHighlight="@color/black_eighty_seven"
             android:textColorHint="@color/hint_color" />
-    </android.support.design.widget.TextInputLayout>
+    </com.cc.grameenphone.views.CustomTextInputLayout>
 
 
     <TextView
@@ -157,7 +157,7 @@
         android:textColor="@color/black_semi_transparent"
         android:textSize="16sp" />
 
-    <android.support.design.widget.TextInputLayout
+    <com.cc.grameenphone.views.CustomTextInputLayout
         android:id="@+id/PinConform_container"
         android:layout_width="match_parent"
         android:layout_height="72dp"
@@ -172,7 +172,7 @@
             android:inputType="numberPassword"
             android:textColorHighlight="@color/black_eighty_seven"
             android:textColorHint="@color/hint_color" />
-    </android.support.design.widget.TextInputLayout>
+    </com.cc.grameenphone.views.CustomTextInputLayout>
 
     <com.cc.grameenphone.views.RippleView
         android:id="@+id/confirmRipple"

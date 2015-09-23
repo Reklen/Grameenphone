@@ -31,22 +31,35 @@ public final class PreferenceManager {
     }
 
 
-    public void setMSISDN(String msisdn){
+    public void setMSISDN(String msisdn) {
         mSharedPreferences.edit().putString("MSISDN", msisdn).commit();
     }
+
     public String getMSISDN() {
         return mSharedPreferences.getString("MSISDN", "");
     }
-    public void setReferCode(String referCode){
+
+    public void setReferCode(String referCode) {
         mSharedPreferences.edit().putString("REFER", referCode).commit();
     }
+
     public String getReferCode() {
         return mSharedPreferences.getString("REFER", "");
     }
-    public void setPINCode(String pinCode){
+
+    public void setPINCode(String pinCode) {
         mSharedPreferences.edit().putString("PIN", pinCode).commit();
     }
+
     public String getPINCode() {
         return mSharedPreferences.getString("PIN", "");
+    }
+
+    public void setCompaniesSavedFlag(boolean companiesSavedFlag) {
+        mSharedPreferences.edit().putBoolean("companiesSavedFlag", companiesSavedFlag).commit();
+    }
+
+    public Boolean getCompaniesSavedFlag() {
+        return mSharedPreferences.getBoolean("companiesSavedFlag", false);
     }
 }

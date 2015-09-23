@@ -65,7 +65,7 @@
                     android:text="+88017 "
                     android:textColor="@color/hint_color" />
 
-                <android.support.design.widget.TextInputLayout
+                <com.cc.grameenphone.views.CustomTextInputLayout
                     android:id="@+id/phone_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -87,12 +87,12 @@
 
                         <requestFocus />
                     </EditText>
-                </android.support.design.widget.TextInputLayout>
+                </com.cc.grameenphone.views.CustomTextInputLayout>
 
 
             </RelativeLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.cc.grameenphone.views.CustomTextInputLayout
                 android:id="@+id/setPin_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
                     android:textColor="@color/black_semi_transparent"
                     android:textColorHighlight="@color/hint_color"
                     android:textColorHint="@color/hint_color" />
-            </android.support.design.widget.TextInputLayout>
+            </com.cc.grameenphone.views.CustomTextInputLayout>
 
 
             <TextView
@@ -123,7 +123,7 @@
                 android:text="@string/Consecutive"
                 android:textSize="13sp" />
 
-            <android.support.design.widget.TextInputLayout
+            <com.cc.grameenphone.views.CustomTextInputLayout
                 android:id="@+id/confromPin_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -142,10 +142,10 @@
                     android:textColor="@color/black_semi_transparent"
                     android:textColorHighlight="@color/hint_color"
                     android:textColorHint="@color/hint_color" />
-            </android.support.design.widget.TextInputLayout>
+            </com.cc.grameenphone.views.CustomTextInputLayout>
 
 
-            <android.support.design.widget.TextInputLayout
+            <com.cc.grameenphone.views.CustomTextInputLayout
                 android:id="@+id/referral_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -165,7 +165,7 @@
                     android:textColor="@color/black_semi_transparent"
                     android:textColorHighlight="@color/hint_color"
                     android:textColorHint="@color/hint_color" />
-            </android.support.design.widget.TextInputLayout>
+            </com.cc.grameenphone.views.CustomTextInputLayout>
 
 
             <RelativeLayout

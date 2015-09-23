@@ -17,6 +17,10 @@ import android.widget.TextView;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.api_models.BalanceEnquiryModel;
+import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
+import com.cc.grameenphone.api_models.OtherPaymentModel;
+import com.cc.grameenphone.async.CompaniesSaveDBTask;
+import com.cc.grameenphone.async.SessionClearTask;
 import com.cc.grameenphone.fragments.DemoFragment;
 import com.cc.grameenphone.fragments.HomeFragment;
 import com.cc.grameenphone.fragments.ManageFavoriteFragment;
@@ -24,6 +28,7 @@ import com.cc.grameenphone.fragments.PinChangeFragment;
 import com.cc.grameenphone.fragments.ProfileFragment;
 import com.cc.grameenphone.fragments.TermsConditionFragment;
 import com.cc.grameenphone.generator.ServiceGenerator;
+import com.cc.grameenphone.interfaces.OtherPaymentApi;
 import com.cc.grameenphone.interfaces.WalletBalanceInterface;
 import com.cc.grameenphone.interfaces.WalletCheckApi;
 import com.cc.grameenphone.utils.ConnectivityUtils;
@@ -33,6 +38,8 @@ import com.cc.grameenphone.views.RippleView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -70,45 +77,28 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
     private WalletCheckApi walletCheckApi;
     MaterialDialog logoutDialog;
     private MaterialDialog walletBalanceDialog, sessionDialog, internetDialog;
+    private OtherPaymentApi otherPaymentApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grameenhome);
         ButterKnife.inject(this);
-        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
-        //  setSupportActionBar(toolbar);
+        init();
 
-        internetDialog = new MaterialDialog(HomeActivity.this);
-        internetDialog.setMessage("No Internet connection , please connect and retry");
-        internetDialog.setCanceledOnTouchOutside(false);
-        internetDialog.setPositiveButton("Ok", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                internetDialog.dismiss();
-                finish();
-            }
-        });
-        internetDialog.setNegativeButton("Retry", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                internetDialog.dismiss();
-                startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-            }
-        });
-
-        if (!ConnectivityUtils.isConnected(HomeActivity.this)) {
-            internetDialog.show();
-        }
-        preferenceManager = new PreferenceManager(HomeActivity.this);
-        fragment = new HomeFragment();
-        toolbarTextView.setText("Home");
-        // getSupportActionBar().setTitle("");
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container_body, fragment);
         fragmentTransaction.commit();
 
         getWalletBalance();
+        if (!preferenceManager.getCompaniesSavedFlag())
+            getOtherPaymentCompanies();
+
+        handleNavigationView();
+        handleRipple();
+    }
+
+    private void handleNavigationView() {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             // This method will trigger on item Click of navigation menu
@@ -205,10 +195,9 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
                         logoutDialog.setPositiveButton("Yes", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                preferenceManager.setAuthToken("");
-                                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-                                preferenceManager.setMSISDN("");
-                                finish();
+                                SessionClearTask sessionClearTask = new SessionClearTask(HomeActivity.this);
+                                sessionClearTask.execute();
+
                             }
                         });
                         logoutDialog.setNegativeButton("Cancel", new View.OnClickListener() {
@@ -253,8 +242,72 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
         //calling sync state is necessay or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
 
+    }
 
-        handleRipple();
+    private void init() {
+        internetDialog = new MaterialDialog(HomeActivity.this);
+        internetDialog.setMessage("No Internet connection , please connect and retry");
+        internetDialog.setCanceledOnTouchOutside(false);
+        internetDialog.setPositiveButton("Ok", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                internetDialog.dismiss();
+                finish();
+            }
+        });
+        internetDialog.setNegativeButton("Retry", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                internetDialog.dismiss();
+                startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+            }
+        });
+
+        if (!ConnectivityUtils.isConnected(HomeActivity.this)) {
+            internetDialog.show();
+        }
+        preferenceManager = new PreferenceManager(HomeActivity.this);
+        fragment = new HomeFragment();
+        toolbarTextView.setText("Home");
+    }
+
+    private void getOtherPaymentCompanies() {
+        otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+            JSONObject innerObject = new JSONObject();
+            innerObject.put("DEVICEID", android_id);
+            innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("TYPE", "CTCMPLREQ");
+            jsonObject.put("COMMAND", innerObject);
+            Logger.d("getOtherPaymentCompanies ", jsonObject.toString());
+
+            otherPaymentApi.otherPayment(jsonObject, new Callback<OtherPaymentModel>() {
+                @Override
+                public void success(OtherPaymentModel otherPaymentModel, Response response) {
+
+                    if (otherPaymentModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                        OtherPaymentModel model = otherPaymentModel;
+                        List<OtherPaymentCompanyModel> companiesList = model.getCOMMAND().getCOMPANYDET();
+                        CompaniesSaveDBTask companiesSaveDBTask = new CompaniesSaveDBTask(getApplicationContext(), companiesList);
+                        companiesSaveDBTask.execute();
+                    } else {
+                        Logger.e("getOtherPaymentCompanies", otherPaymentModel.getCOMMAND().getTXNSTATUS() + " " + otherPaymentModel.getCOMMAND().toString());
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Logger.e("getOtherPaymentCompanies", error.getMessage() + "");
+                }
+            });
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void handleRipple() {
@@ -322,22 +375,22 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
                         Logger.d("Balance", balanceEnquiryModel.toString());
                         walletLabel.setText("  ৳ " + balanceEnquiryModel.getCOMMAND().getBALANCE());
                         walletLabel.setTag(balanceEnquiryModel);
-                    } else {
+                    } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
                         Logger.d("Balance", balanceEnquiryModel.toString());
                         sessionDialog = new MaterialDialog(HomeActivity.this);
                         sessionDialog.setMessage("Session expired , please login again");
                         sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                preferenceManager.setAuthToken("");
-                                preferenceManager.setMSISDN("");
-                                sessionDialog.dismiss();
-                                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-                                finish();
+                                SessionClearTask sessionClearTask = new SessionClearTask(HomeActivity.this);
+                                sessionClearTask.execute();
+
                             }
                         });
                         sessionDialog.setCanceledOnTouchOutside(false);
                         sessionDialog.show();
+                    } else {
+                        Logger.d("Balance", balanceEnquiryModel.toString());
                     }
                 }
 

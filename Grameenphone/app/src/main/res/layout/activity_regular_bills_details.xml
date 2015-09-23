@@ -262,7 +262,7 @@
             android:textColor="#929292"
             android:textSize="17sp" />
 
-        <android.support.design.widget.TextInputLayout
+        <com.cc.grameenphone.views.CustomTextInputLayout
             android:id="@+id/PinConform_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -276,7 +276,7 @@
                 android:hint="Enter PIN"
                 android:inputType="numberPassword"
                 android:textSize="15sp" />
-        </android.support.design.widget.TextInputLayout>
+        </com.cc.grameenphone.views.CustomTextInputLayout>
 
         <Button
             android:id="@+id/confirm_btn"

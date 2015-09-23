@@ -24,6 +24,7 @@ import com.cc.grameenphone.adapter.BillsListAdapter;
 import com.cc.grameenphone.api_models.BalanceEnquiryModel;
 import com.cc.grameenphone.api_models.BillListModel;
 import com.cc.grameenphone.api_models.UserBillsModel;
+import com.cc.grameenphone.async.SessionClearTask;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.BillspaymentApi;
 import com.cc.grameenphone.interfaces.WalletCheckApi;
@@ -96,6 +97,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     List<String> billsSelectedList;
     ProgressDialog loadingDialog;
     MaterialDialog walletBalanceDialog;
+    private MaterialDialog sessionDialog;
 
     @Override
 
@@ -144,15 +146,32 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                             loadingDialog.dismiss();
                         }
 
-                    } else {
+                    } else if (billListModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
+                        Logger.e("Balance", billListModel.getCOMMAND().toString() + " ");
+                        loadingDialog.cancel();
+                        sessionDialog = new MaterialDialog(BillPaymentActivity.this);
+                        sessionDialog.setMessage("Session expired , please login again");
+                        sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                sessionDialog.dismiss();
+                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this);
+                                sessionClearTask.execute();
 
+                            }
+                        });
+                        sessionDialog.setCanceledOnTouchOutside(false);
+                        sessionDialog.show();
+                    } else {
+                        loadingDialog.cancel();
+                        Logger.e("Balance", billListModel.toString());
                     }
 
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-
+                    Logger.e("BILLS", error.getMessage());
                 }
             });
 
@@ -241,6 +260,24 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                         Logger.d("Balance", balanceEnquiryModel.toString());
                         walletLabel.setText("  ৳ " + balanceEnquiryModel.getCOMMAND().getBALANCE());
                         walletLabel.setTag(balanceEnquiryModel);
+                    } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
+                        Logger.e("Balance", balanceEnquiryModel.getCOMMAND().getMESSAGE().toString() + " ");
+                        loadingDialog.cancel();
+                        sessionDialog = new MaterialDialog(BillPaymentActivity.this);
+                        sessionDialog.setMessage("Session expired , please login again");
+                        sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                sessionDialog.dismiss();
+                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this);
+                                sessionClearTask.execute();
+
+                            }
+                        });
+                        sessionDialog.setCanceledOnTouchOutside(false);
+                        sessionDialog.show();
+                    } else {
+                        Logger.e("Balance", balanceEnquiryModel.toString());
                     }
                 }
 

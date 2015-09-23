@@ -15,6 +15,7 @@ import retrofit.http.POST;
 public interface OtherPaymentApi {
     @POST("/GPTxn/CelliciumSelector?LOGIN=Ussd_Bearer1&PASSWORD=U$$d_Int11&REQUEST_GATEWAY_CODE=J2ME&REQUEST_GATEWAY_TYPE=J2ME&requestText=")
     void otherPayment(@Body JSONObject jsonObject, Callback<OtherPaymentModel> cb);
+
     @POST("/GPTxn/CelliciumSelector?LOGIN=Ussd_Bearer1&PASSWORD=U$$d_Int11&REQUEST_GATEWAY_CODE=J2ME&REQUEST_GATEWAY_TYPE=J2ME&requestText=")
     void billConfirmation(@Body JSONObject jsonObject, Callback<BillConfirmationModel> cb);
 }

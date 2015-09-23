@@ -41,6 +41,7 @@ public class ContactModel implements Rush {
     public void setPhotoId(String photoId) {
         this.photoId = photoId;
     }
+
     @Override
     public void save() { RushCore.getInstance().save(this); }
     @Override

@@ -3,6 +3,7 @@ package com.cc.grameenphone;
 import android.app.Application;
 
 import com.cc.grameenphone.api_models.ContactModel;
+import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
 import com.cc.grameenphone.utils.Logger;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class MainApplication extends Application {
         List<Class<? extends Rush>> classes = new ArrayList<>();
         // Add classes
         classes.add(ContactModel.class);
+        classes.add(OtherPaymentCompanyModel.class);
 
         AndroidInitializeConfig config = new AndroidInitializeConfig(getApplicationContext());
         config.setClasses(classes);
