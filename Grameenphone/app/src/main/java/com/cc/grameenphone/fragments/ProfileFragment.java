@@ -2,6 +2,7 @@ package com.cc.grameenphone.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,9 +11,21 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.cc.grameenphone.R;
+import com.cc.grameenphone.api_models.ProfileModel;
+import com.cc.grameenphone.generator.ServiceGenerator;
+import com.cc.grameenphone.interfaces.ProfileUpdateApi;
+import com.cc.grameenphone.utils.Logger;
+import com.cc.grameenphone.utils.PreferenceManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import me.drakeet.materialdialog.MaterialDialog;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by rajkiran on 09/09/15.
@@ -38,6 +51,10 @@ public class ProfileFragment extends Fragment {
     EditText dob;
     @InjectView(R.id.dobTextInputLayout)
     TextInputLayout dobTextInputLayout;
+    private String android_id;
+    PreferenceManager preferenceManager;
+    MaterialDialog materialDialog;
+    ProfileUpdateApi profileDisplay;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -53,11 +70,54 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.profile_fragment_layout, container, false);
-
-
         // Inflate the layout for this fragment
         ButterKnife.inject(this, rootView);
+        displayProfile();
         return rootView;
+    }
+
+    private void displayProfile() {
+        //TODO Implement fetching profile data
+        preferenceManager = new PreferenceManager(getActivity());
+        android_id = Settings.Secure.getString(getActivity().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        profileDisplay = ServiceGenerator.createService(ProfileUpdateApi.class);
+        try {
+            JSONObject jsonObject = new JSONObject();
+            JSONObject innerObject = new JSONObject();
+            innerObject.put("DEVICEID", android_id);
+            innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("TYPE", "SUBDATAREQ");
+            jsonObject.put("COMMAND", innerObject);
+            Logger.d("Profile Fetch Data", jsonObject.toString());
+            profileDisplay.profile(jsonObject, new Callback<ProfileModel>() {
+                @Override
+                public void success(ProfileModel profileModel, Response response) {
+                    if (profileModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                        Logger.d("Profile Success" + profileModel.toString());
+                        firstName.setText("" + profileModel.getCOMMAND().getFNAME());
+                        lastName.setText("" + profileModel.getCOMMAND().getLNAME());
+                        emailName.setText("" + profileModel.getCOMMAND().getEMAIL());
+                        nationalId.setText("" + profileModel.getCOMMAND().getIDNO());
+                        dob.setText("" + profileModel.getCOMMAND().getDOB());
+
+                    } else {
+
+                        //Dont know
+                        Logger.d("Profile fetch failed");
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Logger.d("Retrofit failure" + error.getMessage());
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

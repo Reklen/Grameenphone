@@ -40,6 +40,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -163,32 +164,17 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         setupListViewItemClick();
         setupRipples();
         getWalletBalance();
-       /* selectedPaymentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                paySelectDialog = new AppCompatDialog(BillPaymentActivity.this);
-                paySelectDialog.setContentView(R.layout.enterpin_dailogue);
-                confirmButton = (Button) paySelectDialog.findViewById(R.id.confrimButton);
-                paySelectDialog.show();
-                paySelectDialog.getWindow().setLayout(650, 500);
-                confirmButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
 
-
-                    }
-                });
-                paySelectDialog.setCanceledOnTouchOutside(true);
-            }
-        });
-        otherPaymentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(BillPaymentActivity.this, PaymentActivity.class));
-            }
-        });*/
     }
 
+    @OnClick(R.id.selectedPaymentButton)
+    public  void selctedBillPay(){
+        //TODO Paying selected bills
+
+
+
+
+    }
     private void setupListViewItemClick() {
         billsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
