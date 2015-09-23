@@ -596,8 +596,7 @@ public class HomeFragment extends Fragment {
 
                 String num = PhoneUtils.normalizeNum(((String) data.getExtras().get(Constants.RETURN_RESULT)));
                 num = num.replace("+", "");
-                String substring = num.substring(Math.max(num.length() - 8, 0));
-                /*String upToNCharacters = num.substring(0, Math.min(num.length(), 5));
+                String upToNCharacters = num.substring(0, Math.min(num.length(), 5));
                 String upToNCharacters1 = num.substring(0, Math.min(num.length(), 3));
                 if (upToNCharacters.equalsIgnoreCase("88017")) {
                     last8 = num.substring(5, Math.min(num.length(), num.length()));
@@ -606,10 +605,10 @@ public class HomeFragment extends Fragment {
 
                 }else{
                     last8 = num;
-                }*/
+                }
 
 
-                phoneNumberEditText.setText("" + substring);
+                phoneNumberEditText.setText("" + last8);
             } catch (Exception e) {
                 e.printStackTrace();
             }
