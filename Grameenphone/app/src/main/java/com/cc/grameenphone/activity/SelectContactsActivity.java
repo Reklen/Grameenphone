@@ -140,6 +140,11 @@ public class SelectContactsActivity extends AppCompatActivity implements SearchV
             public boolean onQueryTextChange(String s) {
                 //adapter.getFilter().filter(s);
                 Logger.d("Text is", s);
+                if (contactsViewpager.getCurrentItem() == 1)
+                    selectcontactAdapter.contactsDetailsFragment.getFilterContacts(s);
+                else {
+                    selectcontactAdapter.manageFavoriteFragment.getFilterContacts(s);
+                }
                 return true;
             }
         };
@@ -162,7 +167,7 @@ public class SelectContactsActivity extends AppCompatActivity implements SearchV
 
     @Override
     public boolean onQueryTextChange(String s) {
-        selectcontactAdapter.contactsDetailsFragment.getFilterContacts(s);
+
         return false;
     }
 }

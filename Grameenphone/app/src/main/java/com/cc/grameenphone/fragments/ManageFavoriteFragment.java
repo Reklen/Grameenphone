@@ -81,7 +81,7 @@ public class ManageFavoriteFragment extends Fragment {
                     case 0:
 
                         confirmDialog = new MaterialDialog(getActivity());
-                        confirmDialog.setMessage("Remove" + " " + contactModelList.get(position).toString() + " " + "from favorites ?");
+                        confirmDialog.setMessage("Remove" + " " + adapter.getItem(position).getName() + " " + "from favorites ?");
                         confirmDialog.setNegativeButton("CANCEL", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -120,6 +120,12 @@ public class ManageFavoriteFragment extends Fragment {
         return rootView;
     }
 
+    public void getFilterContacts(String searchText){
+        if(adapter!=null){
+            Logger.d("Search Text", searchText);
+            adapter.getFilter().filter(searchText);
+        }
+    }
     private void fetchList() {
         List<ContactModel> list = ContactModel.listAll(ContactModel.class);
         contactModelList.clear();
