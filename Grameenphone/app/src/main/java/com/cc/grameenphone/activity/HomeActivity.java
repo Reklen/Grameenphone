@@ -284,19 +284,35 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
             @Override
             public void onComplete(RippleView rippleView) {
                 walletBalanceDialog = new MaterialDialog(HomeActivity.this);
-
-                BalanceEnquiryModel md = (BalanceEnquiryModel) walletLabel.getTag();
-                if (md != null) {
-                    walletBalanceDialog.setMessage(md.getCOMMAND().getMESSAGE());
-                    walletBalanceDialog.setPositiveButton("Ok", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            walletBalanceDialog.dismiss();
-                        }
-                    });
-                    walletBalanceDialog.show();
+                Fragment f = getSupportFragmentManager().findFragmentById(R.id.container_body);
+                if(f instanceof HomeFragment) {
+                    BalanceEnquiryModel md = (BalanceEnquiryModel) walletLabel.getTag();
+                    if (md != null) {
+                        walletBalanceDialog.setMessage(md.getCOMMAND().getMESSAGE());
+                        walletBalanceDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                walletBalanceDialog.dismiss();
+                            }
+                        });
+                        walletBalanceDialog.show();
+                    }
                 }
+                if (f instanceof ProfileFragment) {
 
+                    fragment = new ProfileFragment();
+                    //   getSupportActionBar().setTitle("Profile");
+                    toolbarTextView.setText("Profile");
+                    icon1.setImageDrawable(getResources().getDrawable(R.drawable.icon_refresh));
+                    icon2.setImageDrawable(getResources().getDrawable(R.drawable.icon_edit));
+                    walletLabel.setVisibility(View.GONE);
+                    icon1Ripple.setVisibility(View.VISIBLE);
+                    icon2Ripple.setVisibility(View.VISIBLE);
+                    fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.container_body, fragment);
+                    fragmentTransaction.commit();
+
+                }
 
             }
         });

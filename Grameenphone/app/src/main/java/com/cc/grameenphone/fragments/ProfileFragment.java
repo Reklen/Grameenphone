@@ -1,6 +1,7 @@
 package com.cc.grameenphone.fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
@@ -55,6 +56,7 @@ public class ProfileFragment extends Fragment {
     PreferenceManager preferenceManager;
     MaterialDialog materialDialog;
     ProfileUpdateApi profileDisplay;
+    ProgressDialog loadingDialog;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -78,6 +80,9 @@ public class ProfileFragment extends Fragment {
 
     private void displayProfile() {
         //TODO Implement fetching profile data
+        loadingDialog = new ProgressDialog(getActivity());
+        loadingDialog.setMessage("Loading profile..");
+        loadingDialog.show();
         preferenceManager = new PreferenceManager(getActivity());
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
@@ -107,6 +112,7 @@ public class ProfileFragment extends Fragment {
                         //Dont know
                         Logger.d("Profile fetch failed");
                     }
+                    loadingDialog.dismiss();
                 }
 
                 @Override
