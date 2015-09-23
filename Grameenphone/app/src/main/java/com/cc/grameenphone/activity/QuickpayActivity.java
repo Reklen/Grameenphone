@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.api_models.BalanceEnquiryModel;
-import com.cc.grameenphone.fragments.BillPaymentFragment;
+import com.cc.grameenphone.fragments.QuickBillPayFragment;
 import com.cc.grameenphone.fragments.QuickPayFragment;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.WalletCheckApi;
@@ -52,9 +52,9 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayFragm
     private WalletCheckApi walletCheckApi;
     private String android_id;
     private PreferenceManager preferenceManager;
-    private MaterialDialog walletBalanceDialog;
-    QuickPayFragment qf;
-    BillPaymentFragment bf;
+    private MaterialDialog walletBalanceDialog, successDialog;
+    QuickPayFragment quickCodeFragment;
+    QuickBillPayFragment quickBillFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +65,10 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayFragm
         setupToolbar();
         preferenceManager = new PreferenceManager(QuickPayActivity.this);
 
-        qf = new QuickPayFragment();
+
+        quickCodeFragment = new QuickPayFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, qf);
+        transaction.replace(R.id.container, quickCodeFragment);
         transaction.commit();
         getWalletBalance();
     }
@@ -109,16 +110,28 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayFragm
 
     //Need to edit! The paycode is passed over here!
     public void onclickQuickPay_QuickPayFragment(String paycode) {
-
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.addToBackStack("qf");
-        bf = new BillPaymentFragment();
+       // transaction.addToBackStack("quickCodeFragment");
+        quickBillFragment = new QuickBillPayFragment();
+        quickCodeFragment = new QuickPayFragment();
         Bundle args = new Bundle();
         args.putString("QUICKPAYCODE", paycode);
-        bf.setArguments(args);
-        transaction.replace(R.id.container, bf);
-
+        quickBillFragment.setArguments(args);
+        Logger.d("PAYCODE" + paycode);
+        if (paycode.equals("")) {
+            transaction.replace(R.id.container, quickCodeFragment);
+            successDialog = new MaterialDialog(QuickPayActivity.this);
+            successDialog.setMessage("You must enter a valid quick pay code");
+            successDialog.setPositiveButton("OK", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    successDialog.dismiss();
+                }
+            });
+            successDialog.show();
+        } else {
+            transaction.replace(R.id.container, quickBillFragment);
+        }
         transaction.commit();
     }
 

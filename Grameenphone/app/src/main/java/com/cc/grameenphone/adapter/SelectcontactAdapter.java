@@ -13,7 +13,8 @@ import com.cc.grameenphone.fragments.ManageFavoriteFragment;
 public class SelectcontactAdapter extends FragmentPagerAdapter {
 
     String tabs[] = {"Favorites", "Contacts"};
-
+    public ContactsDetailsFragment contactsDetailsFragment;
+    public ManageFavoriteFragment manageFavoriteFragment;
     public SelectcontactAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -22,12 +23,12 @@ public class SelectcontactAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                ManageFavoriteFragment art = new ManageFavoriteFragment();
-                return art;
+               manageFavoriteFragment = new ManageFavoriteFragment();
+                return manageFavoriteFragment;
 
             case 1:
-                ContactsDetailsFragment dscn = new ContactsDetailsFragment();
-                return dscn;
+                contactsDetailsFragment = new ContactsDetailsFragment();
+                return contactsDetailsFragment;
         }
         return null;
     }

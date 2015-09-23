@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
@@ -18,20 +20,21 @@ import com.cc.grameenphone.utils.ImageCache;
 import com.cc.grameenphone.utils.async_task_thread_pool.AsyncTaskEx;
 import com.cc.grameenphone.utils.async_task_thread_pool.AsyncTaskThreadPool;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 /**
  * Created by aditlal on 20/09/15.
  */
-public class ManageFavAdapter extends BaseAdapter {
+public class ManageFavAdapter extends BaseAdapter implements Filterable{
     List<ContactModel> list;
     Context context;
     private LayoutInflater mInflater;
     private final int CONTACT_PHOTO_IMAGE_SIZE;
     private final int[] PHOTO_TEXT_BACKGROUND_COLORS;
     private final AsyncTaskThreadPool mAsyncTaskThreadPool = new AsyncTaskThreadPool(1, 2, 10);
-
+    private ArrayList<ContactModel> dummyContactsList;
     public ManageFavAdapter(List<ContactModel> list, Context ctx) {
         this.list = list;
         this.context = ctx;
@@ -141,5 +144,54 @@ public class ManageFavAdapter extends BaseAdapter {
         TextView friendName, friendNumber;
         public AsyncTaskEx<Void, Void, Bitmap> updateTask;
     }
+
+    @Override
+    public Filter getFilter() {
+             /*= new ArrayList<Contact>();*/
+        Filter filter = new Filter() {
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                list = (ArrayList<ContactModel>) results.values;
+                if (list != null && list.isEmpty()) {
+                }
+                notifyDataSetChanged();
+            }
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();
+
+                ArrayList<ContactModel> FilteredList = new ArrayList<ContactModel>();
+                if (dummyContactsList == null) {
+                    dummyContactsList = new ArrayList<ContactModel>(list);
+                }
+                if (constraint == null || constraint.length() == 0) {
+                    results.count = dummyContactsList.size();
+                    results.values = dummyContactsList;
+
+                } else {
+                    constraint = constraint.toString().trim().toLowerCase(Locale.getDefault());
+                    for (int i = 0; i < dummyContactsList.size(); i++) {
+                        String name = dummyContactsList.get(i).getName();
+                        String number = dummyContactsList.get(i).getNumber();
+                        if (name.toLowerCase(Locale.getDefault()).contains(constraint.toString())
+                                || number.toLowerCase(Locale.getDefault()).contains(constraint.toString())) {
+                            FilteredList.add(dummyContactsList.get(i));
+
+                        }
+                    }
+                    results.count = FilteredList.size();
+                    results.values = FilteredList;
+                }
+                return results;
+
+            }
+
+        };
+
+        return filter;
+    }
+
 
 }

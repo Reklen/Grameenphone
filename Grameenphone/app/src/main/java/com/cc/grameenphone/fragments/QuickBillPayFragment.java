@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.activity.BillPaymentActivity;
+import com.cc.grameenphone.activity.QuickPayActivity;
 import com.cc.grameenphone.api_models.QuickPayConfirmModel;
 import com.cc.grameenphone.api_models.QuickPayModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
@@ -39,7 +40,7 @@ import retrofit.client.Response;
 /**
  * Created by rajkiran on 18/09/15.
  */
-public class BillPaymentFragment extends Fragment {
+public class QuickBillPayFragment extends Fragment {
 
 
     MaterialDialog confirmDialog;
@@ -130,9 +131,9 @@ public class BillPaymentFragment extends Fragment {
                 public void success(final QuickPayModel quickPayModel, Response response) {
                     if (quickPayModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                         Logger.d("Quickpay Bill Success", quickPayModel.toString());
-                        companyName.setText("" + quickPayModel.getCOMMAND().getMESSAGE().getCOMPNAME());
-                        accountNumber.setText("" + quickPayModel.getCOMMAND().getMESSAGE().getACCNUM());
-                        billNumber.setText("" + quickPayModel.getCOMMAND().getMESSAGE().getBILLNUM());
+                        companyName.setText("" + quickPayModel.getCOMMAND().getCOMPNAME());
+                        accountNumber.setText("" + quickPayModel.getCOMMAND().getACCNUM());
+                        billNumber.setText("" + quickPayModel.getCOMMAND().getBILLNUM());
                         totalAmountEditText.addTextChangedListener(new TextWatcher() {
                             @Override
                             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -181,10 +182,10 @@ public class BillPaymentFragment extends Fragment {
 
                             }
                         });
-                        totalAmountEditText.setText("৳ " + quickPayModel.getCOMMAND().getMESSAGE().getAMOUNT());
+                        totalAmountEditText.setText("৳ " + quickPayModel.getCOMMAND().getAMOUNT());
 
                         surchargeAmountEditText.setText("৳ " + surchargeAmountEditText.getText().toString());
-                        dueDate.setText("" + quickPayModel.getCOMMAND().getMESSAGE().getDUEDATE());
+                        dueDate.setText("" + quickPayModel.getCOMMAND().getDUEDATE());
 
                         //Confirm payment
                         confirmRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
@@ -198,11 +199,11 @@ public class BillPaymentFragment extends Fragment {
                                     innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
                                     innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
                                     innerObject.put("TYPE", "CPMBCBREQ");
-                                    innerObject.put("BILLCCODE", quickPayModel.getCOMMAND().getMESSAGE().getCOMPNAME().toUpperCase());
-                                    innerObject.put("BILLANO", quickPayModel.getCOMMAND().getMESSAGE().getACCNUM());
-                                    innerObject.put("AMOUNT", quickPayModel.getCOMMAND().getMESSAGE().getAMOUNT());
-                                    innerObject.put("BILLNO", quickPayModel.getCOMMAND().getMESSAGE().getBILLNUM());
-                                    innerObject.put("BPROVIDER", quickPayModel.getCOMMAND().getMESSAGE().getBPROVIDER());
+                                    innerObject.put("BILLCCODE", quickPayModel.getCOMMAND().getCOMPNAME().toUpperCase());
+                                    innerObject.put("BILLANO", quickPayModel.getCOMMAND().getACCNUM());
+                                    innerObject.put("AMOUNT", quickPayModel.getCOMMAND().getAMOUNT());
+                                    innerObject.put("BILLNO", quickPayModel.getCOMMAND().getBILLNUM());
+                                    innerObject.put("BPROVIDER", quickPayModel.getCOMMAND().getBPROVIDER());
                                     innerObject.put("PIN", pinNumbEdit.getText().toString());
                                     jsonObject.put("COMMAND", innerObject);
                                     Logger.d("Qickpay Bill Congirmation Strinv", jsonObject.toString());
@@ -226,7 +227,7 @@ public class BillPaymentFragment extends Fragment {
                                                 confirmDialog.show();
 
                                             } else {
-                                                Logger.e("Quick pay not success ", "status " + quickPayConfirmModel.toString());
+                                                Logger.e("Quick pay confirmation not success ", "status " + quickPayConfirmModel.toString());
                                                 errorDialog = new MaterialDialog(getActivity());
                                                 errorDialog.setMessage(quickPayConfirmModel.getCOMMAND().getMESSAGE() + "");
                                                 errorDialog.setPositiveButton("OK", new View.OnClickListener() {
@@ -253,7 +254,7 @@ public class BillPaymentFragment extends Fragment {
                             }
                         });
 
-                    } else if (quickPayModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("00066")) {
+                    } else {
                         Logger.e("Quick pay not success ", "status " + quickPayModel.toString());
                         errorDialog = new MaterialDialog(getActivity());
                         errorDialog.setMessage(quickPayModel.getCOMMAND().getMESSAGE() + "");
@@ -261,6 +262,8 @@ public class BillPaymentFragment extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 errorDialog.dismiss();
+                                startActivity(new Intent(getActivity(), QuickPayActivity.class));
+                                getActivity().finish();
                             }
                         });
                         errorDialog.show();

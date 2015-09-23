@@ -127,17 +127,22 @@ public class ReferFriendsActivity extends AppCompatActivity {
                 String num = PhoneUtils.normalizeNum(((String) data.getExtras().get(Constants.RETURN_RESULT)));
                 num = num.replace("+", "");
                 String upToNCharacters = num.substring(0, Math.min(num.length(), 5));
+                String upToNCharacters1 = num.substring(0, Math.min(num.length(), 3));
                 if (upToNCharacters.equalsIgnoreCase("88017")) {
                     last8 = num.substring(5, Math.min(num.length(), num.length()));
-                } else {
+                } else if(upToNCharacters1.equalsIgnoreCase("017")){
+                    last8 = num.substring(3, Math.min(num.length(), num.length()));
+
+                }else{
                     last8 = num;
                 }
-
-
                 phoneNumberEditText.setText("" + last8);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+        else{
+            phoneNumberEditText.setText("" + preferenceManager.getMSISDN());
         }
     }
 

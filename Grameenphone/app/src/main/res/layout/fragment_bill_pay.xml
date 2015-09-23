@@ -124,7 +124,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:hint="Amount"
-            android:inputType="number"
+            android:editable="false"
+            android:inputType="none"
             android:textColorHighlight="@color/black_eighty_seven"
             android:textColorHint="@color/hint_color" />
     </com.cc.grameenphone.views.CustomTextInputLayout>
@@ -141,7 +142,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:hint="Surcharge"
-            android:inputType="number"
+            android:editable="false"
+            android:inputType="none"
             android:textColorHighlight="@color/black_eighty_seven"
             android:textColorHint="@color/hint_color" />
     </com.cc.grameenphone.views.CustomTextInputLayout>

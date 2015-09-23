@@ -17,7 +17,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Filter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.utils.CircularContactView;
@@ -104,6 +106,15 @@ public class ContactsDetailsFragment extends Fragment {
         return rootView;
     }
 
+    public void getFilterContacts(String searchText){
+        if(mAdapter!=null){
+            Logger.d("Search Text",searchText);
+            mAdapter.getFilter().filter(searchText);
+        }
+    }
+
+
+
     public static int getResIdFromAttribute(final Activity activity, final int attr) {
         if (attr == 0)
             return 0;
@@ -177,6 +188,14 @@ public class ContactsDetailsFragment extends Fragment {
         String displayName;
         String photoId;
         String number;
+
+        public String getNumber() {
+            return number;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
     }
 
 
@@ -185,6 +204,7 @@ public class ContactsDetailsFragment extends Fragment {
     // //////////////////
     private class ContactsAdapter extends SearchablePinnedHeaderListViewAdapter<Contact> {
         private ArrayList<Contact> mContacts;
+        private ArrayList<Contact> dummyContactsList;
         private final int CONTACT_PHOTO_IMAGE_SIZE;
         private final int[] PHOTO_TEXT_BACKGROUND_COLORS;
         private final AsyncTaskThreadPool mAsyncTaskThreadPool = new AsyncTaskThreadPool(1, 2, 10);
@@ -249,7 +269,7 @@ public class ContactsDetailsFragment extends Fragment {
                 final int backgroundColorToUse = PHOTO_TEXT_BACKGROUND_COLORS[position
                         % PHOTO_TEXT_BACKGROUND_COLORS.length];
                 if (TextUtils.isEmpty(displayName))
-                    holder.friendProfileCircularContactView.setImageResource(R.drawable.icon_invite,
+                    holder.friendProfileCircularContactView.setImageResource(R.drawable.icon_add_ppl,
                             backgroundColorToUse);
                 else {
                     final String characterToShow = TextUtils.isEmpty(displayName) ? "" : displayName.substring(0, 1).toUpperCase(Locale.getDefault());
@@ -299,6 +319,54 @@ public class ContactsDetailsFragment extends Fragment {
             return mContacts;
         }
 
+        @Override
+        public Filter getFilter() {
+             /*= new ArrayList<Contact>();*/
+            Filter filter = new Filter() {
+
+                @Override
+                protected void publishResults(CharSequence constraint, FilterResults results) {
+                    mContacts = (ArrayList<Contact>) results.values;
+                    if (mContacts != null && mContacts.isEmpty()) {
+                        Toast.makeText(getActivity(), "no contacts found", Toast.LENGTH_SHORT).show();
+                    }
+                    notifyDataSetChanged();
+                }
+
+                @Override
+                protected FilterResults performFiltering(CharSequence constraint) {
+                    FilterResults results = new FilterResults();
+
+                    ArrayList<Contact> FilteredList = new ArrayList<Contact>();
+                    if (dummyContactsList == null) {
+                        dummyContactsList = new ArrayList<Contact>(mContacts);
+                    }
+                    if (constraint == null || constraint.length() == 0) {
+                        results.count = dummyContactsList.size();
+                        results.values = dummyContactsList;
+
+                    } else {
+                        constraint = constraint.toString().trim().toLowerCase(Locale.getDefault());
+                        for (int i = 0; i < dummyContactsList.size(); i++) {
+                            String name = dummyContactsList.get(i).getDisplayName();
+                            String number = dummyContactsList.get(i).getNumber();
+                            if (name.toLowerCase(Locale.getDefault()).contains(constraint.toString())
+                                    || number.toLowerCase(Locale.getDefault()).contains(constraint.toString())) {
+                                FilteredList.add(dummyContactsList.get(i));
+
+                            }
+                        }
+                        results.count = FilteredList.size();
+                        results.values = FilteredList;
+                    }
+                    return results;
+
+                }
+
+            };
+
+            return filter;
+        }
 
     }
 
