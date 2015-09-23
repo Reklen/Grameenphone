@@ -254,7 +254,7 @@ public class QuickBillPayFragment extends Fragment {
                             }
                         });
 
-                    } else{
+                    } else {
                         Logger.e("Quick pay not success ", "status " + quickPayModel.toString());
                         errorDialog = new MaterialDialog(getActivity());
                         errorDialog.setMessage(quickPayModel.getCOMMAND().getMESSAGE() + "");
@@ -262,7 +262,7 @@ public class QuickBillPayFragment extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 errorDialog.dismiss();
-                                startActivity(new Intent(getActivity(),QuickPayActivity.class));
+                                startActivity(new Intent(getActivity(), QuickPayActivity.class));
                                 getActivity().finish();
                             }
                         });
