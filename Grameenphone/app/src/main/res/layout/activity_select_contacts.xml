@@ -12,7 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary"
-        android:elevation="0dp"
+        android:contentInsetLeft="0dp"
+        android:contentInsetStart="0dp"
+        android:minHeight="?attr/actionBarSize"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
         local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
