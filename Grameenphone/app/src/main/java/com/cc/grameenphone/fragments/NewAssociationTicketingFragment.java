@@ -215,7 +215,7 @@ public class NewAssociationTicketingFragment extends BaseTabFragment implements 
                 }
             }
         });
-        companyRadioGroupScroll.fullScroll(ScrollView.FOCUS_UP);
+        //companyRadioGroupScroll.fullScroll(ScrollView.FOCUS_UP);
 
     }
 

@@ -132,8 +132,13 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment implements 
         new RushSearch().whereEqual("CATCODE", "ELE")
                 .find(OtherPaymentCompanyModel.class, new RushSearchCallback<OtherPaymentCompanyModel>() {
                     @Override
-                    public void complete(List<OtherPaymentCompanyModel> list) {
-                        setupViews(list);
+                    public void complete(final List<OtherPaymentCompanyModel> list) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                setupViews(list);
+                            }
+                        });
                     }
                 });
 
@@ -229,7 +234,7 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment implements 
                 }
             }
         });
-        companyRadioGroupScroll.fullScroll(ScrollView.FOCUS_UP);
+        //companyRadioGroupScroll.fullScroll(ScrollView.FOCUS_UP);
 
     }
 
