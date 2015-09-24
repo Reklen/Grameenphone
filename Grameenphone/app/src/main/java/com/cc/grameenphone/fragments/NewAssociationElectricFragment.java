@@ -22,6 +22,7 @@ import com.cc.grameenphone.interfaces.ManageAssociationApi;
 import com.cc.grameenphone.interfaces.OtherPaymentApi;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
+import com.cc.grameenphone.views.RippleView;
 
 import java.util.List;
 
@@ -53,6 +54,8 @@ public class NewAssociationElectricFragment extends BaseTabFragment {
     TextInputLayout billNumbContainer;
     @InjectView(R.id.submitButton)
     Button sbmtBtn;
+    @InjectView(R.id.submitRippleView)
+    RippleView submitRippleView;
     @InjectView(R.id.electricity_container)
     RelativeLayout electricityContainer;
     private String android_id;
