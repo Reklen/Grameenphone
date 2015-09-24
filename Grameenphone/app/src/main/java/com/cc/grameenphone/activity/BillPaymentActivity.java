@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -118,9 +119,12 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         loadingDialog.setMessage("Loading due bills..");
         userBillsModels = new ArrayList<>();
         billsSelectedList = new ArrayList<>();
-        View emptyView = LayoutInflater.from(BillPaymentActivity.this).inflate(R.layout.empty_bills_list, null);
+
         listViewAdapter = new BillsListAdapter(BillPaymentActivity.this, userBillsModels, BillPaymentActivity.this);
         billsListView.setAdapter(listViewAdapter);
+        ViewGroup parentGroup = (ViewGroup) billsListView.getParent();
+        View emptyView = LayoutInflater.from(BillPaymentActivity.this).inflate(R.layout.empty_list, parentGroup, false);
+        parentGroup.addView(emptyView);
         billsListView.setEmptyView(emptyView);
         android_id = Settings.Secure.getString(BillPaymentActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);

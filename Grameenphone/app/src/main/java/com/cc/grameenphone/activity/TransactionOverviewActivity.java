@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -80,6 +82,11 @@ public class TransactionOverviewActivity extends AppCompatActivity {
         });
         adapter = new TransactionOverviewAdapter(TransactionOverviewActivity.this, listItemsList);
         transactionList.setAdapter(adapter);
+        ViewGroup parentGroup = (ViewGroup) transactionList.getParent();
+        View emptyView = LayoutInflater.from(TransactionOverviewActivity.this).inflate(R.layout.empty_list, parentGroup, false);
+        ((TextView) emptyView.findViewById(R.id.textView)).setText("No Transactions history found");
+        parentGroup.addView(emptyView);
+        transactionList.setEmptyView(emptyView);
         transactionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
