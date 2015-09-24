@@ -28,7 +28,7 @@ import com.cc.grameenphone.api_models.BillPaymentModel;
 import com.cc.grameenphone.api_models.UserBillsModel;
 import com.cc.grameenphone.async.SessionClearTask;
 import com.cc.grameenphone.generator.ServiceGenerator;
-import com.cc.grameenphone.interfaces.BillsPayButtonInterface;
+import com.cc.grameenphone.interfaces.BIllsPayButtonInterface;
 import com.cc.grameenphone.interfaces.BillspaymentApi;
 import com.cc.grameenphone.interfaces.WalletCheckApi;
 import com.cc.grameenphone.utils.Logger;
@@ -54,7 +54,7 @@ import retrofit.client.Response;
 /**
  * Created by rahul on 11/09/15.
  */
-public class BillPaymentActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, BillsPayButtonInterface {
+public class BillPaymentActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, BIllsPayButtonInterface {
 
 
     @InjectView(R.id.quickpayButton)

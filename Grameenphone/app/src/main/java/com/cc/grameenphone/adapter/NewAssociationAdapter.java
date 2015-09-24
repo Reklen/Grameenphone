@@ -65,8 +65,9 @@ public class NewAssociationAdapter extends FragmentStatePagerAdapter {
                 tabFragment = NewAssociationInternetFragment.newInstance(bundle);
 
                 return tabFragment;
+            default:
+                return null;
         }
-        return null;
     }
 
     @Override

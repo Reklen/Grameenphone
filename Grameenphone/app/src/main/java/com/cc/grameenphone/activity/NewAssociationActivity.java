@@ -12,8 +12,12 @@ import android.widget.TextView;
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.adapter.NewAssociationAdapter;
 import com.cc.grameenphone.api_models.CompanyListModel;
+import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
+import com.cc.grameenphone.api_models.OtherPaymentModel;
+import com.cc.grameenphone.async.CompaniesSaveDBTask;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.ManageAssociationApi;
+import com.cc.grameenphone.interfaces.OtherPaymentApi;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
 import com.cc.grameenphone.views.RippleView;
@@ -21,6 +25,8 @@ import com.cc.grameenphone.views.tabs.SlidingTabLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -56,19 +62,87 @@ public class NewAssociationActivity extends AppCompatActivity {
     ProgressDialog loadingDialog;
     private String android_id;
     private PreferenceManager preferenceManager;
+    private OtherPaymentApi otherPaymentApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_association);
         ButterKnife.inject(this);
+        preferenceManager = new PreferenceManager(NewAssociationActivity.this);
         android_id = Settings.Secure.getString(NewAssociationActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        preferenceManager = new PreferenceManager(NewAssociationActivity.this);
+        associationApi = ServiceGenerator.createService(ManageAssociationApi.class);
+        setUpToolBar();
+        fetchCompanies();
+
+    }
+
+    private void fetchCompanies() {
+        loadingDialog = new ProgressDialog(NewAssociationActivity.this);
+        loadingDialog.setMessage("Fetching list..");
+        loadingDialog.show();
+        if (preferenceManager.getCompaniesSavedFlag()) {
+
+            loadingDialog.dismiss();
+            tabs.setViewPager(pager);
+
+        } else {
+            getOtherPaymentCompanies();
+        }
+    }
+
+    private void getOtherPaymentCompanies() {
+        otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
+        try {
+            JSONObject jsonObject = new JSONObject();
+            JSONObject innerObject = new JSONObject();
+            innerObject.put("DEVICEID", android_id);
+            innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("TYPE", "CTCMPLREQ");
+            jsonObject.put("COMMAND", innerObject);
+            Logger.d("getOtherPaymentCompanies ", jsonObject.toString());
+
+            otherPaymentApi.otherPayment(jsonObject, new Callback<OtherPaymentModel>() {
+                @Override
+                public void success(OtherPaymentModel otherPaymentModel, Response response) {
+
+                    if (otherPaymentModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                        OtherPaymentModel model = otherPaymentModel;
+                        final List<OtherPaymentCompanyModel> companiesList = model.getCOMMAND().getCOMPANYDET();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                loadingDialog.dismiss();
+                                tabs.setViewPager(pager);
+                            }
+                        });
+                        CompaniesSaveDBTask companiesSaveDBTask = new CompaniesSaveDBTask(getApplicationContext(), companiesList);
+                        companiesSaveDBTask.execute();
+                    } else {
+                        Logger.e("getOtherPaymentCompanies", otherPaymentModel.getCOMMAND().getTXNSTATUS() + " " + otherPaymentModel.getCOMMAND().toString());
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Logger.e("getOtherPaymentCompanies", error.getMessage() + "");
+                }
+            });
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setUpToolBar() {
         loadingDialog = new ProgressDialog(NewAssociationActivity.this);
         loadingDialog.setMessage("Loading ..");
         toolbarText.setText("New Association");
-        associationApi = ServiceGenerator.createService(ManageAssociationApi.class);
+        newAssociationAdapter = new NewAssociationAdapter(getSupportFragmentManager(), titles, numOfTabs, 1);
+
         fetchList();
         backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
@@ -76,7 +150,6 @@ public class NewAssociationActivity extends AppCompatActivity {
                 finish();
             }
         });
-        newAssociationAdapter = new NewAssociationAdapter(getSupportFragmentManager(), titles, numOfTabs, 1);
 
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(newAssociationAdapter);
@@ -90,9 +163,7 @@ public class NewAssociationActivity extends AppCompatActivity {
                 return getResources().getColor(R.color.white);
             }
         });
-        tabs.setViewPager(pager);
-
-
+        // tabs.setViewPager(pager);
     }
 
     private void fetchList() {

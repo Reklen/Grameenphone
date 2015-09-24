@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.api_models.UserBillsModel;
-import com.cc.grameenphone.interfaces.BillsPayButtonInterface;
+import com.cc.grameenphone.interfaces.BIllsPayButtonInterface;
 import com.cc.grameenphone.viewmodels.BillDetailsViewHolder;
 
 import java.util.List;
@@ -26,11 +26,11 @@ public class BillsListAdapter extends BaseAdapter {
     private int focuseditem = 0;
     // LayoutInflater inflater = LayoutInflater inflater; (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     LayoutInflater inflater;
-    BillsPayButtonInterface payButtonInterface;
+    BIllsPayButtonInterface payButtonInterface;
     boolean isPayButtonVisible = true;
 
 
-    public BillsListAdapter(Context context, List<UserBillsModel> list, BillsPayButtonInterface payButtonInterface) {
+    public BillsListAdapter(Context context, List<UserBillsModel> list, BIllsPayButtonInterface payButtonInterface) {
         this.mContext = context;
         inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.listitemslist = list;
