@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -23,9 +24,11 @@ import com.cc.grameenphone.R;
 import com.cc.grameenphone.adapter.BillsListAdapter;
 import com.cc.grameenphone.api_models.BalanceEnquiryModel;
 import com.cc.grameenphone.api_models.BillListModel;
+import com.cc.grameenphone.api_models.BillPaymentModel;
 import com.cc.grameenphone.api_models.UserBillsModel;
 import com.cc.grameenphone.async.SessionClearTask;
 import com.cc.grameenphone.generator.ServiceGenerator;
+import com.cc.grameenphone.interfaces.BillsPayButtonInterface;
 import com.cc.grameenphone.interfaces.BillspaymentApi;
 import com.cc.grameenphone.interfaces.WalletCheckApi;
 import com.cc.grameenphone.utils.Logger;
@@ -51,7 +54,7 @@ import retrofit.client.Response;
 /**
  * Created by rahul on 11/09/15.
  */
-public class BillPaymentActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
+public class BillPaymentActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, BillsPayButtonInterface {
 
 
     @InjectView(R.id.quickpayButton)
@@ -91,6 +94,8 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     TextView walletLabel;
     @InjectView(R.id.icon1Ripple)
     RippleView icon1Ripple;
+    @InjectView(R.id.multiBillsCheckBox)
+    CheckBox multiBillsCheckBox;
     private String android_id;
     PreferenceManager preferenceManager;
     List<UserBillsModel> userBillsModels;
@@ -113,7 +118,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         userBillsModels = new ArrayList<>();
         billsSelectedList = new ArrayList<>();
         View emptyView = LayoutInflater.from(BillPaymentActivity.this).inflate(R.layout.empty_bills_list, null);
-        listViewAdapter = new BillsListAdapter(BillPaymentActivity.this, userBillsModels);
+        listViewAdapter = new BillsListAdapter(BillPaymentActivity.this, userBillsModels, BillPaymentActivity.this);
         billsListView.setAdapter(listViewAdapter);
         billsListView.setEmptyView(emptyView);
         android_id = Settings.Secure.getString(BillPaymentActivity.this.getContentResolver(),
@@ -131,7 +136,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             jsonObject.put("COMMAND", innerObject);
             Logger.d("ProfileUpdates", jsonObject.toString());
             //TODO Checking API Calls
-            billspaymentApi.billsPay(jsonObject, new Callback<BillListModel>() {
+            billspaymentApi.fetchBills(jsonObject, new Callback<BillListModel>() {
                 @Override
                 public void success(BillListModel billListModel, Response response) {
                     Logger.d("BILLS response", billListModel.toString());
@@ -187,17 +192,17 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     }
 
     @OnClick(R.id.selectedPaymentButton)
-    public  void selctedBillPay(){
+    public void selctedBillPay() {
         //TODO Paying selected bills
 
 
-
-
     }
+
     private void setupListViewItemClick() {
         billsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Logger.d("bills test ", "clicked on " + view.getId() + "");
                 CheckBox checkBox = (CheckBox) view.findViewById(R.id.billCheckBox);
                 UserBillsModel userBillsModel = (UserBillsModel) listViewAdapter.getItem(position);
                 if (billsSelectedList.contains(position + "")) {
@@ -214,13 +219,56 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                     listViewAdapter.togglePayButton(true);
                     selectedPayRippleView.setVisibility(View.GONE);
                     quickPayRippleView.setVisibility(View.VISIBLE);
+                    multiBillsCheckBox.setVisibility(View.GONE);
+                    multiBillsCheckBox.setChecked(false);
+                    billsbar.setText("My Pending bills");
                     otherPayRippleView.setVisibility(View.VISIBLE);
                 } else {
                     listViewAdapter.togglePayButton(false);
                     selectedPayRippleView.setVisibility(View.VISIBLE);
                     quickPayRippleView.setVisibility(View.GONE);
+                    multiBillsCheckBox.setVisibility(View.VISIBLE);
+                    billsbar.setText("Select all bills");
                     otherPayRippleView.setVisibility(View.GONE);
                 }
+
+                if (billsSelectedList.size() == listViewAdapter.getCount()) {
+                    selectedPaymentButton.setText("PAY ALL BILLS");
+                } else {
+                    selectedPaymentButton.setText("PAY SELECTED BILLS");
+                }
+            }
+        });
+
+
+        multiBillsCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                for (int k = 0; k < listViewAdapter.getListitemslist().size(); k++) {
+                    UserBillsModel bills = listViewAdapter.getItem(k);
+                    if (isChecked) {
+                        bills.setIsSelected(true);
+                        billsSelectedList.add(k + "");
+                    } else {
+                        bills.setIsSelected(false);
+                        billsSelectedList.clear();
+
+                    }
+                }
+                listViewAdapter.notifyDataSetChanged();
+                if (isChecked)
+                    selectedPaymentButton.setText("PAY ALL BILLS");
+                else {
+                    selectedPaymentButton.setText("PAY SELECTED BILLS");
+                    listViewAdapter.togglePayButton(true);
+                    selectedPayRippleView.setVisibility(View.GONE);
+                    quickPayRippleView.setVisibility(View.VISIBLE);
+                    multiBillsCheckBox.setVisibility(View.GONE);
+                    multiBillsCheckBox.setChecked(false);
+                    billsbar.setText("My Pending bills");
+                    otherPayRippleView.setVisibility(View.VISIBLE);
+                }
+
             }
         });
     }
@@ -374,5 +422,114 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         return super.onOptionsItemSelected(item);
     }
 
+    View pinConfirmationView;
+    EditText pinConfirmationET;
+    MaterialDialog pinConfirmDialog;
 
+    @Override
+    public void payClickedAt(int position) {
+        Logger.d("bills test ", "clicked on " + position + "");
+        final UserBillsModel userBillsModel = listViewAdapter.getItem(position);
+        pinConfirmationView = LayoutInflater.from(BillPaymentActivity.this).inflate(R.layout.dialog_pin_confirmation, null);
+        pinConfirmationET = (EditText) pinConfirmationView.findViewById(R.id.pinConfirmEditText);
+
+        pinConfirmDialog = new MaterialDialog(BillPaymentActivity.this);
+        pinConfirmDialog.setContentView(pinConfirmationView);
+        pinConfirmDialog.setPositiveButton("CONFIRM", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (pinConfirmationET.getText().toString().length() != 4) {
+                    pinConfirmationET.setError("Enter your valid pin");
+                    return;
+                }
+                String pin = pinConfirmationET.getText().toString();
+                payBillForClickedPosition(userBillsModel, pin);
+                pinConfirmDialog.dismiss();
+            }
+        });
+        pinConfirmDialog.show();
+    }
+
+    MaterialDialog dialog;
+
+    private void payBillForClickedPosition(UserBillsModel userBillsModel, String pin) {
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+            JSONObject innerObject = new JSONObject();
+            innerObject.put("DEVICEID", android_id);
+            innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("TYPE", "CPMPBREQ");
+            innerObject.put("BILLCCODE", userBillsModel.getCOMPANYNAME().toUpperCase());
+            innerObject.put("BILLANO", userBillsModel.getACCOUNTNUM());
+            innerObject.put("AMOUNT", userBillsModel.getAMOUNT());
+            innerObject.put("BILLNO", userBillsModel.getBILLNUM());
+            innerObject.put("PIN", pin);//TODO add pin confirm dialog
+            innerObject.put("BPROVIDER", userBillsModel.getBPROVIDER());
+            jsonObject.put("COMMAND", innerObject);
+            Logger.d("Paying Bill", jsonObject.toString());
+            //TODO Checking API Calls
+            billspaymentApi.payBill(jsonObject, new Callback<BillPaymentModel>() {
+                @Override
+                public void success(BillPaymentModel billPaymentModel, Response response) {
+                    Logger.d("BILLS response", billPaymentModel.toString());
+                    if (billPaymentModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                        loadingDialog.dismiss();
+
+                        dialog = new MaterialDialog(BillPaymentActivity.this);
+                        dialog.setMessage("" + billPaymentModel.getCOMMAND().getMESSAGE());
+                        dialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+                        dialog.show();
+
+                    } else if (billPaymentModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
+                        Logger.e("Balance", billPaymentModel.getCOMMAND().toString() + " ");
+                        loadingDialog.cancel();
+                        sessionDialog = new MaterialDialog(BillPaymentActivity.this);
+                        sessionDialog.setMessage("Session expired , please login again");
+                        sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                sessionDialog.dismiss();
+                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this);
+                                sessionClearTask.execute();
+
+                            }
+                        });
+                        sessionDialog.setCanceledOnTouchOutside(false);
+                        sessionDialog.show();
+                    } else {
+                        loadingDialog.cancel();
+                        errorDialog = new MaterialDialog(BillPaymentActivity.this);
+                        errorDialog.setMessage(billPaymentModel.getCOMMAND().getMESSAGE());
+                        errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                errorDialog.dismiss();
+                            }
+                        });
+                        errorDialog.setCanceledOnTouchOutside(true);
+                        errorDialog.show();
+                        Logger.e("Balance", billPaymentModel.toString());
+                    }
+
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Logger.e("BILLS", error.getMessage());
+                }
+            });
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

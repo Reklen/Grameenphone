@@ -105,20 +105,29 @@
         android:layout_height="34dp"
         android:layout_below="@+id/toolbar"
         android:layout_marginTop="11dp"
-        android:background="#cccccc">
+        android:background="#cccccc"
+        android:paddingLeft="16dp">
 
         <TextView
             android:id="@+id/billsbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="false"
             android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/multiBillsCheckBox"
             android:gravity="center_vertical"
-            android:paddingLeft="16dp"
+            android:paddingLeft="24dp"
             android:text="My Pending Bills"
             android:textColor="#030303"
             android:textSize="16sp" />
+
+        <CheckBox
+            android:id="@+id/multiBillsCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:checked="false"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <ListView
@@ -131,9 +140,9 @@
         android:layout_marginBottom="4dp"
         android:background="#FFFFFF"
         android:clickable="false"
-        android:paddingTop="8dp"
+        android:listSelector="@drawable/rowbackgroundselector"
         android:paddingBottom="8dp"
-       />
+        android:paddingTop="8dp" />
 
     <com.cc.grameenphone.views.RippleView
         android:id="@+id/selectedPayRippleView"

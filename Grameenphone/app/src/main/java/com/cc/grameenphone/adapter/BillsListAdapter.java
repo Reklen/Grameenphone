@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.api_models.UserBillsModel;
+import com.cc.grameenphone.interfaces.BillsPayButtonInterface;
 import com.cc.grameenphone.viewmodels.BillDetailsViewHolder;
 
 import java.util.List;
@@ -25,13 +26,15 @@ public class BillsListAdapter extends BaseAdapter {
     private int focuseditem = 0;
     // LayoutInflater inflater = LayoutInflater inflater; (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     LayoutInflater inflater;
+    BillsPayButtonInterface payButtonInterface;
     boolean isPayButtonVisible = true;
 
 
-    public BillsListAdapter(Context context, List<UserBillsModel> list) {
+    public BillsListAdapter(Context context, List<UserBillsModel> list, BillsPayButtonInterface payButtonInterface) {
         this.mContext = context;
         inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.listitemslist = list;
+        this.payButtonInterface = payButtonInterface;
     }
 
     @Override
@@ -70,6 +73,7 @@ public class BillsListAdapter extends BaseAdapter {
             holder.categoryType = (TextView) itemView.findViewById(R.id.categoryCompany);
             holder.dueDate = (TextView) itemView.findViewById(R.id.dueDate);
             holder.paybutton = (Button) itemView.findViewById(R.id.payButton);
+
             // holder.inr = (TextView) itemView.findViewById(R.id.inr);
             holder.value = (TextView) itemView.findViewById(R.id.totalBillAmount);
             if (!isPayButtonVisible)
@@ -79,7 +83,7 @@ public class BillsListAdapter extends BaseAdapter {
 
             itemView.setTag(holder);
             holder.checkBox.setTag(getItem(position));
-
+            holder.paybutton.setTag(position);
         } else {
             itemView = convertView;
             ((BillDetailsViewHolder) itemView.getTag()).checkBox.setTag(getItem(position));
@@ -99,6 +103,16 @@ public class BillsListAdapter extends BaseAdapter {
         holder.value.setText("৳ " + listitemslist.get(position).getAMOUNT());
         holder.categoryType.setText("" + listitemslist.get(position).getCATEGORYNAME());
         holder.checkBox.setChecked(getItem(position).isSelected());
+        holder.paybutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    payButtonInterface.payClickedAt((Integer) v.getTag());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
 //        holder.inr.setText("");
        /* // BillDetailsItems l = listitemslist.get(position);
@@ -113,4 +127,10 @@ public class BillsListAdapter extends BaseAdapter {
         isPayButtonVisible = b;
         notifyDataSetInvalidated();
     }
+
+    public List<UserBillsModel> getListitemslist() {
+        return listitemslist;
+    }
+
+
 }
