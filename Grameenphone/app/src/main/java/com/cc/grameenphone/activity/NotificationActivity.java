@@ -1,7 +1,7 @@
 package com.cc.grameenphone.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +19,7 @@ import butterknife.InjectView;
 /**
  * Created by Rajkiran on 9/11/2015.
  */
-public class NotificationActivity extends ActionBarActivity {
+public class NotificationActivity extends AppCompatActivity {
 
     NotificationAdapter adapter;
     @InjectView(R.id.backRipple)

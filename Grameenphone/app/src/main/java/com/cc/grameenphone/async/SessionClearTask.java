@@ -18,15 +18,19 @@ import co.uk.rushorm.core.RushCore;
 public class SessionClearTask extends AsyncTask<Void, Void, Void> {
 
     Context ctx;
+    boolean isCleanOut;
 
-    public SessionClearTask(Context ctx) {
+    public SessionClearTask(Context ctx, boolean isCleanOut) {
         this.ctx = ctx;
+        this.isCleanOut = isCleanOut;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        RushCore.getInstance().deleteAll(ContactModel.class);
-        RushCore.getInstance().deleteAll(OtherPaymentCompanyModel.class);
+        if (isCleanOut) {
+            RushCore.getInstance().deleteAll(ContactModel.class);
+            RushCore.getInstance().deleteAll(OtherPaymentCompanyModel.class);
+        }
         return null;
     }
 

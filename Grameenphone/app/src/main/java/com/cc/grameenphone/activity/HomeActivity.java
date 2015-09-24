@@ -195,7 +195,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
                         logoutDialog.setPositiveButton("Yes", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                SessionClearTask sessionClearTask = new SessionClearTask(HomeActivity.this);
+                                SessionClearTask sessionClearTask = new SessionClearTask(HomeActivity.this , true);
                                 sessionClearTask.execute();
 
                             }
@@ -398,7 +398,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
                         sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                SessionClearTask sessionClearTask = new SessionClearTask(HomeActivity.this);
+                                SessionClearTask sessionClearTask = new SessionClearTask(HomeActivity.this, false);
                                 sessionClearTask.execute();
 
                             }

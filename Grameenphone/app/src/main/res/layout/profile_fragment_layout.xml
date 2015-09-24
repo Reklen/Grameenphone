@@ -13,7 +13,7 @@
         android:layout_below="@+id/toolbar"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="16dp">
 
         <EditText
             android:id="@+id/first_name"
@@ -33,7 +33,7 @@
         android:layout_below="@+id/firstNameTextInputLayout"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="16dp">
 
 
         <EditText
@@ -54,7 +54,7 @@
         android:layout_below="@+id/lastNameTextInputLayout"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="16dp">
 
         <EditText
             android:id="@+id/email_name"
@@ -75,7 +75,7 @@
         android:layout_below="@+id/emailTextInputLayout"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="16dp">
 
         <EditText
             android:id="@+id/national_id"
@@ -94,7 +94,7 @@
         android:layout_below="@+id/nationalTextInputLayout"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="16dp">
 
         <EditText
             android:id="@+id/dob"

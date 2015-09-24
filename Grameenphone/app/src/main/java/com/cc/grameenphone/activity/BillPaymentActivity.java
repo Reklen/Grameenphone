@@ -146,12 +146,17 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                 public void success(BillListModel billListModel, Response response) {
                     Logger.d("BILLS response", billListModel.toString());
                     if (billListModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
-                        loadingDialog.dismiss();
+
                         if (billListModel.getCOMMAND().getMessage().getComapny() != null) {
                             Logger.d("BILLS response", billListModel.getCOMMAND().getMessage().getComapny().toString());
                             List<UserBillsModel> bills = billListModel.getCOMMAND().getMessage().getComapny();
-                            userBillsModels.addAll(bills);
+                            for (UserBillsModel b : bills) {
+                                if (b.getBILLNUM() != null)
+                                    userBillsModels.add(b);
+                            }
+
                             listViewAdapter.notifyDataSetChanged();
+                            loadingDialog.dismiss();
                         } else {
                             //dontknwo
                             loadingDialog.dismiss();
@@ -166,7 +171,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                             @Override
                             public void onClick(View v) {
                                 sessionDialog.dismiss();
-                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this);
+                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this , false);
                                 sessionClearTask.execute();
 
                             }
@@ -323,7 +328,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                             @Override
                             public void onClick(View v) {
                                 sessionDialog.dismiss();
-                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this);
+                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this,false);
                                 sessionClearTask.execute();
 
                             }
@@ -516,7 +521,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                             @Override
                             public void onClick(View v) {
                                 sessionDialog.dismiss();
-                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this);
+                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this,false);
                                 sessionClearTask.execute();
 
                             }

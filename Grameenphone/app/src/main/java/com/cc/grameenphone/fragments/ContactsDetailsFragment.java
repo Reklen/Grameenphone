@@ -331,6 +331,8 @@ public class ContactsDetailsFragment extends Fragment {
                         Toast.makeText(getActivity(), "no contacts found", Toast.LENGTH_SHORT).show();
                     }
                     notifyDataSetChanged();
+                    setHeaderViewVisible(false);
+
                 }
 
                 @Override

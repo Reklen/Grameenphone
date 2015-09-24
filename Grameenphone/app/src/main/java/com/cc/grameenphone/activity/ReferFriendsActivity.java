@@ -201,7 +201,7 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
                         sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                SessionClearTask sessionClearTask = new SessionClearTask(ReferFriendsActivity.this);
+                                SessionClearTask sessionClearTask = new SessionClearTask(ReferFriendsActivity.this , false);
                                 sessionClearTask.execute();
 
                             }
