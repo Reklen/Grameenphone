@@ -131,7 +131,7 @@ public class ProfileUpdateActivity extends Activity {
                         sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                SessionClearTask sessionClearTask = new SessionClearTask(ProfileUpdateActivity.this);
+                                SessionClearTask sessionClearTask = new SessionClearTask(ProfileUpdateActivity.this , false);
                                 sessionClearTask.execute();
 
                             }

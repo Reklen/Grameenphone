@@ -138,7 +138,6 @@
         android:layout_below="@+id/billContainer"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="4dp"
-        android:background="#FFFFFF"
         android:clickable="false"
         android:listSelector="@drawable/rowbackgroundselector"
         android:paddingBottom="8dp"

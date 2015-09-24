@@ -135,7 +135,7 @@ public class TransactionOverviewActivity extends AppCompatActivity {
                         sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                SessionClearTask sessionClearTask = new SessionClearTask(TransactionOverviewActivity.this);
+                                SessionClearTask sessionClearTask = new SessionClearTask(TransactionOverviewActivity.this, false);
                                 sessionClearTask.execute();
 
                             }
