@@ -1,6 +1,8 @@
 package com.cc.grameenphone.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.util.TypedValue;
@@ -14,13 +16,22 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.cc.grameenphone.R;
-import com.cc.grameenphone.api_models.CompanyListModel;
+import com.cc.grameenphone.activity.HomeActivity;
+import com.cc.grameenphone.api_models.BillConfirmationModel;
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
+import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.ManageAssociationApi;
+import com.cc.grameenphone.interfaces.OtherPaymentApi;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
+import com.cc.grameenphone.views.RippleView;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.Validator.ValidationListener;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,7 +48,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class OtherPaymentElectricityFragment extends BaseTabFragment {
+public class OtherPaymentElectricityFragment extends BaseTabFragment implements ValidationListener {
 
 
     ManageAssociationApi associationApi;
@@ -46,14 +57,17 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment {
     LinearLayout custodialRadiogroup;
     @InjectView(R.id.companyRadioGroupScroll)
     ScrollView companyRadioGroupScroll;
+    @NotEmpty
     @InjectView(R.id.account_numbEdit)
     EditText accountNumbEdit;
     @InjectView(R.id.account_numb_container)
     TextInputLayout accountNumbContainer;
+    @NotEmpty
     @InjectView(R.id.bill_numbEdit)
     EditText billNumbEdit;
     @InjectView(R.id.bill_numb_container)
     TextInputLayout billNumbContainer;
+    @NotEmpty
     @InjectView(R.id.amountEditText)
     EditText amountEditText;
     @InjectView(R.id.amountTextInputLayout)
@@ -64,6 +78,8 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment {
     TextInputLayout surchargeTextInputLayout;
     @InjectView(R.id.submitButton)
     Button sbmtBtn;
+    @InjectView(R.id.submitRippleView)
+    RippleView submitRippleView;
     @InjectView(R.id.electricity_container)
     RelativeLayout electricityContainer;
     private String android_id;
@@ -74,9 +90,13 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment {
     private List<OtherPaymentCompanyModel> companyList;
     private int numberOfCompany;
     RadioGroup rg;
-
+    OtherPaymentApi otherPaymentApi;
     int selectedSurchargePos;
     String selectedCompany;
+    View pinConfirmationView;
+    EditText pinConfirmationET;
+    MaterialDialog pinConfirmDialog;
+    Validator validator;
 
     public static OtherPaymentElectricityFragment newInstance(Bundle b) {
         OtherPaymentElectricityFragment electricityTab = new OtherPaymentElectricityFragment();
@@ -89,9 +109,20 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.other_payments_fragment, container, false);
         ButterKnife.inject(this, v);
+        validator = new Validator(this);
+        validator.setValidationListener(this);
 
         //Calling method to get companies details for other bill details
         getCompaniesDetails();
+
+        submitRippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                validator.validate();
+
+            }
+        });
+
         return v;
     }
 
@@ -161,6 +192,7 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment {
                 rb[i].setAllCaps(true);
                 rb[i].setTextColor(getActivity().getResources().getColor(R.color.black_semi_transparent));
                 rb[i].setText(companyList.get(i).getCOMPNAME());
+                rb[i].setTag(companyList.get(i));
 
             }
 
@@ -178,127 +210,96 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment {
                     RadioButton btn = (RadioButton) rg.getChildAt(i);
                     if (btn.getId() == pos) {
                         selectedSurchargePos = pos;
-                        // Toast.makeText(getActivity(), "Selected company" + btn.getText(), Toast.LENGTH_LONG).show();
-                        selectedCompany = btn.getText().toString();
+                        selectedCompany = btn.getText().toString().toUpperCase();
+                        Logger.d("Selcted Compnay" + selectedCompany);
+                        try {
+                            OtherPaymentCompanyModel companyModel = (OtherPaymentCompanyModel) btn.getTag();
+                            String isSurcharge = companyModel.getSURCREQ();
+                            Logger.d("Surcharge Available ", isSurcharge);
+                            if (isSurcharge.equalsIgnoreCase("Y")) {
+                                surchargeEditText.setVisibility(View.VISIBLE);
+                            } else {
+                                surchargeEditText.setVisibility(View.GONE);
+                            }
+                        } catch (Exception e) {
+
+                        }
                         return;
                     }
                 }
             }
         });
         companyRadioGroupScroll.fullScroll(ScrollView.FOCUS_UP);
-        //TODO Submitting amount, surcharge amount
-   /*     sbmtBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                try {
-                    JSONObject jsonObject = new JSONObject();
-                    JSONObject innerObject = new JSONObject();
-                    innerObject.put("DEVICEID", android_id);
-                    innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-                    innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
-                    innerObject.put("TYPE", "CPMBREQ");
-                    innerObject.put("BILLCCODE", selectedCompany);
-                    if (accountNumbEdit.getText().toString() != null)
-                        innerObject.put("BILLANO", accountNumbEdit.getText().toString());//coomented for testing
-                    else
-                        accountNumbEdit.setError("Account number is empty");
-                    if (amountEditText.getText().toString() != null)
-                        innerObject.put("AMOUNT", amountEditText.getText().toString());
-                    else
-                        amountEditText.setError("Amount must be fill");
-                    if (billNumbEdit.getText().toString() != null)
-                        innerObject.put("BILLNO", billNumbEdit.getText().toString());
-                    else
-                        billNumbEdit.setError("Bill number is empty");
-                    innerObject.put("BPROVIDER", "101");
-                    //if (otherPaymentModel.getCOMMAND().getCOMPANYDET().get(selectedSurchargePos).getSURCREQ().equalsIgnoreCase("Y"))
-                    innerObject.put("SURCHARGE", "1"*//*surchargeEditText.getText().toString()*//*);
-                    // else
-                    // innerObject.put("SURCHARGE", "0");
-                    innerObject.put("PIN", preferenceManager.getPINCode());
-                    jsonObject.put("COMMAND", innerObject);
-                    Logger.d("confirmaing bill payment ", jsonObject.toString());
-                    otherPaymentApi.billConfirmation(jsonObject, new Callback<BillConfirmationModel>() {
-                        @Override
-                        public void success(BillConfirmationModel billConfirmationModel, Response response) {
-                            if (billConfirmationModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
-                                View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.confirmation_dialog, null);
-                                confirmationDialog = new MaterialDialog(getActivity());
-                                confirmationDialog.setView(dialogView);
-
-                                Button confirmButton = (Button) dialogView.findViewById(R.id.confirmDialogButton);
-                                confirmButton.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-
-                                        confirmationDialog.dismiss();
-                                    }
-                                });
-                                confirmationDialog.show();
-                            } else if (billConfirmationModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("00292")) {
-                                errorDialog = new MaterialDialog(getActivity());
-                                errorDialog.setMessage(billConfirmationModel.getCOMMAND().getMESSAGE());
-                                errorDialog.setPositiveButton("OK", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        errorDialog.dismiss();
-                                    }
-                                });
-                                errorDialog.show();
-                            } else if (billConfirmationModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("00351")) {
-                                errorDialog = new MaterialDialog(getActivity());
-                                errorDialog.setMessage(billConfirmationModel.getCOMMAND().getMESSAGE());
-                                errorDialog.setPositiveButton("OK", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        errorDialog.dismiss();
-                                    }
-                                });
-                                errorDialog.show();
-                            } else {
-                                errorDialog = new MaterialDialog(getActivity());
-                                errorDialog.setMessage(billConfirmationModel.getCOMMAND().getMESSAGE());
-                                errorDialog.setPositiveButton("OK", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        errorDialog.dismiss();
-                                    }
-                                });
-                                errorDialog.show();
-                            }
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-
-                        }
-                    });
-
-
-                } catch (JSONException e) {
-
-                }
-
-
-            }
-        });*/
     }
 
-    private void fetchList() {
+    void pinConfirmation() {
+        pinConfirmationView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_pin_confirmation, null);
+        pinConfirmationET = (EditText) pinConfirmationView.findViewById(R.id.pinConfirmEditText);
+
+        pinConfirmDialog = new MaterialDialog(getActivity());
+        pinConfirmDialog.setContentView(pinConfirmationView);
+        pinConfirmDialog.setPositiveButton("CONFIRM", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSubmitClick();
+                pinConfirmDialog.dismiss();
+
+            }
+        });
+        pinConfirmDialog.show();
+    }
+
+
+    void onSubmitClick() {
+        //TODO Submitting amount, surcharge amount
+
+        preferenceManager = new PreferenceManager(getActivity());
+        android_id = Settings.Secure.getString(getActivity().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
         try {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
             innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
-            innerObject.put("TYPE", "FBILASCREQ");
+            innerObject.put("TYPE", "CPMBREQ");
+            innerObject.put("BILLCCODE", selectedCompany);
+            innerObject.put("BILLANO", accountNumbEdit.getText().toString());
+            innerObject.put("AMOUNT", amountEditText.getText().toString());
+            innerObject.put("BILLNO", billNumbEdit.getText().toString());
+            innerObject.put("BPROVIDER", "101");
+            innerObject.put("SURCHARGE", surchargeEditText.getText().toString());
+            innerObject.put("PIN", preferenceManager.getPINCode());
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("sending json", jsonObject.toString());
-            associationApi.fetchAssociaition(jsonObject, new Callback<CompanyListModel>() {
+            Logger.d("confirmaing bill payment ", jsonObject.toString());
+            otherPaymentApi.billConfirmation(jsonObject, new Callback<BillConfirmationModel>() {
                 @Override
-                public void success(CompanyListModel companyListModel, Response response) {
-                    Logger.d("Companies ", companyListModel.toString());
+                public void success(final BillConfirmationModel billConfirmationModel, Response response) {
+                    if (billConfirmationModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                        confirmationDialog = new MaterialDialog(getActivity());
+                        confirmationDialog.setMessage("" + billConfirmationModel.getCOMMAND().getMESSAGE());
+                        confirmationDialog.setPositiveButton("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                startActivity(new Intent(getActivity(), HomeActivity.class));
+                                getActivity().finish();
+                            }
+                        });
+                        confirmationDialog.show();
+
+                    } else {
+                        errorDialog = new MaterialDialog(getActivity());
+                        errorDialog.setMessage(billConfirmationModel.getCOMMAND().getMESSAGE());
+                        errorDialog.setPositiveButton("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                errorDialog.dismiss();
+                            }
+                        });
+                        errorDialog.show();
+                    }
                 }
 
                 @Override
@@ -306,8 +307,34 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment {
 
                 }
             });
+
+
         } catch (JSONException e) {
-            e.printStackTrace();
+
+        }
+
+
+    }
+
+
+    @Override
+    public void onValidationSucceeded() {
+
+        pinConfirmation();
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(getActivity());
+
+            // Display error messages ;)
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

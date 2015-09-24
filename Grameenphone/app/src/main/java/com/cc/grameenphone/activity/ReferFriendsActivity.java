@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.api_models.ReferFriendModel;
@@ -25,9 +26,14 @@ import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PhoneUtils;
 import com.cc.grameenphone.utils.PreferenceManager;
 import com.cc.grameenphone.views.RippleView;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -36,7 +42,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class ReferFriendsActivity extends AppCompatActivity {
+public class ReferFriendsActivity extends AppCompatActivity implements Validator.ValidationListener{
 
     @InjectView(R.id.backRipple)
     RippleView backRipple;
@@ -48,6 +54,7 @@ public class ReferFriendsActivity extends AppCompatActivity {
     TextView referTextMain;
     @InjectView(R.id.areaCode)
     EditText areaCode;
+    @NotEmpty
     @InjectView(R.id.phoneNumberEditText)
     EditText phoneNumberEditText;
     @InjectView(R.id.phone_container)
@@ -73,6 +80,7 @@ public class ReferFriendsActivity extends AppCompatActivity {
     ReferFriendsApi referFriendsApi;
     private String last8;
     private MaterialDialog sessionDialog;
+    Validator validator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +94,8 @@ public class ReferFriendsActivity extends AppCompatActivity {
             referCode.setText("No Refer Code Available");
         else
             referCode.setText("" + preferenceManager.getReferCode());
-
+        validator = new Validator(this);
+        validator.setValidationListener(ReferFriendsActivity.this);
 
         backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
@@ -97,7 +106,7 @@ public class ReferFriendsActivity extends AppCompatActivity {
         confirmRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
-                confirmClick();
+               validator.validate();
             }
         });
         phoneNumberEditText.setOnTouchListener(new View.OnTouchListener() {
@@ -147,7 +156,7 @@ public class ReferFriendsActivity extends AppCompatActivity {
     }
 
     void confirmClick() {
-
+        
         android_id = Settings.Secure.getString(ReferFriendsActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         referFriendsApi = ServiceGenerator.createService(ReferFriendsApi.class);
@@ -218,4 +227,23 @@ public class ReferFriendsActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onValidationSucceeded() {
+        confirmClick();
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(ReferFriendsActivity.this);
+
+            // Display error messages ;)
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                Toast.makeText(ReferFriendsActivity.this, message, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 }
