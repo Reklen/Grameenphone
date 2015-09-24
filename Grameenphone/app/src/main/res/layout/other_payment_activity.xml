@@ -31,6 +31,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:paddingLeft="6dp"
                 android:paddingRight="6dp"
                 app:rv_rippleDuration="100">
