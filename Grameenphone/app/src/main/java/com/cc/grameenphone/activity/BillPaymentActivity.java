@@ -39,6 +39,7 @@ import com.cc.grameenphone.views.RippleView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -195,6 +196,8 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     public void selctedBillPay() {
         //TODO Paying selected bills
 
+        Logger.d("Bills selected", "Position are " + billsSelectedList.toString());
+
 
     }
 
@@ -208,10 +211,21 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                 if (billsSelectedList.contains(position + "")) {
                     billsSelectedList.remove(position + "");
                     checkBox.setChecked(false);
+                    try {
+                        Field field = CompoundButton.class.getDeclaredField("mChecked");
+                        field.setAccessible(true);
+                        field.set(multiBillsCheckBox, multiBillsCheckBox.isChecked());
+                        multiBillsCheckBox.refreshDrawableState();
+                        multiBillsCheckBox.invalidate();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    selectedPaymentButton.setText("PAY SELECTED BILLS");
                     userBillsModel.setIsSelected(false);
                 } else {
                     billsSelectedList.add(position + "");
                     checkBox.setChecked(true);
+                    selectedPaymentButton.setText("PAY SELECTED BILLS");
                     userBillsModel.setIsSelected(true);
                 }
 
@@ -232,11 +246,11 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                     otherPayRippleView.setVisibility(View.GONE);
                 }
 
-                if (billsSelectedList.size() == listViewAdapter.getCount()) {
+               /* if (billsSelectedList.size() == listViewAdapter.getCount()) {
                     selectedPaymentButton.setText("PAY ALL BILLS");
                 } else {
                     selectedPaymentButton.setText("PAY SELECTED BILLS");
-                }
+                }*/
             }
         });
 
@@ -248,7 +262,9 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                     UserBillsModel bills = listViewAdapter.getItem(k);
                     if (isChecked) {
                         bills.setIsSelected(true);
-                        billsSelectedList.add(k + "");
+                        if (!billsSelectedList.contains(k + "")) {
+                            billsSelectedList.add(k + "");
+                        }
                     } else {
                         bills.setIsSelected(false);
                         billsSelectedList.clear();
