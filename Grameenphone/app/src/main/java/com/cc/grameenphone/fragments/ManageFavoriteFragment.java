@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -119,6 +120,11 @@ public class ManageFavoriteFragment extends Fragment {
         contactModelList = new ArrayList<>();
         adapter = new ManageFavAdapter(contactModelList, getActivity());
         listView.setAdapter(adapter);
+        ViewGroup parentGroup = (ViewGroup) listView.getParent();
+        View emptyView = LayoutInflater.from(getActivity()).inflate(R.layout.empty_list, parentGroup, false);
+        ((TextView) emptyView.findViewById(R.id.textView)).setText("No Favorites add some");
+        parentGroup.addView(emptyView);
+        listView.setEmptyView(emptyView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -133,12 +139,13 @@ public class ManageFavoriteFragment extends Fragment {
         return rootView;
     }
 
-    public void getFilterContacts(String searchText){
-        if(adapter!=null){
+    public void getFilterContacts(String searchText) {
+        if (adapter != null) {
             Logger.d("Search Text", searchText);
             adapter.getFilter().filter(searchText);
         }
     }
+
     private void fetchList() {
 
         new RushSearch()

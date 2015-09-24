@@ -568,15 +568,17 @@ public class HomeFragment extends Fragment {
         phoneNumberEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                int DRAWABLE_RIGHT =2;
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= phoneNumberEditText.getRight() - phoneNumberEditText.getTotalPaddingRight()) {
+
+                    if (event.getRawX() >= (phoneNumberEditText.getRight() - phoneNumberEditText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                         // your action for drawable click event
                         //
                         startActivityForResult(new Intent(getActivity(), SelectContactsActivity.class), REQCODE);
                         return true;
                     }
                 }
-                return true;
+                return false;
             }
         });
     }
@@ -600,10 +602,10 @@ public class HomeFragment extends Fragment {
                 String upToNCharacters1 = num.substring(0, Math.min(num.length(), 3));
                 if (upToNCharacters.equalsIgnoreCase("88017")) {
                     last8 = num.substring(5, Math.min(num.length(), num.length()));
-                } else if(upToNCharacters1.equalsIgnoreCase("017")){
+                } else if (upToNCharacters1.equalsIgnoreCase("017")) {
                     last8 = num.substring(3, Math.min(num.length(), num.length()));
 
-                }else{
+                } else {
                     last8 = num;
                 }
 
@@ -612,8 +614,7 @@ public class HomeFragment extends Fragment {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        else{
+        } else {
             phoneNumberEditText.setText("" + preferenceManager.getMSISDN());
         }
     }
