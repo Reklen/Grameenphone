@@ -9,6 +9,7 @@ import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -173,6 +174,7 @@ public class HomeFragment extends Fragment {
                 Settings.Secure.ANDROID_ID);
 
         phoneNumberEditText.setText(preferenceManager.getMSISDN() + "");
+        phoneNumberEditText.setInputType(0x00000000);
         editamt.setText("৳ 50");
         editamt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -563,12 +565,13 @@ public class HomeFragment extends Fragment {
 
         otherFlex.setVisibility(View.GONE);
         phoneNumberEditText.setText("");
+        phoneNumberEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
         editamt.setText("৳ 50");
         phoneNumberEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_add_ppl, 0);
         phoneNumberEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                int DRAWABLE_RIGHT =2;
+                int DRAWABLE_RIGHT = 2;
                 if (event.getAction() == MotionEvent.ACTION_UP) {
 
                     if (event.getRawX() >= (phoneNumberEditText.getRight() - phoneNumberEditText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
