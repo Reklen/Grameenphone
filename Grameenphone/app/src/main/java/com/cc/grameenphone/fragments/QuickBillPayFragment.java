@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
-import com.cc.grameenphone.activity.BillPaymentActivity;
+import com.cc.grameenphone.activity.HomeActivity;
 import com.cc.grameenphone.api_models.QuickPayConfirmModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.QuickPayApi;
@@ -130,7 +130,7 @@ public class QuickBillPayFragment extends Fragment {
                                         confirmDialog.dismiss();
                                         pinNumbEdit.setText("");
                                         totalAmountEditText.setText("");
-                                        startActivity(new Intent(getActivity(), BillPaymentActivity.class));
+                                        startActivity(new Intent(getActivity(), HomeActivity.class));
                                         getActivity().finish();
                                     }
                                 });
