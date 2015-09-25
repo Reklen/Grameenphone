@@ -78,6 +78,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
     MaterialDialog logoutDialog;
     private MaterialDialog walletBalanceDialog, sessionDialog, internetDialog;
     private OtherPaymentApi otherPaymentApi;
+    private MaterialDialog errorDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,7 +196,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
                         logoutDialog.setPositiveButton("Yes", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                SessionClearTask sessionClearTask = new SessionClearTask(HomeActivity.this , true);
+                                SessionClearTask sessionClearTask = new SessionClearTask(HomeActivity.this, true);
                                 sessionClearTask.execute();
 
                             }
@@ -284,7 +285,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
             jsonObject.put("COMMAND", innerObject);
             Logger.d("getOtherPaymentCompanies ", jsonObject.toString());
 
-            otherPaymentApi.otherPayment(jsonObject, new Callback<OtherPaymentModel>() {
+            otherPaymentApi.fetchCompanies(jsonObject, new Callback<OtherPaymentModel>() {
                 @Override
                 public void success(OtherPaymentModel otherPaymentModel, Response response) {
 
@@ -338,7 +339,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
             public void onComplete(RippleView rippleView) {
                 walletBalanceDialog = new MaterialDialog(HomeActivity.this);
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.container_body);
-                if(f instanceof HomeFragment) {
+                if (f instanceof HomeFragment) {
                     BalanceEnquiryModel md = (BalanceEnquiryModel) walletLabel.getTag();
                     if (md != null) {
                         walletBalanceDialog.setMessage(md.getCOMMAND().getMESSAGE());
@@ -405,7 +406,30 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
                         });
                         sessionDialog.setCanceledOnTouchOutside(false);
                         sessionDialog.show();
+                    } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA903")) {
+                        Logger.d("Balance", balanceEnquiryModel.toString());
+                        sessionDialog = new MaterialDialog(HomeActivity.this);
+                        sessionDialog.setMessage("Session expired , please login again");
+                        sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                SessionClearTask sessionClearTask = new SessionClearTask(HomeActivity.this, false);
+                                sessionClearTask.execute();
+
+                            }
+                        });
+                        sessionDialog.setCanceledOnTouchOutside(false);
+                        sessionDialog.show();
                     } else {
+                        errorDialog = new MaterialDialog(HomeActivity.this);
+                        errorDialog.setMessage(balanceEnquiryModel.getCOMMAND().getMESSAGE() + "");
+                        errorDialog.setPositiveButton("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                errorDialog.dismiss();
+                            }
+                        });
+                        errorDialog.show();
                         Logger.d("Balance", balanceEnquiryModel.toString());
                     }
                 }

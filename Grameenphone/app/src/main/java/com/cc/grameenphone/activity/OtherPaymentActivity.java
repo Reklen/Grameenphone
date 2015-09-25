@@ -165,7 +165,7 @@ public class OtherPaymentActivity extends AppCompatActivity {
             jsonObject.put("COMMAND", innerObject);
             Logger.d("getOtherPaymentCompanies ", jsonObject.toString());
 
-            otherPaymentApi.otherPayment(jsonObject, new Callback<OtherPaymentModel>() {
+            otherPaymentApi.fetchCompanies(jsonObject, new Callback<OtherPaymentModel>() {
                 @Override
                 public void success(OtherPaymentModel otherPaymentModel, Response response) {
 

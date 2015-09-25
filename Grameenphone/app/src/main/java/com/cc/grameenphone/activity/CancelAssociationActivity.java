@@ -1,6 +1,7 @@
 package com.cc.grameenphone.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
@@ -153,14 +154,19 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
                     cancelDialog.dismiss();
                     getAssociationApi.cancelAssociation(jsonObject, new Callback<CancelAssociationModel>() {
                         @Override
-                        public void success(CancelAssociationModel cancelAssociationModel, Response response) {
+                        public void success(final CancelAssociationModel cancelAssociationModel, Response response) {
+
                             removeDialog = new MaterialDialog(CancelAssociationActivity.this);
                             removeDialog.setMessage(cancelAssociationModel.getCommand().getMESSAGE());
                             removeDialog.setPositiveButton("Ok", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     removeDialog.dismiss();
-                                    finish();
+                                    if (cancelAssociationModel.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
+                                        startActivity(new Intent(CancelAssociationActivity.this, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                        finish();
+                                    }
+
                                 }
                             });
                             removeDialog.show();
