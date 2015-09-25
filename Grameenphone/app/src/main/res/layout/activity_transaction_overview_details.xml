@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/friends"
-            android:text="Company"
+            android:text="Account"
             android:textColor="#87000000"
             android:textSize="16sp" />
 
@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="DESCO"
+            android:text="01718181818"
             android:textColor="#87000000"
             android:textSize="16sp" />
     </RelativeLayout>

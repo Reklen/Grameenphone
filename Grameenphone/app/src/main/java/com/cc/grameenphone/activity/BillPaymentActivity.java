@@ -515,7 +515,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                         dialog.setPositiveButton("Ok", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                fetchBills();
+                                //fetchBills();
                                 dialog.dismiss();
                             }
                         });
