@@ -131,6 +131,14 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         preferenceManager = new PreferenceManager(BillPaymentActivity.this);
         billspaymentApi = ServiceGenerator.createService(BillspaymentApi.class);
         loadingDialog.show();
+        fetchBills();
+        setupListViewItemClick();
+        setupRipples();
+        getWalletBalance();
+
+    }
+
+    private void fetchBills() {
         try {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
@@ -151,8 +159,12 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                             Logger.d("BILLS response", billListModel.getCOMMAND().getMessage().getComapny().toString());
                             List<UserBillsModel> bills = billListModel.getCOMMAND().getMessage().getComapny();
                             for (UserBillsModel b : bills) {
-                                if (b.getBILLNUM() != null)
+                                if (!b.getBILLNUM().equalsIgnoreCase("null")) {
                                     userBillsModels.add(b);
+                                    Logger.d("UserBills not null");
+                                } else {
+                                    Logger.d("UserBills null");
+                                }
                             }
 
                             listViewAdapter.notifyDataSetChanged();
@@ -171,7 +183,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                             @Override
                             public void onClick(View v) {
                                 sessionDialog.dismiss();
-                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this , false);
+                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this, false);
                                 sessionClearTask.execute();
 
                             }
@@ -195,10 +207,6 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        setupListViewItemClick();
-        setupRipples();
-        getWalletBalance();
-
     }
 
     @OnClick(R.id.selectedPaymentButton)
@@ -328,7 +336,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                             @Override
                             public void onClick(View v) {
                                 sessionDialog.dismiss();
-                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this,false);
+                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this, false);
                                 sessionClearTask.execute();
 
                             }
@@ -507,6 +515,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                         dialog.setPositiveButton("Ok", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                fetchBills();
                                 dialog.dismiss();
                             }
                         });
@@ -521,7 +530,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                             @Override
                             public void onClick(View v) {
                                 sessionDialog.dismiss();
-                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this,false);
+                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this, false);
                                 sessionClearTask.execute();
 
                             }

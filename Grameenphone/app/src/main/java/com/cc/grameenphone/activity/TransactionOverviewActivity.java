@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -60,6 +61,8 @@ public class TransactionOverviewActivity extends AppCompatActivity {
     private MaterialDialog sessionDialog;
     private MaterialDialog errorDialog;
 
+    HashMap<Integer, String> posMessageMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +75,7 @@ public class TransactionOverviewActivity extends AppCompatActivity {
         android_id = Settings.Secure.getString(TransactionOverviewActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         preferenceManager = new PreferenceManager(TransactionOverviewActivity.this);
-
+        posMessageMap = new HashMap<>();
         transactionOverviewApi = ServiceGenerator.createService(TransactionOverviewApi.class);
         backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
@@ -114,6 +117,7 @@ public class TransactionOverviewActivity extends AppCompatActivity {
                     if (transactionOverviewModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                         listItemsList.clear();
                         listItemsList.addAll(transactionOverviewModel.getCOMMAND().getDATA());
+                        mapValues(transactionOverviewModel);
                         adapter.notifyDataSetChanged();
                         loadingDialog.cancel();
                     } else if (transactionOverviewModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA903")) {
@@ -158,6 +162,16 @@ public class TransactionOverviewActivity extends AppCompatActivity {
             });
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void mapValues(TransactionOverviewModel transactionOverviewModel) {
+        String message = transactionOverviewModel.getCOMMAND().getMESSAGE();
+        String[] parts = message.split("\\n");
+        for (int k = 0; k < parts.length; k++) {
+            String s = parts[k];
+            String[] wordParts = s.split(" ");
+            posMessageMap.put(k, wordParts[2]);
         }
     }
 
