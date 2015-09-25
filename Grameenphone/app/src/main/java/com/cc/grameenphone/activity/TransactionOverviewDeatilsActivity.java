@@ -95,7 +95,8 @@ public class TransactionOverviewDeatilsActivity extends AppCompatActivity {
 
     private void initData() {
 
-        data.enterDate.setText("");
+       //
+       // data.enterDate.setText("");
         serviceTextView.setText(data.getSERVICE());
         companyNameTextView.setText("");
         amountTextView.setText(data.getTXNAMT());

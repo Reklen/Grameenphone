@@ -103,7 +103,6 @@
                 android:layout_height="36dp"
                 android:background="@drawable/login_button"
                 android:gravity="center"
-                android:padding="10dp"
                 android:text="@string/submit"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
