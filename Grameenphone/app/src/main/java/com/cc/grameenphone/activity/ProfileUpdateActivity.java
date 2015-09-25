@@ -17,6 +17,7 @@ import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.ProfileUpdateApi;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
+import com.cc.grameenphone.views.RippleView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,7 +59,8 @@ public class ProfileUpdateActivity extends Activity {
     Button signUpBtn;
     @InjectView(R.id.skipButton)
     Button skipButton;
-
+    @InjectView(R.id.submitRippleView)
+    RippleView submitRippleView;
     ProfileUpdateApi profileUpdateApi;
     MaterialDialog otpDialog, successSignupDialog, errorDialog;
     private String android_id;
@@ -70,9 +72,14 @@ public class ProfileUpdateActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
         ButterKnife.inject(this);
+        submitRippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                submitClick();
+            }
+        });
     }
 
-    @OnClick(R.id.submitButton)
     void submitClick() {
         android_id = Settings.Secure.getString(ProfileUpdateActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
@@ -131,7 +138,7 @@ public class ProfileUpdateActivity extends Activity {
                         sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                SessionClearTask sessionClearTask = new SessionClearTask(ProfileUpdateActivity.this , false);
+                                SessionClearTask sessionClearTask = new SessionClearTask(ProfileUpdateActivity.this, false);
                                 sessionClearTask.execute();
 
                             }
