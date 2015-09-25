@@ -54,6 +54,7 @@ public class TransactionOverviewDeatilsActivity extends AppCompatActivity {
     TextView transactionNumberTextView;
     @InjectView(R.id.fifth_top)
     RelativeLayout fifthTop;
+    String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,8 @@ public class TransactionOverviewDeatilsActivity extends AppCompatActivity {
             Bundle b = getIntent().getExtras();
 
             data = (TransactionOverviewData) b.get("transaction_obj");
+
+            date = b.getString("transactionMap");
             initData();
         } catch (Exception e) {
             e.printStackTrace();
@@ -95,8 +98,7 @@ public class TransactionOverviewDeatilsActivity extends AppCompatActivity {
 
     private void initData() {
 
-        data.
-        enterDate.setText("");
+        enterDate.setText(""+date);
         serviceTextView.setText(data.getSERVICE());
         companyNameTextView.setText("");
         amountTextView.setText(data.getTXNAMT());

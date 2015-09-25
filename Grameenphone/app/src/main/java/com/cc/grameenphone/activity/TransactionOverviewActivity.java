@@ -30,7 +30,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -61,7 +60,7 @@ public class TransactionOverviewActivity extends AppCompatActivity {
     private MaterialDialog sessionDialog;
     private MaterialDialog errorDialog;
 
-    HashMap<Integer, String> posMessageMap;
+    ArrayList<String> posMessageMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +74,7 @@ public class TransactionOverviewActivity extends AppCompatActivity {
         android_id = Settings.Secure.getString(TransactionOverviewActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         preferenceManager = new PreferenceManager(TransactionOverviewActivity.this);
-        posMessageMap = new HashMap<>();
+        posMessageMap = new ArrayList<>();
         transactionOverviewApi = ServiceGenerator.createService(TransactionOverviewApi.class);
         backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
@@ -94,7 +93,7 @@ public class TransactionOverviewActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 startActivity(new Intent(TransactionOverviewActivity.this,
-                        TransactionOverviewDeatilsActivity.class).putExtra("transaction_obj", adapter.getItem(i)));
+                        TransactionOverviewDeatilsActivity.class).putExtra("transaction_obj", adapter.getItem(i)).putExtra("transactionMap", posMessageMap.get(i)));
             }
         });
         fetchList();
@@ -114,6 +113,7 @@ public class TransactionOverviewActivity extends AppCompatActivity {
             transactionOverviewApi.fetchStatements(jsonObject, new Callback<TransactionOverviewModel>() {
                 @Override
                 public void success(TransactionOverviewModel transactionOverviewModel, Response response) {
+                    Logger.d("TransactionOverview", transactionOverviewModel.toString());
                     if (transactionOverviewModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                         listItemsList.clear();
                         listItemsList.addAll(transactionOverviewModel.getCOMMAND().getDATA());
@@ -171,7 +171,7 @@ public class TransactionOverviewActivity extends AppCompatActivity {
         for (int k = 0; k < parts.length; k++) {
             String s = parts[k];
             String[] wordParts = s.split(" ");
-            posMessageMap.put(k, wordParts[2]);
+            posMessageMap.add(wordParts[2]);
         }
     }
 
