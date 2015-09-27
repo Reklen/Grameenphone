@@ -23,6 +23,7 @@ import com.cc.grameenphone.activity.HomeActivity;
 import com.cc.grameenphone.api_models.BillConfirmationModel;
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
+import com.cc.grameenphone.interfaces.AddAssociationApi;
 import com.cc.grameenphone.interfaces.OtherPaymentApi;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
@@ -48,7 +49,7 @@ import retrofit.client.Response;
 /**
  * Created by rajkiran on 21/09/15.
  */
-public class NewAssociationTicketingFragment extends BaseTabFragment implements Validator.ValidationListener{
+public class NewAssociationTicketingFragment extends BaseTabFragment implements Validator.ValidationListener {
     @InjectView(R.id.customRadioGroupLayout)
     LinearLayout custodialRadiogroup;
     @InjectView(R.id.companyRadioGroupScroll)
@@ -77,13 +78,14 @@ public class NewAssociationTicketingFragment extends BaseTabFragment implements 
     private List<OtherPaymentCompanyModel> companyList;
     private int numberOfCompany;
     RadioGroup rg;
-    OtherPaymentApi otherPaymentApi;
+    AddAssociationApi addAssociationApi;
     int selectedSurchargePos;
     String selectedCompany;
     View pinConfirmationView;
     EditText pinConfirmationET;
     MaterialDialog pinConfirmDialog;
     Validator validator;
+
     public static NewAssociationTicketingFragment newInstance(Bundle b) {
         NewAssociationTicketingFragment gasTabFragment = new NewAssociationTicketingFragment();
         gasTabFragment.setArguments(b);
@@ -118,11 +120,15 @@ public class NewAssociationTicketingFragment extends BaseTabFragment implements 
         new RushSearch().whereEqual("CATCODE", "TCKT")
                 .find(OtherPaymentCompanyModel.class, new RushSearchCallback<OtherPaymentCompanyModel>() {
                     @Override
-                    public void complete(List<OtherPaymentCompanyModel> list) {
-                        setupViews(list);
+                    public void complete(final List<OtherPaymentCompanyModel> list) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                setupViews(list);
+                            }
+                        });
                     }
                 });
-
 
     }
 
@@ -243,25 +249,25 @@ public class NewAssociationTicketingFragment extends BaseTabFragment implements 
         preferenceManager = new PreferenceManager(getActivity());
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
+        addAssociationApi = ServiceGenerator.createService(AddAssociationApi.class);
         try {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
             innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
-            innerObject.put("TYPE", "CPMBREQ");
+            innerObject.put("TYPE", "BPREGREQ");
+            innerObject.put("CATEGORY", "TCKT");
+            innerObject.put("PREF1", accountNumbEdit.getText().toString());
             innerObject.put("BILLCCODE", selectedCompany);
-            innerObject.put("BILLANO", accountNumbEdit.getText().toString());
-            innerObject.put("BILLNO", billNumbEdit.getText().toString());
-            innerObject.put("BPROVIDER", "101");
-            innerObject.put("PIN", preferenceManager.getPINCode());
             jsonObject.put("COMMAND", innerObject);
             Logger.d("confirmaing bill payment ", jsonObject.toString());
-            otherPaymentApi.billConfirmation(jsonObject, new Callback<BillConfirmationModel>() {
+            addAssociationApi.associationSubmit(jsonObject, new Callback<BillConfirmationModel>() {
                 @Override
-                public void success(final BillConfirmationModel billConfirmationModel, Response response) {
+                public void success(BillConfirmationModel billConfirmationModel, Response response) {
+
                     if (billConfirmationModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+
                         confirmationDialog = new MaterialDialog(getActivity());
                         confirmationDialog.setMessage("" + billConfirmationModel.getCOMMAND().getMESSAGE());
                         confirmationDialog.setPositiveButton("OK", new View.OnClickListener() {
@@ -284,6 +290,8 @@ public class NewAssociationTicketingFragment extends BaseTabFragment implements 
                         });
                         errorDialog.show();
                     }
+
+
                 }
 
                 @Override
