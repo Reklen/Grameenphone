@@ -5,12 +5,20 @@ package com.cc.grameenphone.api_models;
  */
 public class SignupCommandModel {
     private String MESSAGE;
-
+    private String RFRCODE;
     private String TXNID;
 
     private String TXNSTATUS;
 
     private String TYPE;
+
+    public void setRFRCODE(String RFRCODE) {
+        this.RFRCODE = RFRCODE;
+    }
+
+    public String getRFRCODE() {
+        return RFRCODE;
+    }
 
     public String getMESSAGE() {
         return MESSAGE;
@@ -46,7 +54,7 @@ public class SignupCommandModel {
 
     @Override
     public String toString() {
-        return "ClassPojo [MESSAGE = " + MESSAGE + ", TXNID = " + TXNID + ", TXNSTATUS = " + TXNSTATUS + ", TYPE = " + TYPE + "]";
+        return "ClassPojo [RFRCODE = " + RFRCODE + ", MESSAGE = " + MESSAGE + ", TXNID = " + TXNID + ", TXNSTATUS = " + TXNSTATUS + ", TYPE = " + TYPE + "]";
     }
 
     /*

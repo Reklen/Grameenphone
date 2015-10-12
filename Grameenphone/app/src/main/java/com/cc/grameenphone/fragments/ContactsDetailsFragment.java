@@ -125,7 +125,9 @@ public class ContactsDetailsFragment extends Fragment {
 
     private ArrayList<Contact> getContacts() {
         if (checkContactsReadPermission()) {
-            Uri uri = ContactsQuery.CONTENT_URI;
+            Uri uri = ContactsQuery.CONTENT_URI.buildUpon()
+                    .appendQueryParameter(ContactsContract.REMOVE_DUPLICATE_ENTRIES, "1")
+                    .build();
             final Cursor cursor = getActivity().managedQuery(uri, ContactsQuery.PROJECTION, ContactsQuery.SELECTION, null, ContactsQuery.SORT_ORDER);
             if (cursor == null)
                 return null;

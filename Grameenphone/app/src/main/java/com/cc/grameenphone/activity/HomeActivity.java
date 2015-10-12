@@ -19,6 +19,7 @@ import com.cc.grameenphone.R;
 import com.cc.grameenphone.api_models.BalanceEnquiryModel;
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
 import com.cc.grameenphone.api_models.OtherPaymentModel;
+import com.cc.grameenphone.api_models.ProfileModel;
 import com.cc.grameenphone.async.CompaniesSaveDBTask;
 import com.cc.grameenphone.async.SessionClearTask;
 import com.cc.grameenphone.fragments.DemoFragment;
@@ -91,12 +92,18 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
         fragmentTransaction.replace(R.id.container_body, fragment);
         fragmentTransaction.commit();
 
-        getWalletBalance();
+
         if (!preferenceManager.getCompaniesSavedFlag())
             getOtherPaymentCompanies();
 
         handleNavigationView();
         handleRipple();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getWalletBalance();
     }
 
     private void handleNavigationView() {
@@ -143,7 +150,9 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
                         fragmentTransaction.commit();
                         return true;
                     case R.id.navigation_item_3:
-                        fragment = new ManageFavoriteFragment();
+                        Bundle b = new Bundle();
+                        b.putBoolean("isHome", true);
+                        fragment = ManageFavoriteFragment.newInstance(b);
                         //  getSupportActionBar().setTitle("Manage Favorites");
                         toolbarTextView.setText("Manage Favorites");
                         // icon1.setVisibility(View.GONE);
@@ -196,8 +205,10 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
                         logoutDialog.setPositiveButton("Yes", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+
                                 SessionClearTask sessionClearTask = new SessionClearTask(HomeActivity.this, true);
                                 sessionClearTask.execute();
+                                finish();
 
                             }
                         });
@@ -274,7 +285,8 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
 
     private void getOtherPaymentCompanies() {
         otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
-
+        android_id = Settings.Secure.getString(HomeActivity.this.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
         try {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
@@ -323,8 +335,9 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
 
                 }
                 if (f instanceof ProfileFragment) {
+                    ProfileModel profileModel = ((ProfileFragment) f).getProfileModel();
 
-                    startActivity(new Intent(HomeActivity.this, EditProfileActivity.class));
+                    startActivity(new Intent(HomeActivity.this, EditProfileActivity.class).putExtra("profileObj", profileModel));
 
                 }
                 if (f instanceof HomeFragment) {
@@ -453,6 +466,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
     @Override
     public void fetchBalanceAgain() {
         Logger.d("WalletCheck ", "again 2");
+        walletLabel.setText("  ৳ ");
         getWalletBalance();
     }
 }

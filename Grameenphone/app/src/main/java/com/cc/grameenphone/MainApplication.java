@@ -6,6 +6,11 @@ import com.cc.grameenphone.api_models.ContactModel;
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
 import com.cc.grameenphone.utils.Logger;
 
+import org.acra.ACRA;
+import org.acra.ReportField;
+import org.acra.ReportingInteractionMode;
+import org.acra.annotation.ReportsCrashes;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +21,14 @@ import co.uk.rushorm.core.RushCore;
 /**
  * Created by aditlal on 14/09/15.
  */
+@ReportsCrashes(
+        mailTo = "adit.lal@cognitiveclouds.com",
+        customReportContent = {ReportField.APP_VERSION_CODE,
+                ReportField.APP_VERSION_NAME, ReportField.ANDROID_VERSION,
+                ReportField.PHONE_MODEL, ReportField.CUSTOM_DATA,
+                ReportField.STACK_TRACE, ReportField.LOGCAT},
+        mode = ReportingInteractionMode.TOAST, resToastText = R.string.crash
+)
 public class MainApplication extends Application {
 
 
@@ -25,7 +38,8 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
-        Logger.init("gp");
+        ACRA.init(this);
+        Logger.init("Grameen");
         initializeDB();
     }
 

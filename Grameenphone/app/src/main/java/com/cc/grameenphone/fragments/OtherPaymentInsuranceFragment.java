@@ -24,6 +24,7 @@ import com.cc.grameenphone.api_models.BillConfirmationModel;
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.OtherPaymentApi;
+import com.cc.grameenphone.utils.KeyboardUtil;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
 import com.cc.grameenphone.views.RippleView;
@@ -156,14 +157,15 @@ public class OtherPaymentInsuranceFragment extends BaseTabFragment implements Va
             rg.setOrientation(RadioGroup.VERTICAL);
             for (int i = 0; i < numberOfCompany; i++) {
                 rb[i] = new RadioButton(getActivity());
-                rg.addView(rb[i], layoutParams);
-                rb[i].setPadding(padding, padding, 0, padding);
+
+            /*    rb[i].setPadding(padding, padding, 0, padding);
                 rb[i].setCompoundDrawablePadding(compoundDrawablePadding);
-                rb[i].setTextSize(15);
+                rb[i].setTextSize(15);*/
                 rb[i].setAllCaps(true);
                 rb[i].setTextColor(getActivity().getResources().getColor(R.color.black_semi_transparent));
                 rb[i].setText(companyList.get(i).getCOMPNAME());
                 rb[i].setTag(companyList.get(i));
+                rg.addView(rb[i], layoutParams);
             }
 
             custodialRadiogroup.addView(rg);
@@ -197,7 +199,7 @@ public class OtherPaymentInsuranceFragment extends BaseTabFragment implements Va
                 }
             }
         });
-       // companyRadioGroupScroll.fullScroll(ScrollView.FOCUS_UP);
+        // companyRadioGroupScroll.fullScroll(ScrollView.FOCUS_UP);
     }
 
     void pinConfirmation() {
@@ -209,7 +211,14 @@ public class OtherPaymentInsuranceFragment extends BaseTabFragment implements Va
         pinConfirmDialog.setPositiveButton("CONFIRM", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onSubmitClick();
+                if (pinConfirmationET.getText().toString().length() != 4) {
+                    pinConfirmationET.setError("Enter your valid pin");
+                    return;
+                }
+                String pin = pinConfirmationET.getText().toString();
+                pinConfirmDialog.dismiss();
+                KeyboardUtil.hideKeyboard(getActivity());
+                onSubmitClick(pin);
                 pinConfirmDialog.dismiss();
 
             }
@@ -217,7 +226,7 @@ public class OtherPaymentInsuranceFragment extends BaseTabFragment implements Va
         pinConfirmDialog.show();
     }
 
-    void onSubmitClick() {
+    void onSubmitClick(String pin) {
         //TODO Submitting amount, surcharge amount
 
         preferenceManager = new PreferenceManager(getActivity());
@@ -237,7 +246,7 @@ public class OtherPaymentInsuranceFragment extends BaseTabFragment implements Va
             innerObject.put("BILLNO", billNumbEdit.getText().toString());
             innerObject.put("BPROVIDER", "101");
             innerObject.put("SURCHARGE", surchargeEditText.getText().toString());
-            innerObject.put("PIN", preferenceManager.getPINCode());
+            innerObject.put("PIN", pin);
             jsonObject.put("COMMAND", innerObject);
             Logger.d("confirmaing bill payment ", jsonObject.toString());
             otherPaymentApi.billConfirmation(jsonObject, new Callback<BillConfirmationModel>() {

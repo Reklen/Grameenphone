@@ -42,6 +42,6 @@ public class SessionClearTask extends AsyncTask<Void, Void, Void> {
         preferenceManager.setAuthToken("");
         preferenceManager.setMSISDN("");
 
-        ctx.startActivity(new Intent(ctx, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+        ctx.startActivity(new Intent(ctx, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 }

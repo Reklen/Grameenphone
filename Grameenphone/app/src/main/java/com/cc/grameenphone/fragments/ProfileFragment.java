@@ -58,6 +58,8 @@ public class ProfileFragment extends Fragment {
     ProfileUpdateApi profileDisplay;
     ProgressDialog loadingDialog;
 
+    ProfileModel profileModel;
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -101,11 +103,16 @@ public class ProfileFragment extends Fragment {
                 public void success(ProfileModel profileModel, Response response) {
                     if (profileModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                         Logger.d("Profile Success" + profileModel.toString());
-                        firstName.setText("" + profileModel.getCOMMAND().getFNAME());
-                        lastName.setText("" + profileModel.getCOMMAND().getLNAME());
-                        emailName.setText("" + profileModel.getCOMMAND().getEMAIL());
-                        nationalId.setText("" + profileModel.getCOMMAND().getIDNO());
-                        dob.setText("" + profileModel.getCOMMAND().getDOB());
+                        try {
+                            setProfileModel(profileModel);
+                            firstName.setText("" + profileModel.getCOMMAND().getFNAME());
+                            lastName.setText("" + profileModel.getCOMMAND().getLNAME());
+                            emailName.setText("" + profileModel.getCOMMAND().getEMAIL());
+                            nationalId.setText("" + profileModel.getCOMMAND().getIDNO());
+                            dob.setText("" + profileModel.getCOMMAND().getDOB());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                     } else {
 
@@ -140,5 +147,13 @@ public class ProfileFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
+    }
+
+    public ProfileModel getProfileModel() {
+        return profileModel;
+    }
+
+    public void setProfileModel(ProfileModel profileModel) {
+        this.profileModel = profileModel;
     }
 }

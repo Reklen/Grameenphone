@@ -1,14 +1,17 @@
 package com.cc.grameenphone.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContextWrapper;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -40,6 +43,8 @@ import java.util.Locale;
 import java.util.Random;
 
 import co.uk.rushorm.core.RushCallback;
+import co.uk.rushorm.core.RushSearch;
+import co.uk.rushorm.core.RushSearchCallback;
 
 public class AddFavoriteContactsActivity extends AppCompatActivity {
     private LayoutInflater mInflater;
@@ -48,6 +53,8 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
     ContextWrapper contextWrapper;
     TextView tooltext;
     ImageView back_icon;
+    private ProgressDialog loadingDialog;
+    boolean isNameFoundCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +83,8 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
         });
         mListView = (PinnedHeaderListView) findViewById(android.R.id.list);
         mAdapter = new ContactsAdapter(contacts);
-
+        loadingDialog = new ProgressDialog(AddFavoriteContactsActivity.this);
+        loadingDialog.setMessage("Loading..");
         int pinnedHeaderBackgroundColor = getResources().getColor(R.color.transparent);
         mAdapter.setPinnedHeaderBackgroundColor(pinnedHeaderBackgroundColor);
         mAdapter.setPinnedHeaderTextColor(getResources().getColor(R.color.pinned_header_text));
@@ -88,19 +96,49 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Contact contact = ((ContactsAdapter) mListView.getAdapter()).getItem(position);
+                isNameFoundCheck = false;
+                final Contact contact = ((ContactsAdapter) mListView.getAdapter()).getItem(position);
                 final ContactModel contactModel = new ContactModel();
                 contactModel.setName(contact.displayName);
                 contactModel.setNumber(contact.number);
                 contactModel.setPhotoId(contact.photoId);
-                contactModel.save(new RushCallback() {
-                    @Override
-                    public void complete() {
-                        Logger.d("Contact adding to fav", contactModel.getId() + "");
-                        finish();
-                    }
-                });
+                loadingDialog.show();
+                new RushSearch()
+                        .find(ContactModel.class, new RushSearchCallback<ContactModel>() {
+                            @Override
+                            public void complete(List<ContactModel> list) {
+                                for (ContactModel d : list) {
+                                    if (d.getName() != null && d.getName().contains(contact.displayName)) {
+                                        isNameFoundCheck = true;
+                                        Logger.d("nme check", "found " + contact.displayName);
+                                        break;
+                                    }
 
+                                }
+                                if (!isNameFoundCheck)
+                                    contactModel.save(new RushCallback() {
+                                        @Override
+                                        public void complete() {
+                                            loadingDialog.cancel();
+                                            Logger.d("Contact adding to fav", contactModel.getId() + "");
+                                            finish();
+
+                                        }
+                                    });
+                                else {
+                                    loadingDialog.cancel();
+                                    Snackbar.make(findViewById(android.R.id.content), "This contact is already a favourite , go back ?", Snackbar.LENGTH_LONG)
+                                            .setAction("Ok", new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    finish();
+                                                }
+                                            })
+                                            .setActionTextColor(Color.GREEN)
+                                            .show();
+                                }
+                            }
+                        });
 
             }
         });
@@ -118,7 +156,10 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
 
     private ArrayList<Contact> getContacts() {
         if (checkContactsReadPermission()) {
-            Uri uri = ContactsQuery.CONTENT_URI;
+            Uri uri = ContactsQuery.CONTENT_URI.buildUpon()
+                    .appendQueryParameter(ContactsContract.REMOVE_DUPLICATE_ENTRIES, "1")
+                    .build();
+
             final Cursor cursor = managedQuery(uri, ContactsQuery.PROJECTION, ContactsQuery.SELECTION, null, ContactsQuery.SORT_ORDER);
             if (cursor == null)
                 return null;

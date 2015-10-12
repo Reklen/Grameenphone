@@ -1,5 +1,6 @@
 package com.cc.grameenphone.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
@@ -62,6 +63,7 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
     QuickBillPayFragment quickBillFragment;
     private QuickPayApi quickPayApi;
     private MaterialDialog errorDialog;
+    private ProgressDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,7 +197,10 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
 
     //TODO Implement Quickpay
     public void getQuickPayDetails(String code) {
-
+        loadingDialog = new ProgressDialog(QuickPayActivity.this);
+        loadingDialog.setMessage("Fetching details");
+        loadingDialog.setCanceledOnTouchOutside(false);
+        loadingDialog.show();
         quickPayApi = ServiceGenerator.createService(QuickPayApi.class);
         String quickPayCode = code;
         try {
@@ -214,7 +219,7 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
                     if (quickPayModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                         Logger.d("Quickpay Bill Success", quickPayModel.toString());
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
+                        loadingDialog.cancel();
                         quickBillFragment = new QuickBillPayFragment();
                         Bundle args = new Bundle();
                         args.putString(IntentUtils.QUICK_PAY_COMPANY_NAME, quickPayModel.getCOMMAND().getCOMPNAME() + "");
@@ -232,7 +237,7 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
                         transaction.commit();
 
                     } else {
-
+                        loadingDialog.cancel();
                         Logger.e("Quick pay not success ", "status " + quickPayModel.toString());
                         errorDialog = new MaterialDialog(QuickPayActivity.this);
                         errorDialog.setMessage(quickPayModel.getCOMMAND().getMESSAGE() + "");
@@ -251,6 +256,7 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
 
                 @Override
                 public void failure(RetrofitError error) {
+                    loadingDialog.cancel();
                     if (error.getKind() == RetrofitError.Kind.NETWORK) {
                         Logger.e("Failuare", error.getMessage());
                     } else {
@@ -260,6 +266,7 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
             });
 
         } catch (JSONException e) {
+            loadingDialog.cancel();
             e.printStackTrace();
         }
     }

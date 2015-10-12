@@ -87,7 +87,7 @@ public class PinChangeFragment extends Fragment {
         confirmRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
-               confirmClick();
+                confirmClick();
             }
         });
         return rootView;
@@ -161,6 +161,21 @@ public class PinChangeFragment extends Fragment {
                             }
                         });
                         successSignupDialog.show();
+                    } else {
+                        errorDialog = new MaterialDialog(getActivity());
+                        errorDialog.setMessage(pinChangeModel.getCommand().getMESSAGE());
+                        errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                errorDialog.dismiss();
+                                oldPinEditText.setText("");
+                                newPineditText.setText("");
+                                confirmPinEditText.setText("");
+
+                            }
+                        });
+                        errorDialog.setCanceledOnTouchOutside(true);
+                        errorDialog.show();
                     }
                 }
 

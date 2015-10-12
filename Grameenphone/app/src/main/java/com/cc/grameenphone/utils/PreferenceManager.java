@@ -56,7 +56,9 @@ public final class PreferenceManager {
     }
 
     public void setCompaniesSavedFlag(boolean companiesSavedFlag) {
+
         mSharedPreferences.edit().putBoolean("companiesSavedFlag", companiesSavedFlag).commit();
+        Logger.d("Pref Check", getCompaniesSavedFlag() + "");
     }
 
     public Boolean getCompaniesSavedFlag() {

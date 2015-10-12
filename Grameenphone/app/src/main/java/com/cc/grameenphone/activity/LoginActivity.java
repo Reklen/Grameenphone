@@ -235,6 +235,19 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
                     } else if (model.getCommand().getTXNSTATUS().equalsIgnoreCase("00210")) {
                         walletPinNumber.setError("" + model.getCommand().getMESSAGE());
                         loadingDialog.dismiss();
+                    } else {
+                        loadingDialog.dismiss();
+                        errorDialogBuilder.setMessage(model.getCommand().getMESSAGE() + "");
+                        errorDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                errorDialog.cancel();
+
+                                //TODO goto signup
+                            }
+                        });
+                        errorDialog = errorDialogBuilder.create();
+                        errorDialog.show();
                     }
                 }
 

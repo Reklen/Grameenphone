@@ -1,5 +1,6 @@
 package com.cc.grameenphone.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -116,7 +117,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
     LinearLayout signUpLayout;
     @InjectView(R.id.scrollView)
     ScrollView scrollView;
-
+    ProgressDialog loadingDialog;
     Validator validator;
     MSISDNCheckApi msisdnCheckApi;
 
@@ -141,7 +142,8 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
         validator = new Validator(this);
         validator.setValidationListener(this);
         msisdnCheckApi = ServiceGenerator.createService(MSISDNCheckApi.class);
-
+        loadingDialog = new ProgressDialog(SignUpActivity.this);
+        loadingDialog.setMessage("Registering , please wait..");
         handleExtras();
         android_id = Settings.Secure.getString(SignUpActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
@@ -204,6 +206,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
 
     @OnClick(R.id.sign_up_btn)
     void signUpClick() {
+        loadingDialog.show();
         validator.validate();
     }
 
@@ -216,6 +219,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
+        loadingDialog.cancel();
         for (ValidationError error : errors) {
             View view = error.getView();
             String message = error.getCollatedErrorMessage(SignUpActivity.this);
@@ -245,17 +249,16 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
                     if (msisdnCheckModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                         otpString = msisdnCheckModel.getCOMMAND().getOTP();
                         authTokenString = msisdnCheckModel.getCOMMAND().getAUTHTOKEN();
+                        loadingDialog.cancel();
                         signUpUser();
                     } else {
-
+                        loadingDialog.cancel();
                         errorDialog = new MaterialDialog(SignUpActivity.this);
                         errorDialog.setMessage(msisdnCheckModel.getCOMMAND().getAUTHTOKEN() + "");
                         errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 errorDialog.dismiss();
-                                startActivity(new Intent(SignUpActivity.this, LoginActivity.class).putExtra("mobile_number", phoneNumberEditText.getText().toString()));
-                                finish();
 
                             }
                         });
@@ -266,7 +269,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
 
                 @Override
                 public void failure(RetrofitError error) {
-
+                    loadingDialog.cancel();
                 }
             });
         } catch (JSONException e) {
@@ -301,7 +304,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
             Logger.d("Signup ", "doing signUpUser " + jsonObject.toString());
             signupApi.signup(jsonObject, new Callback<SignupModel>() {
                 @Override
-                public void success(SignupModel signupModel, Response response) {
+                public void success(final SignupModel signupModel, Response response) {
                     Logger.d("Signup Model", signupModel.toString());
                     if (signupModel.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
                         //dialog
@@ -351,10 +354,12 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
                             @Override
                             public void onClick(View v) {
                                 preferenceManager.setAuthToken(authTokenString);
-
+                                if (signupModel.getCommand().getRFRCODE() != null)
+                                    preferenceManager.setReferCode(signupModel.getCommand().getRFRCODE());
+                                else
+                                    preferenceManager.setReferCode("No Refercode Available");
                                 preferenceManager.setMSISDN(phoneNumberEditText.getText().toString());
                                 successSignupDialog.dismiss();
-                                preferenceManager.setMSISDN(phoneNumberEditText.getText().toString());
                                 startActivity(new Intent(SignUpActivity.this, ProfileUpdateActivity.class));
                                 finish();
 

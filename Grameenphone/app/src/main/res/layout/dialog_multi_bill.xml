@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/top_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/friends"
+        android:layout_centerHorizontal="true"
+        android:text="Flexiload for 500 is processed\nsuccessfully"
+        android:textColor="@color/black_eighty_seven"
+        android:textSize="14sp" />
+
+
+    <ListView
+        android:id="@+id/multiBillsStatusListView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/top_text"
+        android:layout_marginTop="8dp"
+        android:divider="@color/transparent"
+        android:dividerHeight="8dp"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/adapter_multi_bill" />
+
+
+</RelativeLayout>

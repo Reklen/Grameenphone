@@ -142,6 +142,7 @@ public class OtherPaymentActivity extends AppCompatActivity {
         loadingDialog = new ProgressDialog(OtherPaymentActivity.this);
         loadingDialog.setMessage("Fetching list..");
         loadingDialog.show();
+        Logger.d("Pref Check", preferenceManager.getCompaniesSavedFlag() + "");
         if (preferenceManager.getCompaniesSavedFlag()) {
 
             loadingDialog.dismiss();
@@ -155,6 +156,8 @@ public class OtherPaymentActivity extends AppCompatActivity {
 
     private void getOtherPaymentCompanies() {
         otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
+        android_id = Settings.Secure.getString(OtherPaymentActivity.this.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
         try {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();

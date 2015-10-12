@@ -42,7 +42,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class ReferFriendsActivity extends AppCompatActivity implements Validator.ValidationListener{
+public class ReferFriendsActivity extends AppCompatActivity implements Validator.ValidationListener {
 
     @InjectView(R.id.backRipple)
     RippleView backRipple;
@@ -106,7 +106,7 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
         confirmRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
-               validator.validate();
+                validator.validate();
             }
         });
         phoneNumberEditText.setOnTouchListener(new View.OnTouchListener() {
@@ -115,11 +115,14 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
                 final int DRAWABLE_RIGHT = 2;
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (phoneNumberEditText.getRight() - phoneNumberEditText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    Logger.d("Touch ", "Action UP " + event.getRawX());
+                    if (event.getRawX() >= (phoneNumberEditText.getRight() - phoneNumberEditText.getTotalPaddingRight())) {
                         // your action here
+                        Logger.d("Touch ", "Going in");
                         startActivityForResult(new Intent(ReferFriendsActivity.this, SelectContactsActivity.class), IntentUtils.SELECT_CONTACT_REQ);
                         return true;
                     }
+                    Logger.d("Touch ", "Outside drawable");
                 }
                 return false;
             }
@@ -139,24 +142,23 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
                 String upToNCharacters1 = num.substring(0, Math.min(num.length(), 3));
                 if (upToNCharacters.equalsIgnoreCase("88017")) {
                     last8 = num.substring(5, Math.min(num.length(), num.length()));
-                } else if(upToNCharacters1.equalsIgnoreCase("017")){
+                } else if (upToNCharacters1.equalsIgnoreCase("017")) {
                     last8 = num.substring(3, Math.min(num.length(), num.length()));
 
-                }else{
+                } else {
                     last8 = num;
                 }
                 phoneNumberEditText.setText("" + last8);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        else{
+        } else {
             phoneNumberEditText.setText("" + preferenceManager.getMSISDN());
         }
     }
 
     void confirmClick() {
-        
+
         android_id = Settings.Secure.getString(ReferFriendsActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         referFriendsApi = ServiceGenerator.createService(ReferFriendsApi.class);
@@ -166,6 +168,8 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
             innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            if (!preferenceManager.getReferCode().equalsIgnoreCase("No Refercode Available"))
+                innerObject.put("RFRCODE", preferenceManager.getReferCode());
             innerObject.put("MSISDN2", "017" + phoneNumberEditText.getText().toString());
             innerObject.put("TYPE", "RFRFRDREQ");
             jsonObject.put("COMMAND", innerObject);
@@ -201,7 +205,7 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
                         sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                SessionClearTask sessionClearTask = new SessionClearTask(ReferFriendsActivity.this , false);
+                                SessionClearTask sessionClearTask = new SessionClearTask(ReferFriendsActivity.this, false);
                                 sessionClearTask.execute();
 
                             }

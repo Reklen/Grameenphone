@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.design.widget.TextInputLayout;
+import android.support.v7.widget.Toolbar;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cc.grameenphone.R;
@@ -17,14 +20,17 @@ import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.ProfileUpdateApi;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
+import com.cc.grameenphone.views.CustomTextInputLayout;
 import com.cc.grameenphone.views.RippleView;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -33,36 +39,45 @@ import retrofit.client.Response;
 /**
  * Created by Rajkiran on 9/9/2015.
  */
-public class ProfileUpdateActivity extends Activity {
+public class ProfileUpdateActivity extends Activity implements DatePickerDialog.OnDateSetListener {
 
+
+    ProfileUpdateApi profileUpdateApi;
+    MaterialDialog otpDialog, successSignupDialog, errorDialog;
+    @InjectView(R.id.toolbar_text)
+    TextView toolbarText;
+    @InjectView(R.id.skipText)
+    TextView skipText;
+    @InjectView(R.id.skipRipple)
+    RippleView skipRipple;
+    @InjectView(R.id.toolbar_container)
+    RelativeLayout toolbarContainer;
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
     @InjectView(R.id.first_nameEdit)
     EditText firstNameEdit;
     @InjectView(R.id.firstName_container)
-    TextInputLayout firstNameContainer;
+    CustomTextInputLayout firstNameContainer;
     @InjectView(R.id.last_nameEdit)
     EditText lastNameEdit;
     @InjectView(R.id.lastName_container)
-    TextInputLayout lastNameContainer;
+    CustomTextInputLayout lastNameContainer;
     @InjectView(R.id.email_idEdit)
     EditText emailIdEdit;
     @InjectView(R.id.emailid_container)
-    TextInputLayout emailidContainer;
+    CustomTextInputLayout emailidContainer;
     @InjectView(R.id.national_idEdit)
     EditText nationalIdEdit;
     @InjectView(R.id.nationalId_container)
-    TextInputLayout nationalIdContainer;
+    CustomTextInputLayout nationalIdContainer;
     @InjectView(R.id.date_of_birthEdit)
     EditText dateOfBirthEdit;
     @InjectView(R.id.dateOfBirth_container)
-    TextInputLayout dateOfBirthContainer;
+    CustomTextInputLayout dateOfBirthContainer;
     @InjectView(R.id.submitButton)
-    Button signUpBtn;
-    @InjectView(R.id.skipButton)
-    Button skipButton;
+    Button submitButton;
     @InjectView(R.id.submitRippleView)
     RippleView submitRippleView;
-    ProfileUpdateApi profileUpdateApi;
-    MaterialDialog otpDialog, successSignupDialog, errorDialog;
     private String android_id;
     PreferenceManager preferenceManager;
     private MaterialDialog sessionDialog;
@@ -76,6 +91,29 @@ public class ProfileUpdateActivity extends Activity {
             @Override
             public void onComplete(RippleView rippleView) {
                 submitClick();
+            }
+        });
+        skipRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                skipClick();
+            }
+        });
+        dateOfBirthEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar now = Calendar.getInstance();
+                DatePickerDialog dpd = DatePickerDialog.newInstance(
+                        ProfileUpdateActivity.this,
+                        now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH)
+                );
+                dpd.setThemeDark(false);
+                dpd.setMaxDate(now);
+                dpd.vibrate(true);
+                dpd.dismissOnPause(true);
+                dpd.show(getFragmentManager(), "Datepickerdialog");
             }
         });
     }
@@ -99,7 +137,9 @@ public class ProfileUpdateActivity extends Activity {
                 emailIdEdit.requestFocus();
             }
             innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
-            innerObject.put("DOB", dateOfBirthEdit.getText().toString());
+            String dobText = dateOfBirthEdit.getText().toString();
+            dobText = dobText.replace("/", "");
+            innerObject.put("DOB", dobText);
             innerObject.put("IDNO", nationalIdEdit.getText().toString());
             innerObject.put("TYPE", "PRFLUPDATE");
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
@@ -161,7 +201,6 @@ public class ProfileUpdateActivity extends Activity {
         }
     }
 
-    @OnClick(R.id.skipButton)
     void skipClick() {
         startActivity(new Intent(ProfileUpdateActivity.this, HomeActivity.class));
 
@@ -171,7 +210,14 @@ public class ProfileUpdateActivity extends Activity {
         if (target == null) {
             return false;
         } else {
-            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+            return Patterns.EMAIL_ADDRESS.matcher(target).matches();
         }
+    }
+
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        String date = dayOfMonth + "/" + (++monthOfYear) + "/" + year;
+        dateOfBirthEdit.setText(date);
     }
 }

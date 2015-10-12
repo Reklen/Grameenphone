@@ -1,5 +1,6 @@
 package com.cc.grameenphone.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -61,6 +62,9 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
     ListView associationList;
     private String android_id;
     private PreferenceManager preferenceManager;
+    private MaterialDialog errorDialog;
+    private ProgressDialog loadingDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +88,8 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
 
     private void init() {
         list = new ArrayList<>();
+        loadingDialog = new ProgressDialog(CancelAssociationActivity.this);
+
         android_id = Settings.Secure.getString(CancelAssociationActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         preferenceManager = new PreferenceManager(CancelAssociationActivity.this);
@@ -134,12 +140,17 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
 
     @Override
     public void onBtnClick(int position) {
+
         final AssociationBillModel model = adapter.getItem(position);
         cancelDialog = new MaterialDialog(CancelAssociationActivity.this);
         cancelDialog.setMessage("Remove Acc. No: " + model.getACCNUM() + " from " + model.getCOMPCODE() + " association ?");
         cancelDialog.setPositiveButton("Remove", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                loadingDialog.setMessage("Cancelling association " + model.getACCNUM() + " from " + model.getCOMPCODE());
+                loadingDialog.show();
+
                 try {
                     JSONObject jsonObject = new JSONObject();
                     JSONObject innerObject = new JSONObject();
@@ -155,21 +166,38 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
                     getAssociationApi.cancelAssociation(jsonObject, new Callback<CancelAssociationModel>() {
                         @Override
                         public void success(final CancelAssociationModel cancelAssociationModel, Response response) {
+                            loadingDialog.cancel();
+                            if (cancelAssociationModel.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
+                                removeDialog = new MaterialDialog(CancelAssociationActivity.this);
+                                removeDialog.setMessage(cancelAssociationModel.getCommand().getMESSAGE());
+                                removeDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        removeDialog.dismiss();
 
-                            removeDialog = new MaterialDialog(CancelAssociationActivity.this);
-                            removeDialog.setMessage(cancelAssociationModel.getCommand().getMESSAGE());
-                            removeDialog.setPositiveButton("Ok", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    removeDialog.dismiss();
-                                    if (cancelAssociationModel.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
                                         startActivity(new Intent(CancelAssociationActivity.this, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                         finish();
+
+
                                     }
 
-                                }
-                            });
-                            removeDialog.show();
+                                });
+
+                                removeDialog.show();
+                            } else
+
+                            {
+                                errorDialog = new MaterialDialog(CancelAssociationActivity.this);
+                                errorDialog.setMessage(cancelAssociationModel.getCommand().getMESSAGE());
+                                errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        errorDialog.dismiss();
+                                    }
+                                });
+                                errorDialog.setCanceledOnTouchOutside(true);
+                                errorDialog.show();
+                            }
                         }
 
                         @Override

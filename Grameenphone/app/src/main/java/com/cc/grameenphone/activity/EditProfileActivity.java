@@ -18,9 +18,13 @@ import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.ProfileUpdateApi;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Calendar;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -31,7 +35,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class EditProfileActivity extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity implements OnDateSetListener {
 
 
     @InjectView(R.id.button)
@@ -66,6 +70,7 @@ public class EditProfileActivity extends AppCompatActivity {
     ProfileUpdateApi profileDisplay, profileUpdateApi;
     String email, fName, lName, dateOfBirth, nationId;
     ProgressDialog loadingDialog;
+    ProfileModel profileModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,55 +83,90 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void displayProfile() {
         //TODO Implement fetching profile data
-        loadingDialog = new ProgressDialog(EditProfileActivity.this);
-        loadingDialog.setMessage("Loading companies..");
-        loadingDialog.show();
+        getIntentExtras();
         preferenceManager = new PreferenceManager(EditProfileActivity.this);
         android_id = Settings.Secure.getString(EditProfileActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         profileDisplay = ServiceGenerator.createService(ProfileUpdateApi.class);
+
+        dob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar now = Calendar.getInstance();
+                DatePickerDialog dpd = DatePickerDialog.newInstance(
+                        EditProfileActivity.this,
+                        now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH)
+                );
+                dpd.setThemeDark(false);
+                dpd.setMaxDate(now);
+                dpd.vibrate(true);
+                dpd.dismissOnPause(true);
+                dpd.show(getFragmentManager(), "Datepickerdialog");
+            }
+        });
+
+    }
+
+    private void getIntentExtras() {
+        Bundle b = getIntent().getExtras();
+
         try {
-            JSONObject jsonObject = new JSONObject();
-            JSONObject innerObject = new JSONObject();
-            innerObject.put("DEVICEID", android_id);
-            innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
-            innerObject.put("TYPE", "SUBDATAREQ");
-            jsonObject.put("COMMAND", innerObject);
-            Logger.d("Profile Fetch Data", jsonObject.toString());
-            profileDisplay.profile(jsonObject, new Callback<ProfileModel>() {
-                @Override
-                public void success(ProfileModel profileModel, Response response) {
-                    if (profileModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
-                        Logger.d("Profile Success" + profileModel.toString());
-                        firstName.setText("" + profileModel.getCOMMAND().getFNAME());
-                        fName = profileModel.getCOMMAND().getFNAME();
-                        lastName.setText("" + profileModel.getCOMMAND().getLNAME());
-                        lName = profileModel.getCOMMAND().getLNAME();
-                        emailName.setText("" + profileModel.getCOMMAND().getEMAIL());
-                        email = profileModel.getCOMMAND().getEMAIL().toString();
-                        nationalId.setText("" + profileModel.getCOMMAND().getIDNO());
-                        nationId = profileModel.getCOMMAND().getIDNO();
-                        dob.setText("" + profileModel.getCOMMAND().getDOB());
-                        dateOfBirth = profileModel.getCOMMAND().getDOB();
-
-                    } else {
-
-                        //Dont know
-                        Logger.d("Profile fetch failed");
-                    }
-                    loadingDialog.dismiss();
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    Logger.d("Retrofit failure" + error.getMessage());
-                }
-            });
-        } catch (JSONException e) {
+            profileModel = (ProfileModel) b.get("profileObj");
+            firstName.setText("" + profileModel.getCOMMAND().getFNAME());
+            fName = profileModel.getCOMMAND().getFNAME();
+            lastName.setText("" + profileModel.getCOMMAND().getLNAME());
+            lName = profileModel.getCOMMAND().getLNAME();
+            emailName.setText("" + profileModel.getCOMMAND().getEMAIL());
+            email = profileModel.getCOMMAND().getEMAIL().toString();
+            nationalId.setText("" + profileModel.getCOMMAND().getIDNO());
+            nationId = profileModel.getCOMMAND().getIDNO();
+            dob.setText("" + profileModel.getCOMMAND().getDOB());
+            dateOfBirth = profileModel.getCOMMAND().getDOB();
+        } catch (Exception e) {
             e.printStackTrace();
-        }
+            try {
+                JSONObject jsonObject = new JSONObject();
+                JSONObject innerObject = new JSONObject();
+                innerObject.put("DEVICEID", android_id);
+                innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+                innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+                innerObject.put("TYPE", "SUBDATAREQ");
+                jsonObject.put("COMMAND", innerObject);
+                Logger.d("Profile Fetch Data", jsonObject.toString());
+                profileDisplay.profile(jsonObject, new Callback<ProfileModel>() {
+                    @Override
+                    public void success(ProfileModel profileModel, Response response) {
+                        if (profileModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                            Logger.d("Profile Success" + profileModel.toString());
+                            firstName.setText("" + profileModel.getCOMMAND().getFNAME());
+                            fName = profileModel.getCOMMAND().getFNAME();
+                            lastName.setText("" + profileModel.getCOMMAND().getLNAME());
+                            lName = profileModel.getCOMMAND().getLNAME();
+                            emailName.setText("" + profileModel.getCOMMAND().getEMAIL());
+                            email = profileModel.getCOMMAND().getEMAIL().toString();
+                            nationalId.setText("" + profileModel.getCOMMAND().getIDNO());
+                            nationId = profileModel.getCOMMAND().getIDNO();
+                            dob.setText("" + profileModel.getCOMMAND().getDOB());
+                            dateOfBirth = profileModel.getCOMMAND().getDOB();
+                        } else {
+                            //Dont know
+                            Logger.d("Profile fetch failed");
+                        }
 
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Logger.d("Retrofit failure" + error.getMessage());
+                    }
+                });
+
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 
     public final static boolean isValidEmail(CharSequence target) {
@@ -147,6 +187,9 @@ public class EditProfileActivity extends AppCompatActivity {
 
         profileUpdateApi = ServiceGenerator.createService(ProfileUpdateApi.class);
         if (emailName.getText().toString() != email) {
+            fName = firstName.getText().toString();
+            lName = lastName.getText().toString();
+            nationId = nationalId.getText().toString();
             try {
                 JSONObject jsonObject = new JSONObject();
                 JSONObject innerObject = new JSONObject();
@@ -158,9 +201,12 @@ public class EditProfileActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, "Invalid email id", Toast.LENGTH_LONG).show();
                     emailName.requestFocus();
+                    return;
                 }
                 innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
-                innerObject.put("DOB", dateOfBirth);
+                String dobText = dob.getText().toString();
+                dobText = dobText.replace("/", "");
+                innerObject.put("DOB", dobText);
                 innerObject.put("IDNO", nationId);
                 innerObject.put("TYPE", "PRFLUPDATE");
                 innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
@@ -183,7 +229,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 }
                             });
                             successDialog.show();
-                        } else  {
+                        } else {
                             errorDialog = new MaterialDialog(EditProfileActivity.this);
                             errorDialog.setMessage(profileUpdateModel.getCommand().getMESSAGE());
                             errorDialog.setPositiveButton("OK", new View.OnClickListener() {
@@ -221,5 +267,17 @@ public class EditProfileActivity extends AppCompatActivity {
             });
             errorDialog.show();
         }
+    }
+
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        String date;
+        if (dayOfMonth < 10)
+            date = "0" + dayOfMonth + "/" + (++monthOfYear) + "/" + year;
+        else
+            date = dayOfMonth + "/" + (++monthOfYear) + "/" + year;
+
+        dob.setText(date);
     }
 }

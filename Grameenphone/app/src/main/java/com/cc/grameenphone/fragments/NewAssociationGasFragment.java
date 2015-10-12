@@ -24,7 +24,6 @@ import com.cc.grameenphone.api_models.BillConfirmationModel;
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.AddAssociationApi;
-import com.cc.grameenphone.interfaces.OtherPaymentApi;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
 import com.cc.grameenphone.views.RippleView;
@@ -179,9 +178,9 @@ public class NewAssociationGasFragment extends BaseTabFragment implements Valida
             for (int i = 0; i < numberOfCompany; i++) {
                 rb[i] = new RadioButton(getActivity());
                 rg.addView(rb[i], layoutParams);
-                rb[i].setPadding(padding, padding, 0, padding);
+              /*  rb[i].setPadding(padding, padding, 0, padding);
                 rb[i].setCompoundDrawablePadding(compoundDrawablePadding);
-                rb[i].setTextSize(15);
+                rb[i].setTextSize(15);*/
                 rb[i].setAllCaps(true);
                 rb[i].setTextColor(getActivity().getResources().getColor(R.color.black_semi_transparent));
                 rb[i].setText(companyList.get(i).getCOMPNAME());

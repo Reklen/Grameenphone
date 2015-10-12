@@ -127,6 +127,7 @@ da, orci magna rhoncus neque id pulvinar odio\n
 lorem non turpis. Nullam sit amet enim</string>
     <string name="title_activity_quickpay">QuickpayActivity</string>
     <string name="title_activity_ansbvs">ANSBVS</string>
+    <string name="crash">App has crashed , please share the crash logs with the developer.</string>
 
 
 </resources>

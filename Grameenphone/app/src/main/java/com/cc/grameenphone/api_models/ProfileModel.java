@@ -2,10 +2,12 @@ package com.cc.grameenphone.api_models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by rajkiran on 23/09/15.
  */
-public class ProfileModel {
+public class ProfileModel implements Serializable {
     @SerializedName("COMMAND")
     private ProfileCommandModel COMMAND;
 

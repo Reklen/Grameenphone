@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:editable="false"
-            android:text="John"
+            android:hint="First Name"
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color" />
 
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:editable="false"
-            android:text="Doe"
+            android:hint="Last Name"
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color" />
     </com.cc.grameenphone.views.CustomTextInputLayout>
@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:editable="false"
-            android:text="john.doe@example.com"
+            android:hint="Email"
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color" />
 
@@ -82,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:editable="false"
-            android:text="28484848859"
+            android:hint="National Id"
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color" />
     </com.cc.grameenphone.views.CustomTextInputLayout>
@@ -101,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:editable="false"
-            android:text="29-02-1990"
+            android:hint="Date of Birth"
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color" />
     </com.cc.grameenphone.views.CustomTextInputLayout>

@@ -82,6 +82,7 @@ public class NewAssociationActivity extends AppCompatActivity {
         loadingDialog = new ProgressDialog(NewAssociationActivity.this);
         loadingDialog.setMessage("Fetching list..");
         loadingDialog.show();
+        Logger.d("Pref Check", preferenceManager.getCompaniesSavedFlag() + "");
         if (preferenceManager.getCompaniesSavedFlag()) {
 
             loadingDialog.dismiss();
@@ -95,6 +96,8 @@ public class NewAssociationActivity extends AppCompatActivity {
 
     private void getOtherPaymentCompanies() {
         otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
+        android_id = Settings.Secure.getString(NewAssociationActivity.this.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
         try {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
@@ -144,7 +147,7 @@ public class NewAssociationActivity extends AppCompatActivity {
         toolbarText.setText("New Association");
         newAssociationAdapter = new NewAssociationAdapter(getSupportFragmentManager(), titles, numOfTabs, 1);
 
-        fetchList();
+        //fetchList();
         backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {

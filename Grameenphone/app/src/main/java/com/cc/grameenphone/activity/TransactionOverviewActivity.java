@@ -111,58 +111,82 @@ public class TransactionOverviewActivity extends AppCompatActivity {
             jsonObject.put("COMMAND", innerObject);
             Logger.d("sending json", jsonObject.toString());
             transactionOverviewApi.fetchStatements(jsonObject, new Callback<TransactionOverviewModel>() {
-                @Override
-                public void success(TransactionOverviewModel transactionOverviewModel, Response response) {
-                    Logger.d("TransactionOverview", transactionOverviewModel.toString());
-                    if (transactionOverviewModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
-                        listItemsList.clear();
-                        listItemsList.addAll(transactionOverviewModel.getCOMMAND().getDATA());
-                        mapValues(transactionOverviewModel);
-                        adapter.notifyDataSetChanged();
-                        loadingDialog.cancel();
-                    } else if (transactionOverviewModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA903")) {
-                        loadingDialog.cancel();
-                        errorDialog = new MaterialDialog(TransactionOverviewActivity.this);
-                        errorDialog.setMessage(transactionOverviewModel.getCOMMAND().getMESSAGE() + "");
-                        errorDialog.setPositiveButton("OK", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                errorDialog.dismiss();
-                            }
-                        });
-                        errorDialog.show();
-                    } else if (transactionOverviewModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
-                        Logger.d("Balance", transactionOverviewModel.toString());
-                        loadingDialog.cancel();
-                        sessionDialog = new MaterialDialog(TransactionOverviewActivity.this);
-                        sessionDialog.setMessage("Session expired , please login again");
-                        sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                SessionClearTask sessionClearTask = new SessionClearTask(TransactionOverviewActivity.this, false);
-                                sessionClearTask.execute();
+                        @Override
+                        public void success(TransactionOverviewModel transactionOverviewModel, Response response) {
+                            Logger.d("TransactionOverview", transactionOverviewModel.toString());
+                            if (transactionOverviewModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                                listItemsList.clear();
+                                for (TransactionOverviewData modelData : transactionOverviewModel.getCOMMAND().getDATA()) {
+                                    if (!modelData.getTXNAMT().equalsIgnoreCase("null")) {
+                                        listItemsList.add(modelData);
+                                    }
+                                }
 
+                                mapValues(transactionOverviewModel);
+                                adapter.notifyDataSetChanged();
+                                loadingDialog.cancel();
+                            } else if (transactionOverviewModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA903")) {
+                                loadingDialog.cancel();
+                                errorDialog = new MaterialDialog(TransactionOverviewActivity.this);
+                                errorDialog.setMessage(transactionOverviewModel.getCOMMAND().getMESSAGE() + "");
+                                errorDialog.setPositiveButton("OK", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        errorDialog.dismiss();
+                                    }
+                                });
+                                errorDialog.show();
+                            } else if (transactionOverviewModel.getCOMMAND().
+
+                                    getTXNSTATUS()
+
+                                    .
+
+                                            equalsIgnoreCase("MA907")
+
+                                    )
+
+                            {
+                                Logger.d("Balance", transactionOverviewModel.toString());
+                                loadingDialog.cancel();
+                                sessionDialog = new MaterialDialog(TransactionOverviewActivity.this);
+                                sessionDialog.setMessage("Session expired , please login again");
+                                sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        SessionClearTask sessionClearTask = new SessionClearTask(TransactionOverviewActivity.this, false);
+                                        sessionClearTask.execute();
+
+                                    }
+                                });
+                                sessionDialog.setCanceledOnTouchOutside(false);
+                                sessionDialog.show();
+                            } else
+
+                            {
+                                Logger.e("Error", transactionOverviewModel.toString());
                             }
-                        });
-                        sessionDialog.setCanceledOnTouchOutside(false);
-                        sessionDialog.show();
-                    } else {
-                        Logger.e("Error", transactionOverviewModel.toString());
+
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            Logger.e("TO", error.getMessage() + "");
+                            Toast.makeText(TransactionOverviewActivity.this, "Some Error Occured", Toast.LENGTH_SHORT).show();
+
+                            loadingDialog.cancel();
+                        }
                     }
 
-                }
+            );
+        } catch (
+                JSONException e
+                )
 
-                @Override
-                public void failure(RetrofitError error) {
-                    Logger.e("TO", error.getMessage() + "");
-                    Toast.makeText(TransactionOverviewActivity.this, "Some Error Occured", Toast.LENGTH_SHORT).show();
-
-                    loadingDialog.cancel();
-                }
-            });
-        } catch (JSONException e) {
+        {
             e.printStackTrace();
         }
+
     }
 
     private void mapValues(TransactionOverviewModel transactionOverviewModel) {

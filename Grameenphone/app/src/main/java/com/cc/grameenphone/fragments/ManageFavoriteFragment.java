@@ -41,9 +41,17 @@ public class ManageFavoriteFragment extends Fragment {
     FloatingActionButton addBtn;
     ManageFavAdapter adapter;
     List<ContactModel> contactModelList;
+    private boolean isHome;
 
     public ManageFavoriteFragment() {
         // Required empty public constructor
+    }
+
+
+    public static ManageFavoriteFragment newInstance(Bundle b) {
+        ManageFavoriteFragment fragment = new ManageFavoriteFragment();
+        fragment.setArguments(b);
+        return fragment;
     }
 
     @Override
@@ -56,7 +64,7 @@ public class ManageFavoriteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_manage_favs, container, false);
-
+        handleArguments();
         final SwipeMenuListView listView = (SwipeMenuListView) rootView.findViewById(R.id.transactionList);
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -128,15 +136,30 @@ public class ManageFavoriteFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent d = new Intent();
-                d.putExtra(Constants.RETURN_RESULT, adapter.getItem(i).getNumber());
-                getActivity().setResult(getActivity().RESULT_OK, d);
-                getActivity().finish();
+                if (!isHome) {
+                    Intent d = new Intent();
+                    d.putExtra(Constants.RETURN_RESULT, adapter.getItem(i).getNumber());
+                    getActivity().setResult(getActivity().RESULT_OK, d);
+                    getActivity().finish();
+                }
             }
         });
         fetchList();
 
         return rootView;
+    }
+
+    private void handleArguments() {
+        Bundle b;
+        try {
+            b = getArguments();
+            Logger.d("argu", b.toString());
+            isHome = getArguments().getBoolean("isHome");
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
     }
 
     public void getFilterContacts(String searchText) {

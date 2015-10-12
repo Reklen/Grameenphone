@@ -4,12 +4,12 @@
     android:id="@+id/toolbar_widget"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/primary"
     android:contentInsetLeft="0dp"
     android:contentInsetStart="0dp"
     android:minHeight="?attr/actionBarSize"
     app:contentInsetLeft="0dp"
-    app:contentInsetStart="0dp"
-    android:background="@color/primary">
+    app:contentInsetStart="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,11 +20,10 @@
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/vertical_view"
             android:layout_centerVertical="true"
-            android:background="@null"
             android:layout_marginRight="5dp"
-            android:textSize="16sp"
+            android:layout_toLeftOf="@+id/vertical_view"
+            android:background="@null"
             android:drawableLeft="@drawable/icon_cancel"
             android:text="CANCEL"
             android:textColor="@color/white" />
@@ -45,7 +44,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:textSize="16sp"
             android:layout_marginRight="16dp"
             android:background="@null"
             android:drawableLeft="@drawable/icon_done"

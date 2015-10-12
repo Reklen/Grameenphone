@@ -3,7 +3,7 @@
     android:id="@+id/transactionToolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/blue_900"
+    android:background="@color/primary"
     android:contentInsetLeft="0dp"
     android:contentInsetStart="0dp"
     android:minHeight="?attr/actionBarSize"
