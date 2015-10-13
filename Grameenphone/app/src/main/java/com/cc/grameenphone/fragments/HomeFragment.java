@@ -424,8 +424,15 @@ public class HomeFragment extends Fragment {
                             buttonOk.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
+                                    loadingDialog.cancel();
                                     materialDialog.dismiss();
+                                    otherFlexi = false;
+                                    phoneNumberEditText.setText("" + preferenceManager.getMSISDN());
+                                    phoneNumberEditText.setInputType(0x00000000);
+                                    phoneNumberEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                                    otherFlex.setVisibility(View.VISIBLE);
                                     editamt.setText("৳ 50");
+                                    Logger.d("WalletCheck ", "again 1");
                                     mCallback.fetchBalanceAgain();
                                 }
                             });
@@ -517,8 +524,15 @@ public class HomeFragment extends Fragment {
                             buttonOk.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
+                                    loadingDialog.cancel();
                                     materialDialog.dismiss();
+                                    otherFlexi = false;
+                                    phoneNumberEditText.setText("" + preferenceManager.getMSISDN());
+                                    phoneNumberEditText.setInputType(0x00000000);
+                                    phoneNumberEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                                    otherFlex.setVisibility(View.VISIBLE);
                                     editamt.setText("৳ 50");
+                                    Logger.d("WalletCheck ", "again 1");
                                     mCallback.fetchBalanceAgain();
                                 }
                             });
@@ -587,10 +601,15 @@ public class HomeFragment extends Fragment {
                         buttonOk.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                loadingDialog.cancel();
                                 materialDialog.dismiss();
                                 otherFlexi = false;
-                                phoneNumberEditText.setText("");
+                                phoneNumberEditText.setText("" + preferenceManager.getMSISDN());
+                                phoneNumberEditText.setInputType(0x00000000);
+                                phoneNumberEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                                otherFlex.setVisibility(View.VISIBLE);
                                 editamt.setText("৳ 50");
+                                Logger.d("WalletCheck ", "again 1");
                                 mCallback.fetchBalanceAgain();
                             }
                         });
