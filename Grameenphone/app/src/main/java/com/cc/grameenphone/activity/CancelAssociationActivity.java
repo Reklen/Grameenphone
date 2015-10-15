@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -97,6 +99,11 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
 
         adapter = new CancelAssociationAdapter(this, list, this);
         associationList.setAdapter(adapter);
+        ViewGroup parentGroup = (ViewGroup) associationList.getParent();
+        View emptyView = LayoutInflater.from(CancelAssociationActivity.this).inflate(R.layout.empty_list, parentGroup, false);
+        ((TextView) emptyView.findViewById(R.id.textView)).setText("No Associated accounts found");
+        parentGroup.addView(emptyView);
+        associationList.setEmptyView(emptyView);
         try {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
@@ -111,8 +118,10 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
                 public void success(AssociationModel associationModel, Response response) {
                     if (associationModel.getCommandModel().getTXNSTATUS().equalsIgnoreCase("200")) {
                         list.clear();
-                        list.addAll(associationModel.getCommandModel().getBILLDEL());
-                        adapter.notifyDataSetChanged();
+                        if (associationModel.getCommandModel().getBILLDEL() != null) {
+                            list.addAll(associationModel.getCommandModel().getBILLDEL());
+                            adapter.notifyDataSetChanged();
+                        }
                     } else {
                         Logger.e("CancelAssociation", associationModel.getCommandModel().getTXNSTATUS().toString() + "");
                     }

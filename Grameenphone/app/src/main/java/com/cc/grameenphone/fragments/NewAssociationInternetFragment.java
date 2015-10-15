@@ -237,6 +237,7 @@ public class NewAssociationInternetFragment extends BaseTabFragment implements V
             @Override
             public void onClick(View v) {
                 if (pinConfirmationET.getText().toString().length() != 4) {
+                    pinConfirmationET.requestFocus();
                     pinConfirmationET.setError("Enter your valid pin");
                     return;
                 }

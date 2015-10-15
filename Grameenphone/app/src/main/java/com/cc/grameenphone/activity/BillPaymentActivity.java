@@ -258,6 +258,16 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                 selectedPayConfirmationDialog.dismiss();
                 loadingDialog.cancel();
                 fetchBills();
+                selectedPaymentButton.setText("PAY SELECTED BILLS");
+                listViewAdapter.togglePayButton(true);
+                selectedPayRippleView.setVisibility(View.GONE);
+                quickPayRippleView.setVisibility(View.VISIBLE);
+                multiBillsCheckBox.setVisibility(View.GONE);
+                multiBillListModelList.clear();
+                billsSelectedList.clear();
+                multiBillsCheckBox.setChecked(false);
+                billsbar.setText("My Pending bills");
+                otherPayRippleView.setVisibility(View.VISIBLE);
             }
         });
 
@@ -269,11 +279,13 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         pinConfirmDialog.setPositiveButton("CONFIRM", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingDialog.show();
+
                 if (pinConfirmationET.getText().toString().length() != 4) {
+                    pinConfirmationET.requestFocus();
                     pinConfirmationET.setError("Enter your valid pin");
                     return;
                 }
+                loadingDialog.show();
                 String pin = pinConfirmationET.getText().toString();
                 pinConfirmDialog.dismiss();
                 KeyboardUtil.hideKeyboard(BillPaymentActivity.this);
@@ -369,6 +381,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                 Logger.d("bills test ", "clicked on " + view.getId() + "");
                 CheckBox checkBox = (CheckBox) view.findViewById(R.id.billCheckBox);
                 UserBillsModel userBillsModel = (UserBillsModel) listViewAdapter.getItem(position);
+                Logger.d("bills test ", "clicked on " + position + " " + billsSelectedList.toString());
                 if (billsSelectedList.contains(position + "")) {
                     billsSelectedList.remove(position + "");
                     checkBox.setChecked(false);

@@ -145,6 +145,7 @@ public class HomeFragment extends Fragment {
     boolean otherFlexi = false;
     private WalletBalanceInterface mCallback;
 
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -239,6 +240,7 @@ public class HomeFragment extends Fragment {
         suggestionModelList = new ArrayList<>();
 
         completeAdapter = new AutoCompleteAdapter(getActivity(), suggestionModelList);
+
         phoneNumberEditText.setAdapter(completeAdapter);
 
 
@@ -351,6 +353,11 @@ public class HomeFragment extends Fragment {
         rechargeApi = ServiceGenerator.createService(RechargeApi.class);
         if (phoneNumberEditText.getText().toString().length() == 0) {
             phoneNumberEditText.setError("Enter a valid number");
+            phoneNumberEditText.requestFocus();
+            return;
+        } else if (phoneNumberEditText.getText().toString().length() < 8) {
+            phoneNumberEditText.setError("Enter a valid number");
+            phoneNumberEditText.requestFocus();
             return;
         } else {
             phoneNumberEditText.setError(null);
@@ -377,6 +384,7 @@ public class HomeFragment extends Fragment {
                 public void onClick(View v) {
                     if (pinConfirmationET.getText().toString().length() != 4) {
                         pinConfirmationET.setError("Enter your valid pin");
+                        pinConfirmationET.requestFocus();
                         return;
                     }
 

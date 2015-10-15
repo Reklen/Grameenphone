@@ -24,6 +24,7 @@ import com.cc.grameenphone.api_models.BillConfirmationModel;
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.AddAssociationApi;
+import com.cc.grameenphone.utils.KeyboardUtil;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
 import com.cc.grameenphone.views.RippleView;
@@ -234,7 +235,15 @@ public class NewAssociationGasFragment extends BaseTabFragment implements Valida
         pinConfirmDialog.setPositiveButton("CONFIRM", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onSubmitClick();
+                if (pinConfirmationET.getText().toString().length() != 4) {
+                    pinConfirmationET.requestFocus();
+                    pinConfirmationET.setError("Enter your valid pin");
+                    return;
+                }
+                String pin = pinConfirmationET.getText().toString();
+                pinConfirmDialog.dismiss();
+                KeyboardUtil.hideKeyboard(getActivity());
+                onSubmitClick(pin);
                 pinConfirmDialog.dismiss();
 
             }
@@ -243,7 +252,7 @@ public class NewAssociationGasFragment extends BaseTabFragment implements Valida
     }
 
 
-    void onSubmitClick() {
+    void onSubmitClick(String pin) {
         //TODO Submitting amount, surcharge amount
 
         preferenceManager = new PreferenceManager(getActivity());

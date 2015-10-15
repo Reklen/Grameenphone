@@ -239,6 +239,7 @@ public class NewAssociationInsuranceFragment extends BaseTabFragment implements 
             @Override
             public void onClick(View v) {
                 if (pinConfirmationET.getText().toString().length() != 4) {
+                    pinConfirmationET.requestFocus();
                     pinConfirmationET.setError("Enter your valid pin");
                     return;
                 }
