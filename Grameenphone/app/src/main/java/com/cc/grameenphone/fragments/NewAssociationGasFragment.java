@@ -49,7 +49,7 @@ import retrofit.client.Response;
 /**
  * Created by rajkiran on 21/09/15.
  */
-public class NewAssociationGasFragment extends BaseTabFragment implements Validator.ValidationListener{
+public class NewAssociationGasFragment extends BaseTabFragment implements Validator.ValidationListener {
 
     @InjectView(R.id.customRadioGroupLayout)
     LinearLayout custodialRadiogroup;
@@ -86,6 +86,7 @@ public class NewAssociationGasFragment extends BaseTabFragment implements Valida
     EditText pinConfirmationET;
     MaterialDialog pinConfirmDialog;
     Validator validator;
+
     public static NewAssociationGasFragment newInstance(Bundle b) {
         NewAssociationGasFragment gasTabFragment = new NewAssociationGasFragment();
         gasTabFragment.setArguments(b);
@@ -243,7 +244,7 @@ public class NewAssociationGasFragment extends BaseTabFragment implements Valida
                 String pin = pinConfirmationET.getText().toString();
                 pinConfirmDialog.dismiss();
                 KeyboardUtil.hideKeyboard(getActivity());
-                onSubmitClick(pin);
+                onSubmitClick();
                 pinConfirmDialog.dismiss();
 
             }
@@ -252,7 +253,7 @@ public class NewAssociationGasFragment extends BaseTabFragment implements Valida
     }
 
 
-    void onSubmitClick(String pin) {
+    void onSubmitClick() {
         //TODO Submitting amount, surcharge amount
 
         preferenceManager = new PreferenceManager(getActivity());
@@ -320,12 +321,14 @@ public class NewAssociationGasFragment extends BaseTabFragment implements Valida
 
     @Override
     public void onValidationSucceeded() {
-
-        pinConfirmation();
+        KeyboardUtil.hideKeyboard(getActivity());
+        onSubmitClick();
+        //pinConfirmation();
     }
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
+        KeyboardUtil.hideKeyboard(getActivity());
         for (ValidationError error : errors) {
             View view = error.getView();
             String message = error.getCollatedErrorMessage(getActivity());

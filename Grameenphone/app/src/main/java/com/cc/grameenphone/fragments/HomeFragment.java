@@ -350,6 +350,9 @@ public class HomeFragment extends Fragment {
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         KeyboardUtil.hideKeyboard(getActivity());
+        String str = phoneNumberEditText.getText().toString();
+        str = str.replace(" ", "");
+        phoneNumberEditText.setText(str);
         rechargeApi = ServiceGenerator.createService(RechargeApi.class);
         if (phoneNumberEditText.getText().toString().length() == 0) {
             phoneNumberEditText.setError("Enter a valid number");
@@ -395,11 +398,33 @@ public class HomeFragment extends Fragment {
                     flexiLoadOtherPrepaid(pin);
                 }
             });
-            pinConfirmDialog.show();
+            if (!(editamt.getText().toString().length() > 2)) {
+                editamt.setError("Enter Amount");
+                editamt.requestFocus();
+                return;
+
+            }
+            if (phoneNumberEditText.getText().toString().equalsIgnoreCase(preferenceManager.getMSISDN())) {
+                phoneNumberEditText.setText("");
+                phoneNumberEditText.setError("You have entered your phone number, please select a different number");
+                return;
+            } else {
+                pinConfirmDialog.show();
+                Logger.d("Pinnny", phoneNumberEditText.getText().toString() + " " + preferenceManager.getMSISDN());
+
+            }
+
 
         } else if ((prepaidOption.isChecked()) && (otherFlexi == false)) {
             //TODO implement prepaid for self
             loadingDialog.show();
+            if (!(editamt.getText().toString().length() > 2)) {
+                editamt.setError("Enter Amount");
+                editamt.requestFocus();
+                loadingDialog.dismiss();
+                return;
+
+            }
             try {
                 JSONObject jsonObject = new JSONObject();
                 JSONObject innerObject = new JSONObject();
@@ -494,12 +519,34 @@ public class HomeFragment extends Fragment {
                     flexiLoadOtherPostpaid(pin);
                 }
             });
-            pinConfirmDialog.show();
+            if (!(editamt.getText().toString().length() > 2)) {
+                editamt.setError("Enter Amount");
+                editamt.requestFocus();
+                return;
+
+            }
+
+            if (phoneNumberEditText.getText().toString().equalsIgnoreCase(preferenceManager.getMSISDN())) {
+                phoneNumberEditText.setText("");
+                phoneNumberEditText.setError("You have entered your phone number, please select a different number");
+                return;
+            } else {
+                pinConfirmDialog.show();
+                Logger.d("Pinnny", phoneNumberEditText.getText().toString() + " " + preferenceManager.getMSISDN());
+
+            }
 
 
         } else if ((postpaidOption.isChecked()) && (otherFlexi == false)) {
             //TODO implement self postpaid recharge
             loadingDialog.show();
+            if (!(editamt.getText().toString().length() > 2)) {
+                editamt.setError("Enter Amount");
+                editamt.requestFocus();
+                loadingDialog.dismiss();
+                return;
+
+            }
             try {
                 JSONObject jsonObject = new JSONObject();
                 JSONObject innerObject = new JSONObject();
@@ -697,6 +744,7 @@ public class HomeFragment extends Fragment {
                                 otherFlex.setVisibility(View.VISIBLE);
                                 editamt.setText("৳ 50");
                                 Logger.d("WalletCheck ", "again 1");
+
                                 mCallback.fetchBalanceAgain();
                             }
                         });

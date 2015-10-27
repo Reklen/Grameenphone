@@ -213,6 +213,7 @@ public class OtherPaymentInternetFragment extends BaseTabFragment implements Val
             @Override
             public void onClick(View v) {
                 if (pinConfirmationET.getText().toString().length() != 4) {
+                    pinConfirmationET.requestFocus();
                     pinConfirmationET.setError("Enter your valid pin");
                     return;
                 }
@@ -325,6 +326,7 @@ public class OtherPaymentInternetFragment extends BaseTabFragment implements Val
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
+        KeyboardUtil.hideKeyboard(getActivity());
         for (ValidationError error : errors) {
             View view = error.getView();
             String message = error.getCollatedErrorMessage(getActivity());

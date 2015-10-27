@@ -228,7 +228,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         loadingDialog.setCanceledOnTouchOutside(false);
         loadingDialog.setMessage("Loading , please wait");
 
-        final MaterialDialog selectedPayConfirmationDialog;
+
         selectedPayConfirmationDialog = new MaterialDialog(BillPaymentActivity.this);
         View view = LayoutInflater.from(BillPaymentActivity.this).inflate(R.layout.dialog_multi_bill, null);
         ListView listView = (ListView) view.findViewById(R.id.multiBillsStatusListView);
@@ -350,10 +350,33 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                         });
                         sessionDialog.setCanceledOnTouchOutside(false);
                         sessionDialog.show();
+                    } else if (billPaymentModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("00068")) {
+                        loadingDialog.cancel();
+
+                        selectedPayConfirmationDialog.dismiss();
+                        errorDialog = new MaterialDialog(BillPaymentActivity.this);
+                        errorDialog.setMessage(billPaymentModel.getCOMMAND().getMESSAGE());
+                        errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                errorDialog.dismiss();
+                            }
+                        });
+                        errorDialog.setCanceledOnTouchOutside(true);
+                        errorDialog.show();
                     } else {
                         loadingDialog.cancel();
-                        userBillsModel.setStatus(0);
-                        multiPayDialogListAdapter.notifyDataSetChanged();
+                        selectedPayConfirmationDialog.dismiss();
+                        errorDialog = new MaterialDialog(BillPaymentActivity.this);
+                        errorDialog.setMessage(billPaymentModel.getCOMMAND().getMESSAGE());
+                        errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                errorDialog.dismiss();
+                            }
+                        });
+                        errorDialog.setCanceledOnTouchOutside(true);
+                        errorDialog.show();
                         Logger.e("Balance", billPaymentModel.toString());
                     }
 
@@ -428,6 +451,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                 }*/
             }
         });
+
 
 
         multiBillsCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

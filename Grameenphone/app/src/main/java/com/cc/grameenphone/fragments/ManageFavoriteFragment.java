@@ -25,6 +25,8 @@ import com.cc.grameenphone.utils.Constants;
 import com.cc.grameenphone.utils.Logger;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import co.uk.rushorm.core.RushSearch;
@@ -176,6 +178,12 @@ public class ManageFavoriteFragment extends Fragment {
                     @Override
                     public void complete(List<ContactModel> list) {
                         contactModelList.clear();
+                        Collections.sort(list, new Comparator<ContactModel>() {
+                            @Override
+                            public int compare(ContactModel s1, ContactModel s2) {
+                                return s1.getName().compareToIgnoreCase(s2.getName());
+                            }
+                        });
                         contactModelList.addAll(list);
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -202,5 +210,13 @@ public class ManageFavoriteFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    class Compa implements Comparator<ContactModel> {
+
+        @Override
+        public int compare(ContactModel e1, ContactModel e2) {
+            return e1.getName().compareToIgnoreCase(e2.getName());
+        }
     }
 }

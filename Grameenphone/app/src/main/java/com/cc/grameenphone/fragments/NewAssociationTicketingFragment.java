@@ -242,7 +242,7 @@ public class NewAssociationTicketingFragment extends BaseTabFragment implements 
                 String pin = pinConfirmationET.getText().toString();
                 pinConfirmDialog.dismiss();
                 KeyboardUtil.hideKeyboard(getActivity());
-                onSubmitClick(pin);
+                //onSubmitClick(pin);
                 pinConfirmDialog.dismiss();
 
             }
@@ -251,7 +251,7 @@ public class NewAssociationTicketingFragment extends BaseTabFragment implements 
     }
 
 
-    void onSubmitClick(String pin) {
+    void onSubmitClick() {
         //TODO Submitting amount, surcharge amount
 
         preferenceManager = new PreferenceManager(getActivity());
@@ -319,12 +319,13 @@ public class NewAssociationTicketingFragment extends BaseTabFragment implements 
 
     @Override
     public void onValidationSucceeded() {
-
-        pinConfirmation();
+        KeyboardUtil.hideKeyboard(getActivity());
+        onSubmitClick();
     }
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
+        KeyboardUtil.hideKeyboard(getActivity());
         for (ValidationError error : errors) {
             View view = error.getView();
             String message = error.getCollatedErrorMessage(getActivity());

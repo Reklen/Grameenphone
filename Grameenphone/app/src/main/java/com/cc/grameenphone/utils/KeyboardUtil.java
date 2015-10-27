@@ -2,6 +2,7 @@ package com.cc.grameenphone.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -13,9 +14,11 @@ public class KeyboardUtil {
         try {
             InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            Log.e("KeyBoardUtil","hiddent");
         } catch (Exception e) {
+
             // Ignore exceptions if any
-            //Log.e("KeyBoardUtil", e.toString(), e);
+            Log.e("KeyBoardUtil", e.toString(), e);
         }
     }
 
