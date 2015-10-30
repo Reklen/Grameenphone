@@ -5,7 +5,7 @@ package com.cc.grameenphone.viewmodels;
  */
 public class TransactionItem {
     private String serviceType;
-    private String  serviceAmt;
+    private String serviceAmt;
 
     public void setServiceAmt(String serviceAmt) {
         this.serviceAmt = serviceAmt;

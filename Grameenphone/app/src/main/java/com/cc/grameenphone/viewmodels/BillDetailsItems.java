@@ -7,15 +7,15 @@ public class BillDetailsItems {
 
     private final String accountNumber_String = "Acc. No: ";
     private final String billNumber_String = "Bill No: ";
-    private final String company_String= "Company";
+    private final String company_String = "Company";
     private final String dueDate_String = "Due date : ";
-    private final String inr= "INR ";
+    private final String inr = "INR ";
     private int accountNumber;
     private int billNumber;
     private String company;
     private String dueDate;
     private int value;
-    private boolean selected=false;
+    private boolean selected = false;
 
     public BillDetailsItems(int accountNumber, int billNumber, String company, String dueDate, boolean selected, int value) {
         this.accountNumber = accountNumber;

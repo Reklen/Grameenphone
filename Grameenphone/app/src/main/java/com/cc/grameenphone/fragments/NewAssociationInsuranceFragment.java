@@ -325,7 +325,7 @@ public class NewAssociationInsuranceFragment extends BaseTabFragment implements 
     public void onValidationSucceeded() {
         KeyboardUtil.hideKeyboard(getActivity());
         onSubmitClick();
-       // pinConfirmation();
+        // pinConfirmation();
     }
 
     @Override

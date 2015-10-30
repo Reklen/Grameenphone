@@ -22,99 +22,80 @@ public class BillConfirmationCommandModel {
 
     private String TYPE;
 
-    public String getMESSAGE ()
-    {
+    public String getMESSAGE() {
         return MESSAGE;
     }
 
-    public void setMESSAGE (String MESSAGE)
-    {
+    public void setMESSAGE(String MESSAGE) {
         this.MESSAGE = MESSAGE;
     }
 
-    public String getBDUDATE ()
-    {
+    public String getBDUDATE() {
         return BDUDATE;
     }
 
-    public void setBDUDATE (String BDUDATE)
-    {
+    public void setBDUDATE(String BDUDATE) {
         this.BDUDATE = BDUDATE;
     }
 
-    public String getTXNID ()
-    {
+    public String getTXNID() {
         return TXNID;
     }
 
-    public void setTXNID (String TXNID)
-    {
+    public void setTXNID(String TXNID) {
         this.TXNID = TXNID;
     }
 
-    public String getTRID ()
-    {
+    public String getTRID() {
         return TRID;
     }
 
-    public void setTRID (String TRID)
-    {
+    public void setTRID(String TRID) {
         this.TRID = TRID;
     }
 
-    public String getBILLCCODE ()
-    {
+    public String getBILLCCODE() {
         return BILLCCODE;
     }
 
-    public void setBILLCCODE (String BILLCCODE)
-    {
+    public void setBILLCCODE(String BILLCCODE) {
         this.BILLCCODE = BILLCCODE;
     }
 
-    public String getBILLNO ()
-    {
+    public String getBILLNO() {
         return BILLNO;
     }
 
-    public void setBILLNO (String BILLNO)
-    {
+    public void setBILLNO(String BILLNO) {
         this.BILLNO = BILLNO;
     }
 
-    public String getAMOUNT ()
-    {
+    public String getAMOUNT() {
         return AMOUNT;
     }
 
-    public void setAMOUNT (String AMOUNT)
-    {
+    public void setAMOUNT(String AMOUNT) {
         this.AMOUNT = AMOUNT;
     }
 
-    public String getTXNSTATUS ()
-    {
+    public String getTXNSTATUS() {
         return TXNSTATUS;
     }
 
-    public void setTXNSTATUS (String TXNSTATUS)
-    {
+    public void setTXNSTATUS(String TXNSTATUS) {
         this.TXNSTATUS = TXNSTATUS;
     }
 
-    public String getTYPE ()
-    {
+    public String getTYPE() {
         return TYPE;
     }
 
-    public void setTYPE (String TYPE)
-    {
+    public void setTYPE(String TYPE) {
         this.TYPE = TYPE;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [MESSAGE = "+MESSAGE+", BDUDATE = "+BDUDATE+", TXNID = "+TXNID+", TRID = "+TRID+", BILLCCODE = "+BILLCCODE+", BILLNO = "+BILLNO+", AMOUNT = "+AMOUNT+", TXNSTATUS = "+TXNSTATUS+", TYPE = "+TYPE+"]";
+    public String toString() {
+        return "ClassPojo [MESSAGE = " + MESSAGE + ", BDUDATE = " + BDUDATE + ", TXNID = " + TXNID + ", TRID = " + TRID + ", BILLCCODE = " + BILLCCODE + ", BILLNO = " + BILLNO + ", AMOUNT = " + AMOUNT + ", TXNSTATUS = " + TXNSTATUS + ", TYPE = " + TYPE + "]";
     }
 }

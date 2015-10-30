@@ -15,6 +15,7 @@ import retrofit.http.POST;
 public interface OtherPostpaidApi {
     @POST("/GPTxn/CelliciumSelector?LOGIN=Ussd_Bearer1&PASSWORD=U$$d_Int11&REQUEST_GATEWAY_CODE=J2ME&REQUEST_GATEWAY_TYPE=J2ME&requestText=")
     void otherPostpaid(@Body JSONObject jsonObject, Callback<OtherPostpaidModel> cb);
+
     @POST("/GPTxn/CelliciumSelector?LOGIN=Ussd_Bearer1&PASSWORD=U$$d_Int11&REQUEST_GATEWAY_CODE=J2ME&REQUEST_GATEWAY_TYPE=J2ME&requestText=")
     void selfPostpaid(@Body JSONObject jsonObject, Callback<SelfPostpaidModel> cb);
 

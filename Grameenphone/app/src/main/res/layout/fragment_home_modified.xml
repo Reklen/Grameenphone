@@ -1,13 +1,21 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/fst_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:visibility="visible">
 
         <RadioGroup
             android:id="@+id/radioGroup"
@@ -25,7 +33,7 @@
                 android:checked="true"
                 android:drawablePadding="50dp"
                 android:paddingLeft="8dp"
-                android:text="Prepaid"
+                android:text="Self"
                 android:textColor="#D9000000"
                 android:textSize="17sp"
                 android:textStyle="normal" />
@@ -37,7 +45,7 @@
                 android:layout_marginLeft="79dp"
                 android:drawablePadding="50dp"
                 android:paddingLeft="8dp"
-                android:text="Postpaid"
+                android:text="Others"
                 android:textColor="#D9000000"
                 android:textSize="17sp"
                 android:textStyle="normal" />
@@ -141,31 +149,46 @@
                 android:layout_marginBottom="15dp"
                 android:layout_marginRight="20dp"
                 android:text="OTHER FLEXILOAD"
+                android:visibility="gone"
                 android:textColor="#00adee"
                 android:textSize="12sp" />
 
         </RelativeLayout>
 
-        <com.cc.grameenphone.views.CustomTextInputLayout
-            android:id="@+id/amount_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/top_container1"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp">
-
-            <EditText
-                android:id="@+id/editamt"
+         <TextView
+             android:id="@+id/taka_text"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="16dp"
+             android:layout_marginTop="16dp"
+             android:textSize="16sp"
+             android:layout_above="@+id/flexi_Ripple"
+             android:layout_centerHorizontal="true"
+             android:layout_alignParentLeft="true"
+             android:paddingTop="8dp"
+             android:visibility="gone"
+             android:paddingBottom="12dp"
+             android:text="৳"/>
+            <com.cc.grameenphone.views.CustomTextInputLayout
+                android:id="@+id/amount_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter amount"
-                android:inputType="numberDecimal"
-                android:text="50"
-                android:textColor="@color/black_semi_transparent"
-                android:textColorHighlight="@color/hint_color"
-                android:textColorHint="@color/hint_color" />
-        </com.cc.grameenphone.views.CustomTextInputLayout>
+                android:layout_below="@+id/top_container1"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp">
+                ​
+                <com.cc.grameenphone.views.AmountEditText
+                    android:id="@+id/editamt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter amount"
+                    android:inputType="numberDecimal"
+                    android:text="50"
+                    android:textColor="@color/black_semi_transparent"
+                    android:textColorHighlight="@color/hint_color"
+                    android:textColorHint="@color/hint_color"/>
+            </com.cc.grameenphone.views.CustomTextInputLayout>
 
         <com.cc.grameenphone.views.RippleView
             android:id="@+id/flexi_Ripple"
@@ -189,12 +212,62 @@
                 android:textColor="#ffffff"
                 android:textSize="14sp" />
         </com.cc.grameenphone.views.RippleView>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/sec_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            tools:visibility="gone">
+
+            <ImageView
+                android:id="@+id/grameenPhone_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/logo" />
+
+            <RelativeLayout
+                android:id="@+id/flexi_load_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@+id/grameenPhone_icon"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bill_background">
+
+                <ImageView
+                    android:id="@+id/flexi_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="14dp"
+                    android:src="@drawable/icon_bill_payment"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/felexi_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_below="@+id/felexi_text"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="FELEXILOAD"
+                    android:textColor="@color/black_semi_transparent"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+        </RelativeLayout>
 
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/flexi_Ripple"
+            android:layout_below="@+id/fst_container"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
@@ -209,13 +282,23 @@
             android:background="@null" />
 
 
+   <RelativeLayout
+       android:id="@+id/bills_container"
+       android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+       android:layout_centerInParent="true"
+       android:gravity="center"
+       android:layout_gravity="center"
+
+       >
+
         <com.cc.grameenphone.views.RippleView
             android:id="@+id/billPayRipple"
             rv_centered="true"
             rv_zoom="true"
             android:layout_width="140dp"
             android:layout_height="100dp"
-            android:layout_below="@+id/divider"
+            android:layout_below="@+id/sec_container"
             android:layout_marginRight="8dp"
             android:layout_marginTop="13dp"
             android:layout_toLeftOf="@+id/centerview"
@@ -257,10 +340,10 @@
             rv_zoom="true"
             android:layout_width="140dp"
             android:layout_height="100dp"
-            android:layout_below="@+id/divider"
+            android:layout_below="@+id/sec_container"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="13dp"
-            android:layout_toRightOf="@+id/centerview"
+            android:layout_toRightOf="@+id/billPayRipple"
             app:rv_rippleDuration="100">
 
             <RelativeLayout
@@ -292,6 +375,7 @@
                     android:textSize="12sp" />
             </RelativeLayout>
         </com.cc.grameenphone.views.RippleView>
+
 
         <com.cc.grameenphone.views.RippleView
             android:id="@+id/emergencyCallRipple"
@@ -346,7 +430,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="24dp"
-            android:layout_toRightOf="@+id/centerview"
+            android:layout_toRightOf="@+id/emergencyCallRipple"
             app:rv_rippleDuration="100">
 
             <RelativeLayout
@@ -380,5 +464,7 @@
             </RelativeLayout>
 
         </com.cc.grameenphone.views.RippleView>
-    </RelativeLayout>
+   </RelativeLayout>
+
+    </LinearLayout>
 </ScrollView>

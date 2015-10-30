@@ -14,60 +14,49 @@ public class SelfPrepaidCommandModel {
 
     private String TYPE;
 
-    public String getMESSAGE ()
-    {
+    public String getMESSAGE() {
         return MESSAGE;
     }
 
-    public void setMESSAGE (String MESSAGE)
-    {
+    public void setMESSAGE(String MESSAGE) {
         this.MESSAGE = MESSAGE;
     }
 
-    public String getTXNID ()
-    {
+    public String getTXNID() {
         return TXNID;
     }
 
-    public void setTXNID (String TXNID)
-    {
+    public void setTXNID(String TXNID) {
         this.TXNID = TXNID;
     }
 
-    public String getTRID ()
-    {
+    public String getTRID() {
         return TRID;
     }
 
-    public void setTRID (String TRID)
-    {
+    public void setTRID(String TRID) {
         this.TRID = TRID;
     }
 
-    public String getTXNSTATUS ()
-    {
+    public String getTXNSTATUS() {
         return TXNSTATUS;
     }
 
-    public void setTXNSTATUS (String TXNSTATUS)
-    {
+    public void setTXNSTATUS(String TXNSTATUS) {
         this.TXNSTATUS = TXNSTATUS;
     }
 
-    public String getTYPE ()
-    {
+    public String getTYPE() {
         return TYPE;
     }
 
-    public void setTYPE (String TYPE)
-    {
+    public void setTYPE(String TYPE) {
         this.TYPE = TYPE;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [MESSAGE = "+MESSAGE+", TXNID = "+TXNID+", TRID = "+TRID+", TXNSTATUS = "+TXNSTATUS+", TYPE = "+TYPE+"]";
+    public String toString() {
+        return "ClassPojo [MESSAGE = " + MESSAGE + ", TXNID = " + TXNID + ", TRID = " + TRID + ", TXNSTATUS = " + TXNSTATUS + ", TYPE = " + TYPE + "]";
     }
 
 }

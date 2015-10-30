@@ -14,7 +14,7 @@ public class KeyboardUtil {
         try {
             InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            Log.e("KeyBoardUtil","hiddent");
+            Log.e("KeyBoardUtil", "hiddent");
         } catch (Exception e) {
 
             // Ignore exceptions if any

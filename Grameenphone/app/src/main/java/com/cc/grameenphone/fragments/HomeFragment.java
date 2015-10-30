@@ -48,6 +48,7 @@ import com.cc.grameenphone.utils.KeyboardUtil;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PhoneUtils;
 import com.cc.grameenphone.utils.PreferenceManager;
+import com.cc.grameenphone.views.AmountEditText;
 import com.cc.grameenphone.views.RippleView;
 
 import org.json.JSONException;
@@ -73,9 +74,11 @@ public class HomeFragment extends Fragment {
 
 
     @InjectView(R.id.prepaidOption)
-    RadioButton prepaidOption;
+    RadioButton selfFlexiOption;
+  //  RadioButton prepaidOption;
     @InjectView(R.id.postpaidOption)
-    RadioButton postpaidOption;
+    RadioButton othersFlexiOption;
+    //RadioButton postpaidOption;
     @InjectView(R.id.radioGroup)
     RadioGroup radioGroup;
     @InjectView(R.id.areaCode)
@@ -89,7 +92,7 @@ public class HomeFragment extends Fragment {
     @InjectView(R.id.top_container1)
     RelativeLayout topContainer1;
     @InjectView(R.id.editamt)
-    EditText editamt;
+    AmountEditText editamt;
     @InjectView(R.id.amount_container)
     TextInputLayout amountContainer;
     @InjectView(R.id.flexi_btn)
@@ -118,6 +121,12 @@ public class HomeFragment extends Fragment {
     TextView friendsText;
     @InjectView(R.id.referFriends)
     RelativeLayout referFriends;
+    @InjectView(R.id.flexi_load_container)
+    RelativeLayout flexiLoad;
+    @InjectView(R.id.sec_container)
+    RelativeLayout secContainer;
+    @InjectView(R.id.fst_container)
+    RelativeLayout fstContainer;
 
     int REQCODE = IntentUtils.SELECT_CONTACT_REQ;
     RechargeApi rechargeApi;
@@ -174,7 +183,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_home_modified, container, false);
         // Inflate the layout for this fragment
         ButterKnife.inject(this, rootView);
 
@@ -189,12 +198,15 @@ public class HomeFragment extends Fragment {
         editamt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if (editamt.getText().charAt(0)!='৳'){
 
+                }
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
+
                     if (editamt.getText().charAt(editamt.length() - 1) == '৳') {
                         editamt.setText("৳ ");
                         editamt.setSelection(editamt.getText().length());
@@ -219,9 +231,14 @@ public class HomeFragment extends Fragment {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (prepaidOption.isChecked()) {
+                if (selfFlexiOption.isChecked()) {
+                    phoneNumberEditText.setText(preferenceManager.getMSISDN() + "");
+                    phoneNumberEditText.setCompoundDrawables(null, null, null, null);
+                    phoneNumberEditText.setInputType(0x00000000);
+                    editamt.setText("৳ 50");
 
-                } else if (postpaidOption.isChecked()) {
+                } else if (othersFlexiOption.isChecked()) {
+                    otherFlexiLoadClick();
                 }
 
             }
@@ -274,7 +291,7 @@ public class HomeFragment extends Fragment {
         flexiRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
-                flexiButtonClick();
+                flexiBtnClick();
 
             }
         });
@@ -374,8 +391,8 @@ public class HomeFragment extends Fragment {
 
         selfPrepaidApi = ServiceGenerator.createService(SelfPrepaidApi.class);
         otherPostpaidApi = ServiceGenerator.createService(OtherPostpaidApi.class);
-        Logger.d("CheckFlexi", prepaidOption.isChecked() + " " + otherFlexi + " " + postpaidOption.isChecked());
-        if ((prepaidOption.isChecked()) && otherFlexi) {
+        Logger.d("CheckFlexi", selfFlexiOption.isChecked() + " " + otherFlexi + " " + othersFlexiOption.isChecked());
+        if ((selfFlexiOption.isChecked()) && otherFlexi) {
             //TODO implement other prepaid recharge
             pinConfirmationView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_pin_confirmation, null);
             pinConfirmationET = (EditText) pinConfirmationView.findViewById(R.id.pinConfirmEditText);
@@ -395,7 +412,7 @@ public class HomeFragment extends Fragment {
                     pinConfirmDialog.dismiss();
                     KeyboardUtil.hideKeyboardDialogDismiss(getActivity());
                     loadingDialog.show();
-                    flexiLoadOtherPrepaid(pin);
+                    flexiLoadOtherNewPrepaid(pin);
                 }
             });
             if (!(editamt.getText().toString().length() > 2)) {
@@ -415,7 +432,7 @@ public class HomeFragment extends Fragment {
             }
 
 
-        } else if ((prepaidOption.isChecked()) && (otherFlexi == false)) {
+        } else if ((selfFlexiOption.isChecked()) && (otherFlexi == false)) {
             //TODO implement prepaid for self
             loadingDialog.show();
             if (!(editamt.getText().toString().length() > 2)) {
@@ -497,7 +514,7 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
                 loadingDialog.cancel();
             }
-        } else if ((postpaidOption.isChecked()) && otherFlexi) {
+        } else if ((othersFlexiOption.isChecked()) && otherFlexi) {
             //TODO implement other postpaid recharge
             pinConfirmationView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_pin_confirmation, null);
             pinConfirmationET = (EditText) pinConfirmationView.findViewById(R.id.pinConfirmEditText);
@@ -537,7 +554,7 @@ public class HomeFragment extends Fragment {
             }
 
 
-        } else if ((postpaidOption.isChecked()) && (otherFlexi == false)) {
+        } else if ((othersFlexiOption.isChecked()) && (otherFlexi == false)) {
             //TODO implement self postpaid recharge
             loadingDialog.show();
             if (!(editamt.getText().toString().length() > 2)) {
@@ -621,6 +638,160 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    void flexiBtnClick() {
+
+        // Recharge psot
+        android_id = Settings.Secure.getString(getActivity().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        KeyboardUtil.hideKeyboard(getActivity());
+        String str = phoneNumberEditText.getText().toString();
+        str = str.replace(" ", "");
+        phoneNumberEditText.setText(str);
+        rechargeApi = ServiceGenerator.createService(RechargeApi.class);
+        if (phoneNumberEditText.getText().toString().length() == 0) {
+            phoneNumberEditText.setError("Enter a valid number");
+            phoneNumberEditText.requestFocus();
+            return;
+        } else if (phoneNumberEditText.getText().toString().length() < 8) {
+            phoneNumberEditText.setError("Enter a valid number");
+            phoneNumberEditText.requestFocus();
+            return;
+        } else {
+            phoneNumberEditText.setError(null);
+            phoneNumberEditText.requestFocus();
+        }
+
+        loadingDialog = new ProgressDialog(getActivity());
+        loadingDialog.setCanceledOnTouchOutside(false);
+        loadingDialog.setMessage("Flexiload in progress , please wait");
+
+
+        selfPrepaidApi = ServiceGenerator.createService(SelfPrepaidApi.class);
+        otherPostpaidApi = ServiceGenerator.createService(OtherPostpaidApi.class);
+        Logger.d("CheckFlexi", selfFlexiOption.isChecked() + " " + otherFlexi + " " + othersFlexiOption.isChecked());
+        if (selfFlexiOption.isChecked()){
+            loadingDialog.show();
+            if (!(editamt.getText().toString().length() > 2)) {
+                editamt.setError("Enter Amount");
+                editamt.requestFocus();
+                loadingDialog.dismiss();
+                return;
+
+            }
+            try {
+                JSONObject jsonObject = new JSONObject();
+                JSONObject innerObject = new JSONObject();
+                innerObject.put("DEVICEID", android_id);
+                innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+                innerObject.put("MSISDN", "017" + phoneNumberEditText.getText().toString());
+                innerObject.put("TYPE", "CTMMREQ");
+
+                String amt = editamt.getText().toString();
+                amt = amt.replace("৳", "");
+                amt = amt.replace(" ", "");
+                innerObject.put("AMOUNT", amt);
+                jsonObject.put("COMMAND", innerObject);
+                Logger.d("Flexiload", jsonObject.toString());
+                selfPrepaidApi.selfPrepaid(jsonObject, new Callback<SelfPrepaidModel>() {
+                    @Override
+                    public void success(SelfPrepaidModel selfPrepaidModel, Response response) {
+                        if (selfPrepaidModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                            loadingDialog.cancel();
+                            View flexiDialog = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_flexi_layout, null);
+                            Logger.d("Its msisdn check ", "status " + selfPrepaidModel.toString());
+                            materialDialog = new MaterialDialog(getActivity()).setContentView(flexiDialog);
+                            materialDialog.setCanceledOnTouchOutside(true);
+                            ((TextView) flexiDialog.findViewById(R.id.top_text)).setText(selfPrepaidModel.getCOMMAND().getMESSAGE() + "");
+                            ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText("017" + phoneNumberEditText.getText().toString() + "");
+                            ((TextView) flexiDialog.findViewById(R.id.transactionNumber)).setText("\n" + selfPrepaidModel.getCOMMAND().getTXNID() + "");
+                            ((TextView) flexiDialog.findViewById(R.id.flxiloadAmount)).setText(editamt.getText().toString() + "");
+                            materialDialog.show();
+                            Button buttonOk = (Button) flexiDialog.findViewById(R.id.okButton);
+                            buttonOk.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    loadingDialog.cancel();
+                                    materialDialog.dismiss();
+                                    otherFlexi = false;
+                                    phoneNumberEditText.setText("" + preferenceManager.getMSISDN());
+                                    phoneNumberEditText.setInputType(0x00000000);
+                                    phoneNumberEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                                    otherFlex.setVisibility(View.VISIBLE);
+                                    editamt.setText("৳ 50");
+                                    Logger.d("WalletCheck ", "again 1");
+                                    mCallback.fetchBalanceAgain();
+                                }
+                            });
+
+                        } else {
+                            loadingDialog.cancel();
+                            Logger.e("Its msisdn check ", "status " + selfPrepaidModel.toString());
+                            errorDialog = new MaterialDialog(getActivity());
+                            errorDialog.setMessage(selfPrepaidModel.getCOMMAND().getMESSAGE() + "");
+                            errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    errorDialog.dismiss();
+                                    editamt.setText("৳ 50");
+                                    mCallback.fetchBalanceAgain();
+                                }
+                            });
+                            errorDialog.show();
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        loadingDialog.cancel();
+                    }
+                });
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                loadingDialog.cancel();
+            }
+
+        }else {
+            pinConfirmationView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_pin_confirmation, null);
+            pinConfirmationET = (EditText) pinConfirmationView.findViewById(R.id.pinConfirmEditText);
+
+            pinConfirmDialog = new MaterialDialog(getActivity());
+            pinConfirmDialog.setContentView(pinConfirmationView);
+            pinConfirmDialog.setPositiveButton("CONFIRM", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (pinConfirmationET.getText().toString().length() != 4) {
+                        pinConfirmationET.setError("Enter your valid pin");
+                        pinConfirmationET.requestFocus();
+                        return;
+                    }
+
+                    pin = pinConfirmationET.getText().toString();
+                    pinConfirmDialog.dismiss();
+                    KeyboardUtil.hideKeyboardDialogDismiss(getActivity());
+                    loadingDialog.show();
+                    flexiLoadOtherNewPrepaid(pin);
+                }
+            });
+            if (!(editamt.getText().toString().length() > 2)) {
+                editamt.setError("Enter Amount");
+                editamt.requestFocus();
+                return;
+
+            }
+            if (phoneNumberEditText.getText().toString().equalsIgnoreCase(preferenceManager.getMSISDN())) {
+                phoneNumberEditText.setText("");
+                phoneNumberEditText.setError("You have entered your phone number, please select a different number");
+                return;
+            } else {
+                pinConfirmDialog.show();
+                Logger.d("Pinnny", phoneNumberEditText.getText().toString() + " " + preferenceManager.getMSISDN());
+
+            }
+
+        }
+    }
+
     private void flexiLoadOtherPostpaid(String pin) {
         try {
             JSONObject jsonObject = new JSONObject();
@@ -698,6 +869,85 @@ public class HomeFragment extends Fragment {
 
     }
 
+    private void flexiLoadOtherNewPrepaid(String pin) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            JSONObject innerObject = new JSONObject();
+            innerObject.put("DEVICEID", android_id);
+            innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("MSISDN2", "017" + phoneNumberEditText.getText().toString());
+            innerObject.put("TYPE", "OCTMMREQ");
+            // innerObject.put("RCTYPE", "PREPAID");
+            innerObject.put("PIN", pin);
+            String amt = editamt.getText().toString();
+            amt = amt.replace("৳", "");
+            amt = amt.replace(" ", "");
+            innerObject.put("AMOUNT", amt);
+            jsonObject.put("COMMAND", innerObject);
+            Logger.d("Flexiload", jsonObject.toString());
+            selfPrepaidApi.selfPrepaidOther(jsonObject, new Callback<OtherPrepaidModel>() {
+                @Override
+                public void success(OtherPrepaidModel selfPrepaidModel, Response response) {
+
+                    if (selfPrepaidModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                        Logger.d("Some taggg", "Flexi complete loading bar should disappera");
+                        loadingDialog.cancel();
+                        View flexiDialog = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_flexi_layout, null);
+                        Logger.d("Its prepaid other check ", "status " + selfPrepaidModel.toString());
+                        materialDialog = new MaterialDialog(getActivity()).setContentView(flexiDialog);
+                        materialDialog.setCanceledOnTouchOutside(true);
+                        ((TextView) flexiDialog.findViewById(R.id.top_text)).setText(selfPrepaidModel.getCOMMAND().getMESSAGE() + "");
+                        ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText("017" + phoneNumberEditText.getText().toString() + "");
+                        ((TextView) flexiDialog.findViewById(R.id.transactionNumber)).setText("\n" + selfPrepaidModel.getCOMMAND().getTXNID() + "");
+                        ((TextView) flexiDialog.findViewById(R.id.flxiloadAmount)).setText(editamt.getText().toString() + "");
+                        materialDialog.show();
+                        Button buttonOk = (Button) flexiDialog.findViewById(R.id.okButton);
+                        buttonOk.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                loadingDialog.cancel();
+                                materialDialog.dismiss();
+                                otherFlexi = false;
+                                phoneNumberEditText.setText("" + preferenceManager.getMSISDN());
+                                phoneNumberEditText.setInputType(0x00000000);
+                                phoneNumberEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                                otherFlex.setVisibility(View.VISIBLE);
+                                editamt.setText("৳ 50");
+                                Logger.d("WalletCheck ", "again 1");
+
+                                mCallback.fetchBalanceAgain();
+                            }
+                        });
+                    } else {
+                        loadingDialog.cancel();
+                        Logger.e("Its other prepaid check ", "status " + selfPrepaidModel.toString());
+                        errorDialog = new MaterialDialog(getActivity());
+                        errorDialog.setMessage(selfPrepaidModel.getCOMMAND().getMESSAGE() + "");
+                        errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                errorDialog.dismiss();
+                                editamt.setText("৳ 50");
+                                Logger.d("WalletCheck ", "again 1");
+                                mCallback.fetchBalanceAgain();
+                            }
+                        });
+                        errorDialog.show();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    loadingDialog.cancel();
+                }
+            });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            loadingDialog.cancel();
+        }
+    }
     private void flexiLoadOtherPrepaid(String pin) {
         try {
             JSONObject jsonObject = new JSONObject();
@@ -777,6 +1027,11 @@ public class HomeFragment extends Fragment {
             loadingDialog.cancel();
         }
     }
+    @OnClick(R.id.flexi_load_container)
+    void flexiLoadCick(){
+        fstContainer.setVisibility(View.VISIBLE);
+        secContainer.setVisibility(View.GONE);
+    }
 
     @OnClick(R.id.other_flex)
     void otherFlexiLoadClick() {
@@ -845,6 +1100,7 @@ public class HomeFragment extends Fragment {
             phoneNumberEditText.setText("" + preferenceManager.getMSISDN());
         }
     }
+
 
 
 }

@@ -5,5 +5,5 @@ package com.cc.grameenphone.utils;
  */
 public class Constants {
 
-    public static String RETURN_RESULT ="result";
+    public static String RETURN_RESULT = "result";
 }

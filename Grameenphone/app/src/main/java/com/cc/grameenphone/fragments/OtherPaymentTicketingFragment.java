@@ -244,7 +244,7 @@ public class OtherPaymentTicketingFragment extends BaseTabFragment implements Va
             innerObject.put("BILLNO", billNumbEdit.getText().toString());
             innerObject.put("BPROVIDER", "101");
             innerObject.put("SURCHARGE", surchargeEditText.getText().toString());
-            innerObject.put("PIN",pin);
+            innerObject.put("PIN", pin);
             jsonObject.put("COMMAND", innerObject);
             Logger.d("confirmaing bill payment ", jsonObject.toString());
             otherPaymentApi.billConfirmation(jsonObject, new Callback<BillConfirmationModel>() {

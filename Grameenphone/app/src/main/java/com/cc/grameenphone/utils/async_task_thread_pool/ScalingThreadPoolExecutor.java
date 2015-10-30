@@ -9,34 +9,29 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by rajkiran on 11/09/15.
  */
-public class ScalingThreadPoolExecutor extends ThreadPoolExecutor
-{
+public class ScalingThreadPoolExecutor extends ThreadPoolExecutor {
     /**
      * number of threads that are actively executing tasks
      */
-    private final AtomicInteger activeCount =new AtomicInteger();
+    private final AtomicInteger activeCount = new AtomicInteger();
 
     @SuppressWarnings("unchecked")
-    public ScalingThreadPoolExecutor(final int corePoolSize,final int maximumPoolSize,final long keepAliveTime,final TimeUnit unit,@SuppressWarnings("rawtypes") final BlockingQueue workQueue,final ThreadFactory threadFactory)
-    {
-        super(corePoolSize,maximumPoolSize,keepAliveTime,unit,workQueue,threadFactory);
+    public ScalingThreadPoolExecutor(final int corePoolSize, final int maximumPoolSize, final long keepAliveTime, final TimeUnit unit, @SuppressWarnings("rawtypes") final BlockingQueue workQueue, final ThreadFactory threadFactory) {
+        super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory);
     }
 
     @Override
-    public int getActiveCount()
-    {
+    public int getActiveCount() {
         return activeCount.get();
     }
 
     @Override
-    protected void beforeExecute(final Thread t,final Runnable r)
-    {
+    protected void beforeExecute(final Thread t, final Runnable r) {
         activeCount.incrementAndGet();
     }
 
     @Override
-    protected void afterExecute(final Runnable r,final Throwable t)
-    {
+    protected void afterExecute(final Runnable r, final Throwable t) {
         activeCount.decrementAndGet();
     }
 }

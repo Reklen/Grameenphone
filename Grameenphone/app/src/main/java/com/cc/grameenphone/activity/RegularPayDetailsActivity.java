@@ -17,10 +17,10 @@ import com.cc.grameenphone.R;
  * Created by Rajkiran on 9/10/2015.
  */
 public class RegularPayDetailsActivity extends AppCompatActivity {
-    TextView CompanyText,DESCOTExt,ACNOText,AccNumbText,billNumbText,bNumbText,AmountText,AnumbText,SubchargeText,subNumbText,
-             dueDateText,pinConfromText;
+    TextView CompanyText, DESCOTExt, ACNOText, AccNumbText, billNumbText, bNumbText, AmountText, AnumbText, SubchargeText, subNumbText,
+            dueDateText, pinConfromText;
     EditText pinNumbEdit;
-    Button confrim_btn,okay_btn;
+    Button confrim_btn, okay_btn;
     AppCompatDialog confirmDialog;
     Toolbar toolbar;
     RelativeLayout toolbarContainer;
@@ -30,10 +30,10 @@ public class RegularPayDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regular_bills_details);
-        toolbar= (Toolbar) findViewById(R.id.toolbar);
-        toolbarContainer= (RelativeLayout) findViewById(R.id.toolbar_container);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbarContainer = (RelativeLayout) findViewById(R.id.toolbar_container);
         toolbarContainer.setVisibility(View.VISIBLE);
-        toolbarText= (TextView) findViewById(R.id.toolbar_text);
+        toolbarText = (TextView) findViewById(R.id.toolbar_text);
         toolbarText.setText("DESCO");
 
         // setSupportActionBar(toolbar);
@@ -42,10 +42,10 @@ public class RegularPayDetailsActivity extends AppCompatActivity {
 //        getSupportActionBar().setTitle("DESCO");
 
         //EditText
-        pinNumbEdit= (EditText) findViewById(R.id.pinNumbEdit);
+        pinNumbEdit = (EditText) findViewById(R.id.pinNumbEdit);
 
         //Button
-        confrim_btn= (Button) findViewById(R.id.confirm_btn);
+        confrim_btn = (Button) findViewById(R.id.confirm_btn);
         confrim_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

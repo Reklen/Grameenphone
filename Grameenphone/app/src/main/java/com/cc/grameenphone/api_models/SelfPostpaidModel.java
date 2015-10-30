@@ -6,19 +6,16 @@ package com.cc.grameenphone.api_models;
 public class SelfPostpaidModel {
     private SelfPostpaidCommandModel COMMAND;
 
-    public SelfPostpaidCommandModel getCOMMAND ()
-    {
+    public SelfPostpaidCommandModel getCOMMAND() {
         return COMMAND;
     }
 
-    public void setCOMMAND (SelfPostpaidCommandModel COMMAND)
-    {
+    public void setCOMMAND(SelfPostpaidCommandModel COMMAND) {
         this.COMMAND = COMMAND;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [COMMAND = "+COMMAND+"]";
+    public String toString() {
+        return "ClassPojo [COMMAND = " + COMMAND + "]";
     }
 }

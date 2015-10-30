@@ -37,7 +37,7 @@
     <string name="numberText">+88017</string>
     <string name="enterPhnnumb">Enter a phone number</string>
     <string name="accept">I accept to</string>
-    <string name="terms_condition"><u>Terms &amp; Conditions</u></string>
+    <string name="terms_condition"><u>Accept Terms &amp; Conditions</u></string>
     <string name="create_new_wallet">CREATE A NEW WALLET</string>
     <string name="Or">OR</string>
     <string name="sign_up">Sign Up</string>
@@ -93,7 +93,7 @@
                                 DESCO association?</string>
     <string name="rs_amount"> 230</string>
     <string name="Get_full_talktime">Get full talktime on top up of \u20B9200 &amp;</string>
-        <string name="association_confrim">Your request is being processed.\nYou will get association conformation\nSMS shortly</string>
+    <string name="association_confrim">Your request is being processed.\nYou will get association conformation\nSMS shortly</string>
 
 
     <string name="button_stringname">OTHER PAYMENT</string>

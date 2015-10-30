@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="@string/bill_paid_successfully"
         android:textColor="@color/black"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="10dp" />
 
     <Button
         android:id="@+id/okay_btn"
@@ -21,6 +21,5 @@
         android:layout_gravity="end"
         android:text="OK"
         android:textColor="@color/blue_900"
-        android:layout_marginTop="10dp"
-        />
+        android:layout_marginTop="10dp" />
 </LinearLayout>

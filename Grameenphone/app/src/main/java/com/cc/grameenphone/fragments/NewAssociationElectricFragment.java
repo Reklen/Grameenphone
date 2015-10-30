@@ -323,7 +323,7 @@ public class NewAssociationElectricFragment extends BaseTabFragment implements V
     public void onValidationSucceeded() {
         KeyboardUtil.hideKeyboard(getActivity());
         onSubmitClick();
-      //  pinConfirmation();
+        //  pinConfirmation();
     }
 
     @Override

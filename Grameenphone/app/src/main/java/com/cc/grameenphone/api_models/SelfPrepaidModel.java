@@ -9,19 +9,16 @@ public class SelfPrepaidModel {
     @SerializedName("COMMAND")
     private SelfPrepaidCommandModel COMMAND;
 
-    public SelfPrepaidCommandModel getCOMMAND ()
-    {
+    public SelfPrepaidCommandModel getCOMMAND() {
         return COMMAND;
     }
 
-    public void setCOMMAND (SelfPrepaidCommandModel COMMAND)
-    {
+    public void setCOMMAND(SelfPrepaidCommandModel COMMAND) {
         this.COMMAND = COMMAND;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [COMMAND = "+COMMAND+"]";
+    public String toString() {
+        return "ClassPojo [COMMAND = " + COMMAND + "]";
     }
 }

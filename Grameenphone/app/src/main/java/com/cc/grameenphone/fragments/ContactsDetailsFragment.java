@@ -106,13 +106,12 @@ public class ContactsDetailsFragment extends Fragment {
         return rootView;
     }
 
-    public void getFilterContacts(String searchText){
-        if(mAdapter!=null){
-            Logger.d("Search Text",searchText);
+    public void getFilterContacts(String searchText) {
+        if (mAdapter != null) {
+            Logger.d("Search Text", searchText);
             mAdapter.getFilter().filter(searchText);
         }
     }
-
 
 
     public static int getResIdFromAttribute(final Activity activity, final int attr) {

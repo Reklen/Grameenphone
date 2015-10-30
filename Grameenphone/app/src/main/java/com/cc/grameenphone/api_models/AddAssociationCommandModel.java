@@ -15,49 +15,40 @@ public class AddAssociationCommandModel {
 
     private String TYPE;
 
-    public String getNOOFCOM ()
-    {
+    public String getNOOFCOM() {
         return NOOFCOM;
     }
 
-    public void setNOOFCOM (String NOOFCOM)
-    {
+    public void setNOOFCOM(String NOOFCOM) {
         this.NOOFCOM = NOOFCOM;
     }
 
-    public AddAssociationComapanyModel[] getCOMPANYDET ()
-    {
+    public AddAssociationComapanyModel[] getCOMPANYDET() {
         return COMPANYDET;
     }
 
-    public void setCOMPANYDET (AddAssociationComapanyModel[] COMPANYDET)
-    {
+    public void setCOMPANYDET(AddAssociationComapanyModel[] COMPANYDET) {
         this.COMPANYDET = COMPANYDET;
     }
 
-    public String getTXNSTATUS ()
-    {
+    public String getTXNSTATUS() {
         return TXNSTATUS;
     }
 
-    public void setTXNSTATUS (String TXNSTATUS)
-    {
+    public void setTXNSTATUS(String TXNSTATUS) {
         this.TXNSTATUS = TXNSTATUS;
     }
 
-    public String getTYPE ()
-    {
+    public String getTYPE() {
         return TYPE;
     }
 
-    public void setTYPE (String TYPE)
-    {
+    public void setTYPE(String TYPE) {
         this.TYPE = TYPE;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [NOOFCOM = "+NOOFCOM+", COMPANYDET = "+COMPANYDET+", TXNSTATUS = "+TXNSTATUS+", TYPE = "+TYPE+"]";
+    public String toString() {
+        return "ClassPojo [NOOFCOM = " + NOOFCOM + ", COMPANYDET = " + COMPANYDET + ", TXNSTATUS = " + TXNSTATUS + ", TYPE = " + TYPE + "]";
     }
 }

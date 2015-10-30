@@ -49,7 +49,7 @@ import retrofit.client.Response;
 /**
  * Created by rajkiran on 21/09/15.
  */
-public class NewAssociationInternetFragment extends BaseTabFragment implements Validator.ValidationListener{
+public class NewAssociationInternetFragment extends BaseTabFragment implements Validator.ValidationListener {
 
     @InjectView(R.id.customRadioGroupLayout)
     LinearLayout custodialRadiogroup;
@@ -223,7 +223,7 @@ public class NewAssociationInternetFragment extends BaseTabFragment implements V
                 }
             }
         });
-       // companyRadioGroupScroll.fullScroll(ScrollView.FOCUS_UP);
+        // companyRadioGroupScroll.fullScroll(ScrollView.FOCUS_UP);
 
     }
 
@@ -244,7 +244,7 @@ public class NewAssociationInternetFragment extends BaseTabFragment implements V
                 String pin = pinConfirmationET.getText().toString();
                 pinConfirmDialog.dismiss();
                 KeyboardUtil.hideKeyboard(getActivity());
-               // onSubmitClick(pin);
+                // onSubmitClick(pin);
                 pinConfirmDialog.dismiss();
 
             }
@@ -322,8 +322,8 @@ public class NewAssociationInternetFragment extends BaseTabFragment implements V
     @Override
     public void onValidationSucceeded() {
         KeyboardUtil.hideKeyboard(getActivity());
-         onSubmitClick();
-       // pinConfirmation();
+        onSubmitClick();
+        // pinConfirmation();
     }
 
     @Override

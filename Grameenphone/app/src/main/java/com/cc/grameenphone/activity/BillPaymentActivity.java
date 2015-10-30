@@ -453,7 +453,6 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         });
 
 
-
         multiBillsCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

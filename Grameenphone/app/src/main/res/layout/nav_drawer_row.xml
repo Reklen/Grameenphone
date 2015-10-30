@@ -13,8 +13,8 @@
         android:layout_centerVertical="true"
         android:background="@mipmap/ic_launcher"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="15dp"
-        />
+        android:layout_marginLeft="15dp" />
+
     <TextView
         android:id="@+id/title"
         android:layout_width="fill_parent"

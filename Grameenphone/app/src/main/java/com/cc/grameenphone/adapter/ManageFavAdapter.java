@@ -27,7 +27,7 @@ import java.util.Locale;
 /**
  * Created by aditlal on 20/09/15.
  */
-public class ManageFavAdapter extends BaseAdapter implements Filterable{
+public class ManageFavAdapter extends BaseAdapter implements Filterable {
     List<ContactModel> list;
     Context context;
     private LayoutInflater mInflater;
@@ -35,6 +35,7 @@ public class ManageFavAdapter extends BaseAdapter implements Filterable{
     private final int[] PHOTO_TEXT_BACKGROUND_COLORS;
     private final AsyncTaskThreadPool mAsyncTaskThreadPool = new AsyncTaskThreadPool(1, 2, 10);
     private ArrayList<ContactModel> dummyContactsList;
+
     public ManageFavAdapter(List<ContactModel> list, Context ctx) {
         this.list = list;
         this.context = ctx;

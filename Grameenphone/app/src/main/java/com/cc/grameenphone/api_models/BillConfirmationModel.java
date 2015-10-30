@@ -9,19 +9,16 @@ public class BillConfirmationModel {
     @SerializedName("COMMAND")
     private BillConfirmationCommandModel COMMAND;
 
-    public BillConfirmationCommandModel getCOMMAND ()
-    {
+    public BillConfirmationCommandModel getCOMMAND() {
         return COMMAND;
     }
 
-    public void setCOMMAND (BillConfirmationCommandModel COMMAND)
-    {
+    public void setCOMMAND(BillConfirmationCommandModel COMMAND) {
         this.COMMAND = COMMAND;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [COMMAND = "+COMMAND+"]";
+    public String toString() {
+        return "ClassPojo [COMMAND = " + COMMAND + "]";
     }
 }

@@ -9,19 +9,16 @@ public class QuickPayConfirmModel {
     @SerializedName("COMMAND")
     private QuickPayConfirmCommandModel COMMAND;
 
-    public QuickPayConfirmCommandModel getCOMMAND ()
-    {
+    public QuickPayConfirmCommandModel getCOMMAND() {
         return COMMAND;
     }
 
-    public void setCOMMAND (QuickPayConfirmCommandModel COMMAND)
-    {
+    public void setCOMMAND(QuickPayConfirmCommandModel COMMAND) {
         this.COMMAND = COMMAND;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [COMMAND = "+COMMAND+"]";
+    public String toString() {
+        return "ClassPojo [COMMAND = " + COMMAND + "]";
     }
 }
