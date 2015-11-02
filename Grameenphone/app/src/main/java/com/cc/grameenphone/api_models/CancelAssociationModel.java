@@ -8,6 +8,15 @@ import com.google.gson.annotations.SerializedName;
 public class CancelAssociationModel {
     @SerializedName("COMMAND")
     private CancelAssociationCommandModel model;
+    private Boolean isChecked;
+
+    public Boolean getIsChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(Boolean isChecked) {
+        this.isChecked = isChecked;
+    }
 
     public CancelAssociationCommandModel getCommand() {
         return model;

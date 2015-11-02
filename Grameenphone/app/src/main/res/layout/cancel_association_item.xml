@@ -4,12 +4,23 @@
     android:layout_height="72dp"
     android:orientation="horizontal">
 
+    <CheckBox
+        android:id="@+id/cancelCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:checked="false"
+        android:clickable="false"
+        android:focusable="false" />
+
     <LinearLayout
         android:id="@+id/list_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/cancelCheckBox"
         android:orientation="vertical">
 
         <LinearLayout
@@ -73,7 +84,7 @@
         android:background="@drawable/login_button"
         android:focusable="false"
         android:text="Cancel"
+        android:visibility="visible"
         android:layout_marginRight="16dp"
         android:textColor="@color/white" />
-
 </RelativeLayout>

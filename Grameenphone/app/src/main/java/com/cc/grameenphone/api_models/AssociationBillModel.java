@@ -9,6 +9,8 @@ public class AssociationBillModel {
 
     private String COMPCODE;
 
+    private Boolean isSelected =false;
+
     public String getACCNUM() {
         return ACCNUM;
     }
@@ -23,6 +25,14 @@ public class AssociationBillModel {
 
     public void setCOMPCODE(String COMPCODE) {
         this.COMPCODE = COMPCODE;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setIsSelected(boolean isSelected) {
+        this.isSelected = isSelected;
     }
 
     @Override

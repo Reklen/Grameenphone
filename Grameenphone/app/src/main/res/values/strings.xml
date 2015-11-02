@@ -98,6 +98,7 @@
 
     <string name="button_stringname">OTHER PAYMENT</string>
     <string name="button_payselectedbills">PAY SELECTED BILLS</string>
+    <string name="button_cancelBills">CANCEL SELECTED BILLS</string>
     <string name="terms_condition_statement_1">Lorem ipsum dolor sit amet, consectetuer adipisc-\n
 ing elit. Morbi commodo,ipsum sed pharetra gravi-\n
 da, orci magna rhoncus neque id pulvinar odio\n
