@@ -94,6 +94,7 @@ public class QuickPayFragment extends Fragment implements Validator.ValidationLi
 
     @Override
     public void onValidationSucceeded() {
+        editTextQuickPayCode.setText("");
         quickPayInterface.onQuickCodeSubmit(editTextQuickPayCode.getText().toString() + "");
     }
 

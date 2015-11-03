@@ -33,6 +33,7 @@ import com.cc.grameenphone.interfaces.OtherPaymentApi;
 import com.cc.grameenphone.interfaces.WalletBalanceInterface;
 import com.cc.grameenphone.interfaces.WalletCheckApi;
 import com.cc.grameenphone.utils.ConnectivityUtils;
+import com.cc.grameenphone.utils.KeyboardUtil;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
 import com.cc.grameenphone.views.RippleView;
@@ -236,14 +237,16 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
 
             @Override
             public void onDrawerClosed(View drawerView) {
+                KeyboardUtil.hideKeyboard(HomeActivity.this);
                 // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
                 super.onDrawerClosed(drawerView);
+
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
-
+                KeyboardUtil.hideKeyboard(HomeActivity.this);
                 super.onDrawerOpened(drawerView);
             }
         };

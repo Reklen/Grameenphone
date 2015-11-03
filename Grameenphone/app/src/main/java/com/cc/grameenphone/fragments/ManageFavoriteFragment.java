@@ -144,6 +144,35 @@ public class ManageFavoriteFragment extends Fragment {
                     getActivity().setResult(getActivity().RESULT_OK, d);
                     getActivity().finish();
                 }
+
+            }
+        });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                confirmDialog = new MaterialDialog(getActivity());
+                confirmDialog.setMessage("Remove" + " " + adapter.getItem(position).getName() + " " + "from favorites ?");
+                confirmDialog.setNegativeButton("CANCEL", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        confirmDialog.dismiss();
+                    }
+                });
+                confirmDialog.setPositiveButton("REMOVE", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        confirmDialog.dismiss();
+                        Logger.d("Delte fav", "position is " + position);
+                        adapter.getItem(position).delete();
+                        adapter.remove(position);
+
+
+
+                    }
+                });
+
+                confirmDialog.show();
+                return false;
             }
         });
         fetchList();
@@ -185,12 +214,16 @@ public class ManageFavoriteFragment extends Fragment {
                             }
                         });
                         contactModelList.addAll(list);
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                adapter.notifyDataSetChanged();
-                            }
-                        });
+                        try {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                     }
                 });

@@ -48,6 +48,7 @@ import com.cc.grameenphone.utils.KeyboardUtil;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PhoneUtils;
 import com.cc.grameenphone.utils.PreferenceManager;
+import com.cc.grameenphone.views.AmountEditText;
 import com.cc.grameenphone.views.RippleView;
 
 import org.json.JSONException;
@@ -89,7 +90,7 @@ public class HomeFragment extends Fragment {
     @InjectView(R.id.top_container1)
     RelativeLayout topContainer1;
     @InjectView(R.id.editamt)
-    EditText editamt;
+    AmountEditText editamt;
     @InjectView(R.id.amount_container)
     TextInputLayout amountContainer;
     @InjectView(R.id.flexi_btn)
@@ -189,7 +190,6 @@ public class HomeFragment extends Fragment {
         editamt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
