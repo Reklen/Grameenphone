@@ -18,9 +18,10 @@
         android:textColor="@color/white"
         android:textSize="24sp" />
 
-    <View android:layout_height="1dp"
+    <View
+        android:layout_height="1dp"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/grameen_text"
-        android:background="@color/grey_300"/>
+        android:background="@color/grey_300" />
 </RelativeLayout>

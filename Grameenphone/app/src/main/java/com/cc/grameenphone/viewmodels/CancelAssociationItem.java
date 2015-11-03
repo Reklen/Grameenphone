@@ -66,21 +66,22 @@ public class CancelAssociationItem {
     public void setCancelBtn(int cancelBtn) {
         this.cancelBtn = cancelBtn;
     }
+
     public static class ItemList {
         public static List<CancelAssociationItem> getItem() {
-            List<CancelAssociationItem> list=new ArrayList<CancelAssociationItem>();
+            List<CancelAssociationItem> list = new ArrayList<CancelAssociationItem>();
             list.add(new CancelAssociationItem("ACC. No:",
-                    "123432","Company:","DESCO",R.id.cancelButton));
+                    "123432", "Company:", "DESCO", R.id.cancelButton));
             list.add(new CancelAssociationItem("ACC. No:",
-                    "123433","Company:","TITAS",R.id.cancelButton));
+                    "123433", "Company:", "TITAS", R.id.cancelButton));
             list.add(new CancelAssociationItem("ACC. No:",
-                    "123422","Company:","KGCL",R.id.cancelButton));
+                    "123422", "Company:", "KGCL", R.id.cancelButton));
             list.add(new CancelAssociationItem("ACC. No:",
-                    "123132","Company:","DESCO",R.id.cancelButton));
+                    "123132", "Company:", "DESCO", R.id.cancelButton));
             list.add(new CancelAssociationItem("ACC. No:",
-                    "123452","Company:","KGCL",R.id.cancelButton));
+                    "123452", "Company:", "KGCL", R.id.cancelButton));
             list.add(new CancelAssociationItem("ACC. No:",
-                    "123467","Company:","TITAS",R.id.cancelButton));
+                    "123467", "Company:", "TITAS", R.id.cancelButton));
 
             return list;
         }

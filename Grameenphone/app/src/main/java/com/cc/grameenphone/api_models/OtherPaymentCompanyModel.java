@@ -44,20 +44,18 @@ public class OtherPaymentCompanyModel implements Rush, Serializable {
     public void setCOMPCODE(String COMPCODE) {
         this.COMPCODE = COMPCODE;
     }
-    public String getCATCODE ()
-    {
+
+    public String getCATCODE() {
         return CATCODE;
     }
 
-    public void setCATCODE (String CATCODE)
-    {
+    public void setCATCODE(String CATCODE) {
         this.CATCODE = CATCODE;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [SURCREQ = "+SURCREQ+", COMPNAME = "+COMPNAME+", CATCODE = "+CATCODE+", COMPCODE = "+COMPCODE+"]";
+    public String toString() {
+        return "ClassPojo [SURCREQ = " + SURCREQ + ", COMPNAME = " + COMPNAME + ", CATCODE = " + CATCODE + ", COMPCODE = " + COMPCODE + "]";
     }
 
     @Override

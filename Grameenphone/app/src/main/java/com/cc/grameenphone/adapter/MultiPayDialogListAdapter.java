@@ -73,7 +73,7 @@ public class MultiPayDialogListAdapter extends BaseAdapter {
         MultiBillsListViewHolder holder = (MultiBillsListViewHolder) itemView.getTag();
         MultiBillListModel model = listitemslist.get(position);
         holder.account_textView.setText(model.getAccountNumber());
-        holder.amount_textView.setText("৳ " +model.getAmount());
+        holder.amount_textView.setText("৳ " + model.getAmount());
         if (model.getStatus() == -1)
             holder.statusImageView.setImageDrawable(new ColorDrawable(Color.TRANSPARENT));
         else if (model.getStatus() == 0)

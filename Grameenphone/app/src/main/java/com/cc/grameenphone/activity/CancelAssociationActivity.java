@@ -7,10 +7,14 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,11 +34,13 @@ import com.cc.grameenphone.views.RippleView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -62,10 +68,19 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
     Toolbar toolbar;
     @InjectView(R.id.associationList)
     ListView associationList;
+    @InjectView(R.id.selectedCancelButton)
+    Button selectedCancelButton;
+    @InjectView(R.id.multiCancelBillsCheckBox)
+    CheckBox multiCancelBillsCheckBox;
+    @InjectView(R.id.cancelBillsbar)
+    TextView cancelBillsbar;
+    @InjectView(R.id.selectedCancelRippleView)
+    RippleView selectedCancelRippleView;
     private String android_id;
     private PreferenceManager preferenceManager;
     private MaterialDialog errorDialog;
     private ProgressDialog loadingDialog;
+    List<String> cancelBillsSelectedList;
 
 
     @Override
@@ -75,6 +90,7 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
         ButterKnife.inject(this);
         setupToolbar();
         init();
+        cancelBillsSelectedList = new ArrayList<>();
 
     }
 
@@ -86,6 +102,11 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
                 finish();
             }
         });
+    }
+
+    @OnClick(R.id.selectedCancelButton)
+    public void selctedBillCancel() {
+
     }
 
     private void init() {
@@ -127,7 +148,6 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
                     }
 
                 }
-
                 @Override
                 public void failure(RetrofitError error) {
                     Logger.e("CancelAssociation", error.getMessage() + "");
@@ -137,11 +157,84 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
             e.printStackTrace();
         }
 
-
         associationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Logger.d("CancelAssociation", "Position " + position);
+
+                CheckBox checkBox = (CheckBox) view.findViewById(R.id.cancelCheckBox);
+                Button cancelButton= (Button) view.findViewById(R.id.cancelButton);
+
+                AssociationBillModel associationBillModel = (AssociationBillModel) adapter.getItem(position);
+                if (cancelBillsSelectedList.contains(position + "")) {
+                    cancelBillsSelectedList.remove(position + "");
+                    checkBox.setChecked(false);
+                    multiCancelBillsCheckBox.setChecked(false);
+                    try {
+                        Field field = CompoundButton.class.getDeclaredField("mChecked");
+                        field.setAccessible(true);
+                        field.set(multiCancelBillsCheckBox, multiCancelBillsCheckBox.isChecked());
+                        multiCancelBillsCheckBox.refreshDrawableState();
+                        multiCancelBillsCheckBox.invalidate();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    selectedCancelButton.setText("CANCEL SELECTED BILLS");
+                    associationBillModel.setIsSelected(false);
+                } else {
+                    cancelBillsSelectedList.add(position + "");
+                    checkBox.setChecked(true);
+                    selectedCancelButton.setText("CANCEL SELECTED BILLS");
+                    associationBillModel.setIsSelected(true);
+                }
+                if (cancelBillsSelectedList.size() == 0) {
+                    adapter.toggleCancelButton(true);
+                    selectedCancelRippleView.setVisibility(View.GONE);
+                    multiCancelBillsCheckBox.setVisibility(View.GONE);
+                   // cancelButton.setVisibility(View.VISIBLE);
+                    multiCancelBillsCheckBox.setChecked(false);
+                    cancelBillsbar.setText("Association List");
+
+
+                }else {
+                    adapter.toggleCancelButton(false);
+                    selectedCancelRippleView.setVisibility(View.VISIBLE);
+                    multiCancelBillsCheckBox.setVisibility(View.VISIBLE);
+                   // cancelButton.setVisibility(View.GONE);
+                    cancelBillsbar.setText("Cancel selected bills");
+                }
+
+            }
+        });
+        multiCancelBillsCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                for (int k = 0; k < adapter.getListitemslist().size(); k++) {
+                    AssociationBillModel bills = adapter.getItem(k);
+                    if (isChecked) {
+                        bills.setIsSelected(true);
+                        if (!cancelBillsSelectedList.contains(k + "")) {
+                            cancelBillsSelectedList.add(k + "");
+                        }
+                    } else {
+                        bills.setIsSelected(false);
+                        cancelBillsSelectedList.clear();
+                    }
+                }
+                adapter.notifyDataSetChanged();
+                if (isChecked) {
+                    Log.d("association", adapter.getListitemslist().toString());
+                    selectedCancelButton.setText("CANCEL ALL ASSOCIATION");
+                }
+                else {
+                    selectedCancelButton.setText("CANCEL SELECTED BILLS");
+                    adapter.toggleCancelButton(true);
+                    selectedCancelRippleView.setVisibility(View.GONE);
+                    multiCancelBillsCheckBox.setVisibility(View.GONE);
+                    multiCancelBillsCheckBox.setChecked(false);
+                    cancelBillsbar.setText("My Pending bills");
+                    //otherPayRippleView.setVisibility(View.VISIBLE);
+                }
 
             }
         });
@@ -151,8 +244,11 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
     public void onBtnClick(int position) {
 
         final AssociationBillModel model = adapter.getItem(position);
+        adapter.clear();
         cancelDialog = new MaterialDialog(CancelAssociationActivity.this);
         cancelDialog.setMessage("Remove Acc. No: " + model.getACCNUM() + " from " + model.getCOMPCODE() + " association ?");
+        Log.d("billNumb", model.getACCNUM());
+        Log.d("compCode",model.getCOMPCODE());
         cancelDialog.setPositiveButton("Remove", new View.OnClickListener() {
             @Override
             public void onClick(View v) {

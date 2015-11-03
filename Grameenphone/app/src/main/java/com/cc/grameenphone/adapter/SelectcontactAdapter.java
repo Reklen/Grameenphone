@@ -15,6 +15,7 @@ public class SelectcontactAdapter extends FragmentPagerAdapter {
     String tabs[] = {"Favorites", "Contacts"};
     public ContactsDetailsFragment contactsDetailsFragment;
     public ManageFavoriteFragment manageFavoriteFragment;
+
     public SelectcontactAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -23,7 +24,7 @@ public class SelectcontactAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-               manageFavoriteFragment = new ManageFavoriteFragment();
+                manageFavoriteFragment = new ManageFavoriteFragment();
                 return manageFavoriteFragment;
 
             case 1:

@@ -57,12 +57,12 @@ public class PhoneUtils {
 
         String uriString = "";
 
-        if(!ussd.startsWith("tel:"))
+        if (!ussd.startsWith("tel:"))
             uriString += "tel:";
 
-        for(char c : ussd.toCharArray()) {
+        for (char c : ussd.toCharArray()) {
 
-            if(c == '#')
+            if (c == '#')
                 uriString += Uri.encode("#");
             else
                 uriString += c;

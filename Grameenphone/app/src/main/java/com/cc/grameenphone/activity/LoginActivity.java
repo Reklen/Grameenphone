@@ -31,6 +31,7 @@ import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.Validator.ValidationListener;
 import com.mobsandgeeks.saripaar.annotation.Checked;
+import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 
@@ -59,6 +60,7 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
     @InjectView(R.id.areaCode)
     TextView areaCode;
     @NotEmpty
+    @Length(min = 8)
     @InjectView(R.id.phoneNumberEditText)
     EditText phoneNumberEditText;
     @InjectView(R.id.phone_container)
@@ -275,6 +277,7 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
             // Display error messages ;)
             if (view instanceof EditText) {
                 ((EditText) view).setError(message);
+                ((EditText) view).setText("");
             } else {
                 Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
             }

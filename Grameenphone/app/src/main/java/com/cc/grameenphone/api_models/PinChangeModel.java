@@ -9,19 +9,16 @@ public class PinChangeModel {
     @SerializedName("COMMAND")
     private PinChangeCommandModel command;
 
-    public PinChangeCommandModel getCommand()
-    {
+    public PinChangeCommandModel getCommand() {
         return command;
     }
 
-    public void setCommand(PinChangeCommandModel command)
-    {
+    public void setCommand(PinChangeCommandModel command) {
         this.command = command;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [command = "+ command +"]";
+    public String toString() {
+        return "ClassPojo [command = " + command + "]";
     }
 }

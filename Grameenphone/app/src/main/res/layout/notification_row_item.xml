@@ -21,6 +21,7 @@
             android:text="Exclusive Offer"
             android:textColor="@color/primary"
             android:textSize="16dp" />
+
         <TextView
             android:id="@+id/fulltalk_text"
             android:layout_width="wrap_content"
@@ -41,6 +42,7 @@
 
 
     </LinearLayout>
+
     <TextView
         android:id="@+id/today_text"
         android:layout_width="wrap_content"

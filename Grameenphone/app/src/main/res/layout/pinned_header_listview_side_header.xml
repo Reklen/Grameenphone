@@ -9,4 +9,4 @@
     android:background="@color/transparent"
     android:text="A"
     android:textSize="25sp"
-    tools:ignore="HardcodedText"/>
+    tools:ignore="HardcodedText" />

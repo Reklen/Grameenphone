@@ -159,7 +159,7 @@ public class AutoCompleteAdapter extends ArrayAdapter<ContactModel> implements F
             else {
                 result = new ArrayList<ContactModel>();
                 for (int i = 0; i < mOriginalValues.size(); i++) {
-                    String number =  mOriginalValues.get(i).getNumber();
+                    String number = mOriginalValues.get(i).getNumber();
                     number = number.replace(" ", "");
                     if (prefix.length() > 0 && number.contains(prefix.toString()))
                         result.add(mOriginalValues.get(i));

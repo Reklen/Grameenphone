@@ -9,19 +9,16 @@ public class NewAssociationConfirmModel {
     @SerializedName("COMMAND")
     private NewAssociationConfirmCommandModel COMMAND;
 
-    public NewAssociationConfirmCommandModel getCOMMAND ()
-    {
+    public NewAssociationConfirmCommandModel getCOMMAND() {
         return COMMAND;
     }
 
-    public void setCOMMAND (NewAssociationConfirmCommandModel COMMAND)
-    {
+    public void setCOMMAND(NewAssociationConfirmCommandModel COMMAND) {
         this.COMMAND = COMMAND;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [COMMAND = "+COMMAND+"]";
+    public String toString() {
+        return "ClassPojo [COMMAND = " + COMMAND + "]";
     }
 }

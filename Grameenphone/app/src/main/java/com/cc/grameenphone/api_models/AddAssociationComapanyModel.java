@@ -10,39 +10,32 @@ public class AddAssociationComapanyModel {
 
     private String COMPCODE;
 
-    public String getSURCREQ ()
-    {
+    public String getSURCREQ() {
         return SURCREQ;
     }
 
-    public void setSURCREQ (String SURCREQ)
-    {
+    public void setSURCREQ(String SURCREQ) {
         this.SURCREQ = SURCREQ;
     }
 
-    public String getCOMPNAME ()
-    {
+    public String getCOMPNAME() {
         return COMPNAME;
     }
 
-    public void setCOMPNAME (String COMPNAME)
-    {
+    public void setCOMPNAME(String COMPNAME) {
         this.COMPNAME = COMPNAME;
     }
 
-    public String getCOMPCODE ()
-    {
+    public String getCOMPCODE() {
         return COMPCODE;
     }
 
-    public void setCOMPCODE (String COMPCODE)
-    {
+    public void setCOMPCODE(String COMPCODE) {
         this.COMPCODE = COMPCODE;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [SURCREQ = "+SURCREQ+", COMPNAME = "+COMPNAME+", COMPCODE = "+COMPCODE+"]";
+    public String toString() {
+        return "ClassPojo [SURCREQ = " + SURCREQ + ", COMPNAME = " + COMPNAME + ", COMPCODE = " + COMPCODE + "]";
     }
 }

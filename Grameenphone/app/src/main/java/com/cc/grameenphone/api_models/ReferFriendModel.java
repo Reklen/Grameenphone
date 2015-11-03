@@ -9,19 +9,16 @@ public class ReferFriendModel {
     @SerializedName("COMMAND")
     private ReferFriendCommandModel command;
 
-    public ReferFriendCommandModel getCommand()
-    {
+    public ReferFriendCommandModel getCommand() {
         return command;
     }
 
-    public void setCommand(ReferFriendCommandModel command)
-    {
+    public void setCommand(ReferFriendCommandModel command) {
         this.command = command;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [command = "+ command +"]";
+    public String toString() {
+        return "ClassPojo [command = " + command + "]";
     }
 }

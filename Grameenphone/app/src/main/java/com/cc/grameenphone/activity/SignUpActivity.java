@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.media.MediaMetadataCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -37,6 +38,8 @@ import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Checked;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
+import com.mobsandgeeks.saripaar.annotation.Length;
+import com.mobsandgeeks.saripaar.annotation.Min;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 
@@ -77,6 +80,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
     TextView areaCode;
 
     @NotEmpty
+    @Length(min = 8)
     @InjectView(R.id.phoneNumberEditText)
     EditText phoneNumberEditText;
 
@@ -227,6 +231,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
             // Display error messages ;)
             if (view instanceof EditText) {
                 ((EditText) view).setError(message);
+                ((EditText) view).setText("");
             } else {
                 Toast.makeText(SignUpActivity.this, message, Toast.LENGTH_LONG).show();
             }

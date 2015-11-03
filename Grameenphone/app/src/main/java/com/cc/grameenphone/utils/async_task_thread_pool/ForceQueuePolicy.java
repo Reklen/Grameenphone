@@ -7,17 +7,12 @@ import java.util.concurrent.ThreadPoolExecutor;
 /**
  * Created by rajkiran on 11/09/15.
  */
-class ForceQueuePolicy implements RejectedExecutionHandler
-{
+class ForceQueuePolicy implements RejectedExecutionHandler {
     @Override
-    public void rejectedExecution(final Runnable r,final ThreadPoolExecutor executor)
-    {
-        try
-        {
+    public void rejectedExecution(final Runnable r, final ThreadPoolExecutor executor) {
+        try {
             executor.getQueue().put(r);
-        }
-        catch(final InterruptedException e)
-        {
+        } catch (final InterruptedException e) {
             // should never happen since we never wait
             throw new RejectedExecutionException(e);
         }

@@ -11,19 +11,16 @@ public class ProfileModel implements Serializable {
     @SerializedName("COMMAND")
     private ProfileCommandModel COMMAND;
 
-    public ProfileCommandModel getCOMMAND ()
-    {
+    public ProfileCommandModel getCOMMAND() {
         return COMMAND;
     }
 
-    public void setCOMMAND (ProfileCommandModel COMMAND)
-    {
+    public void setCOMMAND(ProfileCommandModel COMMAND) {
         this.COMMAND = COMMAND;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [COMMAND = "+COMMAND+"]";
+    public String toString() {
+        return "ClassPojo [COMMAND = " + COMMAND + "]";
     }
 }

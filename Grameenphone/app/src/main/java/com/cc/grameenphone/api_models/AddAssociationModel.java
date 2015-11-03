@@ -6,19 +6,16 @@ package com.cc.grameenphone.api_models;
 public class AddAssociationModel {
     private AddAssociationCommandModel COMMAND;
 
-    public AddAssociationCommandModel getCOMMAND ()
-    {
+    public AddAssociationCommandModel getCOMMAND() {
         return COMMAND;
     }
 
-    public void setCOMMAND (AddAssociationCommandModel COMMAND)
-    {
+    public void setCOMMAND(AddAssociationCommandModel COMMAND) {
         this.COMMAND = COMMAND;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [COMMAND = "+COMMAND+"]";
+    public String toString() {
+        return "ClassPojo [COMMAND = " + COMMAND + "]";
     }
 }

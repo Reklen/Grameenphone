@@ -9,19 +9,16 @@ public class OtherPaymentModel {
     @SerializedName("COMMAND")
     private OtherPaymentCommandModel COMMAND;
 
-    public OtherPaymentCommandModel getCOMMAND ()
-    {
+    public OtherPaymentCommandModel getCOMMAND() {
         return COMMAND;
     }
 
-    public void setCOMMAND (OtherPaymentCommandModel COMMAND)
-    {
+    public void setCOMMAND(OtherPaymentCommandModel COMMAND) {
         this.COMMAND = COMMAND;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [COMMAND = "+COMMAND+"]";
+    public String toString() {
+        return "ClassPojo [COMMAND = " + COMMAND + "]";
     }
 }

@@ -49,7 +49,7 @@ import retrofit.client.Response;
 /**
  * Created by Rajkiran on 9/10/2015.
  */
-public class OtherPaymentInternetFragment extends BaseTabFragment implements Validator.ValidationListener{
+public class OtherPaymentInternetFragment extends BaseTabFragment implements Validator.ValidationListener {
 
 
     @InjectView(R.id.customRadioGroupLayout)
@@ -248,7 +248,7 @@ public class OtherPaymentInternetFragment extends BaseTabFragment implements Val
             innerObject.put("BILLNO", billNumbEdit.getText().toString());
             innerObject.put("BPROVIDER", "101");
             innerObject.put("SURCHARGE", surchargeEditText.getText().toString());
-            innerObject.put("PIN",pin);
+            innerObject.put("PIN", pin);
             jsonObject.put("COMMAND", innerObject);
             Logger.d("confirmaing bill payment ", jsonObject.toString());
             otherPaymentApi.billConfirmation(jsonObject, new Callback<BillConfirmationModel>() {

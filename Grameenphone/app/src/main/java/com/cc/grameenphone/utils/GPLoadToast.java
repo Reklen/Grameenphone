@@ -106,8 +106,8 @@ public class GPLoadToast {
     }
 
 
-    public void success(){
-        if(!mInflated){
+    public void success() {
+        if (!mInflated) {
             mToastCanceled = true;
             return;
         }
@@ -116,8 +116,8 @@ public class GPLoadToast {
     }
 
 
-    public void error(){
-        if (!mInflated){
+    public void error() {
+        if (!mInflated) {
             mToastCanceled = true;
             return;
         }

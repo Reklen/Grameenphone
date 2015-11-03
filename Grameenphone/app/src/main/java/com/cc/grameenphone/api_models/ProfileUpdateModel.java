@@ -9,19 +9,16 @@ public class ProfileUpdateModel {
     @SerializedName("COMMAND")
     private ProfileUpdateCommandModel command;
 
-    public ProfileUpdateCommandModel getCommand()
-    {
+    public ProfileUpdateCommandModel getCommand() {
         return command;
     }
 
-    public void setCommand(ProfileUpdateCommandModel command)
-    {
+    public void setCommand(ProfileUpdateCommandModel command) {
         this.command = command;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [command = "+ command +"]";
+    public String toString() {
+        return "ClassPojo [command = " + command + "]";
     }
 }

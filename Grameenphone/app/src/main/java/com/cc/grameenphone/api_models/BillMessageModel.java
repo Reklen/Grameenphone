@@ -13,29 +13,24 @@ public class BillMessageModel {
 
     private String BILLCOUNT;
 
-    public List<UserBillsModel> getComapny()
-    {
+    public List<UserBillsModel> getComapny() {
         return comapny;
     }
 
-    public void setComapny(List<UserBillsModel> comapny)
-    {
+    public void setComapny(List<UserBillsModel> comapny) {
         this.comapny = comapny;
     }
 
-    public String getBILLCOUNT ()
-    {
+    public String getBILLCOUNT() {
         return BILLCOUNT;
     }
 
-    public void setBILLCOUNT (String BILLCOUNT)
-    {
+    public void setBILLCOUNT(String BILLCOUNT) {
         this.BILLCOUNT = BILLCOUNT;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [comapny = "+ comapny +", BILLCOUNT = "+BILLCOUNT+"]";
+    public String toString() {
+        return "ClassPojo [comapny = " + comapny + ", BILLCOUNT = " + BILLCOUNT + "]";
     }
 }

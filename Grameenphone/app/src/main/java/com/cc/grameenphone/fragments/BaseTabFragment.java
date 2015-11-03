@@ -27,7 +27,7 @@ public class BaseTabFragment extends Fragment {
                 rdbtn.setText("Radio " + rdbtn.getId());
                 ll.addView(rdbtn);
             }
-           // ((ViewGroup) findViewById(R.id.radiogroup)).addView(ll);
+            // ((ViewGroup) findViewById(R.id.radiogroup)).addView(ll);
         }
 
     }

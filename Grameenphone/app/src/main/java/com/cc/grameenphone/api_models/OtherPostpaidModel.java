@@ -9,20 +9,17 @@ public class OtherPostpaidModel {
     @SerializedName("COMMAND")
     private OtherPostpaidCommandModel command;
 
-    public OtherPostpaidCommandModel getCommand()
-    {
+    public OtherPostpaidCommandModel getCommand() {
         return command;
     }
 
-    public void setCommand(OtherPostpaidCommandModel command)
-    {
+    public void setCommand(OtherPostpaidCommandModel command) {
         this.command = command;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [command = "+ command +"]";
+    public String toString() {
+        return "ClassPojo [command = " + command + "]";
     }
 
 }

@@ -452,8 +452,6 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             }
         });
 
-
-
         multiBillsCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -467,7 +465,6 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                     } else {
                         bills.setIsSelected(false);
                         billsSelectedList.clear();
-
                     }
                 }
                 listViewAdapter.notifyDataSetChanged();

@@ -10,8 +10,8 @@ import android.widget.EditText;
 public class AmountEditText extends EditText {
 
 
-    public AmountEditText(Context context, AttributeSet attr) {
-        super(context, attr);
+    public AmountEditText(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
 
     @Override
@@ -21,3 +21,4 @@ public class AmountEditText extends EditText {
         super.onSelectionChanged(selStart, selEnd);
     }
 }
+

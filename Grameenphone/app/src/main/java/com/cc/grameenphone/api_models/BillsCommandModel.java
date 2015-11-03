@@ -14,39 +14,32 @@ public class BillsCommandModel {
 
     private String TYPE;
 
-    public BillMessageModel getMessage()
-    {
+    public BillMessageModel getMessage() {
         return message;
     }
 
-    public void setMessage(BillMessageModel message)
-    {
+    public void setMessage(BillMessageModel message) {
         this.message = message;
     }
 
-    public String getTXNSTATUS ()
-    {
+    public String getTXNSTATUS() {
         return TXNSTATUS;
     }
 
-    public void setTXNSTATUS (String TXNSTATUS)
-    {
+    public void setTXNSTATUS(String TXNSTATUS) {
         this.TXNSTATUS = TXNSTATUS;
     }
 
-    public String getTYPE ()
-    {
+    public String getTYPE() {
         return TYPE;
     }
 
-    public void setTYPE (String TYPE)
-    {
+    public void setTYPE(String TYPE) {
         this.TYPE = TYPE;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [message = "+ message +", TXNSTATUS = "+TXNSTATUS+", TYPE = "+TYPE+"]";
+    public String toString() {
+        return "ClassPojo [message = " + message + ", TXNSTATUS = " + TXNSTATUS + ", TYPE = " + TYPE + "]";
     }
 }
