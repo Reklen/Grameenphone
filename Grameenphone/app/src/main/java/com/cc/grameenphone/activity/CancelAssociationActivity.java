@@ -312,7 +312,7 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
                         list.clear();
                         if (associationModel.getCommandModel().getBILLDEL() != null) {
                             for (AssociationBillModel associationBillModel : associationModel.getCommandModel().getBILLDEL())
-                                if (associationBillModel.getACCNUM() != null)
+                                if (associationBillModel.getACCNUM() != null && !associationBillModel.getACCNUM().equalsIgnoreCase("null"))
                                     list.add(associationBillModel);
 
                         }
