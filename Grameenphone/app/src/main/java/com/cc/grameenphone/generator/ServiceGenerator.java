@@ -1,5 +1,6 @@
 package com.cc.grameenphone.generator;
 
+import com.cc.grameenphone.utils.Logger;
 import com.squareup.okhttp.OkHttpClient;
 
 import retrofit.RestAdapter;
@@ -19,6 +20,13 @@ public class ServiceGenerator {
     public static <S> S createService(Class<S> serviceClass) {
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(BASE_URL)
+                .setLog(new RestAdapter.Log() {
+                    @Override
+                    public void log(String msg) {
+                        Logger.i("Retro", msg);
+                    }
+                })
+                .setLogLevel(RestAdapter.LogLevel.FULL)
 
                 .setClient(new OkClient(new OkHttpClient()));
 

@@ -9,5 +9,6 @@ import android.widget.TextView;
 public class MultiBillsListViewHolder {
     public TextView account_textView;
     public TextView amount_textView;
+    public TextView amount_label;
     public ImageView statusImageView;
 }

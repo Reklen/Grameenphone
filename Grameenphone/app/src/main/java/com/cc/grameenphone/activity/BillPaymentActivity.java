@@ -27,6 +27,7 @@ import com.cc.grameenphone.adapter.MultiPayDialogListAdapter;
 import com.cc.grameenphone.api_models.BalanceEnquiryModel;
 import com.cc.grameenphone.api_models.BillListModel;
 import com.cc.grameenphone.api_models.BillPaymentModel;
+import com.cc.grameenphone.api_models.MultiBillApiModel;
 import com.cc.grameenphone.api_models.UserBillsModel;
 import com.cc.grameenphone.async.SessionClearTask;
 import com.cc.grameenphone.generator.ServiceGenerator;
@@ -40,9 +41,11 @@ import com.cc.grameenphone.utils.ToolBarUtils;
 import com.cc.grameenphone.viewmodels.MultiBillListModel;
 import com.cc.grameenphone.views.RippleView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +57,8 @@ import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 
 /**
@@ -288,10 +293,9 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                 loadingDialog.show();
                 String pin = pinConfirmationET.getText().toString();
                 pinConfirmDialog.dismiss();
-                KeyboardUtil.hideKeyboard(BillPaymentActivity.this);
+                // KeyboardUtil.hideKeyboard(BillPaymentActivity.this);
                 selectedPayConfirmationDialog.show();
-                for (MultiBillListModel model : multiBillListModelList)
-                    payBillForMultiPosition(model, pin);
+                payBillForMultiPosition(multiBillListModelList, pin);
 
             }
         });
@@ -303,7 +307,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
 
     }
 
-    private void payBillForMultiPosition(final MultiBillListModel userBillsModel, String pin) {
+    /*private void payBillForMultiPosition(final MultiBillListModel userBillsModel, String pin) {
 
         KeyboardUtil.hideKeyboard(BillPaymentActivity.this);
         try {
@@ -393,6 +397,153 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         } catch (JSONException e) {
             e.printStackTrace();
             loadingDialog.cancel();
+        }
+
+    }*/
+    JSONObject billsInnerJsonObject;
+
+    private void payBillForMultiPosition(final List<MultiBillListModel> userBillsModel, String pin) {
+
+        KeyboardUtil.hideKeyboard(BillPaymentActivity.this);
+        try {
+            JSONObject jsonObject = new JSONObject();
+            JSONObject innerObject = new JSONObject();
+            innerObject.put("DEVICEID", android_id);
+            innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("TYPE", "BLKBPAYREQ");
+            innerObject.put("NOOFBILLS", userBillsModel.size());
+            JSONArray billsJsonArray = new JSONArray();
+
+            /*
+              innerObject.put("BILLCCODE", userBillsModel.getCompanyName().toUpperCase());
+            innerObject.put("BILLANO", userBillsModel.getAccountNumber());
+            innerObject.put("AMOUNT", userBillsModel.getAmount());
+            innerObject.put("BILLNO", userBillsModel.getBillNum());
+            innerObject.put("PIN", pin);//TODO add pin confirm dialog
+            innerObject.put("BPROVIDER", userBillsModel.getbProvider());
+             */
+            for (MultiBillListModel multiBillListModel : userBillsModel) {
+                billsInnerJsonObject = new JSONObject();
+                billsInnerJsonObject.put("BILLCCODE", multiBillListModel.getCompanyName().toUpperCase());
+                billsInnerJsonObject.put("BILLANO", multiBillListModel.getAccountNumber());
+                billsInnerJsonObject.put("AMOUNT", multiBillListModel.getAmount());
+                billsInnerJsonObject.put("BILLNO", multiBillListModel.getBillNum());
+                billsInnerJsonObject.put("BPROVIDER", multiBillListModel.getbProvider());
+                billsJsonArray.put(billsInnerJsonObject);
+            }
+
+            innerObject.put("BILLDET", billsJsonArray);
+
+            innerObject.put("PIN", pin);//TODO add pin confirm dialog
+            jsonObject.put("COMMAND", innerObject);
+            Logger.d("Paying Bill", jsonObject.toString());
+            //TODO Checking API Calls
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+
+            billspaymentApi.payMultipleBill(in, new Callback<MultiBillApiModel>() {
+                @Override
+                public void success(MultiBillApiModel multiBillApiModel, Response response) {
+                    Logger.d(multiBillApiModel.toString());
+
+                    if (multiBillApiModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                        //Success
+                        loadingDialog.dismiss();
+                        for (int i = 0; i < multiBillApiModel.getCOMMAND().getBILLDET().size(); i++) {
+                            if (multiBillApiModel.getCOMMAND().getBILLDET().get(i) != null && multiBillApiModel.getCOMMAND().getBILLDET().get(i).getTXNSTATUS() != null)
+                                if (multiBillApiModel.getCOMMAND().getBILLDET().get(i).getTXNSTATUS().equalsIgnoreCase("200")) {
+                                    userBillsModel.get(i).setStatus(1);
+                                    multiPayDialogListAdapter.notifyDataSetChanged();
+
+                                } else {
+                                    userBillsModel.get(i).setStatus(0);
+                                    multiPayDialogListAdapter.notifyDataSetChanged();
+                                }
+                        }
+                        //     multiBillListModel
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Logger.e(error);
+                    loadingDialog.cancel();
+                }
+            });
+          /*  billspaymentApi.payBill(jsonObject, new Callback<BillPaymentModel>() {
+                @Override
+                public void success(BillPaymentModel billPaymentModel, Response response) {
+                    Logger.d("BILLS response", billPaymentModel.toString());
+                    if (billPaymentModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                        loadingDialog.dismiss();
+                        userBillsModel.setStatus(1);
+                        multiPayDialogListAdapter.notifyDataSetChanged();
+
+                    } else if (billPaymentModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
+                        Logger.e("Balance", billPaymentModel.getCOMMAND().toString() + " ");
+                        loadingDialog.cancel();
+                        userBillsModel.setStatus(0);
+                        multiPayDialogListAdapter.notifyDataSetChanged();
+                        selectedPayConfirmationDialog.dismiss();
+                        sessionDialog = new MaterialDialog(BillPaymentActivity.this);
+                        sessionDialog.setMessage("Session expired , please login again");
+                        sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                sessionDialog.dismiss();
+                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this, false);
+                                sessionClearTask.execute();
+
+                            }
+                        });
+                        sessionDialog.setCanceledOnTouchOutside(false);
+                        sessionDialog.show();
+                    } else if (billPaymentModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("00068")) {
+                        loadingDialog.cancel();
+
+                        selectedPayConfirmationDialog.dismiss();
+                        errorDialog = new MaterialDialog(BillPaymentActivity.this);
+                        errorDialog.setMessage(billPaymentModel.getCOMMAND().getMESSAGE());
+                        errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                errorDialog.dismiss();
+                            }
+                        });
+                        errorDialog.setCanceledOnTouchOutside(true);
+                        errorDialog.show();
+                    } else {
+                        loadingDialog.cancel();
+                        selectedPayConfirmationDialog.dismiss();
+                        errorDialog = new MaterialDialog(BillPaymentActivity.this);
+                        errorDialog.setMessage(billPaymentModel.getCOMMAND().getMESSAGE());
+                        errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                errorDialog.dismiss();
+                            }
+                        });
+                        errorDialog.setCanceledOnTouchOutside(true);
+                        errorDialog.show();
+                        Logger.e("Balance", billPaymentModel.toString());
+                    }
+
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Logger.e("BILLS", error.getMessage());
+                    loadingDialog.cancel();
+                }
+            });*/
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            loadingDialog.cancel();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
     }

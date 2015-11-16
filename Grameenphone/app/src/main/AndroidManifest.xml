@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.cc.grameenphone">
+<manifest package="com.cc.grameenphone"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:name=".MainApplication"
@@ -23,66 +23,70 @@
         -->
         <activity
             android:name=".activity.LoginActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".activity.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:windowSoftInputMode="adjustPan">
 
-                <category android:name="android.intent.category.LAUNCHER" />
+        </activity>
+        <activity
+            android:name=".activity.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SelectContactsActivity" />
-        <activity android:name=".activity.SignUpActivity" />
-        <activity android:name=".activity.ProfileUpdateActivity" />
-        <activity android:name=".activity.HomeActivity" />
-        <activity android:name=".activity.TransactionOverviewActivity" />
-        <activity android:name=".activity.BillPaymentActivity" />
-        <activity android:name=".activity.TransactionOverviewDeatilsActivity" />
-        <activity android:name=".activity.AddFavoritesActivity" />
-        <activity android:name=".activity.ReferFriendsActivity" />
-        <activity android:name=".activity.AddFavoriteContactsActivity" />
-        <activity android:name=".activity.EditProfileActivity" />
-        <activity android:name=".sign_up.SignUpActivity" />
-        <activity android:name=".activity.RegularPayDetailsActivity" />
-        <activity android:name=".activity.CancelAssociationActivity" />
-        <activity android:name=".activity.OtherPaymentActivity" />
-        <activity android:name=".activity.NewAssociationActivity" />
+        <activity android:name=".activity.SelectContactsActivity"/>
+        <activity android:name=".activity.SignUpActivity"/>
+        <activity android:name=".activity.ProfileUpdateActivity"/>
+        <activity android:name=".activity.HomeActivity"/>
+        <activity android:name=".activity.TransactionOverviewActivity"/>
+        <activity android:name=".activity.BillPaymentActivity"/>
+        <activity android:name=".activity.TransactionOverviewDeatilsActivity"/>
+        <activity android:name=".activity.AddFavoritesActivity"/>
+        <activity android:name=".activity.ReferFriendsActivity"/>
+        <activity android:name=".activity.AddFavoriteContactsActivity"/>
+        <activity android:name=".activity.EditProfileActivity"/>
+        <activity android:name=".sign_up.SignUpActivity"/>
+        <activity android:name=".activity.RegularPayDetailsActivity"/>
+        <activity android:name=".activity.CancelAssociationActivity"/>
+        <activity android:name=".activity.OtherPaymentActivity"/>
+        <activity android:name=".activity.NewAssociationActivity"/>
 
 
         <activity android:name=".activity.QuickPayActivity"></activity>
-        <activity android:name=".activity.NotificationActivity" />
+        <activity android:name=".activity.NotificationActivity"/>
 
 
         <service
             android:name=".SmsRadarService"
-            android:exported="false" />
+            android:exported="false"/>
 
         <!-- Updating this will cause a database upgrade -->
         <meta-data
             android:name="Rush_db_version"
-            android:value="1" />
+            android:value="1"/>
 
         <!-- Database name -->
         <meta-data
             android:name="Rush_db_name"
-            android:value="gp_android.db" />
+            android:value="gp_android.db"/>
 
         <!-- Setting this to true will cause a migration to happen every launch,
         this is very handy during development although could cause data loss -->
         <meta-data
             android:name="Rush_debug"
-            android:value="true" />
+            android:value="true"/>
 
         <!-- Setting this to true mean that tables will only be created of classes that
         extend RushObject and are annotated with @RushTableAnnotation -->
         <meta-data
             android:name="Rush_requires_table_annotation"
-            android:value="false" />
+            android:value="false"/>
 
         <!-- Turning on logging can be done by settings this value to true -->
         <meta-data
             android:name="Rush_log"
-            android:value="false" />
+            android:value="false"/>
 
     </application>
 
