@@ -311,7 +311,10 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
                     if (associationModel.getCommandModel().getTXNSTATUS().equalsIgnoreCase("200")) {
                         list.clear();
                         if (associationModel.getCommandModel().getBILLDEL() != null) {
-                            list.addAll(associationModel.getCommandModel().getBILLDEL());
+                            for (AssociationBillModel associationBillModel : associationModel.getCommandModel().getBILLDEL())
+                                if (associationBillModel.getACCNUM() != null)
+                                    list.add(associationBillModel);
+
                         }
                         adapter.notifyDataSetChanged();
                     } else {
