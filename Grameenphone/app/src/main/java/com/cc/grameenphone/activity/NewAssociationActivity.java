@@ -106,7 +106,7 @@ public class NewAssociationActivity extends AppCompatActivity {
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CTCMPLREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("getOtherPaymentCompanies ", jsonObject.toString());
@@ -182,7 +182,7 @@ public class NewAssociationActivity extends AppCompatActivity {
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
             innerObject.put("TYPE", "FBILASCREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("sending json", jsonObject.toString());

@@ -131,7 +131,7 @@ public class PinChangeFragment extends Fragment {
                 newPineditText.requestFocus();
             }
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
             if ((confirmPinEditText.getText().toString().length()) == 4) {
                 innerObject.put("CONFIRMPIN", confirmPinEditText.getText().toString());
             } else {

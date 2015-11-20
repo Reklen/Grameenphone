@@ -384,7 +384,7 @@ public class HomeFragment extends Fragment {
             phoneNumberEditText.setError("Enter a valid number");
             phoneNumberEditText.requestFocus();
             return;
-        } else if (phoneNumberEditText.getText().toString().length() < 8) {
+        } else if (phoneNumberEditText.getText().toString().length() < 11) {
             phoneNumberEditText.setError("Enter a valid number");
             phoneNumberEditText.requestFocus();
             return;
@@ -456,7 +456,7 @@ public class HomeFragment extends Fragment {
                 JSONObject innerObject = new JSONObject();
                 innerObject.put("DEVICEID", android_id);
                 innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-                innerObject.put("MSISDN", "017" + phoneNumberEditText.getText().toString());
+                innerObject.put("MSISDN", phoneNumberEditText.getText().toString());
                 innerObject.put("TYPE", "CTMMREQ");
                 innerObject.put("RCTYPE", "PREPAID");
                 String amt = editamt.getText().toString();
@@ -582,7 +582,7 @@ public class HomeFragment extends Fragment {
                 JSONObject innerObject = new JSONObject();
                 innerObject.put("DEVICEID", android_id);
                 innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-                innerObject.put("MSISDN", "017" + phoneNumberEditText.getText().toString());
+                innerObject.put("MSISDN", phoneNumberEditText.getText().toString());
                 innerObject.put("TYPE", "CTMMREQ");
                 innerObject.put("RCTYPE", "POSTPAID");
                 String amt = editamt.getText().toString();
@@ -669,7 +669,7 @@ public class HomeFragment extends Fragment {
             phoneNumberEditText.setError("Enter a valid number");
             phoneNumberEditText.requestFocus();
             return;
-        } else if (phoneNumberEditText.getText().toString().length() < 8) {
+        } else if (phoneNumberEditText.getText().toString().length() < 11) {
             phoneNumberEditText.setError("Enter a valid number");
             phoneNumberEditText.requestFocus();
             return;
@@ -700,7 +700,7 @@ public class HomeFragment extends Fragment {
                 JSONObject innerObject = new JSONObject();
                 innerObject.put("DEVICEID", android_id);
                 innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-                innerObject.put("MSISDN", "017" + phoneNumberEditText.getText().toString());
+                innerObject.put("MSISDN", phoneNumberEditText.getText().toString());
                 innerObject.put("TYPE", "CTMMREQ");
 
                 String amt = editamt.getText().toString();
@@ -819,8 +819,8 @@ public class HomeFragment extends Fragment {
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
-            innerObject.put("MSISDN2", "017" + phoneNumberEditText.getText().toString());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
+            innerObject.put("MSISDN2", phoneNumberEditText.getText().toString());
             innerObject.put("TYPE", "OCTMMREQ");
             innerObject.put("RCTYPE", "POSTPAID");
             innerObject.put("PIN", pin);
@@ -900,8 +900,8 @@ public class HomeFragment extends Fragment {
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
-            innerObject.put("MSISDN2", "017" + phoneNumberEditText.getText().toString());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
+            innerObject.put("MSISDN2", phoneNumberEditText.getText().toString());
             innerObject.put("TYPE", "OCTMMREQ");
             // innerObject.put("RCTYPE", "PREPAID");
             innerObject.put("PIN", pin);
@@ -984,8 +984,8 @@ public class HomeFragment extends Fragment {
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
-            innerObject.put("MSISDN2", "017" + phoneNumberEditText.getText().toString());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
+            innerObject.put("MSISDN2", phoneNumberEditText.getText().toString());
             innerObject.put("TYPE", "OCTMMREQ");
             innerObject.put("RCTYPE", "PREPAID");
             innerObject.put("PIN", pin);
@@ -1127,7 +1127,7 @@ public class HomeFragment extends Fragment {
                 }
 
 
-                phoneNumberEditText.setText("" + last8);
+                phoneNumberEditText.setText("" + num.substring(Math.max(num.length() - 11, 0)));
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -280,7 +280,7 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment implements 
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CPMBREQ");
             innerObject.put("BILLCCODE", selectedCompany);
             innerObject.put("BILLANO", accountNumbEdit.getText().toString());

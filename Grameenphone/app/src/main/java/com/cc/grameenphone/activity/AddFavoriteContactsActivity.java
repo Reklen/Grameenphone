@@ -2,6 +2,8 @@ package com.cc.grameenphone.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -13,14 +15,23 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Filter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.api_models.ContactModel;
@@ -31,10 +42,13 @@ import com.cc.grameenphone.utils.ImageCache;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.async_task_thread_pool.AsyncTaskEx;
 import com.cc.grameenphone.utils.async_task_thread_pool.AsyncTaskThreadPool;
+import com.cc.grameenphone.views.MySearchView;
+import com.cc.grameenphone.views.RippleView;
 import com.cc.grameenphone.views.lv.PinnedHeaderListView;
 import com.cc.grameenphone.views.lv.SearchablePinnedHeaderListViewAdapter;
 import com.cc.grameenphone.views.lv.StringArrayAlphabetIndexer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -42,11 +56,25 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import co.uk.rushorm.core.RushCallback;
 import co.uk.rushorm.core.RushSearch;
 import co.uk.rushorm.core.RushSearchCallback;
 
 public class AddFavoriteContactsActivity extends AppCompatActivity {
+    @InjectView(R.id.image_back)
+    ImageButton imageBack;
+    @InjectView(R.id.backRipple)
+    RippleView backRipple;
+    @InjectView(R.id.toolbar_text)
+    TextView toolbarText;
+    @InjectView(R.id.toolbar_container)
+    RelativeLayout toolbarContainer;
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
+    @InjectView(android.R.id.list)
+    PinnedHeaderListView list;
     private LayoutInflater mInflater;
     private PinnedHeaderListView mListView;
     private ContactsAdapter mAdapter;
@@ -55,11 +83,14 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
     ImageView back_icon;
     private ProgressDialog loadingDialog;
     boolean isNameFoundCheck;
+    private SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_favorite_contacts);
+        ButterKnife.inject(this);
+        setSupportActionBar(toolbar);
         back_icon = (ImageView) findViewById(R.id.image_back);
         back_icon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,58 +123,136 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
         mListView.setAdapter(mAdapter);
         mListView.setOnScrollListener(mAdapter);
         mListView.setEnableHeaderTransparencyChanges(false);
-
+        Logger.d("Textis", "Add fav");
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                isNameFoundCheck = false;
-                final Contact contact = ((ContactsAdapter) mListView.getAdapter()).getItem(position);
-                final ContactModel contactModel = new ContactModel();
-                contactModel.setName(contact.displayName);
-                contactModel.setNumber(contact.number);
-                contactModel.setPhotoId(contact.photoId);
-                loadingDialog.show();
-                new RushSearch()
-                        .find(ContactModel.class, new RushSearchCallback<ContactModel>() {
-                            @Override
-                            public void complete(List<ContactModel> list) {
-                                for (ContactModel d : list) {
-                                    if (d.getName() != null && d.getName().contains(contact.displayName)) {
-                                        isNameFoundCheck = true;
-                                        Logger.d("nme check", "found " + contact.displayName);
-                                        break;
-                                    }
+                                             @Override
+                                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                                 isNameFoundCheck = false;
+                                                 final Contact contact = ((ContactsAdapter) mListView.getAdapter()).getItem(position);
+                                                 final ContactModel contactModel = new ContactModel();
+                                                 contactModel.setName(contact.displayName);
+                                                 contactModel.setNumber(contact.number);
+                                                 contactModel.setPhotoId(contact.photoId);
+                                                 loadingDialog.show();
+                                                 new RushSearch()
+                                                         .find(ContactModel.class, new RushSearchCallback<ContactModel>() {
+                                                                     @Override
+                                                                     public void complete(List<ContactModel> list) {
+                                                                         for (ContactModel d : list) {
+                                                                             if (d.getName() != null && d.getName().contains(contact.displayName)) {
+                                                                                 isNameFoundCheck = true;
+                                                                                 Logger.d("nme check", "found " + contact.displayName);
+                                                                                 break;
+                                                                             }
 
-                                }
-                                if (!isNameFoundCheck)
-                                    contactModel.save(new RushCallback() {
-                                        @Override
-                                        public void complete() {
-                                            loadingDialog.cancel();
-                                            Logger.d("Contact adding to fav", contactModel.getId() + "");
-                                            finish();
+                                                                         }
+                                                                         if (!isNameFoundCheck) {
+                                                                             String num = contactModel.getNumber();
+                                                                             num = num.replace(" ", "");
+                                                                             contactModel.setNumber(num);
+                                                                             contactModel.save(new RushCallback() {
+                                                                                 @Override
+                                                                                 public void complete() {
+                                                                                     loadingDialog.cancel();
+                                                                                     Logger.d("Contact adding to fav", contactModel.getId() + "");
+                                                                                     finish();
 
-                                        }
-                                    });
-                                else {
-                                    loadingDialog.cancel();
-                                    Snackbar.make(findViewById(android.R.id.content), "This contact is already a favourite , go back ?", Snackbar.LENGTH_LONG)
-                                            .setAction("Ok", new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    finish();
-                                                }
-                                            })
-                                            .setActionTextColor(Color.GREEN)
-                                            .show();
-                                }
-                            }
-                        });
+                                                                                 }
+                                                                             });
+                                                                         } else
 
-            }
-        });
+                                                                         {
+                                                                             loadingDialog.cancel();
+                                                                             Snackbar.make(findViewById(android.R.id.content), "This contact is already a favourite , go back ?", Snackbar.LENGTH_LONG)
+                                                                                     .setAction("Ok", new View.OnClickListener() {
+                                                                                         @Override
+                                                                                         public void onClick(View v) {
+                                                                                             finish();
+                                                                                         }
+                                                                                     })
+                                                                                     .setActionTextColor(Color.GREEN)
+                                                                                     .show();
+                                                                         }
+                                                                     }
+                                                                 }
+
+                                                         );
+
+                                             }
+                                         }
+
+        );
 
         // Inflate the layout for this fragment
+    }
+
+    public void getFilterContacts(String searchText) {
+        if (mAdapter != null) {
+            Logger.d("Search Text", searchText);
+            mAdapter.getFilter().filter(searchText);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_select_contacts, menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        mSearchView = MySearchView.getSearchView(AddFavoriteContactsActivity.this, "");
+        setupSearchView(searchItem);
+       /* searchView = (SearchView) searchItem.getActionView();
+
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));*/
+        return true;
+    }
+
+    private void setupSearchView(MenuItem searchItem) {
+        searchItem.setActionView(mSearchView);
+        SearchView.OnQueryTextListener mOnQueryTextListener = new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                //adapter.getFilter().filter(s);
+                Logger.d("Text is", s);
+                getFilterContacts(s);
+                return true;
+            }
+        };
+        mSearchView.setOnQueryTextListener(mOnQueryTextListener);
+       /* SearchViewStyle.on(searchView);
+        searchView.setIconifiedByDefault(true);
+        // searchView.setOnQueryTextListener(this);
+        searchView.setSubmitButtonEnabled(false);
+
+        searchItem.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);*/
+        // Setting the textview default behaviour properties
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                if (item.isActionViewExpanded()) {
+                    item.collapseActionView();
+                    Logger.d(("Closing Group Search"));
+
+
+                } else {
+                    item.expandActionView();
+                    Logger.d(("Opening Group Search"));
+                }
+
+                return true;
+            default:
+                return true;
+        }
     }
 
     public static int getResIdFromAttribute(final Activity activity, final int attr) {
@@ -215,13 +324,22 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
         mAdapter.mAsyncTaskThreadPool.cancelAllTasks(true);
     }
 
-    private static class Contact {
+    public class Contact implements Serializable {
         long contactId;
         Uri contactUri;
         String displayName;
         String photoId;
         String number;
+
+        public String getNumber() {
+            return number;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
     }
+
 /*
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
@@ -254,10 +372,11 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
     }*/
 
     // ////////////////////////////////////////////////////////////
-    // ContactsAdapter //
-    // //////////////////
+// ContactsAdapter //
+// //////////////////
     private class ContactsAdapter extends SearchablePinnedHeaderListViewAdapter<Contact> {
         private ArrayList<Contact> mContacts;
+        private ArrayList<Contact> dummyContactsList;
         private final int CONTACT_PHOTO_IMAGE_SIZE;
         private final int[] PHOTO_TEXT_BACKGROUND_COLORS;
         private final AsyncTaskThreadPool mAsyncTaskThreadPool = new AsyncTaskThreadPool(1, 2, 10);
@@ -265,6 +384,57 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
         @Override
         public CharSequence getSectionTitle(int sectionIndex) {
             return ((StringArrayAlphabetIndexer.AlphaBetSection) getSections()[sectionIndex]).getName();
+        }
+
+        @Override
+        public Filter getFilter() {
+             /*= new ArrayList<Contact>();*/
+            Filter filter = new Filter() {
+
+                @Override
+                protected void publishResults(CharSequence constraint, FilterResults results) {
+                    mContacts = (ArrayList<Contact>) results.values;
+                    if (mContacts != null && mContacts.isEmpty()) {
+                        Toast.makeText(AddFavoriteContactsActivity.this, "no contacts found", Toast.LENGTH_SHORT).show();
+                    }
+                    notifyDataSetChanged();
+                    setHeaderViewVisible(false);
+
+                }
+
+                @Override
+                protected FilterResults performFiltering(CharSequence constraint) {
+                    FilterResults results = new FilterResults();
+
+                    ArrayList<Contact> FilteredList = new ArrayList<Contact>();
+                    if (dummyContactsList == null) {
+                        dummyContactsList = new ArrayList<Contact>(mContacts);
+                    }
+                    if (constraint == null || constraint.length() == 0) {
+                        results.count = dummyContactsList.size();
+                        results.values = dummyContactsList;
+
+                    } else {
+                        constraint = constraint.toString().trim().toLowerCase(Locale.getDefault());
+                        for (int i = 0; i < dummyContactsList.size(); i++) {
+                            String name = dummyContactsList.get(i).getDisplayName();
+                            String number = dummyContactsList.get(i).getNumber();
+                            if (name.toLowerCase(Locale.getDefault()).contains(constraint.toString())
+                                    || number.toLowerCase(Locale.getDefault()).contains(constraint.toString())) {
+                                FilteredList.add(dummyContactsList.get(i));
+
+                            }
+                        }
+                        results.count = FilteredList.size();
+                        results.values = FilteredList;
+                    }
+                    return results;
+
+                }
+
+            };
+
+            return filter;
         }
 
         public ContactsAdapter(final ArrayList<Contact> contacts) {
@@ -382,13 +552,15 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
         }
     }
 
+
     // /////////////////////////////////////////////////////////////////////////////////////
-    // ViewHolder //
-    // /////////////
+// ViewHolder //
+// /////////////
     private static class ViewHolder {
         public CircularContactView friendProfileCircularContactView;
         TextView friendName, headerView, friendNumber;
         public AsyncTaskEx<Void, Void, Bitmap> updateTask;
     }
+
 
 }

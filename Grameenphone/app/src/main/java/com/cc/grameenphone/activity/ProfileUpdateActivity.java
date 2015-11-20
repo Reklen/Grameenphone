@@ -139,7 +139,7 @@ public class ProfileUpdateActivity extends Activity implements DatePickerDialog.
                 Toast.makeText(this, "Invalid email id", Toast.LENGTH_LONG).show();
                 emailIdEdit.requestFocus();
             }
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
             String dobText = dateOfBirthEdit.getText().toString();
             dobText = dobText.replace("/", "");
             innerObject.put("DOB", dobText);

@@ -245,7 +245,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
-            innerObject.put("MSISDN", "017" + phoneNumberEditText.getText().toString());
+            innerObject.put("MSISDN",  phoneNumberEditText.getText().toString());
             innerObject.put("TYPE", "MSISDNCHK");
             jsonObject.put("COMMAND", innerObject);
             String json = jsonObject.toString();

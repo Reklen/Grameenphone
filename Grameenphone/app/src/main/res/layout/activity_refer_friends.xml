@@ -134,7 +134,7 @@
             android:editable="false"
             android:focusable="false"
             android:inputType="none"
-            android:text="+88 "
+            android:text="+88"
             android:textColor="@color/hint_color" />
         <!-- <TextView
              android:id="@+id/areaCode"
@@ -172,10 +172,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/icon_add_ppl"
-                android:ems="8"
+                android:ems="11"
                 android:hint="@string/hintPhone"
                 android:inputType="phone"
-                android:maxLength="8"
+                android:maxLength="11"
                 android:textColor="@color/black_semi_transparent"
                 android:textColorHighlight="@color/hint_color"
                 android:textColorHint="@color/hint_color" />

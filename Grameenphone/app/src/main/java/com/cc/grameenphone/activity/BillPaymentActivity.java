@@ -153,7 +153,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
-            gitinnerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
             innerObject.put("TYPE", "SAPLBPREQ");
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
             jsonObject.put("COMMAND", innerObject);
@@ -414,7 +414,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
             innerObject.put("TYPE", "BLKBPAYREQ");
             innerObject.put("NOOFBILLS", userBillsModel.size());
             JSONArray billsJsonArray = new JSONArray();
@@ -679,7 +679,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CBEREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("wallet request ", jsonObject.toString());
@@ -864,7 +864,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CPMPBREQ");
             innerObject.put("BILLCCODE", userBillsModel.getCOMPANYNAME().toUpperCase());
             innerObject.put("BILLANO", userBillsModel.getACCOUNTNUM());

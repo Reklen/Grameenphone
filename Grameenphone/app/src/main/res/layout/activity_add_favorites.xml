@@ -1,21 +1,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.cc.grameenphone.activity.AddFavoritesActivity">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.cc.grameenphone.activity.AddFavoritesActivity">
 
 
-    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/abc_action_bar_stacked_max_height"
-        android:background="@color/primary"
-        android:contentInsetLeft="0dp"
-        android:contentInsetStart="0dp"
-        android:minHeight="?attr/actionBarSize"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp">
+    <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+                                       xmlns:android="http://schemas.android.com/apk/res/android"
+                                       android:layout_width="match_parent"
+                                       android:layout_height="@dimen/abc_action_bar_stacked_max_height"
+                                       android:background="@color/primary"
+                                       android:contentInsetLeft="0dp"
+                                       android:contentInsetStart="0dp"
+                                       android:minHeight="?attr/actionBarSize"
+                                       app:contentInsetLeft="0dp"
+                                       app:contentInsetStart="0dp">
 
         <RelativeLayout
             android:id="@+id/toolbar_container"
@@ -44,7 +44,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
-                    android:src="@drawable/ic_arrow_back_white" />
+                    android:src="@drawable/ic_arrow_back_white"/>
 
             </com.cc.grameenphone.views.RippleView>
 
@@ -57,7 +57,7 @@
                 android:layout_toRightOf="@+id/backRipple"
                 android:gravity="center_vertical"
                 android:text="Add Favorite"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"/>
 
 
         </RelativeLayout>
@@ -75,7 +75,7 @@
         android:text="Enter mobile number"
         android:textColor="#323232"
         android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
     <EditText
         android:id="@+id/enter_name"
@@ -87,7 +87,7 @@
         android:layout_margin="20dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:text="Name"/>
 
     <RelativeLayout
         android:id="@+id/top_container1"
@@ -106,7 +106,7 @@
             android:text="+88"
             android:textColor="#aaaaaa"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <View
             android:layout_width="60dp"
@@ -126,13 +126,13 @@
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/areaCode"
             android:drawableRight="@drawable/icon_invite"
-            android:ems="10"
+            android:ems="11"
             android:hint="Enter phone number"
             android:inputType="number"
-            android:maxLength="10"
+            android:maxLength="11"
             android:textColor="#929292"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
 
     </RelativeLayout>
@@ -151,5 +151,5 @@
         android:text="ADD"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:visibility="visible" />
+        android:visibility="visible"/>
 </RelativeLayout>

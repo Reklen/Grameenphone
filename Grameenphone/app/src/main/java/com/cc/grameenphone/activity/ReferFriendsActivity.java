@@ -109,8 +109,8 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
         confirmRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
-                if (phoneNumberEditText.getText().length() < 8) {
-                    phoneNumberEditText.setError("Enter a valid 8 digit MSISDN");
+                if (phoneNumberEditText.getText().length() < 11) {
+                    phoneNumberEditText.setError("Enter a valid MSISDN");
                     return;
                 }
                 validator.validate();
@@ -175,10 +175,10 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
             if (!preferenceManager.getReferCode().equalsIgnoreCase("No Refercode Available"))
                 innerObject.put("RFRCODE", preferenceManager.getReferCode());
-            innerObject.put("MSISDN2", "017" + phoneNumberEditText.getText().toString());
+            innerObject.put("MSISDN2",  phoneNumberEditText.getText().toString());
             innerObject.put("TYPE", "RFRFRDREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("pp", jsonObject.toString());

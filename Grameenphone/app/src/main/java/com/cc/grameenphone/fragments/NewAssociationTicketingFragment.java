@@ -273,7 +273,7 @@ public class NewAssociationTicketingFragment extends BaseTabFragment implements 
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
             innerObject.put("TYPE", "BPREGREQ");
             innerObject.put("CATEGORY", "TCKT");
             innerObject.put("PREF1", accountNumbEdit.getText().toString());

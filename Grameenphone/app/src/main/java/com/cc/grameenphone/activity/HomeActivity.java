@@ -302,7 +302,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CTCMPLREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("getOtherPaymentCompanies ", jsonObject.toString());
@@ -408,7 +408,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CBEREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("wallet request ", jsonObject.toString());

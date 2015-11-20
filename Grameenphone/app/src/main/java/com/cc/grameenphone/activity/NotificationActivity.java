@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -54,6 +56,8 @@ public class NotificationActivity extends AppCompatActivity {
     NotificationAdapter adapter;
     List<NotificationMessageModel> list;
     private ProgressDialog progressDialog;
+    MaterialDialog mMaterialDialog;
+    View dialogView;
 
 
     @Override
@@ -75,6 +79,37 @@ public class NotificationActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
         fetchNotifications();
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                NotificationMessageModel model = adapter.getItem(position);
+                dialogView = LayoutInflater.from(NotificationActivity.this).inflate(R.layout.notification_row_item, null);
+                ((TextView) dialogView.findViewById(R.id.notificationTypeTextView)).setText("" + model.getNOTCODE());
+                ((TextView) dialogView.findViewById(R.id.notificationTitleTextView)).setText("" + model.getNOTHEAD());
+                ((TextView) dialogView.findViewById(R.id.notificationContentTextView)).setText("" + model.getNOTDATA());
+                ((TextView) dialogView.findViewById(R.id.notificationTimeTextView)).setText("" + model.getNOTSTDAT());
+
+                mMaterialDialog = new MaterialDialog(NotificationActivity.this)
+                        .setTitle("Notification")
+                        .setView(dialogView)
+                        .setPositiveButton("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mMaterialDialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton("CANCEL", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mMaterialDialog.dismiss();
+                            }
+                        });
+
+                mMaterialDialog.show();
+
+            }
+        });
+
         ViewGroup parentGroup = (ViewGroup) listView.getParent();
         View emptyView = LayoutInflater.from(this).inflate(R.layout.empty_list, parentGroup, false);
         ((TextView) emptyView.findViewById(R.id.textView)).setText("No notifications");
@@ -94,7 +129,7 @@ public class NotificationActivity extends AppCompatActivity {
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "SUBNOTFREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("wallet request ", jsonObject.toString());

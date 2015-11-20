@@ -134,7 +134,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
                 JSONObject innerObject = new JSONObject();
                 innerObject.put("DEVICEID", android_id);
                 innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-                innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+                innerObject.put("MSISDN",  preferenceManager.getMSISDN());
                 innerObject.put("TYPE", "SUBDATAREQ");
                 jsonObject.put("COMMAND", innerObject);
                 Logger.d("Profile Fetch Data", jsonObject.toString());
@@ -210,7 +210,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
                     emailName.requestFocus();
                     return;
                 }
-                innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+                innerObject.put("MSISDN",  preferenceManager.getMSISDN());
                 String dobText = dob.getText().toString();
                 dobText = dobText.replace("/", "");
                 innerObject.put("DOB", dobText);
