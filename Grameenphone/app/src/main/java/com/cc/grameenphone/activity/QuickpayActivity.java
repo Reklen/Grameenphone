@@ -30,12 +30,16 @@ import com.cc.grameenphone.views.RippleView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 public class QuickPayActivity extends AppCompatActivity implements QuickPayInterface {
 
@@ -158,7 +162,9 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
             innerObject.put("TYPE", "CBEREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("wallet request ", jsonObject.toString());
-            walletCheckApi.checkBalance(jsonObject, new Callback<BalanceEnquiryModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            walletCheckApi.checkBalance(in, new Callback<BalanceEnquiryModel>() {
                 @Override
                 public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
                     if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
@@ -175,6 +181,8 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
             });
         } catch (JSONException e) {
 
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
     }
 
@@ -213,7 +221,9 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
             innerObject.put("BILLCODE", quickPayCode);
             jsonObject.put("COMMAND", innerObject);
             Logger.d("Qickpay Bill Fragment", jsonObject.toString());
-            quickPayApi.quickPay(jsonObject, new Callback<QuickPayModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            quickPayApi.quickPay(in, new Callback<QuickPayModel>() {
                 @Override
                 public void success(final QuickPayModel quickPayModel, Response response) {
                     if (quickPayModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
@@ -267,6 +277,8 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
 
         } catch (JSONException e) {
             loadingDialog.cancel();
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }

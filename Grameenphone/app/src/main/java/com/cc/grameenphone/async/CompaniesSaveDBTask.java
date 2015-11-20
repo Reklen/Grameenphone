@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
+import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class CompaniesSaveDBTask extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         PreferenceManager preferenceManager = new PreferenceManager(ctx);
+        Logger.d("shfjdhf", "fetching list saved");
         preferenceManager.setCompaniesSavedFlag(true);
     }
 }

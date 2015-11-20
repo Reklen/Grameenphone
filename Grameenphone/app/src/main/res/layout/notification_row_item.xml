@@ -1,60 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="83dp"
-    android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/notification_firstItem_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_toLeftOf="@+id/notificationTimeTextView"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/exculsive_text"
+            android:id="@+id/notificationTypeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="Roboto Medium"
             android:text="Exclusive Offer"
             android:textColor="@color/primary"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/fulltalk_text"
+            android:id="@+id/notificationTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
             android:fontFamily="Roboto Regular"
             android:text="Full talktime"
             android:textColor="#212121"
-            android:textSize="16dp" />
+            android:textSize="16dp"/>
 
         <TextView
-            android:id="@+id/getFullStatement_text"
+            android:id="@+id/notificationContentTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="Roboto Light"
             android:text="@string/Get_full_talktime"
             android:textColor="#757575"
-            android:textSize="16dp" />
+            android:textSize="16dp"/>
 
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/today_text"
+        android:id="@+id/notificationTimeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
         android:fontFamily="Roboto light"
         android:gravity="right"
         android:text="Today"
         android:textColor="#8C000000"
-        android:textSize="14dp" />
+        android:textSize="14dp"/>
 
 
 </RelativeLayout>

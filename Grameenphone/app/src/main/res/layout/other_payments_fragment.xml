@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    android:id="@+id/electricity_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/electricity_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -12,7 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/submitRippleView"
-        android:padding="16dp">
+        android:fadeScrollbars="false"
+
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -23,8 +26,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical"
-                tools:layout_height="50dp" />
+                tools:layout_height="50dp"/>
 
 
             <com.cc.grameenphone.views.CustomTextInputLayout
@@ -32,7 +38,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/customRadioGroupLayout"
-                android:layout_marginTop="24dp">
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="16dp"
+                >
 
                 <EditText
                     android:id="@+id/account_numbEdit"
@@ -42,7 +51,7 @@
                     android:hint="@string/account_number"
                     android:inputType="number"
                     android:textColor="@color/black_semi_transparent"
-                    android:textColorHint="@color/hint_color" />
+                    android:textColorHint="@color/hint_color"/>
             </com.cc.grameenphone.views.CustomTextInputLayout>
 
             <com.cc.grameenphone.views.CustomTextInputLayout
@@ -50,8 +59,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/account_numb_container"
-
-                android:layout_marginTop="24dp">
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp">
 
                 <EditText
                     android:id="@+id/bill_numbEdit"
@@ -61,7 +71,7 @@
                     android:hint="@string/bill_number"
                     android:inputType="number"
                     android:textColor="@color/black_semi_transparent"
-                    android:textColorHint="@color/hint_color" />
+                    android:textColorHint="@color/hint_color"/>
             </com.cc.grameenphone.views.CustomTextInputLayout>
 
             <com.cc.grameenphone.views.CustomTextInputLayout
@@ -69,7 +79,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/bill_numb_container"
-                android:layout_marginTop="24dp">
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp">
 
                 <EditText
                     android:id="@+id/amountEditText"
@@ -79,7 +91,7 @@
                     android:hint="Amount"
                     android:inputType="number"
                     android:textColor="@color/black_semi_transparent"
-                    android:textColorHint="@color/hint_color" />
+                    android:textColorHint="@color/hint_color"/>
             </com.cc.grameenphone.views.CustomTextInputLayout>
 
             <com.cc.grameenphone.views.CustomTextInputLayout
@@ -87,7 +99,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/amountTextInputLayout"
-                android:layout_marginTop="24dp">
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp">
 
                 <EditText
                     android:id="@+id/surchargeEditText"
@@ -97,7 +111,7 @@
                     android:hint="Surcharge Amount"
                     android:inputType="number"
                     android:textColor="@color/black_semi_transparent"
-                    android:textColorHint="@color/hint_color" />
+                    android:textColorHint="@color/hint_color"/>
             </com.cc.grameenphone.views.CustomTextInputLayout>
 
         </RelativeLayout>
@@ -112,9 +126,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
-        android:paddingLeft="6dp"
-        android:paddingRight="6dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         app:rv_rippleDuration="100">
 
         <Button
@@ -123,6 +137,6 @@
             android:layout_height="36dp"
             android:background="@drawable/login_button"
             android:text="@string/submit"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"/>
     </com.cc.grameenphone.views.RippleView>
 </RelativeLayout>

@@ -29,6 +29,7 @@ import com.cc.grameenphone.views.RippleView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,8 @@ import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 public class TransactionOverviewActivity extends AppCompatActivity {
     ImageView back_icon;
@@ -110,7 +113,9 @@ public class TransactionOverviewActivity extends AppCompatActivity {
             innerObject.put("TYPE", "CLTREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("sending json", jsonObject.toString());
-            transactionOverviewApi.fetchStatements(jsonObject, new Callback<TransactionOverviewModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            transactionOverviewApi.fetchStatements(in, new Callback<TransactionOverviewModel>() {
                         @Override
                         public void success(TransactionOverviewModel transactionOverviewModel, Response response) {
                             Logger.d("TransactionOverview", transactionOverviewModel.toString());
@@ -154,7 +159,7 @@ public class TransactionOverviewActivity extends AppCompatActivity {
                                 sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        SessionClearTask sessionClearTask = new SessionClearTask(TransactionOverviewActivity.this, false);
+                                        SessionClearTask sessionClearTask = new SessionClearTask(TransactionOverviewActivity.this, true);
                                         sessionClearTask.execute();
 
                                     }
@@ -184,6 +189,8 @@ public class TransactionOverviewActivity extends AppCompatActivity {
                 )
 
         {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 

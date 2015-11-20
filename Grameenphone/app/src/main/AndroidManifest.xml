@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.cc.grameenphone"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools">
+<manifest
+    package="com.cc.grameenphone"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.READ_SMS"/>
@@ -23,38 +24,79 @@
         -->
         <activity
             android:name=".activity.LoginActivity"
+            android:screenOrientation="nosensor"
             android:windowSoftInputMode="adjustPan">
 
         </activity>
         <activity
             android:name=".activity.SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SelectContactsActivity"/>
-        <activity android:name=".activity.SignUpActivity"/>
-        <activity android:name=".activity.ProfileUpdateActivity"/>
-        <activity android:name=".activity.HomeActivity"/>
-        <activity android:name=".activity.TransactionOverviewActivity"/>
-        <activity android:name=".activity.BillPaymentActivity"/>
-        <activity android:name=".activity.TransactionOverviewDeatilsActivity"/>
-        <activity android:name=".activity.AddFavoritesActivity"/>
-        <activity android:name=".activity.ReferFriendsActivity"/>
-        <activity android:name=".activity.AddFavoriteContactsActivity"/>
-        <activity android:name=".activity.EditProfileActivity"/>
-        <activity android:name=".sign_up.SignUpActivity"/>
-        <activity android:name=".activity.RegularPayDetailsActivity"/>
-        <activity android:name=".activity.CancelAssociationActivity"/>
-        <activity android:name=".activity.OtherPaymentActivity"/>
-        <activity android:name=".activity.NewAssociationActivity"/>
+        <activity
+            android:name=".activity.SelectContactsActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.SignUpActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.ProfileUpdateActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.HomeActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.TransactionOverviewActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.BillPaymentActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.TransactionOverviewDeatilsActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.AddFavoritesActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.ReferFriendsActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.AddFavoriteContactsActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.EditProfileActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".sign_up.SignUpActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.RegularPayDetailsActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.CancelAssociationActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.OtherPaymentActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".activity.NewAssociationActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustPan"/>
 
 
-        <activity android:name=".activity.QuickPayActivity"></activity>
-        <activity android:name=".activity.NotificationActivity"/>
+        <activity
+            android:name=".activity.QuickPayActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".activity.NotificationActivity"
+            android:screenOrientation="nosensor"/>
 
 
         <service

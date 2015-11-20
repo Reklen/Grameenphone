@@ -26,6 +26,7 @@ import com.cc.grameenphone.views.tabs.SlidingTabLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -33,6 +34,8 @@ import butterknife.InjectView;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 /**
  * Created by Rajkiran on 9/11/2015.
@@ -90,7 +93,7 @@ public class NewAssociationActivity extends AppCompatActivity {
 
         } else {
             //fetchList();
-            getOtherPaymentCompanies();
+            //getOtherPaymentCompanies();
         }
     }
 
@@ -107,8 +110,9 @@ public class NewAssociationActivity extends AppCompatActivity {
             innerObject.put("TYPE", "CTCMPLREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("getOtherPaymentCompanies ", jsonObject.toString());
-
-            otherPaymentApi.fetchCompanies(jsonObject, new Callback<OtherPaymentModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            otherPaymentApi.fetchCompanies(in, new Callback<OtherPaymentModel>() {
                 @Override
                 public void success(OtherPaymentModel otherPaymentModel, Response response) {
 
@@ -137,6 +141,8 @@ public class NewAssociationActivity extends AppCompatActivity {
 
 
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
@@ -180,7 +186,9 @@ public class NewAssociationActivity extends AppCompatActivity {
             innerObject.put("TYPE", "FBILASCREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("sending json", jsonObject.toString());
-            associationApi.fetchAssociaition(jsonObject, new Callback<CompanyListModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            associationApi.fetchAssociaition(in, new Callback<CompanyListModel>() {
                 @Override
                 public void success(CompanyListModel companyListModel, Response response) {
                     Logger.d("Companyies ", companyListModel.toString());
@@ -192,6 +200,8 @@ public class NewAssociationActivity extends AppCompatActivity {
                 }
             });
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }

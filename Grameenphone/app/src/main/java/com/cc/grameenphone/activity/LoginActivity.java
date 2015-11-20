@@ -38,6 +38,7 @@ import com.mobsandgeeks.saripaar.annotation.Password;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -46,6 +47,8 @@ import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 import static android.provider.Settings.Secure;
 
@@ -199,7 +202,10 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
 
 
             Logger.d("sending url", jsonObject.toString());
-            loginApi.login(jsonObject, new Callback<LoginModel>() {
+
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            loginApi.login(in, new Callback<LoginModel>() {
                 @Override
                 public void success(LoginModel model, Response response) {
                     Logger.d("Its msisdn check ", "status " + model.toString());
@@ -263,6 +269,8 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
             });
 
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }

@@ -25,12 +25,16 @@ import com.cc.grameenphone.views.RippleView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 /**
  * Created by rajkiran on 09/09/15.
@@ -143,7 +147,9 @@ public class PinChangeFragment extends Fragment {
             }
             jsonObject.put("COMMAND", innerObject);
             Logger.d("PinChange", jsonObject.toString());
-            pinchnageApi.pinchange(jsonObject, new Callback<PinChangeModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            pinchnageApi.pinChange(in, new Callback<PinChangeModel>() {
                 @Override
                 public void success(PinChangeModel pinChangeModel, Response response) {
                     Logger.d("Its pin change ", "status " + pinChangeModel.toString());
@@ -194,6 +200,8 @@ public class PinChangeFragment extends Fragment {
             });
 
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }

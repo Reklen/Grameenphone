@@ -33,6 +33,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -41,6 +42,8 @@ import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 public class ReferFriendsActivity extends AppCompatActivity implements Validator.ValidationListener {
 
@@ -106,6 +109,10 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
         confirmRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
+                if (phoneNumberEditText.getText().length() < 8) {
+                    phoneNumberEditText.setError("Enter a valid 8 digit MSISDN");
+                    return;
+                }
                 validator.validate();
             }
         });
@@ -148,6 +155,7 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
                 } else {
                     last8 = num;
                 }
+                last8 = last8.replace(" ", "");
                 phoneNumberEditText.setText("" + last8);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -174,7 +182,9 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
             innerObject.put("TYPE", "RFRFRDREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("pp", jsonObject.toString());
-            referFriendsApi.referFriends(jsonObject, new Callback<ReferFriendModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            referFriendsApi.referFriends(in, new Callback<ReferFriendModel>() {
                 @Override
                 public void success(ReferFriendModel referFriendModel, Response response) {
                     if (referFriendModel.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
@@ -205,7 +215,7 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
                         sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                SessionClearTask sessionClearTask = new SessionClearTask(ReferFriendsActivity.this, false);
+                                SessionClearTask sessionClearTask = new SessionClearTask(ReferFriendsActivity.this, true);
                                 sessionClearTask.execute();
 
                             }
@@ -225,6 +235,8 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
 
 
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 

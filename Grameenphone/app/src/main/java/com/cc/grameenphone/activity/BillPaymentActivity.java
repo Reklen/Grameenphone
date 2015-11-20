@@ -153,13 +153,15 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
-            innerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
+            gitinnerObject.put("MSISDN", "017" + preferenceManager.getMSISDN());
             innerObject.put("TYPE", "SAPLBPREQ");
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
             jsonObject.put("COMMAND", innerObject);
             Logger.d("ProfileUpdates", jsonObject.toString());
             //TODO Checking API Calls
-            billspaymentApi.fetchBills(jsonObject, new Callback<BillListModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            billspaymentApi.fetchBills(in, new Callback<BillListModel>() {
                 @Override
                 public void success(BillListModel billListModel, Response response) {
                     Logger.d("BILLS response", billListModel.toString());
@@ -193,7 +195,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                             @Override
                             public void onClick(View v) {
                                 sessionDialog.dismiss();
-                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this, false);
+                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this, true);
                                 sessionClearTask.execute();
 
                             }
@@ -215,6 +217,8 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
 
 
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
@@ -294,7 +298,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                 String pin = pinConfirmationET.getText().toString();
                 pinConfirmDialog.dismiss();
                 // KeyboardUtil.hideKeyboard(BillPaymentActivity.this);
-                selectedPayConfirmationDialog.show();
+
                 payBillForMultiPosition(multiBillListModelList, pin);
 
             }
@@ -446,23 +450,52 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                 @Override
                 public void success(MultiBillApiModel multiBillApiModel, Response response) {
                     Logger.d(multiBillApiModel.toString());
-
                     if (multiBillApiModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                         //Success
                         loadingDialog.dismiss();
+                        selectedPayConfirmationDialog.show();
                         for (int i = 0; i < multiBillApiModel.getCOMMAND().getBILLDET().size(); i++) {
                             if (multiBillApiModel.getCOMMAND().getBILLDET().get(i) != null && multiBillApiModel.getCOMMAND().getBILLDET().get(i).getTXNSTATUS() != null)
-                                if (multiBillApiModel.getCOMMAND().getBILLDET().get(i).getTXNSTATUS().equalsIgnoreCase("200")) {
-                                    userBillsModel.get(i).setStatus(1);
-                                    multiPayDialogListAdapter.notifyDataSetChanged();
+                                try {
+                                    if (multiBillApiModel.getCOMMAND().getBILLDET().get(i).getTXNSTATUS().equalsIgnoreCase("200")) {
+                                        userBillsModel.get(i).setStatus(1);
+                                        multiPayDialogListAdapter.notifyDataSetChanged();
 
-                                } else {
-                                    userBillsModel.get(i).setStatus(0);
-                                    multiPayDialogListAdapter.notifyDataSetChanged();
+                                    } else {
+                                        userBillsModel.get(i).setStatus(0);
+                                        multiPayDialogListAdapter.notifyDataSetChanged();
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
                         }
                         //     multiBillListModel
+                    } else if (multiBillApiModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("01035")) {
+                        loadingDialog.dismiss();
+                        errorDialog = new MaterialDialog(BillPaymentActivity.this);
+                        errorDialog.setMessage("You have entered an invalid pin");
+                        errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                errorDialog.dismiss();
+                            }
+                        });
+                        errorDialog.setCanceledOnTouchOutside(true);
+                        errorDialog.show();
+                    } else if (multiBillApiModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("00068")) {
+                        loadingDialog.dismiss();
+                        errorDialog = new MaterialDialog(BillPaymentActivity.this);
+                        errorDialog.setMessage(multiBillApiModel.getCOMMAND().getMESSAGE());
+                        errorDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                errorDialog.dismiss();
+                            }
+                        });
+                        errorDialog.setCanceledOnTouchOutside(true);
+                        errorDialog.show();
                     }
+
                 }
 
                 @Override
@@ -650,7 +683,9 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             innerObject.put("TYPE", "CBEREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("wallet request ", jsonObject.toString());
-            walletCheckApi.checkBalance(jsonObject, new Callback<BalanceEnquiryModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            walletCheckApi.checkBalance(in, new Callback<BalanceEnquiryModel>() {
                 @Override
                 public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
                     if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
@@ -666,7 +701,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                             @Override
                             public void onClick(View v) {
                                 sessionDialog.dismiss();
-                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this, false);
+                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this, true);
                                 sessionClearTask.execute();
 
                             }
@@ -684,6 +719,8 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                 }
             });
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
@@ -803,6 +840,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             public void onClick(View v) {
                 if (pinConfirmationET.getText().toString().length() != 4) {
                     pinConfirmationET.setError("Enter your valid pin");
+                    pinConfirmationET.requestFocus();
                     return;
                 }
                 String pin = pinConfirmationET.getText().toString();
@@ -837,7 +875,9 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             jsonObject.put("COMMAND", innerObject);
             Logger.d("Paying Bill", jsonObject.toString());
             //TODO Checking API Calls
-            billspaymentApi.payBill(jsonObject, new Callback<BillPaymentModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            billspaymentApi.payBill(in, new Callback<BillPaymentModel>() {
                 @Override
                 public void success(BillPaymentModel billPaymentModel, Response response) {
                     Logger.d("BILLS response", billPaymentModel.toString());
@@ -864,7 +904,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                             @Override
                             public void onClick(View v) {
                                 sessionDialog.dismiss();
-                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this, false);
+                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this, true);
                                 sessionClearTask.execute();
 
                             }
@@ -899,6 +939,8 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         } catch (JSONException e) {
             e.printStackTrace();
             loadingDialog.cancel();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
     }

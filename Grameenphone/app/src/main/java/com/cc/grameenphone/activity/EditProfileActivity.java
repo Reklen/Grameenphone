@@ -24,6 +24,7 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListen
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 
 import butterknife.ButterKnife;
@@ -33,6 +34,8 @@ import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 
 public class EditProfileActivity extends AppCompatActivity implements OnDateSetListener {
@@ -135,7 +138,9 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
                 innerObject.put("TYPE", "SUBDATAREQ");
                 jsonObject.put("COMMAND", innerObject);
                 Logger.d("Profile Fetch Data", jsonObject.toString());
-                profileDisplay.profile(jsonObject, new Callback<ProfileModel>() {
+                String json = jsonObject.toString();
+                TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+                profileDisplay.profile(in, new Callback<ProfileModel>() {
                     @Override
                     public void success(ProfileModel profileModel, Response response) {
                         if (profileModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
@@ -164,6 +169,8 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
                 });
 
             } catch (JSONException e1) {
+                e1.printStackTrace();
+            } catch (UnsupportedEncodingException e1) {
                 e1.printStackTrace();
             }
         }
@@ -212,7 +219,9 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
                 innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
                 jsonObject.put("COMMAND", innerObject);
                 Logger.d("ProfileUpdates", jsonObject.toString());
-                profileUpdateApi.profileUpdate(jsonObject, new Callback<ProfileUpdateModel>() {
+                String json = jsonObject.toString();
+                TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+                profileUpdateApi.profileUpdate(in, new Callback<ProfileUpdateModel>() {
                     @Override
                     public void success(ProfileUpdateModel profileUpdateModel, Response response) {
                         Logger.d("Email change success change ", "status " + profileUpdateModel.toString());
@@ -251,6 +260,8 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
                 });
 
             } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
 

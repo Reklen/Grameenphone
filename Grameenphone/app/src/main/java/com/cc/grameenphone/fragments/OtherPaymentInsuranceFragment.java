@@ -35,6 +35,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -45,6 +46,8 @@ import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 /**
  * Created by Rajkiran on 9/10/2015.
@@ -250,7 +253,9 @@ public class OtherPaymentInsuranceFragment extends BaseTabFragment implements Va
             innerObject.put("PIN", pin);
             jsonObject.put("COMMAND", innerObject);
             Logger.d("confirmaing bill payment ", jsonObject.toString());
-            otherPaymentApi.billConfirmation(jsonObject, new Callback<BillConfirmationModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            otherPaymentApi.billConfirmation(in, new Callback<BillConfirmationModel>() {
                 @Override
                 public void success(final BillConfirmationModel billConfirmationModel, Response response) {
                     if (billConfirmationModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
@@ -287,6 +292,8 @@ public class OtherPaymentInsuranceFragment extends BaseTabFragment implements Va
 
         } catch (JSONException e) {
 
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
 

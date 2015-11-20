@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import com.cc.grameenphone.activity.LoginActivity;
 import com.cc.grameenphone.api_models.ContactModel;
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
+import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
 
 import co.uk.rushorm.core.RushCore;
@@ -38,6 +39,7 @@ public class SessionClearTask extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         PreferenceManager preferenceManager = new PreferenceManager(ctx);
+        Logger.d("shfjdhf", "cleared");
         preferenceManager.setCompaniesSavedFlag(false);
         preferenceManager.setAuthToken("");
         preferenceManager.setMSISDN("");

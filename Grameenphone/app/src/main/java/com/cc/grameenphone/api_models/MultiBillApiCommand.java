@@ -9,6 +9,16 @@ import java.util.List;
  */
 public class MultiBillApiCommand {
 
+    private String MESSAGE;
+
+    public String getMESSAGE() {
+        return MESSAGE;
+    }
+
+    public void setMESSAGE(String MESSAGE) {
+        this.MESSAGE = MESSAGE;
+    }
+
     @SerializedName("BILLDET")
     private List<MultiBillApiBillDetail> billDetailList;
 

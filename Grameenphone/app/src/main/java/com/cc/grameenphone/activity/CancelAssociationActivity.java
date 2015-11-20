@@ -165,7 +165,7 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
             }
         });
 
-        pinConfirmationView = LayoutInflater.from(CancelAssociationActivity.this).inflate(R.layout.dialog_pin_confirmation, null);
+        /*pinConfirmationView = LayoutInflater.from(CancelAssociationActivity.this).inflate(R.layout.dialog_pin_confirmation, null);
         pinConfirmationET = (EditText) pinConfirmationView.findViewById(R.id.pinConfirmEditText);
 
         pinConfirmDialog = new MaterialDialog(CancelAssociationActivity.this);
@@ -189,7 +189,11 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
             }
         });
         pinConfirmDialog.show();
+*/
 
+        loadingDialog.show();
+        selectedPayConfirmationDialog.show();
+        cancelMultiple(multiBillListModelList);
 
         Logger.d("Bills selected", "Position are " + cancelBillsSelectedList.toString());
 
@@ -305,7 +309,9 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
             innerObject.put("TYPE", "FBILASCREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("sending json", jsonObject.toString());
-            getAssociationApi.fetchUserAssociaition(jsonObject, new Callback<AssociationModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            getAssociationApi.fetchUserAssociaition(in, new Callback<AssociationModel>() {
                 @Override
                 public void success(AssociationModel associationModel, Response response) {
                     if (associationModel.getCommandModel().getTXNSTATUS().equalsIgnoreCase("200")) {
@@ -329,6 +335,8 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
                 }
             });
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
@@ -361,7 +369,9 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
                     jsonObject.put("COMMAND", innerObject);
                     Logger.d("sending json", jsonObject.toString());
                     cancelDialog.dismiss();
-                    getAssociationApi.cancelAssociation(jsonObject, new Callback<CancelAssociationModel>() {
+                    String json = jsonObject.toString();
+                    TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+                    getAssociationApi.cancelAssociation(in, new Callback<CancelAssociationModel>() {
                         @Override
                         public void success(final CancelAssociationModel cancelAssociationModel, Response response) {
                             loadingDialog.cancel();
@@ -405,6 +415,8 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
                     });
                 } catch (JSONException e) {
                     e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
                 }
 
 
@@ -422,7 +434,7 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
 
     JSONObject billsInnerJsonObject;
 
-    private void cancelMultiple(final List<MultiCancelAssociationListModel> userBillsModel, String pin) {
+    private void cancelMultiple(final List<MultiCancelAssociationListModel> userBillsModel) {
 
         // KeyboardUtil.hideKeyboard(CancelAssociationActivity.this);
         try {
@@ -460,7 +472,7 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
 
             innerObject.put("BILLDET", billsJsonArray);
 
-            innerObject.put("PIN", pin);//TODO add pin confirm dialog
+            // innerObject.put("PIN", pin);//TODO add pin confirm dialog
             jsonObject.put("COMMAND", innerObject);
             Logger.d("Paying Bill", jsonObject.toString());
             //TODO Checking API Calls

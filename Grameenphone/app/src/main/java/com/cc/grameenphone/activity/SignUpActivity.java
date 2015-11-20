@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.media.MediaMetadataCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -39,13 +38,13 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Checked;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Length;
-import com.mobsandgeeks.saripaar.annotation.Min;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -55,6 +54,8 @@ import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 import static com.mobsandgeeks.saripaar.Validator.ValidationListener;
 
@@ -247,7 +248,9 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
             innerObject.put("MSISDN", "017" + phoneNumberEditText.getText().toString());
             innerObject.put("TYPE", "MSISDNCHK");
             jsonObject.put("COMMAND", innerObject);
-            msisdnCheckApi.check(jsonObject, new Callback<MSISDNCheckModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            msisdnCheckApi.check(in, new Callback<MSISDNCheckModel>() {
                 @Override
                 public void success(MSISDNCheckModel msisdnCheckModel, Response response) {
                     Logger.d("MSISDN  ", msisdnCheckModel.toString());
@@ -279,6 +282,8 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
             });
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
 
@@ -307,7 +312,9 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
             jsonObject.put("COMMAND", innerJsonObj);
 
             Logger.d("Signup ", "doing signUpUser " + jsonObject.toString());
-            signupApi.signup(jsonObject, new Callback<SignupModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            signupApi.signup(in, new Callback<SignupModel>() {
                 @Override
                 public void success(final SignupModel signupModel, Response response) {
                     Logger.d("Signup Model", signupModel.toString());
@@ -407,6 +414,8 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
         } catch (JSONException e) {
             e.printStackTrace();
             displayToast("Some Error occured");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
 

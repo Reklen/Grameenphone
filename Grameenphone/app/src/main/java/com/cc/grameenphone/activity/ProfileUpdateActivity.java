@@ -27,6 +27,7 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 
 import butterknife.ButterKnife;
@@ -35,6 +36,8 @@ import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 /**
  * Created by Rajkiran on 9/9/2015.
@@ -145,7 +148,9 @@ public class ProfileUpdateActivity extends Activity implements DatePickerDialog.
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
             jsonObject.put("COMMAND", innerObject);
             Logger.d("ProfileUpdates", jsonObject.toString());
-            profileUpdateApi.profileUpdate(jsonObject, new Callback<ProfileUpdateModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            profileUpdateApi.profileUpdate(in, new Callback<ProfileUpdateModel>() {
                 @Override
                 public void success(ProfileUpdateModel profileUpdateModel, Response response) {
                     Logger.d("Its pin change ", "status " + profileUpdateModel.toString());
@@ -178,7 +183,7 @@ public class ProfileUpdateActivity extends Activity implements DatePickerDialog.
                         sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                SessionClearTask sessionClearTask = new SessionClearTask(ProfileUpdateActivity.this, false);
+                                SessionClearTask sessionClearTask = new SessionClearTask(ProfileUpdateActivity.this, true);
                                 sessionClearTask.execute();
 
                             }
@@ -197,6 +202,8 @@ public class ProfileUpdateActivity extends Activity implements DatePickerDialog.
             });
 
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }

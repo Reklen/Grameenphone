@@ -34,10 +34,10 @@
 
 
     <string name="grameenPhone">grameenphone</string>
-    <string name="numberText">+88017</string>
+    <string name="numberText">+88</string>
     <string name="enterPhnnumb">Enter a phone number</string>
     <string name="accept">I accept to</string>
-    <string name="terms_condition"><u>Accept Terms &amp; Conditions</u></string>
+    <string name="terms_condition"><u>Terms &amp; Conditions</u></string>
     <string name="create_new_wallet">CREATE A NEW WALLET</string>
     <string name="Or">OR</string>
     <string name="sign_up">Sign Up</string>
@@ -87,7 +87,7 @@
                                           SMS shortly</string>
     <string name="acc_number">Acc. No:</string>
     <string name="company">Company:</string>
-    <string name="hintPhone">Phone number</string>
+    <string name="hintPhone">Enter Phone number</string>
     
     <string name="Remove_AccNo">Remove Acc. No: 123432 from\n
                                 DESCO association?</string>

@@ -27,12 +27,16 @@ import com.cc.grameenphone.views.RippleView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 /**
  * Created by rajkiran on 18/09/15.
@@ -117,7 +121,9 @@ public class QuickBillPayFragment extends Fragment {
                     innerObject.put("PIN", pinNumbEdit.getText().toString());
                     jsonObject.put("COMMAND", innerObject);
                     Logger.d("Qickpay Bill Congirmation Strinv", jsonObject.toString());
-                    quickPayApi.quickPayConfirm(jsonObject, new Callback<QuickPayConfirmModel>() {
+                    String json = jsonObject.toString();
+                    TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+                    quickPayApi.quickPayConfirm(in, new Callback<QuickPayConfirmModel>() {
                         @Override
                         public void success(QuickPayConfirmModel quickPayConfirmModel, Response response) {
                             if (quickPayConfirmModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
@@ -157,6 +163,8 @@ public class QuickBillPayFragment extends Fragment {
                     });
 
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
 

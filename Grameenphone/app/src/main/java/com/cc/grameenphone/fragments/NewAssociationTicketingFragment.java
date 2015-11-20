@@ -1,5 +1,6 @@
 package com.cc.grameenphone.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -22,6 +23,7 @@ import com.cc.grameenphone.R;
 import com.cc.grameenphone.activity.HomeActivity;
 import com.cc.grameenphone.api_models.BillConfirmationModel;
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
+import com.cc.grameenphone.async.SessionClearTask;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.AddAssociationApi;
 import com.cc.grameenphone.utils.KeyboardUtil;
@@ -35,6 +37,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -45,6 +48,8 @@ import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 /**
  * Created by rajkiran on 21/09/15.
@@ -85,6 +90,9 @@ public class NewAssociationTicketingFragment extends BaseTabFragment implements 
     EditText pinConfirmationET;
     MaterialDialog pinConfirmDialog;
     Validator validator;
+    private ProgressDialog progressDialog;
+    private MaterialDialog sessionDialog;
+
 
     public static NewAssociationTicketingFragment newInstance(Bundle b) {
         NewAssociationTicketingFragment gasTabFragment = new NewAssociationTicketingFragment();
@@ -99,13 +107,15 @@ public class NewAssociationTicketingFragment extends BaseTabFragment implements 
         ButterKnife.inject(this, v);
         validator = new Validator(this);
         validator.setValidationListener(this);
-
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading");
         //Calling method to get companies details for other bill details
         getCompaniesDetails();
 
         submitRippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
+                progressDialog.show();
                 validator.validate();
 
             }
@@ -270,10 +280,14 @@ public class NewAssociationTicketingFragment extends BaseTabFragment implements 
             innerObject.put("BILLCCODE", selectedCompany);
             jsonObject.put("COMMAND", innerObject);
             Logger.d("confirmaing bill payment ", jsonObject.toString());
-            addAssociationApi.associationSubmit(jsonObject, new Callback<BillConfirmationModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            addAssociationApi.associationSubmit(in, new Callback<BillConfirmationModel>() {
                 @Override
                 public void success(BillConfirmationModel billConfirmationModel, Response response) {
-
+                    progressDialog.cancel();
+                    billNumbEdit.setText("");
+                    accountNumbEdit.setText("");
                     if (billConfirmationModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
 
                         confirmationDialog = new MaterialDialog(getActivity());
@@ -287,7 +301,22 @@ public class NewAssociationTicketingFragment extends BaseTabFragment implements 
                         });
                         confirmationDialog.show();
 
+                    } else if (billConfirmationModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
+                        Logger.d("Balance", billConfirmationModel.toString());
+                        sessionDialog = new MaterialDialog(getActivity());
+                        sessionDialog.setMessage("Session expired , please login again");
+                        sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                SessionClearTask sessionClearTask = new SessionClearTask(getActivity(), false);
+                                sessionClearTask.execute();
+
+                            }
+                        });
+                        sessionDialog.setCanceledOnTouchOutside(false);
+                        sessionDialog.show();
                     } else {
+
                         errorDialog = new MaterialDialog(getActivity());
                         errorDialog.setMessage(billConfirmationModel.getCOMMAND().getMESSAGE());
                         errorDialog.setPositiveButton("OK", new View.OnClickListener() {
@@ -310,7 +339,10 @@ public class NewAssociationTicketingFragment extends BaseTabFragment implements 
 
 
         } catch (JSONException e) {
-
+            e.printStackTrace();
+            progressDialog.cancel();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
 
@@ -326,6 +358,7 @@ public class NewAssociationTicketingFragment extends BaseTabFragment implements 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
         KeyboardUtil.hideKeyboard(getActivity());
+        progressDialog.cancel();
         for (ValidationError error : errors) {
             View view = error.getView();
             String message = error.getCollatedErrorMessage(getActivity());

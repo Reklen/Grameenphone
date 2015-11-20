@@ -21,12 +21,16 @@ import com.cc.grameenphone.utils.PreferenceManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 /**
  * Created by rajkiran on 09/09/15.
@@ -98,7 +102,9 @@ public class ProfileFragment extends Fragment {
             innerObject.put("TYPE", "SUBDATAREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("Profile Fetch Data", jsonObject.toString());
-            profileDisplay.profile(jsonObject, new Callback<ProfileModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            profileDisplay.profile(in, new Callback<ProfileModel>() {
                 @Override
                 public void success(ProfileModel profileModel, Response response) {
                     if (profileModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
@@ -128,6 +134,8 @@ public class ProfileFragment extends Fragment {
                 }
             });
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 

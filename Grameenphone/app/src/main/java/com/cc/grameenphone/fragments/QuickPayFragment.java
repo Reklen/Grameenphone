@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.interfaces.QuickPayInterface;
+import com.cc.grameenphone.utils.KeyboardUtil;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -83,6 +84,7 @@ public class QuickPayFragment extends Fragment implements Validator.ValidationLi
     @OnClick(R.id.submitbutton)
     void submitbuttonClicked() {
         mValidator.validate();
+        KeyboardUtil.hideKeyboard(getActivity());
 
 
     }

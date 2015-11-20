@@ -54,6 +54,7 @@ import com.cc.grameenphone.views.RippleView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +67,8 @@ import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 /**
  * Created by rajkiran on 09/09/15.
@@ -75,7 +78,7 @@ public class HomeFragment extends Fragment {
 
     @InjectView(R.id.prepaidOption)
     RadioButton selfFlexiOption;
-  //  RadioButton prepaidOption;
+    //  RadioButton prepaidOption;
     @InjectView(R.id.postpaidOption)
     RadioButton othersFlexiOption;
     //RadioButton postpaidOption;
@@ -199,7 +202,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                if (editamt.getText().charAt(0)!='৳'){
+                if (editamt.getText().charAt(0) != '৳') {
 
                 }
 
@@ -235,11 +238,15 @@ public class HomeFragment extends Fragment {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 if (selfFlexiOption.isChecked()) {
                     phoneNumberEditText.setText(preferenceManager.getMSISDN() + "");
-                    phoneNumberEditText.setCompoundDrawables(null, null, null, null);
+                    phoneNumberEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                     phoneNumberEditText.setInputType(0x00000000);
+                    phoneNumberEditText.setError(null);
                     editamt.setText("৳ 50");
+                    editamt.setError(null);
 
                 } else if (othersFlexiOption.isChecked()) {
+                    phoneNumberEditText.setError(null);
+                    editamt.setError(null);
                     otherFlexiLoadClick();
                 }
 
@@ -458,7 +465,9 @@ public class HomeFragment extends Fragment {
                 innerObject.put("AMOUNT", amt);
                 jsonObject.put("COMMAND", innerObject);
                 Logger.d("Flexiload", jsonObject.toString());
-                selfPrepaidApi.selfPrepaid(jsonObject, new Callback<SelfPrepaidModel>() {
+                String json = jsonObject.toString();
+                TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+                selfPrepaidApi.selfPrepaid(in, new Callback<SelfPrepaidModel>() {
                     @Override
                     public void success(SelfPrepaidModel selfPrepaidModel, Response response) {
                         if (selfPrepaidModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
@@ -515,6 +524,8 @@ public class HomeFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
                 loadingDialog.cancel();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
         } else if ((othersFlexiOption.isChecked()) && otherFlexi) {
             //TODO implement other postpaid recharge
@@ -580,7 +591,9 @@ public class HomeFragment extends Fragment {
                 innerObject.put("AMOUNT", amt);
                 jsonObject.put("COMMAND", innerObject);
                 Logger.d("Flexiload", jsonObject.toString());
-                otherPostpaidApi.selfPostpaid(jsonObject, new Callback<SelfPostpaidModel>() {
+                String json = jsonObject.toString();
+                TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+                otherPostpaidApi.selfPostpaid(in, new Callback<SelfPostpaidModel>() {
                     @Override
                     public void success(SelfPostpaidModel selfPostpaidModel, Response response) {
                         if (selfPostpaidModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
@@ -636,6 +649,8 @@ public class HomeFragment extends Fragment {
             } catch (JSONException e) {
                 loadingDialog.cancel();
                 e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -671,7 +686,7 @@ public class HomeFragment extends Fragment {
         selfPrepaidApi = ServiceGenerator.createService(SelfPrepaidApi.class);
         otherPostpaidApi = ServiceGenerator.createService(OtherPostpaidApi.class);
         Logger.d("CheckFlexi", selfFlexiOption.isChecked() + " " + otherFlexi + " " + othersFlexiOption.isChecked());
-        if (selfFlexiOption.isChecked()){
+        if (selfFlexiOption.isChecked()) {
             loadingDialog.show();
             if (!(editamt.getText().toString().length() > 2)) {
                 editamt.setError("Enter Amount");
@@ -694,7 +709,9 @@ public class HomeFragment extends Fragment {
                 innerObject.put("AMOUNT", amt);
                 jsonObject.put("COMMAND", innerObject);
                 Logger.d("Flexiload", jsonObject.toString());
-                selfPrepaidApi.selfPrepaid(jsonObject, new Callback<SelfPrepaidModel>() {
+                String json = jsonObject.toString();
+                TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+                selfPrepaidApi.selfPrepaid(in, new Callback<SelfPrepaidModel>() {
                     @Override
                     public void success(SelfPrepaidModel selfPrepaidModel, Response response) {
                         if (selfPrepaidModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
@@ -751,9 +768,11 @@ public class HomeFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
                 loadingDialog.cancel();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
 
-        }else {
+        } else {
             pinConfirmationView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_pin_confirmation, null);
             pinConfirmationET = (EditText) pinConfirmationView.findViewById(R.id.pinConfirmEditText);
 
@@ -811,7 +830,9 @@ public class HomeFragment extends Fragment {
             innerObject.put("AMOUNT", amt);
             jsonObject.put("COMMAND", innerObject);
             Logger.d("Flexiload", jsonObject.toString());
-            otherPostpaidApi.otherPostpaid(jsonObject, new Callback<OtherPostpaidModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            otherPostpaidApi.otherPostpaid(in, new Callback<OtherPostpaidModel>() {
                 @Override
                 public void success(OtherPostpaidModel otherPostpaidModel, Response response) {
                     if (otherPostpaidModel.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
@@ -867,6 +888,8 @@ public class HomeFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
             loadingDialog.cancel();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
     }
@@ -888,7 +911,9 @@ public class HomeFragment extends Fragment {
             innerObject.put("AMOUNT", amt);
             jsonObject.put("COMMAND", innerObject);
             Logger.d("Flexiload", jsonObject.toString());
-            selfPrepaidApi.selfPrepaidOther(jsonObject, new Callback<OtherPrepaidModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            selfPrepaidApi.selfPrepaidOther(in, new Callback<OtherPrepaidModel>() {
                 @Override
                 public void success(OtherPrepaidModel selfPrepaidModel, Response response) {
 
@@ -948,8 +973,11 @@ public class HomeFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
             loadingDialog.cancel();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
     }
+
     private void flexiLoadOtherPrepaid(String pin) {
         try {
             JSONObject jsonObject = new JSONObject();
@@ -967,7 +995,9 @@ public class HomeFragment extends Fragment {
             innerObject.put("AMOUNT", amt);
             jsonObject.put("COMMAND", innerObject);
             Logger.d("Flexiload", jsonObject.toString());
-            selfPrepaidApi.selfPrepaidOther(jsonObject, new Callback<OtherPrepaidModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            selfPrepaidApi.selfPrepaidOther(in, new Callback<OtherPrepaidModel>() {
                 @Override
                 public void success(OtherPrepaidModel selfPrepaidModel, Response response) {
 
@@ -1027,10 +1057,13 @@ public class HomeFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
             loadingDialog.cancel();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
     }
+
     @OnClick(R.id.flexi_load_container)
-    void flexiLoadCick(){
+    void flexiLoadCick() {
         fstContainer.setVisibility(View.VISIBLE);
         secContainer.setVisibility(View.GONE);
     }
@@ -1102,7 +1135,6 @@ public class HomeFragment extends Fragment {
             phoneNumberEditText.setText("" + preferenceManager.getMSISDN());
         }
     }
-
 
 
 }

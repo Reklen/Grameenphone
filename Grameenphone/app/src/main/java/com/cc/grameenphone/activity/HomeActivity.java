@@ -41,6 +41,7 @@ import com.cc.grameenphone.views.RippleView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -49,6 +50,8 @@ import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 public class HomeActivity extends BaseActivity implements WalletBalanceInterface {
 
@@ -94,8 +97,11 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
         fragmentTransaction.commit();
 
 
-        if (!preferenceManager.getCompaniesSavedFlag())
+        if (!preferenceManager.getCompaniesSavedFlag()) {
+            Logger.d("shfjdhf", "fetching list");
             getOtherPaymentCompanies();
+
+        }
 
         handleNavigationView();
         handleRipple();
@@ -106,6 +112,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
         super.onResume();
         getWalletBalance();
     }
+
 
     private void handleNavigationView() {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -299,8 +306,9 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
             innerObject.put("TYPE", "CTCMPLREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("getOtherPaymentCompanies ", jsonObject.toString());
-
-            otherPaymentApi.fetchCompanies(jsonObject, new Callback<OtherPaymentModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            otherPaymentApi.fetchCompanies(in, new Callback<OtherPaymentModel>() {
                 @Override
                 public void success(OtherPaymentModel otherPaymentModel, Response response) {
 
@@ -322,6 +330,8 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
 
 
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
@@ -388,6 +398,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
         });
     }
 
+
     private void getWalletBalance() {
         walletCheckApi = ServiceGenerator.createService(WalletCheckApi.class);
         android_id = Settings.Secure.getString(HomeActivity.this.getContentResolver(),
@@ -401,7 +412,9 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
             innerObject.put("TYPE", "CBEREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("wallet request ", jsonObject.toString());
-            walletCheckApi.checkBalance(jsonObject, new Callback<BalanceEnquiryModel>() {
+            String json = jsonObject.toString();
+            TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            walletCheckApi.checkBalance(in, new Callback<BalanceEnquiryModel>() {
                 @Override
                 public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
                     if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
@@ -415,7 +428,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
                         sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                SessionClearTask sessionClearTask = new SessionClearTask(HomeActivity.this, false);
+                                SessionClearTask sessionClearTask = new SessionClearTask(HomeActivity.this, true);
                                 sessionClearTask.execute();
 
                             }
@@ -429,7 +442,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
                         sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                SessionClearTask sessionClearTask = new SessionClearTask(HomeActivity.this, false);
+                                SessionClearTask sessionClearTask = new SessionClearTask(HomeActivity.this, true);
                                 sessionClearTask.execute();
 
                             }
@@ -457,6 +470,8 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
             });
         } catch (JSONException e) {
 
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
     }
 
