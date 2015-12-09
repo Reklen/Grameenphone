@@ -142,6 +142,8 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
         if (requestCode == IntentUtils.SELECT_CONTACT_REQ) {
             try {
                 Logger.d("Return Contact", "contacts " + ((String) data.getExtras().get(Constants.RETURN_RESULT)));
+                if (((String) data.getExtras().get(Constants.RETURN_RESULT)) != null)
+                phoneNumberEditText.setText("" + ((String) data.getExtras().get(Constants.RETURN_RESULT)));
 
                 String num = PhoneUtils.normalizeNum(((String) data.getExtras().get(Constants.RETURN_RESULT)));
                 num = num.replace("+", "");
@@ -155,8 +157,9 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
                 } else {
                     last8 = num;
                 }
-                last8 = last8.replace(" ", "");
-                phoneNumberEditText.setText("" + last8);
+
+
+                phoneNumberEditText.setText("" + num.substring(Math.max(num.length() - 11, 0)));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -199,15 +202,19 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
                         });
                         successDialog.show();
                     } else if (referFriendModel.getCommand().getTXNSTATUS().equalsIgnoreCase("MA903")) {
-                        errorDialog = new MaterialDialog(ReferFriendsActivity.this);
-                        errorDialog.setMessage(referFriendModel.getCommand().getMESSAGE() + "");
-                        errorDialog.setPositiveButton("OK", new View.OnClickListener() {
+                        Logger.d("Balance", referFriendModel.toString());
+                        sessionDialog = new MaterialDialog(ReferFriendsActivity.this);
+                        sessionDialog.setMessage("Session expired , please login again");
+                        sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                errorDialog.dismiss();
+                                SessionClearTask sessionClearTask = new SessionClearTask(ReferFriendsActivity.this, true);
+                                sessionClearTask.execute();
+
                             }
                         });
-                        errorDialog.show();
+                        sessionDialog.setCanceledOnTouchOutside(false);
+                        sessionDialog.show();
                     } else if (referFriendModel.getCommand().getTXNSTATUS().equalsIgnoreCase("MA907")) {
                         Logger.d("Balance", referFriendModel.toString());
                         sessionDialog = new MaterialDialog(ReferFriendsActivity.this);
@@ -222,7 +229,18 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
                         });
                         sessionDialog.setCanceledOnTouchOutside(false);
                         sessionDialog.show();
-                    } else {
+                    } else if (referFriendModel.getCommand().getTXNSTATUS().equalsIgnoreCase("00597")) {
+                        errorDialog = new MaterialDialog(ReferFriendsActivity.this);
+                        errorDialog.setMessage(referFriendModel.getCommand().getMESSAGE() + "");
+                        errorDialog.setPositiveButton("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                errorDialog.dismiss();
+                                phoneNumberEditText.setText("");
+                            }
+                        });
+                        errorDialog.show();
+                    }else {
                         Logger.e("Error", referFriendModel.toString());
                     }
                 }

@@ -477,7 +477,7 @@ public class HomeFragment extends Fragment {
                             materialDialog = new MaterialDialog(getActivity()).setContentView(flexiDialog);
                             materialDialog.setCanceledOnTouchOutside(true);
                             ((TextView) flexiDialog.findViewById(R.id.top_text)).setText(selfPrepaidModel.getCOMMAND().getMESSAGE() + "");
-                            ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText("017" + phoneNumberEditText.getText().toString() + "");
+                            ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText(phoneNumberEditText.getText().toString() + "");
                             ((TextView) flexiDialog.findViewById(R.id.transactionNumber)).setText("\n" + selfPrepaidModel.getCOMMAND().getTXNID() + "");
                             ((TextView) flexiDialog.findViewById(R.id.flxiloadAmount)).setText(editamt.getText().toString() + "");
                             materialDialog.show();
@@ -603,7 +603,7 @@ public class HomeFragment extends Fragment {
                             materialDialog = new MaterialDialog(getActivity()).setContentView(flexiDialog);
                             materialDialog.setCanceledOnTouchOutside(true);
                             ((TextView) flexiDialog.findViewById(R.id.top_text)).setText(selfPostpaidModel.getCOMMAND().getMESSAGE() + "");
-                            ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText("017" + phoneNumberEditText.getText().toString() + "");
+                            ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText(phoneNumberEditText.getText().toString() + "");
                             ((TextView) flexiDialog.findViewById(R.id.transactionNumber)).setText("\n" + selfPostpaidModel.getCOMMAND().getTXNID() + "");
                             ((TextView) flexiDialog.findViewById(R.id.flxiloadAmount)).setText(editamt.getText().toString() + "");
                             materialDialog.show();
@@ -721,7 +721,7 @@ public class HomeFragment extends Fragment {
                             materialDialog = new MaterialDialog(getActivity()).setContentView(flexiDialog);
                             materialDialog.setCanceledOnTouchOutside(true);
                             ((TextView) flexiDialog.findViewById(R.id.top_text)).setText(selfPrepaidModel.getCOMMAND().getMESSAGE() + "");
-                            ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText("017" + phoneNumberEditText.getText().toString() + "");
+                            ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText(phoneNumberEditText.getText().toString() + "");
                             ((TextView) flexiDialog.findViewById(R.id.transactionNumber)).setText("\n" + selfPrepaidModel.getCOMMAND().getTXNID() + "");
                             ((TextView) flexiDialog.findViewById(R.id.flxiloadAmount)).setText(editamt.getText().toString() + "");
                             materialDialog.show();
@@ -735,7 +735,7 @@ public class HomeFragment extends Fragment {
                                     phoneNumberEditText.setText("" + preferenceManager.getMSISDN());
                                     phoneNumberEditText.setInputType(0x00000000);
                                     phoneNumberEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                                    otherFlex.setVisibility(View.VISIBLE);
+                                   // otherFlex.setVisibility(View.VISIBLE);
                                     editamt.setText("৳ 50");
                                     Logger.d("WalletCheck ", "again 1");
                                     mCallback.fetchBalanceAgain();
@@ -925,7 +925,7 @@ public class HomeFragment extends Fragment {
                         materialDialog = new MaterialDialog(getActivity()).setContentView(flexiDialog);
                         materialDialog.setCanceledOnTouchOutside(true);
                         ((TextView) flexiDialog.findViewById(R.id.top_text)).setText(selfPrepaidModel.getCOMMAND().getMESSAGE() + "");
-                        ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText("017" + phoneNumberEditText.getText().toString() + "");
+                        ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText(phoneNumberEditText.getText().toString() + "");
                         ((TextView) flexiDialog.findViewById(R.id.transactionNumber)).setText("\n" + selfPrepaidModel.getCOMMAND().getTXNID() + "");
                         ((TextView) flexiDialog.findViewById(R.id.flxiloadAmount)).setText(editamt.getText().toString() + "");
                         materialDialog.show();
@@ -1009,7 +1009,7 @@ public class HomeFragment extends Fragment {
                         materialDialog = new MaterialDialog(getActivity()).setContentView(flexiDialog);
                         materialDialog.setCanceledOnTouchOutside(true);
                         ((TextView) flexiDialog.findViewById(R.id.top_text)).setText(selfPrepaidModel.getCOMMAND().getMESSAGE() + "");
-                        ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText("017" + phoneNumberEditText.getText().toString() + "");
+                        ((TextView) flexiDialog.findViewById(R.id.mobileNumber)).setText(phoneNumberEditText.getText().toString() + "");
                         ((TextView) flexiDialog.findViewById(R.id.transactionNumber)).setText("\n" + selfPrepaidModel.getCOMMAND().getTXNID() + "");
                         ((TextView) flexiDialog.findViewById(R.id.flxiloadAmount)).setText(editamt.getText().toString() + "");
                         materialDialog.show();

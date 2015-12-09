@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.adapter.BillsListAdapter;
 import com.cc.grameenphone.adapter.MultiPayDialogListAdapter;
+import com.cc.grameenphone.api_models.BalanceCommandModel;
 import com.cc.grameenphone.api_models.BalanceEnquiryModel;
 import com.cc.grameenphone.api_models.BillListModel;
 import com.cc.grameenphone.api_models.BillPaymentModel;
@@ -153,7 +154,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
-            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "SAPLBPREQ");
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
             jsonObject.put("COMMAND", innerObject);
@@ -266,6 +267,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             public void onClick(View v) {
                 selectedPayConfirmationDialog.dismiss();
                 loadingDialog.cancel();
+                preferenceManager.setWalletBalance("");
                 fetchBills();
                 selectedPaymentButton.setText("PAY SELECTED BILLS");
                 listViewAdapter.togglePayButton(true);
@@ -414,7 +416,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "BLKBPAYREQ");
             innerObject.put("NOOFBILLS", userBillsModel.size());
             JSONArray billsJsonArray = new JSONArray();
@@ -679,45 +681,57 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CBEREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("wallet request ", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
-            walletCheckApi.checkBalance(in, new Callback<BalanceEnquiryModel>() {
-                @Override
-                public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
-                    if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
-                        Logger.d("Balance", balanceEnquiryModel.toString());
-                        walletLabel.setText("  ৳ " + balanceEnquiryModel.getCOMMAND().getBALANCE());
-                        walletLabel.setTag(balanceEnquiryModel);
-                    } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
-                        Logger.e("Balance", balanceEnquiryModel.getCOMMAND().getMESSAGE().toString() + " ");
-                        loadingDialog.cancel();
-                        sessionDialog = new MaterialDialog(BillPaymentActivity.this);
-                        sessionDialog.setMessage("Session expired , please login again");
-                        sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                sessionDialog.dismiss();
-                                SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this, true);
-                                sessionClearTask.execute();
+            if (preferenceManager.getWalletBalance().isEmpty())
+                walletCheckApi.checkBalance(in, new Callback<BalanceEnquiryModel>() {
+                    @Override
+                    public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
+                        if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            walletLabel.setText("  ৳ " + balanceEnquiryModel.getCOMMAND().getBALANCE());
+                            preferenceManager.setWalletBalance(balanceEnquiryModel.getCOMMAND().getBALANCE());
+                            preferenceManager.setWalletMessage(balanceEnquiryModel.getCOMMAND().getMESSAGE());
+                            walletLabel.setTag(balanceEnquiryModel);
+                        } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
+                            Logger.e("Balance", balanceEnquiryModel.getCOMMAND().getMESSAGE().toString() + " ");
+                            loadingDialog.cancel();
+                            sessionDialog = new MaterialDialog(BillPaymentActivity.this);
+                            sessionDialog.setMessage("Session expired , please login again");
+                            sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    sessionDialog.dismiss();
+                                    SessionClearTask sessionClearTask = new SessionClearTask(BillPaymentActivity.this, true);
+                                    sessionClearTask.execute();
 
-                            }
-                        });
-                        sessionDialog.setCanceledOnTouchOutside(false);
-                        sessionDialog.show();
-                    } else {
-                        Logger.e("Balance", balanceEnquiryModel.toString());
+                                }
+                            });
+                            sessionDialog.setCanceledOnTouchOutside(false);
+                            sessionDialog.show();
+                        } else {
+                            Logger.e("Balance", balanceEnquiryModel.toString());
+                        }
                     }
-                }
 
-                @Override
-                public void failure(RetrofitError error) {
-                    Logger.e("Balance", error.getMessage());
-                }
-            });
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Logger.e("Balance", error.getMessage());
+                    }
+                });
+            else {
+                walletLabel.setText("  ৳ " + preferenceManager.getWalletBalance());
+                BalanceEnquiryModel balanceEnquiryModel = new BalanceEnquiryModel();
+                BalanceCommandModel balanceCommandModel = new BalanceCommandModel();
+                balanceCommandModel.setMESSAGE(preferenceManager.getWalletMessage());
+                balanceEnquiryModel.setCOMMAND(balanceCommandModel);
+            }
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
@@ -864,7 +878,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CPMPBREQ");
             innerObject.put("BILLCCODE", userBillsModel.getCOMPANYNAME().toUpperCase());
             innerObject.put("BILLANO", userBillsModel.getACCOUNTNUM());
@@ -888,8 +902,10 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                         dialog.setPositiveButton("Ok", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                preferenceManager.setWalletBalance("");
+
                                 fetchBills();
-                                getWalletBalance();
+                              //  getWalletBalance();
                                 dialog.dismiss();
                             }
                         });

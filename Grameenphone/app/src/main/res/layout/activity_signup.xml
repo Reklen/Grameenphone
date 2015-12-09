@@ -5,14 +5,14 @@
                 android:layout_height="match_parent">
 
     <include
-        android:id="@+id/transactionToolbar"
+        android:id="@+id/toolbar"
         layout="@layout/sign_up_toolboar"/>
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/transactionToolbar"
+        android:layout_below="@+id/toolbar"
         android:fillViewport="true">
 
         <LinearLayout
@@ -79,7 +79,9 @@
                         android:layout_height="wrap_content"
                         android:ems="11"
                         android:hint="@string/hintPhone"
+                        android:imeOptions="actionNext"
                         android:inputType="phone"
+                        android:digits="0123456789"
                         android:maxLength="11"
                         android:textColor="@color/black_semi_transparent"
                         android:textColorHighlight="@color/hint_color"
@@ -106,6 +108,8 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="Set pin"
+                    android:imeOptions="actionNext"
+
                     android:inputType="numberPassword"
                     android:maxLength="4"
                     android:textColor="@color/black_semi_transparent"
@@ -137,6 +141,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="Confirm pin"
+                    android:imeOptions="actionDone"
                     android:inputType="numberPassword"
                     android:maxLength="4"
                     android:textColor="@color/black_semi_transparent"
@@ -159,7 +164,6 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="Referral code"
-                    android:imeOptions="actionDone"
                     android:inputType="text"
                     android:maxLength="10"
                     android:textColor="@color/black_semi_transparent"

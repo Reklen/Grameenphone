@@ -6,15 +6,18 @@ import android.provider.Settings;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.adapter.BillPaymentViewPagerAdapter;
+import com.cc.grameenphone.api_models.BalanceCommandModel;
 import com.cc.grameenphone.api_models.BalanceEnquiryModel;
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
 import com.cc.grameenphone.api_models.OtherPaymentModel;
 import com.cc.grameenphone.async.CompaniesSaveDBTask;
+import com.cc.grameenphone.async.SessionClearTask;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.OtherPaymentApi;
 import com.cc.grameenphone.interfaces.WalletCheckApi;
@@ -31,6 +34,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -70,6 +74,8 @@ public class OtherPaymentActivity extends AppCompatActivity {
     private String android_id;
     private PreferenceManager preferenceManager;
     private OtherPaymentApi otherPaymentApi;
+    private MaterialDialog errorDialog, sessionDialog;
+    private MaterialDialog walletBalanceDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +110,25 @@ public class OtherPaymentActivity extends AppCompatActivity {
             }
         });
 
+        walletLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                walletBalanceDialog = new MaterialDialog(OtherPaymentActivity.this);
+
+                BalanceEnquiryModel md = (BalanceEnquiryModel) v.getTag();
+                if (md != null) {
+                    walletBalanceDialog.setMessage(md.getCOMMAND().getMESSAGE());
+                    walletBalanceDialog.setPositiveButton("Ok", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            walletBalanceDialog.dismiss();
+                        }
+                    });
+                    walletBalanceDialog.show();
+                }
+            }
+        });
+
         getWalletBalance();
     }
 
@@ -118,26 +143,76 @@ public class OtherPaymentActivity extends AppCompatActivity {
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CBEREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("wallet request ", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
-            walletCheckApi.checkBalance(in, new Callback<BalanceEnquiryModel>() {
-                @Override
-                public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
-                    if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
-                        Logger.d("Balance", balanceEnquiryModel.toString());
-                        walletLabel.setText("  ৳ " + balanceEnquiryModel.getCOMMAND().getBALANCE());
-                    }
-                }
+            if (preferenceManager.getWalletBalance().isEmpty())
+                walletCheckApi.checkBalance(in, new Callback<BalanceEnquiryModel>() {
+                    @Override
+                    public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
+                        if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            walletLabel.setText("  ৳ " + balanceEnquiryModel.getCOMMAND().getBALANCE());
+                            walletLabel.setTag(balanceEnquiryModel);
+                            preferenceManager.setWalletBalance(balanceEnquiryModel.getCOMMAND().getBALANCE());
+                            preferenceManager.setWalletMessage(balanceEnquiryModel.getCOMMAND().getMESSAGE());
+                        } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
+                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            sessionDialog = new MaterialDialog(OtherPaymentActivity.this);
+                            sessionDialog.setMessage("Session expired , please login again");
+                            sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    SessionClearTask sessionClearTask = new SessionClearTask(OtherPaymentActivity.this, true);
+                                    sessionClearTask.execute();
 
-                @Override
-                public void failure(RetrofitError error) {
-                    Logger.e("Balance", error.getMessage());
-                }
-            });
+                                }
+                            });
+                            sessionDialog.show();
+                        } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA903")) {
+                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            sessionDialog = new MaterialDialog(OtherPaymentActivity.this);
+                            sessionDialog.setMessage("Session expired , please login again");
+                            sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    SessionClearTask sessionClearTask = new SessionClearTask(OtherPaymentActivity.this, true);
+                                    sessionClearTask.execute();
+
+                                }
+                            });
+                            sessionDialog.setCanceledOnTouchOutside(false);
+                            sessionDialog.show();
+                        } else {
+                            errorDialog = new MaterialDialog(OtherPaymentActivity.this);
+                            errorDialog.setMessage(balanceEnquiryModel.getCOMMAND().getMESSAGE() + "");
+                            errorDialog.setPositiveButton("OK", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    errorDialog.dismiss();
+                                }
+                            });
+                            errorDialog.show();
+                            Logger.d("Balance", balanceEnquiryModel.toString());
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Logger.e("Balance", error.getMessage());
+                    }
+                });
+            else {
+                walletLabel.setText("  ৳ " + preferenceManager.getWalletBalance());
+                BalanceEnquiryModel balanceEnquiryModel = new BalanceEnquiryModel();
+                BalanceCommandModel balanceCommandModel = new BalanceCommandModel();
+                balanceCommandModel.setMESSAGE(preferenceManager.getWalletMessage());
+                balanceEnquiryModel.setCOMMAND(balanceCommandModel);
+                walletLabel.setTag(balanceEnquiryModel);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
@@ -170,7 +245,7 @@ public class OtherPaymentActivity extends AppCompatActivity {
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CTCMPLREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("getOtherPaymentCompanies ", jsonObject.toString());

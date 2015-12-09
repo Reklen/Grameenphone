@@ -29,6 +29,11 @@
 
         </activity>
         <activity
+            android:name=".activity.TermsAndConditionsActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustPan"/>
+
+        <activity
             android:name=".activity.SplashActivity"
             android:exported="true"
             android:screenOrientation="nosensor">
@@ -47,6 +52,7 @@
         <activity
             android:name=".activity.ProfileUpdateActivity"
             android:screenOrientation="nosensor"/>
+
         <activity
             android:name=".activity.HomeActivity"
             android:screenOrientation="nosensor"/>

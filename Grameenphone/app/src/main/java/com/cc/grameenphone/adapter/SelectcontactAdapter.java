@@ -12,7 +12,7 @@ import com.cc.grameenphone.fragments.ManageFavoriteFragment;
  */
 public class SelectcontactAdapter extends FragmentPagerAdapter {
 
-    String tabs[] = {"Favorites", "Contacts"};
+    String tabs[] = {"App Favorites", "Contacts"};
     public ContactsDetailsFragment contactsDetailsFragment;
     public ManageFavoriteFragment manageFavoriteFragment;
 

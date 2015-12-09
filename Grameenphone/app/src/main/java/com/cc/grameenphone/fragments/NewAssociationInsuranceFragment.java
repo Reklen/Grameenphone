@@ -267,7 +267,12 @@ public class NewAssociationInsuranceFragment extends BaseTabFragment implements 
 
     void onSubmitClick() {
         //TODO Submitting amount, surcharge amount
-
+        if (rg.getCheckedRadioButtonId() == -1) {
+            // no radio buttons are checked
+            Toast.makeText(getActivity(), "Select at least one company", Toast.LENGTH_SHORT).show();
+            progressDialog.cancel();
+            return;
+        }
         preferenceManager = new PreferenceManager(getActivity());
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);

@@ -5,14 +5,14 @@
     tools:context="com.cc.grameenphone.activity.TransactionOverviewActivity">
 
     <include
-        android:id="@+id/transactionToolbar"
+        android:id="@+id/toolbar"
         layout="@layout/transaction_toolbar" />
 
     <ListView
         android:id="@+id/transactionList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/transactionToolbar"
+        android:layout_below="@+id/toolbar"
         android:layout_centerHorizontal="true"
         android:listSelector="@drawable/rowbackgroundselector"
         tools:listitem="@layout/adapter_item_transaction" />

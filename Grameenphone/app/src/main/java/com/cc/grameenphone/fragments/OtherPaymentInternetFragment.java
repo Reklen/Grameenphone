@@ -228,6 +228,11 @@ public class OtherPaymentInternetFragment extends BaseTabFragment implements Val
 
             }
         });
+        if (rg.getCheckedRadioButtonId() == -1) {
+            // no radio buttons are checked
+            Toast.makeText(getActivity(), "Select at least one company", Toast.LENGTH_SHORT).show();
+            return;
+        }
         pinConfirmDialog.show();
     }
 

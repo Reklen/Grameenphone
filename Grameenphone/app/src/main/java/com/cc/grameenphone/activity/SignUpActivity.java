@@ -8,7 +8,6 @@ import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -46,6 +45,8 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -72,7 +73,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
     ImageView imageIconBack;
     @InjectView(R.id.text_tool)
     TextView textTool;
-    @InjectView(R.id.transactionToolbar)
+    @InjectView(R.id.toolbar)
     Toolbar transactionToolbar;
 
     @InjectView(R.id.grameen_text)
@@ -81,7 +82,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
     TextView areaCode;
 
     @NotEmpty
-    @Length(min = 8)
+    @Length(min = 11)
     @InjectView(R.id.phoneNumberEditText)
     EditText phoneNumberEditText;
 
@@ -136,6 +137,8 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
     private String android_id;
     private String otpString, authTokenString;
 
+    boolean isPinCons = false, isPinRep = false;
+
     // ImageView back_icon;
 
     @Override
@@ -187,6 +190,11 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
 
     }
 
+    @OnClick(R.id.sign_terms_text01)
+    void tocClick() {
+        startActivity(new Intent(SignUpActivity.this, TermsAndConditionsActivity.class));
+    }
+
     private void handleExtras() {
         Bundle b = getIntent().getExtras();
         try {
@@ -211,6 +219,77 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
 
     @OnClick(R.id.sign_up_btn)
     void signUpClick() {
+
+        Pattern consPattern = Pattern.compile(
+                "\\b                                                       \n" +
+                        "(?:                                                       \n" +
+                        " (?:                                                      \n" +
+                        "  0(?=1|\\b)|                                             \n" +
+                        "  1(?=2|\\b)|                                             \n" +
+                        "  2(?=3|\\b)|                                             \n" +
+                        "  3(?=4|\\b)|                                             \n" +
+                        "  4(?=5|\\b)|                                             \n" +
+                        "  5(?=6|\\b)|                                             \n" +
+                        "  6(?=7|\\b)|                                             \n" +
+                        "  7(?=8|\\b)|                                             \n" +
+                        "  8(?=9|\\b)|                                             \n" +
+                        "  9\\b         # or 9(?=0|\\b) if you want to allow 890123\n" +
+                        " )+                                                       \n" +
+                        " |                                                        \n" +
+                        " (?:                                                      \n" +
+                        "  9(?=8|\\b)|                                             \n" +
+                        "  8(?=7|\\b)|                                             \n" +
+                        "  7(?=6|\\b)|                                             \n" +
+                        "  6(?=5|\\b)|                                             \n" +
+                        "  5(?=4|\\b)|                                             \n" +
+                        "  4(?=3|\\b)|                                             \n" +
+                        "  3(?=2|\\b)|                                             \n" +
+                        "  2(?=1|\\b)|                                             \n" +
+                        "  1(?=0|\\b)|                                             \n" +
+                        "  0\\b         # or 0(?=9|\\b) if you want to allow 321098\n" +
+                        " )+                                                       \n" +
+                        ")                                                         \n" +
+                        "\\b",
+                Pattern.COMMENTS);
+        Matcher regexMatcher = consPattern.matcher(setPinEdit.getText().toString());
+        if (regexMatcher.matches()) {
+            Logger.d("Pattern", "matches");
+            isPinCons = true;
+        } else {
+            Logger.e("Pattern", "does not match");
+            isPinCons = false;
+        }
+
+
+        Pattern pattern = Pattern.compile("([0-9])\\1{3}");
+        Matcher matcher = pattern.matcher(setPinEdit.getText().toString());
+        if (matcher.find()) {
+            Logger.d("PatternRep", "matches");
+            isPinRep = true;
+        } else {
+            Logger.e("PatternRep", "does not match");
+            isPinRep = false;
+
+        }
+
+        if (isPinCons) {
+            Toast.makeText(SignUpActivity.this, "Password cant contain consecutive digits", Toast.LENGTH_SHORT).show();
+            setPinEdit.setError("Password error");
+            conformPinEdit.setText("");
+            setPinEdit.requestFocus();
+            setPinEdit.setText("");
+
+            return;
+        }
+        if (isPinRep) {
+            Toast.makeText(SignUpActivity.this, "Password cant contain repetitive digits", Toast.LENGTH_SHORT).show();
+            setPinEdit.setError("Password error");
+            conformPinEdit.setText("");
+            setPinEdit.setText("");
+            setPinEdit.requestFocus();
+
+            return;
+        }
         loadingDialog.show();
         validator.validate();
     }
@@ -233,6 +312,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
             if (view instanceof EditText) {
                 ((EditText) view).setError(message);
                 ((EditText) view).setText("");
+                ((EditText) view).requestFocus();
             } else {
                 Toast.makeText(SignUpActivity.this, message, Toast.LENGTH_LONG).show();
             }
@@ -245,7 +325,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
-            innerObject.put("MSISDN",  phoneNumberEditText.getText().toString());
+            innerObject.put("MSISDN", phoneNumberEditText.getText().toString());
             innerObject.put("TYPE", "MSISDNCHK");
             jsonObject.put("COMMAND", innerObject);
             String json = jsonObject.toString();
@@ -257,7 +337,6 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
                     if (msisdnCheckModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                         otpString = msisdnCheckModel.getCOMMAND().getOTP();
                         authTokenString = msisdnCheckModel.getCOMMAND().getAUTHTOKEN();
-                        loadingDialog.cancel();
                         signUpUser();
                     } else {
                         loadingDialog.cancel();
@@ -294,14 +373,15 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
         // {"COMMAND": {"RFRCODE": "ud85szn","PIN": "2468",
         // "MSISDN": "01719202177", "TYPE": "CUSTREG", "DEVICEID":"01234567890654321",
         // "AUTHTOKEN": "5e48dad31259c988275c34641d1ba78761d54391a389225309bb65bd8aed946d", "OTP": "3427359088" }}
-        otpView = LayoutInflater.from(SignUpActivity.this).inflate(R.layout.sign_up_dialog, null);
+
+        //   otpView = LayoutInflater.from(SignUpActivity.this).inflate(R.layout.sign_up_dialog, null);
         Logger.d("Signup ", "doing signUpUser");
         try {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerJsonObj = new JSONObject();
 
             innerJsonObj.put("DEVICEID", android_id);
-            innerJsonObj.put("MSISDN", "017" + phoneNumberEditText.getText().toString());
+            innerJsonObj.put("MSISDN", phoneNumberEditText.getText().toString());
             innerJsonObj.put("TYPE", "CUSTREG");
             if (!referralCodeEdit.getText().toString().isEmpty())
                 innerJsonObj.put("RFRCODE", referralCodeEdit.getText().toString());
@@ -311,7 +391,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
             innerJsonObj.put("AUTHTOKEN", "" + authTokenString);
             jsonObject.put("COMMAND", innerJsonObj);
 
-            Logger.d("Signup ", "doing signUpUser " + jsonObject.toString());
+            Logger.d("Signup ", "doing signUpUser check " + jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             signupApi.signup(in, new Callback<SignupModel>() {
@@ -360,6 +440,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
                                     }
                                 });
                     */
+                        loadingDialog.cancel();
                         successSignupDialog = new MaterialDialog(SignUpActivity.this);
                         successSignupDialog.setMessage(signupModel.getCommand().getMESSAGE() + "");
                         successSignupDialog.setPositiveButton("Ok", new View.OnClickListener() {
@@ -372,6 +453,8 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
                                     preferenceManager.setReferCode("No Refercode Available");
                                 preferenceManager.setMSISDN(phoneNumberEditText.getText().toString());
                                 successSignupDialog.dismiss();
+
+
                                 startActivity(new Intent(SignUpActivity.this, ProfileUpdateActivity.class));
                                 finish();
 
@@ -380,6 +463,8 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
                         successSignupDialog.show();
                     } else if (signupModel.getCommand().getTXNSTATUS().equalsIgnoreCase("GP230")) {
                         //dialog
+                        loadingDialog.cancel();
+
                         // otpDialog.dismiss();
                         errorDialog = new MaterialDialog(SignUpActivity.this);
                         errorDialog.setMessage(signupModel.getCommand().getMESSAGE() + "");
@@ -392,6 +477,8 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
                         errorDialog.show();
                     } else {
 //                        otpDialog.dismiss();
+                        loadingDialog.cancel();
+
                         errorDialog = new MaterialDialog(SignUpActivity.this);
                         errorDialog.setMessage(signupModel.getCommand().getMESSAGE() + "");
                         errorDialog.setPositiveButton("Ok", new View.OnClickListener() {

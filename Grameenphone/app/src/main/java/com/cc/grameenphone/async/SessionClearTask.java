@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.cc.grameenphone.activity.LoginActivity;
-import com.cc.grameenphone.api_models.ContactModel;
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
@@ -29,7 +28,8 @@ public class SessionClearTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         if (isCleanOut) {
-            RushCore.getInstance().deleteAll(ContactModel.class);
+
+           // RushCore.getInstance().deleteAll(ContactModel.class);
             RushCore.getInstance().deleteAll(OtherPaymentCompanyModel.class);
         }
         return null;
@@ -42,8 +42,9 @@ public class SessionClearTask extends AsyncTask<Void, Void, Void> {
         Logger.d("shfjdhf", "cleared");
         preferenceManager.setCompaniesSavedFlag(false);
         preferenceManager.setAuthToken("");
+        preferenceManager.setWalletBalance("");
+        preferenceManager.setWalletMessage("");
         preferenceManager.setMSISDN("");
-
         ctx.startActivity(new Intent(ctx, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 }

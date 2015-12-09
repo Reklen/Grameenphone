@@ -38,6 +38,7 @@
     <string name="enterPhnnumb">Enter a phone number</string>
     <string name="accept">I accept to</string>
     <string name="terms_condition"><u>Terms &amp; Conditions</u></string>
+    <string name="toc_title">Terms &amp; Conditions</string>
     <string name="create_new_wallet">CREATE A NEW WALLET</string>
     <string name="Or">OR</string>
     <string name="sign_up">Sign Up</string>
@@ -130,5 +131,6 @@ lorem non turpis. Nullam sit amet enim</string>
     <string name="title_activity_ansbvs">ANSBVS</string>
     <string name="crash">App has crashed , please share the crash logs with the developer.</string>
 
-
+    <string name="exit_confirmation">Are you sure, want to exit the app ?</string>
+    <string name="exit_app">Exit App</string>
 </resources>

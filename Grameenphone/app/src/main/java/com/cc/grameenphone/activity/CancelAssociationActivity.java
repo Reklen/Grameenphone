@@ -305,7 +305,7 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "FBILASCREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("sending json", jsonObject.toString());
@@ -314,6 +314,7 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
             getAssociationApi.fetchUserAssociaition(in, new Callback<AssociationModel>() {
                 @Override
                 public void success(AssociationModel associationModel, Response response) {
+                    Logger.d("CancelCrash", associationModel.toString());
                     if (associationModel.getCommandModel().getTXNSTATUS().equalsIgnoreCase("200")) {
                         list.clear();
                         if (associationModel.getCommandModel().getBILLDEL() != null) {
@@ -362,7 +363,7 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
                     JSONObject innerObject = new JSONObject();
                     innerObject.put("DEVICEID", android_id);
                     innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-                    innerObject.put("MSISDN",  preferenceManager.getMSISDN());
+                    innerObject.put("MSISDN", preferenceManager.getMSISDN());
                     innerObject.put("TYPE", "BPREGDREQ");
                     innerObject.put("BILLCCODE", model.getCOMPCODE());
                     innerObject.put("PREF1", model.getACCNUM());
@@ -442,7 +443,7 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "BLKCBASREQ");
             innerObject.put("NOOFBILLS", userBillsModel.size());
             JSONArray billsJsonArray = new JSONArray();

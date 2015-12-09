@@ -48,7 +48,7 @@ public class TransactionOverviewActivity extends AppCompatActivity {
     ImageView imageIconBack;
     @InjectView(R.id.text_tool)
     TextView textTool;
-    @InjectView(R.id.transactionToolbar)
+    @InjectView(R.id.toolbar)
     Toolbar transactionToolbar;
     @InjectView(R.id.transactionList)
     ListView transactionList;
@@ -121,15 +121,20 @@ public class TransactionOverviewActivity extends AppCompatActivity {
                             Logger.d("TransactionOverview", transactionOverviewModel.toString());
                             if (transactionOverviewModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                                 listItemsList.clear();
-                                for (TransactionOverviewData modelData : transactionOverviewModel.getCOMMAND().getDATA()) {
-                                    if (!modelData.getTXNAMT().equalsIgnoreCase("null")) {
-                                        listItemsList.add(modelData);
+                                try {
+                                    for (TransactionOverviewData modelData : transactionOverviewModel.getCOMMAND().getDATA()) {
+                                        if (!modelData.getTXNAMT().equalsIgnoreCase("null")) {
+                                            listItemsList.add(modelData);
+                                        }
                                     }
-                                }
 
-                                mapValues(transactionOverviewModel);
-                                adapter.notifyDataSetChanged();
-                                loadingDialog.cancel();
+                                    mapValues(transactionOverviewModel);
+                                    adapter.notifyDataSetChanged();
+                                    loadingDialog.cancel();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    loadingDialog.cancel();
+                                }
                             } else if (transactionOverviewModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA903")) {
                                 loadingDialog.cancel();
                                 errorDialog = new MaterialDialog(TransactionOverviewActivity.this);

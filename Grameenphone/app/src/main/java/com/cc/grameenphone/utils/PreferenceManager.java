@@ -64,4 +64,22 @@ public final class PreferenceManager {
     public Boolean getCompaniesSavedFlag() {
         return mSharedPreferences.getBoolean("companiesSavedFlag", false);
     }
+
+    public String getWalletBalance() {
+        return mSharedPreferences.getString("wallet", "");
+    }
+
+    public void setWalletBalance(String balance) {
+        mSharedPreferences.edit().putString("wallet", balance).commit();
+    }
+
+    public void setWalletMessage(String walletMessage) {
+        mSharedPreferences.edit().putString("walletMessage", walletMessage).commit();
+
+    }
+
+    public String getWalletMessage() {
+        return mSharedPreferences.getString("walletMessage", "");
+    }
+
 }

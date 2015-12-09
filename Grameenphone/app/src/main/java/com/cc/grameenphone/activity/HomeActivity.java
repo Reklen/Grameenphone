@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cc.grameenphone.R;
+import com.cc.grameenphone.api_models.BalanceCommandModel;
 import com.cc.grameenphone.api_models.BalanceEnquiryModel;
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
 import com.cc.grameenphone.api_models.OtherPaymentModel;
@@ -79,11 +81,13 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
     @InjectView(R.id.icon2Ripple)
     RippleView icon2Ripple;
     private String android_id;
+
     private WalletCheckApi walletCheckApi;
     MaterialDialog logoutDialog;
     private MaterialDialog walletBalanceDialog, sessionDialog, internetDialog;
     private OtherPaymentApi otherPaymentApi;
     private MaterialDialog errorDialog;
+    private MaterialDialog exit_dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -302,7 +306,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CTCMPLREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("getOtherPaymentCompanies ", jsonObject.toString());
@@ -408,66 +412,77 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CBEREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("wallet request ", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
-            walletCheckApi.checkBalance(in, new Callback<BalanceEnquiryModel>() {
-                @Override
-                public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
-                    if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
-                        Logger.d("Balance", balanceEnquiryModel.toString());
-                        walletLabel.setText("  ৳ " + balanceEnquiryModel.getCOMMAND().getBALANCE());
-                        walletLabel.setTag(balanceEnquiryModel);
-                    } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
-                        Logger.d("Balance", balanceEnquiryModel.toString());
-                        sessionDialog = new MaterialDialog(HomeActivity.this);
-                        sessionDialog.setMessage("Session expired , please login again");
-                        sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                SessionClearTask sessionClearTask = new SessionClearTask(HomeActivity.this, true);
-                                sessionClearTask.execute();
+            if (preferenceManager.getWalletBalance().isEmpty())
+                walletCheckApi.checkBalance(in, new Callback<BalanceEnquiryModel>() {
+                    @Override
+                    public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
+                        if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
+                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            walletLabel.setText("  ৳ " + balanceEnquiryModel.getCOMMAND().getBALANCE());
+                            preferenceManager.setWalletBalance(balanceEnquiryModel.getCOMMAND().getBALANCE());
+                            preferenceManager.setWalletMessage(balanceEnquiryModel.getCOMMAND().getMESSAGE());
+                            walletLabel.setTag(balanceEnquiryModel);
+                        } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
+                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            sessionDialog = new MaterialDialog(HomeActivity.this);
+                            sessionDialog.setMessage("Session expired , please login again");
+                            sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    SessionClearTask sessionClearTask = new SessionClearTask(HomeActivity.this, true);
+                                    sessionClearTask.execute();
 
-                            }
-                        });
-                        sessionDialog.setCanceledOnTouchOutside(false);
-                        sessionDialog.show();
-                    } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA903")) {
-                        Logger.d("Balance", balanceEnquiryModel.toString());
-                        sessionDialog = new MaterialDialog(HomeActivity.this);
-                        sessionDialog.setMessage("Session expired , please login again");
-                        sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                SessionClearTask sessionClearTask = new SessionClearTask(HomeActivity.this, true);
-                                sessionClearTask.execute();
+                                }
+                            });
+                            sessionDialog.setCanceledOnTouchOutside(false);
+                            sessionDialog.show();
+                        } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA903")) {
+                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            sessionDialog = new MaterialDialog(HomeActivity.this);
+                            sessionDialog.setMessage("Session expired , please login again");
+                            sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    SessionClearTask sessionClearTask = new SessionClearTask(HomeActivity.this, true);
+                                    sessionClearTask.execute();
 
-                            }
-                        });
-                        sessionDialog.setCanceledOnTouchOutside(false);
-                        sessionDialog.show();
-                    } else {
-                        errorDialog = new MaterialDialog(HomeActivity.this);
-                        errorDialog.setMessage(balanceEnquiryModel.getCOMMAND().getMESSAGE() + "");
-                        errorDialog.setPositiveButton("OK", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                errorDialog.dismiss();
-                            }
-                        });
-                        errorDialog.show();
-                        Logger.d("Balance", balanceEnquiryModel.toString());
+                                }
+                            });
+                            sessionDialog.setCanceledOnTouchOutside(false);
+                            sessionDialog.show();
+                        } else {
+                            errorDialog = new MaterialDialog(HomeActivity.this);
+                            errorDialog.setMessage(balanceEnquiryModel.getCOMMAND().getMESSAGE() + "");
+                            errorDialog.setPositiveButton("OK", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    errorDialog.dismiss();
+                                }
+                            });
+                            errorDialog.show();
+                            Logger.d("Balance", balanceEnquiryModel.toString());
+                        }
                     }
-                }
 
-                @Override
-                public void failure(RetrofitError error) {
-                    Logger.e("Balance", error.getMessage());
-                }
-            });
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Logger.e("Balance", error.getMessage());
+                    }
+                });
+            else {
+                walletLabel.setText("  ৳ " + preferenceManager.getWalletBalance());
+                BalanceEnquiryModel balanceEnquiryModel = new BalanceEnquiryModel();
+                BalanceCommandModel balanceCommandModel = new BalanceCommandModel();
+                balanceCommandModel.setMESSAGE(preferenceManager.getWalletMessage());
+                balanceEnquiryModel.setCOMMAND(balanceCommandModel);
+                walletLabel.setTag(balanceEnquiryModel);
+            }
         } catch (JSONException e) {
 
         } catch (UnsupportedEncodingException e) {
@@ -484,7 +499,59 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
     @Override
     public void fetchBalanceAgain() {
         Logger.d("WalletCheck ", "again 2");
+
         walletLabel.setText("  ৳ ");
+        preferenceManager.setWalletBalance("");
         getWalletBalance();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getVisibleFragment() instanceof HomeFragment) {
+            exit_dialog = new MaterialDialog(HomeActivity.this);
+            exit_dialog.setTitle("Exit App");
+            exit_dialog.setMessage("Are you sure, want to exit the app ?");
+            exit_dialog.setPositiveButton("Exit", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    intent.addCategory(Intent.CATEGORY_HOME);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+
+                    exit_dialog.dismiss();
+                    finish();
+                }
+            });
+            exit_dialog.setNegativeButton("Cancel", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    exit_dialog.dismiss();
+
+                }
+            });
+            exit_dialog.show();
+
+
+        } else {
+            fragment = new HomeFragment();
+            toolbarTextView.setText("Home");
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container_body, fragment);
+            fragmentTransaction.commit();
+        }
+    }
+
+
+    public Fragment getVisibleFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                if (fragment != null && fragment.isVisible())
+                    return fragment;
+            }
+        }
+        return null;
     }
 }

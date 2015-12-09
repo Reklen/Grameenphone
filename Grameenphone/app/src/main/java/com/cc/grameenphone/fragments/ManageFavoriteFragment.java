@@ -132,7 +132,7 @@ public class ManageFavoriteFragment extends Fragment {
         listView.setAdapter(adapter);
         ViewGroup parentGroup = (ViewGroup) listView.getParent();
         View emptyView = LayoutInflater.from(getActivity()).inflate(R.layout.empty_list, parentGroup, false);
-        ((TextView) emptyView.findViewById(R.id.textView)).setText("No Favorites add some");
+        ((TextView) emptyView.findViewById(R.id.textView)).setText("No app favorites , add your contacts using +");
         parentGroup.addView(emptyView);
         listView.setEmptyView(emptyView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

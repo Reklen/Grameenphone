@@ -265,8 +265,12 @@ public class NewAssociationElectricFragment extends BaseTabFragment implements V
 
 
     void onSubmitClick() {
-        //TODO Submitting amount, surcharge amount
-
+        if (rg.getCheckedRadioButtonId() == -1) {
+            // no radio buttons are checked
+            Toast.makeText(getActivity(), "Select at least one company", Toast.LENGTH_SHORT).show();
+            progressDialog.cancel();
+            return;
+        }
         preferenceManager = new PreferenceManager(getActivity());
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
@@ -276,7 +280,7 @@ public class NewAssociationElectricFragment extends BaseTabFragment implements V
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "BPREGREQ");
             innerObject.put("CATEGORY", "ELE");
             innerObject.put("PREF1", accountNumbEdit.getText().toString());

@@ -83,15 +83,15 @@ public class NotificationActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 NotificationMessageModel model = adapter.getItem(position);
-                dialogView = LayoutInflater.from(NotificationActivity.this).inflate(R.layout.notification_row_item, null);
+              /*  dialogView = LayoutInflater.from(NotificationActivity.this).inflate(R.layout.notification_row_item, null);
                 ((TextView) dialogView.findViewById(R.id.notificationTypeTextView)).setText("" + model.getNOTCODE());
                 ((TextView) dialogView.findViewById(R.id.notificationTitleTextView)).setText("" + model.getNOTHEAD());
                 ((TextView) dialogView.findViewById(R.id.notificationContentTextView)).setText("" + model.getNOTDATA());
-                ((TextView) dialogView.findViewById(R.id.notificationTimeTextView)).setText("" + model.getNOTSTDAT());
+                ((TextView) dialogView.findViewById(R.id.notificationTimeTextView)).setText("" + model.getNOTSTDAT());*/
 
                 mMaterialDialog = new MaterialDialog(NotificationActivity.this)
-                        .setTitle("Notification")
-                        .setView(dialogView)
+                        .setTitle(model.getNOTHEAD())
+                        .setMessage(model.getNOTDATA() + " \n\n" + model.getNOTSTDAT())
                         .setPositiveButton("OK", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

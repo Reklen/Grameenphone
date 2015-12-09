@@ -122,6 +122,7 @@
                     android:drawablePadding="6dip"
                     android:hint="@string/hintPhone"
                     android:inputType="phone"
+                    android:digits="0123456789"
                     android:maxLength="11"
                     android:textColor="@color/black_semi_transparent"
                     android:textColorHighlight="@color/hint_color"
@@ -182,7 +183,7 @@
                     android:id="@+id/editamt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter amount"
+                    android:hint="Click to change Amount"
                     android:inputType="numberDecimal"
                     android:text="50"
                     android:textColor="@color/black_semi_transparent"
@@ -254,10 +255,9 @@
                     android:id="@+id/felexi_text"
                     android:layout_width="wrap_content"
                     android:layout_height="64dp"
-                    android:layout_below="@+id/felexi_text"
                     android:layout_centerInParent="true"
                     android:gravity="center"
-                    android:text="FELEXILOAD"
+                    android:text="FLEXILOAD"
                     android:textColor="@color/black_semi_transparent"
                     android:textSize="12sp" />
             </RelativeLayout>

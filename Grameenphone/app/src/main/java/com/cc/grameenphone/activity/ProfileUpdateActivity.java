@@ -1,6 +1,7 @@
 package com.cc.grameenphone.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -22,6 +23,9 @@ import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
 import com.cc.grameenphone.views.CustomTextInputLayout;
 import com.cc.grameenphone.views.RippleView;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.json.JSONException;
@@ -29,6 +33,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -39,10 +44,12 @@ import retrofit.client.Response;
 import retrofit.mime.TypedByteArray;
 import retrofit.mime.TypedInput;
 
+import static com.mobsandgeeks.saripaar.Validator.ValidationListener;
+
 /**
  * Created by Rajkiran on 9/9/2015.
  */
-public class ProfileUpdateActivity extends Activity implements DatePickerDialog.OnDateSetListener {
+public class ProfileUpdateActivity extends Activity implements DatePickerDialog.OnDateSetListener, ValidationListener {
 
 
     ProfileUpdateApi profileUpdateApi;
@@ -57,22 +64,32 @@ public class ProfileUpdateActivity extends Activity implements DatePickerDialog.
     RelativeLayout toolbarContainer;
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
+
+    @NotEmpty
     @InjectView(R.id.first_nameEdit)
     EditText firstNameEdit;
     @InjectView(R.id.firstName_container)
     CustomTextInputLayout firstNameContainer;
+
+    @NotEmpty
     @InjectView(R.id.last_nameEdit)
     EditText lastNameEdit;
     @InjectView(R.id.lastName_container)
     CustomTextInputLayout lastNameContainer;
+    @NotEmpty
     @InjectView(R.id.email_idEdit)
     EditText emailIdEdit;
+
     @InjectView(R.id.emailid_container)
     CustomTextInputLayout emailidContainer;
+
+    @NotEmpty
     @InjectView(R.id.national_idEdit)
     EditText nationalIdEdit;
     @InjectView(R.id.nationalId_container)
     CustomTextInputLayout nationalIdContainer;
+
+    @NotEmpty
     @InjectView(R.id.date_of_birthEdit)
     EditText dateOfBirthEdit;
     @InjectView(R.id.dateOfBirth_container)
@@ -84,18 +101,26 @@ public class ProfileUpdateActivity extends Activity implements DatePickerDialog.
     private String android_id;
     PreferenceManager preferenceManager;
     private MaterialDialog sessionDialog;
+    private Validator validator;
+
+    private ProgressDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
         ButterKnife.inject(this);
+        loadingDialog = new ProgressDialog(ProfileUpdateActivity.this);
+        loadingDialog.setMessage("Loading..");
         submitRippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
-                submitClick();
+                validator.validate();
+                //  submitClick();
             }
         });
+        validator = new Validator(ProfileUpdateActivity.this);
+        validator.setValidationListener(ProfileUpdateActivity.this);
         skipRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
@@ -139,9 +164,10 @@ public class ProfileUpdateActivity extends Activity implements DatePickerDialog.
                 Toast.makeText(this, "Invalid email id", Toast.LENGTH_LONG).show();
                 emailIdEdit.requestFocus();
             }
-            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
             String dobText = dateOfBirthEdit.getText().toString();
             dobText = dobText.replace("/", "");
+            dobText = dobText.replace("\\", "");
             innerObject.put("DOB", dobText);
             innerObject.put("IDNO", nationalIdEdit.getText().toString());
             innerObject.put("TYPE", "PRFLUPDATE");
@@ -154,6 +180,7 @@ public class ProfileUpdateActivity extends Activity implements DatePickerDialog.
                 @Override
                 public void success(ProfileUpdateModel profileUpdateModel, Response response) {
                     Logger.d("Its pin change ", "status " + profileUpdateModel.toString());
+                    loadingDialog.dismiss();
                     if (profileUpdateModel.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
                         successSignupDialog = new MaterialDialog(ProfileUpdateActivity.this);
                         successSignupDialog.setMessage(profileUpdateModel.getCommand().getMESSAGE() + "");
@@ -162,7 +189,7 @@ public class ProfileUpdateActivity extends Activity implements DatePickerDialog.
                             public void onClick(View v) {
                                 successSignupDialog.dismiss();
                                 startActivity(new Intent(ProfileUpdateActivity.this, HomeActivity.class));
-
+                                finish();
                             }
                         });
                         successSignupDialog.show();
@@ -191,25 +218,26 @@ public class ProfileUpdateActivity extends Activity implements DatePickerDialog.
                         sessionDialog.setCanceledOnTouchOutside(false);
                         sessionDialog.show();
                     } else {
-                        Logger.d("Balance", profileUpdateModel.toString());
+                        Toast.makeText(ProfileUpdateActivity.this, "Some error occured", Toast.LENGTH_SHORT).show();
+                        Logger.d("ProfileUpdate", profileUpdateModel.toString());
                     }
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
+                    loadingDialog.dismiss();
                     Logger.d("Profile Update response failed ", ": " + error.getMessage().toString());
                 }
             });
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
+        } catch (JSONException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
 
     void skipClick() {
         startActivity(new Intent(ProfileUpdateActivity.this, HomeActivity.class));
+        finish();
 
     }
 
@@ -223,8 +251,45 @@ public class ProfileUpdateActivity extends Activity implements DatePickerDialog.
 
 
     @Override
-    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        String date = dayOfMonth + "/" + (++monthOfYear) + "/" + year;
+    public void onDateSet(DatePickerDialog view, int yearInt, int monthOfYear, int dayOfMonth) {
+        String date, day, month, year;
+        if (dayOfMonth < 10)
+            day = "0" + dayOfMonth;
+        else
+            day = "" + dayOfMonth;
+        if (monthOfYear < 10)
+            month = "0" + (++monthOfYear);
+        else
+            month = "" + (++monthOfYear);
+
+        year = "" + yearInt;
+
+        date = day + "/" + month + "/" + year;
+
         dateOfBirthEdit.setText(date);
+        dateOfBirthEdit.setError(null);
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+        loadingDialog.show();
+        submitClick();
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        loadingDialog.cancel();
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(ProfileUpdateActivity.this);
+
+            // Display error messages ;)
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+                ((EditText) view).setText("");
+            } else {
+                Toast.makeText(ProfileUpdateActivity.this, message, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

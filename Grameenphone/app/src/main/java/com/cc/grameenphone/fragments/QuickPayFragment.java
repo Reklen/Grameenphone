@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -18,6 +16,7 @@ import android.widget.Toast;
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.interfaces.QuickPayInterface;
 import com.cc.grameenphone.utils.KeyboardUtil;
+import com.cc.grameenphone.utils.Logger;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -69,7 +68,7 @@ public class QuickPayFragment extends Fragment implements Validator.ValidationLi
         ButterKnife.inject(this, view);
         mValidator = new Validator(QuickPayFragment.this);
         mValidator.setValidationListener(QuickPayFragment.this);
-        editTextQuickPayCode.setOnKeyListener(new View.OnKeyListener() {
+        /*editTextQuickPayCode.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (keyCode == EditorInfo.IME_ACTION_DONE)) {
@@ -77,7 +76,7 @@ public class QuickPayFragment extends Fragment implements Validator.ValidationLi
                 }
                 return false;
             }
-        });
+        });*/
         return view;
     }
 
@@ -85,8 +84,6 @@ public class QuickPayFragment extends Fragment implements Validator.ValidationLi
     void submitbuttonClicked() {
         mValidator.validate();
         KeyboardUtil.hideKeyboard(getActivity());
-
-
     }
 
     public void clearCodeFromET() {
@@ -96,8 +93,11 @@ public class QuickPayFragment extends Fragment implements Validator.ValidationLi
 
     @Override
     public void onValidationSucceeded() {
-        editTextQuickPayCode.setText("");
+        Logger.d("QUickCode", editTextQuickPayCode.getText().toString() + "");
+
         quickPayInterface.onQuickCodeSubmit(editTextQuickPayCode.getText().toString() + "");
+        editTextQuickPayCode.setText("");
+
     }
 
     @Override

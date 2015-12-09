@@ -24,7 +24,7 @@ public class TransactionOverviewDeatilsActivity extends AppCompatActivity {
     RippleView backRipple;
     @InjectView(R.id.text_tool)
     TextView textTool;
-    @InjectView(R.id.transactionToolbar)
+    @InjectView(R.id.toolbar)
     Toolbar transactionToolbar;
     @InjectView(R.id.dueDate)
     TextView dateText;

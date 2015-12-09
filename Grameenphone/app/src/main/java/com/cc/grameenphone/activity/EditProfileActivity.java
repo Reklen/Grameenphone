@@ -117,16 +117,30 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
 
         try {
             profileModel = (ProfileModel) b.get("profileObj");
-            firstName.setText("" + profileModel.getCOMMAND().getFNAME());
             fName = profileModel.getCOMMAND().getFNAME();
-            lastName.setText("" + profileModel.getCOMMAND().getLNAME());
             lName = profileModel.getCOMMAND().getLNAME();
-            emailName.setText("" + profileModel.getCOMMAND().getEMAIL());
             email = profileModel.getCOMMAND().getEMAIL().toString();
-            nationalId.setText("" + profileModel.getCOMMAND().getIDNO());
-            nationId = profileModel.getCOMMAND().getIDNO();
-            dob.setText("" + profileModel.getCOMMAND().getDOB());
             dateOfBirth = profileModel.getCOMMAND().getDOB();
+            nationId = profileModel.getCOMMAND().getIDNO();
+
+
+            firstName.setText(fName);
+            lastName.setText(lName);
+            emailName.setText(email);
+            nationalId.setText(nationId);
+            dob.setText(dateOfBirth);
+
+            if (fName.equalsIgnoreCase("SUBSUSSD"))
+                firstName.setEnabled(true);
+            else
+                firstName.setEnabled(false);
+
+            if (lName.equalsIgnoreCase("SUBSUSSD"))
+                lastName.setEnabled(true);
+            else
+                lastName.setEnabled(false);
+
+
         } catch (Exception e) {
             e.printStackTrace();
             try {
@@ -134,7 +148,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
                 JSONObject innerObject = new JSONObject();
                 innerObject.put("DEVICEID", android_id);
                 innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-                innerObject.put("MSISDN",  preferenceManager.getMSISDN());
+                innerObject.put("MSISDN", preferenceManager.getMSISDN());
                 innerObject.put("TYPE", "SUBDATAREQ");
                 jsonObject.put("COMMAND", innerObject);
                 Logger.d("Profile Fetch Data", jsonObject.toString());
@@ -210,9 +224,12 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
                     emailName.requestFocus();
                     return;
                 }
-                innerObject.put("MSISDN",  preferenceManager.getMSISDN());
+                innerObject.put("MSISDN", preferenceManager.getMSISDN());
                 String dobText = dob.getText().toString();
                 dobText = dobText.replace("/", "");
+                dobText = dobText.replace("\\", "");
+                Logger.d("DOBstring", dobText);
+
                 innerObject.put("DOB", dobText);
                 innerObject.put("IDNO", nationId);
                 innerObject.put("TYPE", "PRFLUPDATE");
@@ -237,7 +254,8 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
                                     finish();
                                 }
                             });
-                            successDialog.show();
+                            if (!EditProfileActivity.this.isFinishing())
+                                successDialog.show();
                         } else {
                             errorDialog = new MaterialDialog(EditProfileActivity.this);
                             errorDialog.setMessage(profileUpdateModel.getCommand().getMESSAGE());
@@ -249,7 +267,8 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
                                     finish();
                                 }
                             });
-                            errorDialog.show();
+                            if (!EditProfileActivity.this.isFinishing())
+                                errorDialog.show();
                         }
                     }
 
@@ -276,19 +295,29 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
                     finish();
                 }
             });
-            errorDialog.show();
+            if (!EditProfileActivity.this.isFinishing())
+                errorDialog.show();
         }
     }
 
 
     @Override
-    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        String date;
+    public void onDateSet(DatePickerDialog view, int yearInt, int monthOfYear, int dayOfMonth) {
+        String date, day, month, year;
         if (dayOfMonth < 10)
-            date = "0" + dayOfMonth + "/" + (++monthOfYear) + "/" + year;
+            day = "0" + dayOfMonth;
         else
-            date = dayOfMonth + "/" + (++monthOfYear) + "/" + year;
+            day = "" + dayOfMonth;
+        if (monthOfYear < 10)
+            month = "0" + (++monthOfYear);
+        else
+            month = "" + (++monthOfYear);
+
+        year = "" + yearInt;
+
+        date = day + "/" + month + "/" + year;
 
         dob.setText(date);
+        dob.setError(null);
     }
 }

@@ -180,6 +180,11 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
 
     }
 
+    @OnClick(R.id.terms_text)
+    void tocClick(){
+        startActivity(new Intent(LoginActivity.this,TermsAndConditionsActivity.class));
+    }
+
 
     @OnClick(R.id.loginButton)
     void loginUser() {
