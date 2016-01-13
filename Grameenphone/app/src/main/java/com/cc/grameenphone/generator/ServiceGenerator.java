@@ -11,10 +11,10 @@ import retrofit.client.OkClient;
  */
 public class ServiceGenerator {
 
-    public static final String BASE_URL = "http://202.56.229.146:8992/";
-   // public static final String BASE_URL = "http://202.56.5.215:8989/";
+   // public static final String BASE_URL = "http://202.56.229.146:8992/"; // Test
+     public static final String BASE_URL = "http://202.56.5.215:8989/"; //Production
 
-    //http://202.56.5.215:8989/GPTxn/jsp/CelliciumSimulator.html
+    //http://202.56.5.215:8989/GPTxn/CelliciumSimulator.html
 
     // No need to instantiate this class.
     private ServiceGenerator() {

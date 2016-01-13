@@ -151,7 +151,7 @@
         </com.cc.grameenphone.views.CustomTextInputLayout>
 
         <com.cc.grameenphone.views.RippleView
-            android:id="@+id/submitRippleView"
+            android:id="@+id/confirmRippleView"
             rv_centered="true"
             rv_zoom="true"
             android:layout_width="110dp"
@@ -162,7 +162,7 @@
             app:rv_rippleDuration="100">
 
             <Button
-                android:id="@+id/submitButton"
+                android:id="@+id/confirmButton"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:background="@drawable/login_button"

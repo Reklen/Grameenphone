@@ -94,9 +94,9 @@ public class ProfileUpdateActivity extends Activity implements DatePickerDialog.
     EditText dateOfBirthEdit;
     @InjectView(R.id.dateOfBirth_container)
     CustomTextInputLayout dateOfBirthContainer;
-    @InjectView(R.id.submitButton)
+    @InjectView(R.id.confirmButton)
     Button submitButton;
-    @InjectView(R.id.submitRippleView)
+    @InjectView(R.id.confirmRippleView)
     RippleView submitRippleView;
     private String android_id;
     PreferenceManager preferenceManager;

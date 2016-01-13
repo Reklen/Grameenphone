@@ -33,10 +33,10 @@
             android:id="@+id/pinConfirmEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="4"
+            android:ems="10"
             android:hint="Enter PIN"
             android:inputType="numberPassword"
-            android:maxLength="4"
+            android:maxLength="6"
             android:textColor="@color/black_semi_transparent"
             android:textColorHighlight="@color/hint_color"
             android:textColorHint="@color/hint_color" />

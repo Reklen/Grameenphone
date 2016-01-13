@@ -111,7 +111,7 @@
                     android:imeOptions="actionNext"
 
                     android:inputType="numberPassword"
-                    android:maxLength="4"
+                    android:maxLength="6"
                     android:textColor="@color/black_semi_transparent"
                     android:textColorHighlight="@color/hint_color"
                     android:textColorHint="@color/hint_color"/>
@@ -143,7 +143,7 @@
                     android:hint="Confirm pin"
                     android:imeOptions="actionDone"
                     android:inputType="numberPassword"
-                    android:maxLength="4"
+                    android:maxLength="6"
                     android:textColor="@color/black_semi_transparent"
                     android:textColorHighlight="@color/hint_color"
                     android:textColorHint="@color/hint_color"/>

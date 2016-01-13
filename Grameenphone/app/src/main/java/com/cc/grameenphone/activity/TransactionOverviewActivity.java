@@ -96,7 +96,7 @@ public class TransactionOverviewActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 startActivity(new Intent(TransactionOverviewActivity.this,
-                        TransactionOverviewDeatilsActivity.class).putExtra("transaction_obj", adapter.getItem(i)).putExtra("transactionMap", posMessageMap.get(i)));
+                        TransactionOverviewDeatilsActivity.class).putExtra("transaction_obj", adapter.getItem(i)));
             }
         });
         fetchList();
@@ -109,7 +109,7 @@ public class TransactionOverviewActivity extends AppCompatActivity {
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CLTREQ");
             jsonObject.put("COMMAND", innerObject);
             Logger.d("sending json", jsonObject.toString());
@@ -128,7 +128,7 @@ public class TransactionOverviewActivity extends AppCompatActivity {
                                         }
                                     }
 
-                                    mapValues(transactionOverviewModel);
+                                    //   mapValues(transactionOverviewModel);
                                     adapter.notifyDataSetChanged();
                                     loadingDialog.cancel();
                                 } catch (Exception e) {

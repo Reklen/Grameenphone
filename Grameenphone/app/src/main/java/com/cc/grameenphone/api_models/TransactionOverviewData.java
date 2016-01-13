@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 public class TransactionOverviewData implements Serializable {
 
+    private String TXNSC;
 
     private String TXNTYPE;
 
@@ -16,61 +17,96 @@ public class TransactionOverviewData implements Serializable {
 
     private String FROMTO;
 
+    private String TXNDATE;
+
     private String TXNAMT;
 
     private String TXNSTATUS;
 
-    public String getTXNTYPE() {
+    public String getTXNSC ()
+    {
+        return TXNSC;
+    }
+
+    public void setTXNSC (String TXNSC)
+    {
+        this.TXNSC = TXNSC;
+    }
+
+    public String getTXNTYPE ()
+    {
         return TXNTYPE;
     }
 
-    public void setTXNTYPE(String TXNTYPE) {
+    public void setTXNTYPE (String TXNTYPE)
+    {
         this.TXNTYPE = TXNTYPE;
     }
 
-    public String getTXNID() {
+    public String getTXNID ()
+    {
         return TXNID;
     }
 
-    public void setTXNID(String TXNID) {
+    public void setTXNID (String TXNID)
+    {
         this.TXNID = TXNID;
     }
 
-    public String getSERVICE() {
+    public String getSERVICE ()
+    {
         return SERVICE;
     }
 
-    public void setSERVICE(String SERVICE) {
+    public void setSERVICE (String SERVICE)
+    {
         this.SERVICE = SERVICE;
     }
 
-    public String getFROMTO() {
+    public String getFROMTO ()
+    {
         return FROMTO;
     }
 
-    public void setFROMTO(String FROMTO) {
+    public void setFROMTO (String FROMTO)
+    {
         this.FROMTO = FROMTO;
     }
 
-    public String getTXNAMT() {
+    public String getTXNDATE ()
+    {
+        return TXNDATE;
+    }
+
+    public void setTXNDATE (String TXNDATE)
+    {
+        this.TXNDATE = TXNDATE;
+    }
+
+    public String getTXNAMT ()
+    {
         return TXNAMT;
     }
 
-    public void setTXNAMT(String TXNAMT) {
+    public void setTXNAMT (String TXNAMT)
+    {
         this.TXNAMT = TXNAMT;
     }
 
-    public String getTXNSTATUS() {
+    public String getTXNSTATUS ()
+    {
         return TXNSTATUS;
     }
 
-    public void setTXNSTATUS(String TXNSTATUS) {
+    public void setTXNSTATUS (String TXNSTATUS)
+    {
         this.TXNSTATUS = TXNSTATUS;
     }
 
     @Override
-    public String toString() {
-        return "ClassPojo [TXNTYPE = " + TXNTYPE + ", TXNID = " + TXNID + ", SERVICE = " + SERVICE + ", FROMTO = " + FROMTO + ", TXNAMT = " + TXNAMT + ", TXNSTATUS = " + TXNSTATUS + "]";
+    public String toString()
+    {
+        return "ClassPojo [TXNSC = "+TXNSC+", TXNTYPE = "+TXNTYPE+", TXNID = "+TXNID+", SERVICE = "+SERVICE+", FROMTO = "+FROMTO+", TXNDATE = "+TXNDATE+", TXNAMT = "+TXNAMT+", TXNSTATUS = "+TXNSTATUS+"]";
     }
 
 

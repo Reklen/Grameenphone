@@ -20,14 +20,18 @@ import android.widget.Toast;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.activity.HomeActivity;
+import com.cc.grameenphone.activity.OtherDetailsPaymentActivity;
 import com.cc.grameenphone.api_models.BillConfirmationModel;
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
+import com.cc.grameenphone.api_models.OtherPaymentNewModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.OtherPaymentApi;
+import com.cc.grameenphone.utils.ConnectivityUtils;
 import com.cc.grameenphone.utils.KeyboardUtil;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
 import com.cc.grameenphone.views.RippleView;
+import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -66,16 +70,15 @@ public class OtherPaymentGasFragment extends BaseTabFragment implements Validato
     EditText billNumbEdit;
     @InjectView(R.id.bill_numb_container)
     TextInputLayout billNumbContainer;
-    @InjectView(R.id.submitButton)
+    @InjectView(R.id.confirmButton)
     Button sbmtBtn;
     @InjectView(R.id.electricity_container)
     RelativeLayout electricityContainer;
     @InjectView(R.id.companyRadioGroupScroll)
     ScrollView companyRadioGroupScroll;
-    @NotEmpty
     @InjectView(R.id.amountEditText)
     EditText amountEditText;
-    @InjectView(R.id.submitRippleView)
+    @InjectView(R.id.confirmRippleView)
     RippleView submitRippleView;
     @InjectView(R.id.amountTextInputLayout)
     TextInputLayout amountTextInputLayout;
@@ -98,6 +101,7 @@ public class OtherPaymentGasFragment extends BaseTabFragment implements Validato
     EditText pinConfirmationET;
     MaterialDialog pinConfirmDialog;
     Validator validator;
+    private String selectedCompanyName;
 
     public static OtherPaymentGasFragment newInstance(Bundle b) {
         OtherPaymentGasFragment gasTabFragment = new OtherPaymentGasFragment();
@@ -184,7 +188,11 @@ public class OtherPaymentGasFragment extends BaseTabFragment implements Validato
                 for (int i = 0; i < rg.getChildCount(); i++) {
                     RadioButton btn = (RadioButton) rg.getChildAt(i);
                     if (btn.getId() == pos) {
-                        selectedCompany = btn.getText().toString().toUpperCase();
+                        selectedCompany = ((OtherPaymentCompanyModel) btn.getTag()).getCOMPCODE();
+                        selectedCompanyName = ((OtherPaymentCompanyModel) btn.getTag()).getCOMPNAME();
+                        selectedCompanyName = selectedCompanyName.toUpperCase();
+                        Logger.d("confirmaing bill payment ", selectedCompany);
+
                         try {
                             OtherPaymentCompanyModel companyModel = (OtherPaymentCompanyModel) btn.getTag();
                             String isSurcharge = companyModel.getSURCREQ();
@@ -214,7 +222,7 @@ public class OtherPaymentGasFragment extends BaseTabFragment implements Validato
         pinConfirmDialog.setPositiveButton("CONFIRM", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (pinConfirmationET.getText().toString().length() != 4) {
+                if (pinConfirmationET.getText().toString().length() < 4) {
                     pinConfirmationET.requestFocus();
                     pinConfirmationET.setError("Enter your valid pin");
                     return;
@@ -247,7 +255,7 @@ public class OtherPaymentGasFragment extends BaseTabFragment implements Validato
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CPMBREQ");
             innerObject.put("BILLCCODE", selectedCompany);
             innerObject.put("BILLANO", accountNumbEdit.getText().toString());
@@ -305,6 +313,105 @@ public class OtherPaymentGasFragment extends BaseTabFragment implements Validato
     }
 
 
+    void getBillDetails() {
+        //TODO Submitting amount, surcharge amount
+
+        preferenceManager = new PreferenceManager(getActivity());
+        android_id = Settings.Secure.getString(getActivity().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+            JSONObject innerObject = new JSONObject();
+            innerObject.put("DEVICEID", android_id);
+            innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
+            innerObject.put("TYPE", "REGFBILREQ");
+            innerObject.put("COMPANYNAME", selectedCompany);
+            innerObject.put("ACCOUNTNUM", accountNumbEdit.getText().toString());
+            innerObject.put("BILLNUM", billNumbEdit.getText().toString());
+            jsonObject.put("COMMAND", innerObject);
+            Logger.d("confirmaing bill payment ", jsonObject.toString());
+            String json = jsonObject.toString();
+            final TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
+            otherPaymentApi.billFetch(in, new Callback<Response>() {
+                        @Override
+                        public void success(final Response model, Response response) {
+                            JSONObject object = null;
+                            try {
+                                object = new JSONObject(new String(((TypedByteArray) response.getBody()).getBytes()));
+                                JSONObject commandJsonObject = object.getJSONObject("COMMAND");
+                                if (commandJsonObject.has("TXNSTATUS")) {
+                                    //failure
+                                    errorDialog = new MaterialDialog(getActivity());
+                                    String message = ((JSONObject) object.get("COMMAND")).getString("MESSAGE");
+                                    errorDialog.setMessage(message);
+                                    errorDialog.setPositiveButton("OK", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            errorDialog.dismiss();
+                                            accountNumbEdit.setText("");
+                                            billNumbEdit.setText("");
+                                            accountNumbEdit.clearFocus();
+                                            billNumbEdit.clearFocus();
+                                        }
+                                    });
+                                    errorDialog.show();
+
+                                } else {
+                                    Logger.d("Respionse", object.toString());
+                                    Gson gsonMapper = new Gson();
+                                    OtherPaymentNewModel otherPaymentNewModel = gsonMapper.fromJson(object.toString(), OtherPaymentNewModel.class);
+                                    Intent intent = new Intent(getActivity(), OtherDetailsPaymentActivity.class);
+                                    intent.putExtra("otherDetailsModel", otherPaymentNewModel);
+                                    intent.putExtra("otherAccNum", accountNumbEdit.getText().toString());
+                                    intent.putExtra("otherBillNum", billNumbEdit.getText().toString());
+                                    intent.putExtra("otherCompany", selectedCompanyName);
+                                    intent.putExtra("otherBillCCODE", selectedCompany);
+                                    intent.putExtra("otherCategory", "GAS");
+                                    accountNumbEdit.setText("");
+                                    billNumbEdit.setText("");
+                                    accountNumbEdit.clearFocus();
+                                    billNumbEdit.clearFocus();
+                                    startActivity(intent);
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            if (ConnectivityUtils.isConnected(getActivity())) {
+                                errorDialog = new MaterialDialog(getActivity());
+                                errorDialog.setMessage("Unable to connect to server , please check your connectivity");
+                                errorDialog.setPositiveButton("OK", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        errorDialog.dismiss();
+                                        accountNumbEdit.clearFocus();
+                                        billNumbEdit.clearFocus();
+                                    }
+                                });
+                                errorDialog.show();
+                            }
+                        }
+                    }
+
+            );
+
+
+        } catch (JSONException e) {
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     /* @Override
      public void onCreate(@Nullable Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
@@ -332,7 +439,8 @@ public class OtherPaymentGasFragment extends BaseTabFragment implements Validato
 
     @Override
     public void onValidationSucceeded() {
-        pinConfirmation();
+        //pinConfirmation();
+        getBillDetails();
     }
 
     @Override

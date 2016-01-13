@@ -70,9 +70,9 @@ public class NewAssociationInternetFragment extends BaseTabFragment implements V
     EditText billNumbEdit;
     @InjectView(R.id.bill_numb_container)
     TextInputLayout billNumbContainer;
-    @InjectView(R.id.submitButton)
+    @InjectView(R.id.confirmButton)
     Button sbmtBtn;
-    @InjectView(R.id.submitRippleView)
+    @InjectView(R.id.confirmRippleView)
     RippleView submitRippleView;
     @InjectView(R.id.electricity_container)
     RelativeLayout electricityContainer;
@@ -213,7 +213,9 @@ public class NewAssociationInternetFragment extends BaseTabFragment implements V
                     RadioButton btn = (RadioButton) rg.getChildAt(i);
                     if (btn.getId() == pos) {
                         selectedSurchargePos = pos;
-                        selectedCompany = btn.getText().toString().toUpperCase();
+                     //   selectedCompany = btn.getText().toString().toUpperCase();
+                        selectedCompany = ((OtherPaymentCompanyModel) btn.getTag()).getCOMPCODE().toUpperCase();
+
                        /* Logger.d("Selcted Compnay" + selectedCompany);
                         try {
                             OtherPaymentCompanyModel companyModel = (OtherPaymentCompanyModel) btn.getTag();
@@ -245,7 +247,7 @@ public class NewAssociationInternetFragment extends BaseTabFragment implements V
         pinConfirmDialog.setPositiveButton("CONFIRM", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (pinConfirmationET.getText().toString().length() != 4) {
+                if (pinConfirmationET.getText().toString().length() < 4) {
                     pinConfirmationET.requestFocus();
                     pinConfirmationET.setError("Enter your valid pin");
                     return;

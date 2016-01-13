@@ -48,7 +48,7 @@ public class OtherPaymentActivity extends AppCompatActivity {
 
     BillPaymentViewPagerAdapter adapter;
 
-    CharSequence Titles[] = {"ELECTRICITY", "GAS", "INSURANCE", "TICKETING", "INTERNET"};
+    CharSequence titles[] = {"ELECTRICITY", "GAS", "WATER", "INTERNET","TICKET"};
     int NumOfTabs = 5;
 
     @InjectView(R.id.toolbar_text)
@@ -95,7 +95,7 @@ public class OtherPaymentActivity extends AppCompatActivity {
                 finish();
             }
         });
-        adapter = new BillPaymentViewPagerAdapter(getSupportFragmentManager(), Titles, NumOfTabs, 0);
+        adapter = new BillPaymentViewPagerAdapter(getSupportFragmentManager(), titles, NumOfTabs, 0);
 
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);

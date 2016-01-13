@@ -7,9 +7,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.cc.grameenphone.fragments.OtherPaymentElectricityFragment;
 import com.cc.grameenphone.fragments.OtherPaymentGasFragment;
-import com.cc.grameenphone.fragments.OtherPaymentInsuranceFragment;
 import com.cc.grameenphone.fragments.OtherPaymentInternetFragment;
 import com.cc.grameenphone.fragments.OtherPaymentTicketingFragment;
+import com.cc.grameenphone.fragments.OtherPaymentWaterFragment;
 
 /**
  * Created by Rajkiran on 7/3/2015.
@@ -48,20 +48,20 @@ public class BillPaymentViewPagerAdapter extends FragmentStatePagerAdapter {
             case 2:
                 bundle = new Bundle();
                 bundle.putInt("type", type);
-                tabFragment = OtherPaymentInsuranceFragment.newInstance(bundle);
+                tabFragment = OtherPaymentWaterFragment.newInstance(bundle);
 
                 return tabFragment;
             case 3:
                 bundle = new Bundle();
                 bundle.putInt("type", type);
-                tabFragment = OtherPaymentTicketingFragment.newInstance(bundle);
+                tabFragment = OtherPaymentInternetFragment.newInstance(bundle);
 
                 return tabFragment;
             case 4:
 
                 bundle = new Bundle();
                 bundle.putInt("type", type);
-                tabFragment = OtherPaymentInternetFragment.newInstance(bundle);
+                tabFragment = OtherPaymentTicketingFragment.newInstance(bundle);
 
                 return tabFragment;
         }

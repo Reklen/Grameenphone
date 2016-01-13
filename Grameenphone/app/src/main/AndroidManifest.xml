@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.READ_SMS"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
@@ -48,6 +49,9 @@
             android:screenOrientation="nosensor"/>
         <activity
             android:name=".activity.SignUpActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.OtherDetailsPaymentActivity"
             android:screenOrientation="nosensor"/>
         <activity
             android:name=".activity.ProfileUpdateActivity"
@@ -135,7 +139,11 @@
         <meta-data
             android:name="Rush_log"
             android:value="false"/>
-
+       <!-- <receiver android:name=".utils.SMS">
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>-->
     </application>
 
 </manifest>

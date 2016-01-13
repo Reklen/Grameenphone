@@ -70,9 +70,9 @@ public class NewAssociationGasFragment extends BaseTabFragment implements Valida
     EditText billNumbEdit;
     @InjectView(R.id.bill_numb_container)
     TextInputLayout billNumbContainer;
-    @InjectView(R.id.submitButton)
+    @InjectView(R.id.confirmButton)
     Button sbmtBtn;
-    @InjectView(R.id.submitRippleView)
+    @InjectView(R.id.confirmRippleView)
     RippleView submitRippleView;
     @InjectView(R.id.electricity_container)
     RelativeLayout electricityContainer;
@@ -214,8 +214,9 @@ public class NewAssociationGasFragment extends BaseTabFragment implements Valida
                     RadioButton btn = (RadioButton) rg.getChildAt(i);
                     if (btn.getId() == pos) {
                         selectedSurchargePos = pos;
-                        selectedCompany = btn.getText().toString().toUpperCase();
-                       /* Logger.d("Selcted Compnay" + selectedCompany);
+                        //    selectedCompany = btn.getText().toString().toUpperCase();
+                        selectedCompany = ((OtherPaymentCompanyModel) btn.getTag()).getCOMPCODE().toUpperCase();
+ /* Logger.d("Selcted Compnay" + selectedCompany);
                         try {
                             OtherPaymentCompanyModel companyModel = (OtherPaymentCompanyModel) btn.getTag();
                             String isSurcharge = companyModel.getSURCREQ();
@@ -246,7 +247,7 @@ public class NewAssociationGasFragment extends BaseTabFragment implements Valida
         pinConfirmDialog.setPositiveButton("CONFIRM", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (pinConfirmationET.getText().toString().length() != 4) {
+                if (pinConfirmationET.getText().toString().length() < 4) {
                     pinConfirmationET.requestFocus();
                     pinConfirmationET.setError("Enter your valid pin");
                     return;
@@ -280,7 +281,7 @@ public class NewAssociationGasFragment extends BaseTabFragment implements Valida
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
-            innerObject.put("MSISDN",  preferenceManager.getMSISDN());
+            innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "BPREGREQ");
             innerObject.put("CATEGORY", "GAS");
             innerObject.put("PREF1", accountNumbEdit.getText().toString());

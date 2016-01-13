@@ -411,7 +411,7 @@ public class HomeFragment extends Fragment {
             pinConfirmDialog.setPositiveButton("CONFIRM", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (pinConfirmationET.getText().toString().length() != 4) {
+                    if (pinConfirmationET.getText().toString().length() < 4) {
                         pinConfirmationET.setError("Enter your valid pin");
                         pinConfirmationET.requestFocus();
                         return;
@@ -537,7 +537,7 @@ public class HomeFragment extends Fragment {
             pinConfirmDialog.setPositiveButton("CONFIRM", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (pinConfirmationET.getText().toString().length() != 4) {
+                    if (pinConfirmationET.getText().toString().length() < 4) {
                         pinConfirmationET.setError("Enter your valid pin");
                         return;
                     }
@@ -781,7 +781,7 @@ public class HomeFragment extends Fragment {
             pinConfirmDialog.setPositiveButton("CONFIRM", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (pinConfirmationET.getText().toString().length() != 4) {
+                    if (pinConfirmationET.getText().toString().length() < 4) {
                         pinConfirmationET.setError("Enter your valid pin");
                         pinConfirmationET.requestFocus();
                         return;

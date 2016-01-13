@@ -58,6 +58,7 @@ public class TransactionOverviewAdapter extends BaseAdapter {
             ViewHolder holder = new ViewHolder();
             holder.service_type = (TextView) itemView.findViewById(R.id.service_type_tv);
             holder.amountTextView = (TextView) itemView.findViewById(R.id.amount_tv);
+            holder.dateTextView = (TextView) itemView.findViewById(R.id.date_tv);
             itemView.setTag(holder);
 
         } else {
@@ -70,6 +71,7 @@ public class TransactionOverviewAdapter extends BaseAdapter {
 //        holder.checkBox.setTag(l);
         holder.service_type.setText("" + getItem(position).getSERVICE());
         holder.amountTextView.setText("৳  " + getItem(position).getTXNAMT());
+        holder.dateTextView.setText(getItem(position).getTXNDATE() + "");
 //        holder.inr.setText("");
        /* // BillDetailsItems l = listitemslist.get(position);
         if (convertView != null) {
@@ -80,7 +82,7 @@ public class TransactionOverviewAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        protected TextView service_type, amountTextView;
+        protected TextView service_type, amountTextView, dateTextView;
     }
 
 

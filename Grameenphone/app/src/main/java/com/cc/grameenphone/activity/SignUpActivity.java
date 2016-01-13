@@ -2,12 +2,15 @@ package com.cc.grameenphone.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -27,10 +30,12 @@ import com.cc.grameenphone.api_models.MSISDNCheckModel;
 import com.cc.grameenphone.api_models.SignupModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.MSISDNCheckApi;
+import com.cc.grameenphone.interfaces.OnSMSInterface;
 import com.cc.grameenphone.interfaces.SignupApi;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.MyPasswordTransformationMethod;
 import com.cc.grameenphone.utils.PreferenceManager;
+import com.cc.grameenphone.utils.SMS;
 import com.cc.grameenphone.views.RippleView;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -63,7 +68,7 @@ import static com.mobsandgeeks.saripaar.Validator.ValidationListener;
 /**
  * Created by Rajkiran on 9/9/2015.
  */
-public class SignUpActivity extends BaseActivity implements ValidationListener {
+public class SignUpActivity extends BaseActivity implements ValidationListener, OnSMSInterface {
     /* Toolbar signUpToolBar;
      TextView consecutiveText,acceptText,termsText;
      CheckBox checkBox01;
@@ -135,8 +140,11 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
     SignupApi signupApi;
     MaterialDialog otpDialog, successSignupDialog, errorDialog;
     private String android_id;
-    private String otpString, authTokenString;
+    boolean isOTPDialogShown = false;
+    private String otpString, receivedOtpString, authTokenString;
 
+
+    SMS sms;
     boolean isPinCons = false, isPinRep = false;
 
     // ImageView back_icon;
@@ -147,6 +155,12 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
         setContentView(R.layout.activity_signup);
         ButterKnife.inject(this);
         setUpToolBar();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.provider.Telephony.SMS_RECEIVED");
+        //Extends BroadcastReceiver
+        sms = new SMS();
+        sms.setSMSListener(SignUpActivity.this);
+        registerReceiver(sms, filter);
         validator = new Validator(this);
         validator.setValidationListener(this);
         msisdnCheckApi = ServiceGenerator.createService(MSISDNCheckApi.class);
@@ -290,7 +304,6 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
 
             return;
         }
-        loadingDialog.show();
         validator.validate();
     }
 
@@ -336,6 +349,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
                     Logger.d("MSISDN  ", msisdnCheckModel.toString());
                     if (msisdnCheckModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                         otpString = msisdnCheckModel.getCOMMAND().getOTP();
+                       // Toast.makeText(SignUpActivity.this, "OTP for test is "+ otpString, Toast.LENGTH_LONG).show();
                         authTokenString = msisdnCheckModel.getCOMMAND().getAUTHTOKEN();
                         signUpUser();
                     } else {
@@ -374,8 +388,79 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
         // "MSISDN": "01719202177", "TYPE": "CUSTREG", "DEVICEID":"01234567890654321",
         // "AUTHTOKEN": "5e48dad31259c988275c34641d1ba78761d54391a389225309bb65bd8aed946d", "OTP": "3427359088" }}
 
-        //   otpView = LayoutInflater.from(SignUpActivity.this).inflate(R.layout.sign_up_dialog, null);
+        otpView = LayoutInflater.from(SignUpActivity.this).inflate(R.layout.sign_up_dialog, null);
         Logger.d("Signup ", "doing signUpUser");
+       /* SmsRadar.initializeSmsRadarService(SignUpActivity.this, new SmsListener() {
+            @Override
+            public void onSmsSent(Sms sms) {
+                displayToast(sms.getMsg());
+            }
+
+            @Override
+            public void onSmsReceived(Sms sms) {
+                displayToast(sms.getMsg());
+                Logger.d("OTP", sms.getMsg());
+
+                if (sms.getMsg().contains("otp")) {
+                    //then call signup api
+                    Logger.d("OTP", sms.getMsg());
+                    SmsRadar.stopSmsRadarService(SignUpActivity.this);
+                }
+            }
+        });*/
+
+        otpDialog = new MaterialDialog(SignUpActivity.this).setContentView(otpView);
+        otpDialog.setNegativeButton("Resend", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        otpDialog.setPositiveButton("Confirm", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (((EditText) otpView.findViewById(R.id.otpEdit)).getText().length() == 0)
+                    ((EditText) otpView.findViewById(R.id.otpEdit)).setError("Enter OTP to proceed");
+                if (((EditText) otpView.findViewById(R.id.otpEdit)).getText().toString().equalsIgnoreCase(otpString)) {
+                    otpDialog.dismiss();
+                    signupRequest();
+                    //signup
+                }else
+                    ((EditText) otpView.findViewById(R.id.otpEdit)).setError("Invalid OTP entered");
+
+            }
+        });
+       /* ((TextView) otpView.findViewById(R.id.resendButton)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO what to do
+                startActivity(new Intent(SignUpActivity.this, ProfileUpdateActivity.class));
+                finish();
+
+            }
+        });*/
+
+
+        ((TextView) otpView.findViewById(R.id.code_text)).setText("6 digit code has been sent to\n\n" +
+                "+88" + phoneNumberEditText.getText().toString());
+
+
+        otpDialog.setCanceledOnTouchOutside(false);
+
+        otpDialog.show();
+        isOTPDialogShown = true;
+        otpDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                isOTPDialogShown = false;
+            }
+        });
+
+
+    }
+
+    void signupRequest() {
+        loadingDialog.show();
         try {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerJsonObj = new JSONObject();
@@ -400,46 +485,8 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
                     Logger.d("Signup Model", signupModel.toString());
                     if (signupModel.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
                         //dialog
-                        /*otpDialog = new MaterialDialog(SignUpActivity.this).setContentView(otpView);
-                        otpDialog.setPositiveButton("Resend", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                            }
-                        });
-                        ((TextView) otpView.findViewById(R.id.resendButton)).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                //TODO what to do
-                            }
-                        });
 
 
-                        ((TextView) otpView.findViewById(R.id.code_text)).setText("6 digit code has been sent to\n\n" +
-                                "+880 " + phoneNumberEditText.getText().toString());
-
-
-                        otpDialog.setCanceledOnTouchOutside(false);
-
-                        otpDialog.show();*/
-
-                              /*  SmsRadar.initializeSmsRadarService(SignUpActivity.this, new SmsListener() {
-                                    @Override
-                                    public void onSmsSent(Sms sms) {
-                                        displayToast(sms.getMsg());
-                                    }
-
-                                    @Override
-                                    public void onSmsReceived(Sms sms) {
-                                        displayToast(sms.getMsg());
-
-                                        if (sms.getMsg().contains("otp")) {
-                                            //then call signup api
-                                            SmsRadar.stopSmsRadarService(SignUpActivity.this);
-                                        }
-                                    }
-                                });
-                    */
                         loadingDialog.cancel();
                         successSignupDialog = new MaterialDialog(SignUpActivity.this);
                         successSignupDialog.setMessage(signupModel.getCommand().getMESSAGE() + "");
@@ -453,10 +500,9 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
                                     preferenceManager.setReferCode("No Refercode Available");
                                 preferenceManager.setMSISDN(phoneNumberEditText.getText().toString());
                                 successSignupDialog.dismiss();
-
-
                                 startActivity(new Intent(SignUpActivity.this, ProfileUpdateActivity.class));
                                 finish();
+
 
                             }
                         });
@@ -504,7 +550,30 @@ public class SignUpActivity extends BaseActivity implements ValidationListener {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            unregisterReceiver(sms);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onSMS(String smsMessage) {
+        receivedOtpString = smsMessage;
+        if (otpDialog != null)
+            if (isOTPDialogShown)
+                if (smsMessage.contains(otpString)) {
+                    ((EditText) otpView.findViewById(R.id.otpEdit)).setText(otpString);
+                    (otpView.findViewById(R.id.otpEdit)).setEnabled(false);
+                    otpDialog.dismiss();
+                    unregisterReceiver(sms);
+                    signupRequest();
+                }
 
     }
 }

@@ -219,7 +219,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <ImageView
                 android:id="@+id/grameenPhone_icon"
@@ -239,7 +239,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_below="@+id/grameenPhone_icon"
                 android:layout_marginTop="24dp"
-                android:background="@drawable/bill_background">
+                android:background="@drawable/flexiload_bg">
 
                 <ImageView
                     android:id="@+id/flexi_image"
@@ -330,7 +330,7 @@
                     android:drawableTop="@drawable/icon_bill_payment"
                     android:gravity="center"
                     android:text="BILL \nPAYMENT"
-                    android:textColor="@color/black_semi_transparent"
+                    android:textColor="@color/white"
                     android:textSize="12sp" />
             </RelativeLayout>
         </com.cc.grameenphone.views.RippleView>
@@ -351,7 +351,7 @@
                 android:id="@+id/transactionOverview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bill_background">
+                android:background="@drawable/trans_background">
 
                 <ImageView
                     android:id="@+id/trans_icon"
@@ -372,7 +372,7 @@
                     android:drawableTop="@drawable/icon_transaction_overview"
                     android:gravity="center"
                     android:text="TRANSACTION\nOVERVIEW"
-                    android:textColor="@color/black_semi_transparent"
+                    android:textColor="@color/white"
                     android:textSize="12sp" />
             </RelativeLayout>
         </com.cc.grameenphone.views.RippleView>
@@ -395,7 +395,7 @@
                 android:id="@+id/emergencyCall"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bill_background">
+                android:background="@drawable/eme_background">
 
                 <ImageView
                     android:id="@+id/emergencyicon"
@@ -416,7 +416,7 @@
                     android:drawableTop="@drawable/icon_emergency_balance"
                     android:gravity="center"
                     android:text="EMERGENCY\nBALANCE"
-                    android:textColor="@color/black_semi_transparent"
+                    android:textColor="@color/white"
                     android:textSize="12sp" />
             </RelativeLayout>
         </com.cc.grameenphone.views.RippleView>
@@ -438,7 +438,7 @@
                 android:id="@+id/referFriends"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bill_background">
+                android:background="@drawable/refer_background">
 
                 <ImageView
                     android:id="@+id/friends"
@@ -459,7 +459,7 @@
                     android:drawableTop="@drawable/icon_refer_friends"
                     android:gravity="center"
                     android:text="REFER\nFRIENDS"
-                    android:textColor="@color/black_semi_transparent"
+                    android:textColor="@color/white"
                     android:textSize="12sp" />
 
             </RelativeLayout>

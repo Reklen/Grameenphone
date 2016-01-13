@@ -12,7 +12,7 @@
         android:id="@+id/companyRadioGroupScroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/submitRippleView"
+        android:layout_above="@+id/confirmRippleView"
         android:fadeScrollbars="false"
 
         >
@@ -81,6 +81,7 @@
                 android:layout_below="@+id/bill_numb_container"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
+                android:visibility="gone"
                 android:layout_marginTop="8dp">
 
                 <EditText
@@ -101,6 +102,7 @@
                 android:layout_below="@+id/amountTextInputLayout"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
+                android:visibility="gone"
                 android:layout_marginTop="8dp">
 
                 <EditText
@@ -118,7 +120,7 @@
     </ScrollView>
 
     <com.cc.grameenphone.views.RippleView
-        android:id="@+id/submitRippleView"
+        android:id="@+id/confirmRippleView"
         rv_centered="true"
         rv_zoom="true"
         android:layout_width="wrap_content"
@@ -132,7 +134,7 @@
         app:rv_rippleDuration="100">
 
         <Button
-            android:id="@+id/submitButton"
+            android:id="@+id/confirmButton"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:background="@drawable/login_button"

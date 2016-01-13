@@ -30,15 +30,15 @@ public class TransactionOverviewDeatilsActivity extends AppCompatActivity {
     TextView dateText;
     @InjectView(R.id.enterDate)
     TextView enterDate;
-    @InjectView(R.id.ser_text)
+    @InjectView(R.id.accountText)
     TextView serText;
-    @InjectView(R.id.serviceTextView)
+    @InjectView(R.id.accountTextView)
     TextView serviceTextView;
     @InjectView(R.id.second_top)
     RelativeLayout secondTop;
-    @InjectView(R.id.cmpny_text)
+    @InjectView(R.id.billText)
     TextView cmpnyText;
-    @InjectView(R.id.companyNameTextView)
+    @InjectView(R.id.companyTextView)
     TextView companyNameTextView;
     @InjectView(R.id.third_top)
     RelativeLayout thirdTop;
@@ -48,13 +48,19 @@ public class TransactionOverviewDeatilsActivity extends AppCompatActivity {
     TextView amountTextView;
     @InjectView(R.id.fourth_top)
     RelativeLayout fourthTop;
-    @InjectView(R.id.txn_text)
+    @InjectView(R.id.surchargeText)
     TextView txnText;
-    @InjectView(R.id.transactionNumberTextView)
+    @InjectView(R.id.surchargeTextView)
     TextView transactionNumberTextView;
     @InjectView(R.id.fifth_top)
     RelativeLayout fifthTop;
     String date;
+    @InjectView(R.id.amt_sc_txt)
+    TextView amtScTxt;
+    @InjectView(R.id.amountSCTextView)
+    TextView amountSCTextView;
+    @InjectView(R.id.fourth_half_top)
+    RelativeLayout fourthHalfTop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +90,7 @@ public class TransactionOverviewDeatilsActivity extends AppCompatActivity {
 
             data = (TransactionOverviewData) b.get("transaction_obj");
 
-            date = b.getString("transactionMap");
+            //   date = b.getString("transactionMap");
             initData();
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,11 +104,12 @@ public class TransactionOverviewDeatilsActivity extends AppCompatActivity {
 
     private void initData() {
 
-        enterDate.setText("" + date);
+        enterDate.setText("" + data.getTXNDATE());
         serviceTextView.setText(data.getSERVICE());
         companyNameTextView.setText("" + data.getFROMTO());
-        amountTextView.setText(data.getTXNAMT());
+        amountTextView.setText("৳ " + data.getTXNAMT());
         transactionNumberTextView.setText(data.getTXNID());
+        amountSCTextView.setText("৳ " +data.getTXNSC());
 
     }
 

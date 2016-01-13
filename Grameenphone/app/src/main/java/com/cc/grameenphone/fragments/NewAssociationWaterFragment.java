@@ -54,7 +54,7 @@ import retrofit.mime.TypedInput;
 /**
  * Created by rajkiran on 21/09/15.
  */
-public class NewAssociationInsuranceFragment extends BaseTabFragment implements Validator.ValidationListener {
+public class NewAssociationWaterFragment extends BaseTabFragment implements Validator.ValidationListener {
 
     @InjectView(R.id.customRadioGroupLayout)
     LinearLayout custodialRadiogroup;
@@ -70,9 +70,9 @@ public class NewAssociationInsuranceFragment extends BaseTabFragment implements 
     EditText billNumbEdit;
     @InjectView(R.id.bill_numb_container)
     TextInputLayout billNumbContainer;
-    @InjectView(R.id.submitButton)
+    @InjectView(R.id.confirmButton)
     Button sbmtBtn;
-    @InjectView(R.id.submitRippleView)
+    @InjectView(R.id.confirmRippleView)
     RippleView submitRippleView;
     @InjectView(R.id.electricity_container)
     RelativeLayout electricityContainer;
@@ -94,8 +94,8 @@ public class NewAssociationInsuranceFragment extends BaseTabFragment implements 
     private ProgressDialog progressDialog;
     private MaterialDialog sessionDialog;
 
-    public static NewAssociationInsuranceFragment newInstance(Bundle b) {
-        NewAssociationInsuranceFragment gasTabFragment = new NewAssociationInsuranceFragment();
+    public static NewAssociationWaterFragment newInstance(Bundle b) {
+        NewAssociationWaterFragment gasTabFragment = new NewAssociationWaterFragment();
         gasTabFragment.setArguments(b);
         return gasTabFragment;
     }
@@ -128,7 +128,7 @@ public class NewAssociationInsuranceFragment extends BaseTabFragment implements 
     private void getCompaniesDetails() {
         //TODO implement other bills details
 
-        new RushSearch().whereEqual("CATCODE", "INSR")
+        new RushSearch().whereEqual("CATCODE", "WATER")
                 .find(OtherPaymentCompanyModel.class, new RushSearchCallback<OtherPaymentCompanyModel>() {
                     @Override
                     public void complete(final List<OtherPaymentCompanyModel> list) {
@@ -216,7 +216,9 @@ public class NewAssociationInsuranceFragment extends BaseTabFragment implements 
                     RadioButton btn = (RadioButton) rg.getChildAt(i);
                     if (btn.getId() == pos) {
                         selectedSurchargePos = pos;
-                        selectedCompany = btn.getText().toString().toUpperCase();
+                      //  selectedCompany = btn.getText().toString().toUpperCase();
+                        selectedCompany = ((OtherPaymentCompanyModel) btn.getTag()).getCOMPCODE().toUpperCase();
+
                        /* Logger.d("Selcted Compnay" + selectedCompany);
                         try {
                             OtherPaymentCompanyModel companyModel = (OtherPaymentCompanyModel) btn.getTag();
@@ -248,7 +250,7 @@ public class NewAssociationInsuranceFragment extends BaseTabFragment implements 
         pinConfirmDialog.setPositiveButton("CONFIRM", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (pinConfirmationET.getText().toString().length() != 4) {
+                if (pinConfirmationET.getText().toString().length() < 4) {
                     pinConfirmationET.requestFocus();
                     pinConfirmationET.setError("Enter your valid pin");
                     return;
@@ -284,7 +286,7 @@ public class NewAssociationInsuranceFragment extends BaseTabFragment implements 
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
             innerObject.put("MSISDN",  preferenceManager.getMSISDN());
             innerObject.put("TYPE", "BPREGREQ");
-            innerObject.put("CATEGORY", "INSR");
+            innerObject.put("CATEGORY", "WATER");
             innerObject.put("PREF1", accountNumbEdit.getText().toString());
             innerObject.put("BILLCCODE", selectedCompany);
             jsonObject.put("COMMAND", innerObject);

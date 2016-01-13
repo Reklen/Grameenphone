@@ -78,7 +78,7 @@
         android:layout_marginTop="25dp">
 
         <TextView
-            android:id="@+id/txn_text"
+            android:id="@+id/surchargeText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/friends"

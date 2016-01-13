@@ -99,7 +99,7 @@ public class PinChangeFragment extends Fragment implements ValidationListener {
 
         View rootView = inflater.inflate(R.layout.pin_change, container, false);
         ButterKnife.inject(this, rootView);
-            validator = new Validator(this);
+        validator = new Validator(this);
         validator.setValidationListener(this);
         // Inflate the layout for this fragment
         oldPinEditText.setTransformationMethod(new MyPasswordTransformationMethod());
@@ -218,21 +218,23 @@ public class PinChangeFragment extends Fragment implements ValidationListener {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
-            if ((newPineditText.getText().toString().length()) == 4) {
+            if ((newPineditText.getText().toString().length()) >= 4) {
                 innerObject.put("NEWPIN", newPineditText.getText().toString());
             } else {
                 newPineditText.setError("Pin code must be four digits");
                 newPineditText.requestFocus();
+                return;
             }
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
             innerObject.put("MSISDN", preferenceManager.getMSISDN());
-            if ((confirmPinEditText.getText().toString().length()) == 4) {
+            if ((confirmPinEditText.getText().toString().length()) >= 4) {
                 innerObject.put("CONFIRMPIN", confirmPinEditText.getText().toString());
             } else {
                 confirmPinEditText.setError("Pin code must be four digits");
                 confirmPinEditText.requestFocus();
+                return;
             }
-            if(!newPineditText.getText().toString().equalsIgnoreCase(confirmPinEditText.getText().toString())){
+            if (!newPineditText.getText().toString().equalsIgnoreCase(confirmPinEditText.getText().toString())) {
                 Toast.makeText(getActivity(), "Pin code dont match", Toast.LENGTH_SHORT).show();
                 confirmPinEditText.setText("");
                 confirmPinEditText.setError("Pin code must be four digits");
@@ -240,11 +242,12 @@ public class PinChangeFragment extends Fragment implements ValidationListener {
                 return;
             }
             innerObject.put("TYPE", "CCPNREQ");
-            if ((oldPinEditText.getText().toString().length()) == 4) {
+            if ((oldPinEditText.getText().toString().length()) >= 4) {
                 innerObject.put("PIN", oldPinEditText.getText().toString());
             } else {
                 oldPinEditText.setError("Pin code must be four digits");
                 oldPinEditText.requestFocus();
+                return;
             }
             jsonObject.put("COMMAND", innerObject);
             Logger.d("PinChange", jsonObject.toString());

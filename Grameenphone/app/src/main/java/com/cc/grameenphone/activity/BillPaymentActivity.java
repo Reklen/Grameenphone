@@ -35,6 +35,7 @@ import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.BIllsPayButtonInterface;
 import com.cc.grameenphone.interfaces.BillspaymentApi;
 import com.cc.grameenphone.interfaces.WalletCheckApi;
+import com.cc.grameenphone.utils.ConnectivityUtils;
 import com.cc.grameenphone.utils.KeyboardUtil;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
@@ -213,6 +214,18 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                 @Override
                 public void failure(RetrofitError error) {
                     Logger.e("BILLS", error.getMessage());
+                    loadingDialog.cancel();
+                    if (!ConnectivityUtils.isConnected(BillPaymentActivity.this)) {
+                        errorDialog = new MaterialDialog(BillPaymentActivity.this);
+                        errorDialog.setMessage("Unable to connect to server , please check your connectivity");
+                        errorDialog.setPositiveButton("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                errorDialog.dismiss();
+                            }
+                        });
+                        errorDialog.show();
+                    }
                 }
             });
 
@@ -291,7 +304,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             @Override
             public void onClick(View v) {
 
-                if (pinConfirmationET.getText().toString().length() != 4) {
+                if (pinConfirmationET.getText().toString().length() < 4) {
                     pinConfirmationET.requestFocus();
                     pinConfirmationET.setError("Enter your valid pin");
                     return;
@@ -852,7 +865,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         pinConfirmDialog.setPositiveButton("CONFIRM", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (pinConfirmationET.getText().toString().length() != 4) {
+                if (pinConfirmationET.getText().toString().length() < 4) {
                     pinConfirmationET.setError("Enter your valid pin");
                     pinConfirmationET.requestFocus();
                     return;
@@ -905,7 +918,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                                 preferenceManager.setWalletBalance("");
 
                                 fetchBills();
-                              //  getWalletBalance();
+                                //  getWalletBalance();
                                 dialog.dismiss();
                             }
                         });
@@ -964,5 +977,13 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (loadingDialog != null)
+            if (!loadingDialog.isShowing())
+                super.onBackPressed();
+
     }
 }

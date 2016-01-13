@@ -3,7 +3,7 @@
 
     <solid
         android:angle="90"
-        android:color="#94a545"/>
+        android:color="#b53989"/>
     <corners
         android:bottomLeftRadius="4dp"
         android:bottomRightRadius="4dp"

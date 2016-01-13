@@ -36,7 +36,7 @@
     <string name="grameenPhone">grameenphone</string>
     <string name="numberText">+88</string>
     <string name="enterPhnnumb">Enter a phone number</string>
-    <string name="accept">I accept to</string>
+    <string name="accept">Accept</string>
     <string name="terms_condition"><u>Terms &amp; Conditions</u></string>
     <string name="toc_title">Terms &amp; Conditions</string>
     <string name="create_new_wallet">CREATE A NEW WALLET</string>
@@ -133,4 +133,5 @@ lorem non turpis. Nullam sit amet enim</string>
 
     <string name="exit_confirmation">Are you sure, want to exit the app ?</string>
     <string name="exit_app">Exit App</string>
+    <string name="confirm">Confirm</string>
 </resources>

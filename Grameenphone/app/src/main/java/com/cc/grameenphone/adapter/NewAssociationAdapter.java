@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.cc.grameenphone.fragments.NewAssociationElectricFragment;
 import com.cc.grameenphone.fragments.NewAssociationGasFragment;
-import com.cc.grameenphone.fragments.NewAssociationInsuranceFragment;
+import com.cc.grameenphone.fragments.NewAssociationWaterFragment;
 import com.cc.grameenphone.fragments.NewAssociationInternetFragment;
 import com.cc.grameenphone.fragments.NewAssociationTicketingFragment;
 
@@ -49,7 +49,7 @@ public class NewAssociationAdapter extends FragmentStatePagerAdapter {
             case 2:
                 bundle = new Bundle();
                 bundle.putInt("type", type);
-                tabFragment = NewAssociationInsuranceFragment.newInstance(bundle);
+                tabFragment = NewAssociationWaterFragment.newInstance(bundle);
 
                 return tabFragment;
             case 3:
