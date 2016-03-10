@@ -169,6 +169,7 @@ public class OtherPaymentTicketingFragment extends BaseTabFragment implements Va
                 rb[i].setAllCaps(true);
                 rb[i].setTextColor(getActivity().getResources().getColor(R.color.black_semi_transparent));
                 rb[i].setText(companyList.get(i).getCOMPNAME());
+                rb[i].setBackgroundResource(R.drawable.radio_button_selector);
                 rb[i].setTag(companyList.get(i));
                 rg.addView(rb[i], layoutParams);
             }

@@ -183,6 +183,8 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment implements 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int margins = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 (float) 16, getResources().getDisplayMetrics());
+        int marginsVertical = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                (float) 50, getResources().getDisplayMetrics());
         int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 (float) 10, getResources().getDisplayMetrics());
 
@@ -199,6 +201,7 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment implements 
                 rb[i].setCompoundDrawablePadding(compoundDrawablePadding);
                 rb[i].setTextSize(15);*/
                 rb[i].setAllCaps(true);
+                rb[i].setBackgroundResource(R.drawable.radio_button_selector);
                 rb[i].setTextColor(getActivity().getResources().getColor(R.color.black_semi_transparent));
                 rb[i].setText(companyList.get(i).getCOMPNAME());
                 rb[i].setTag(companyList.get(i));
@@ -401,7 +404,7 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment implements 
                             intent.putExtra("otherBillNum", billNumbEdit.getText().toString());
                             intent.putExtra("otherBillCCODE", selectedCompany);
                             intent.putExtra("otherCompany", selectedCompanyName);
-                            intent.putExtra("otherCategory","ELE");
+                            intent.putExtra("otherCategory", "ELE");
                             accountNumbEdit.setText("");
                             billNumbEdit.setText("");
                             accountNumbEdit.clearFocus();

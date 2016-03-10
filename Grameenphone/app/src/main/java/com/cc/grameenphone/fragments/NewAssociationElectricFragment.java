@@ -190,7 +190,6 @@ public class NewAssociationElectricFragment extends BaseTabFragment implements V
             rg.setOrientation(RadioGroup.VERTICAL);
             for (int i = 0; i < numberOfCompany; i++) {
                 rb[i] = new RadioButton(getActivity());
-                rg.addView(rb[i], layoutParams);
               /*  rb[i].setPadding(padding, padding, 0, padding);
                 rb[i].setCompoundDrawablePadding(compoundDrawablePadding);
                 rb[i].setTextSize(15);*/
@@ -198,6 +197,8 @@ public class NewAssociationElectricFragment extends BaseTabFragment implements V
                 rb[i].setTextColor(getActivity().getResources().getColor(R.color.black_semi_transparent));
                 rb[i].setText(companyList.get(i).getCOMPNAME());
                 rb[i].setTag(companyList.get(i));
+                rb[i].setBackgroundResource(R.drawable.radio_button_selector);
+                rg.addView(rb[i], layoutParams);
 
             }
 

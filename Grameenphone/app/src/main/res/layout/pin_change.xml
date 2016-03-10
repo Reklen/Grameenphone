@@ -6,7 +6,7 @@
     android:layout_margin="16dp"
     android:orientation="vertical">
 
-    <com.cc.grameenphone.views.CustomTextInputLayout
+    <android.support.design.widget.TextInputLayout
         android:id="@+id/oldPinEditTextLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,9 +23,9 @@
             android:focusable="true"
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color" />
-    </com.cc.grameenphone.views.CustomTextInputLayout>
+    </android.support.design.widget.TextInputLayout>
 
-    <com.cc.grameenphone.views.CustomTextInputLayout
+    <android.support.design.widget.TextInputLayout
         android:id="@+id/newPineditTextLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,10 +44,10 @@
             android:focusable="true"
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color" />
-    </com.cc.grameenphone.views.CustomTextInputLayout>
+    </android.support.design.widget.TextInputLayout>
 
 
-    <com.cc.grameenphone.views.CustomTextInputLayout
+    <android.support.design.widget.TextInputLayout
         android:id="@+id/confirmPinEditTextLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
             android:focusable="true"
             android:textColor="@color/black_semi_transparent"
             android:textColorHint="@color/hint_color" />
-    </com.cc.grameenphone.views.CustomTextInputLayout>
+    </android.support.design.widget.TextInputLayout>
 
     <com.cc.grameenphone.views.RippleView
         android:id="@+id/confirmRipple"

@@ -351,7 +351,7 @@
                 android:id="@+id/transactionOverview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/trans_background">
+                android:background="@drawable/bill_background">
 
                 <ImageView
                     android:id="@+id/trans_icon"
@@ -395,7 +395,7 @@
                 android:id="@+id/emergencyCall"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/eme_background">
+                android:background="@drawable/bill_background">
 
                 <ImageView
                     android:id="@+id/emergencyicon"
@@ -438,7 +438,7 @@
                 android:id="@+id/referFriends"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/refer_background">
+                android:background="@drawable/bill_background">
 
                 <ImageView
                     android:id="@+id/friends"

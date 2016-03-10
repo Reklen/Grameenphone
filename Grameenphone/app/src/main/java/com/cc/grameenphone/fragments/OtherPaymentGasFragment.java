@@ -168,6 +168,7 @@ public class OtherPaymentGasFragment extends BaseTabFragment implements Validato
               /*  rb[i].setPadding(padding, padding, 0, padding);
                 rb[i].setCompoundDrawablePadding(compoundDrawablePadding);
                 rb[i].setTextSize(15);*/
+                rb[i].setBackgroundResource(R.drawable.radio_button_selector);
                 rb[i].setAllCaps(true);
                 rb[i].setTextColor(getActivity().getResources().getColor(R.color.black_semi_transparent));
                 rb[i].setText(companyList.get(i).getCOMPNAME());

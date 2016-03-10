@@ -1,21 +1,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.cc.grameenphone.activity.ReferFriendsActivity">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.cc.grameenphone.activity.ReferFriendsActivity">
 
-    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/primary"
-        android:contentInsetLeft="0dp"
-        android:contentInsetStart="0dp"
-        android:minHeight="?attr/actionBarSize"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp">
+    <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+                                       xmlns:android="http://schemas.android.com/apk/res/android"
+                                       xmlns:app="http://schemas.android.com/apk/res-auto"
+                                       android:layout_width="match_parent"
+                                       android:layout_height="?actionBarSize"
+                                       android:background="@drawable/toolbar_gradient"
+                                       android:contentInsetLeft="0dp"
+
+                                       android:contentInsetStart="0dp"
+                                       android:minHeight="?attr/actionBarSize"
+                                       app:contentInsetLeft="0dp"
+                                       app:contentInsetStart="0dp">
 
         <RelativeLayout
             android:id="@+id/toolbar_container"
@@ -32,8 +33,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:paddingLeft="6dp"
                 android:paddingRight="6dp"
                 app:rv_rippleDuration="100">
@@ -45,7 +46,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
-                    android:src="@drawable/icon_back" />
+                    android:src="@drawable/icon_back"/>
 
             </com.cc.grameenphone.views.RippleView>
 
@@ -58,7 +59,7 @@
                 android:layout_toRightOf="@+id/backRipple"
                 android:gravity="center_vertical"
                 android:text="Refer Friends"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"/>
 
 
         </RelativeLayout>
@@ -75,7 +76,7 @@
         android:gravity="center"
         android:text="Your referal code:"
         android:textColor="#757575"
-        android:textSize="14sp" />
+        android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/refer_code"
@@ -88,7 +89,7 @@
         android:text="56778"
         android:textColor="@color/black"
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/refer_text_main"
@@ -100,7 +101,7 @@
         android:gravity="center"
         android:text="Enter your friend's mobile number"
         android:textColor="#87000000"
-        android:textSize="16sp" />
+        android:textSize="16sp"/>
 
 
     <RelativeLayout
@@ -135,7 +136,7 @@
             android:focusable="false"
             android:inputType="none"
             android:text="+88"
-            android:textColor="@color/hint_color" />
+            android:textColor="@color/hint_color"/>
         <!-- <TextView
              android:id="@+id/areaCode"
              android:layout_width="wrap_content"
@@ -171,15 +172,15 @@
                 android:id="@+id/phoneNumberEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:digits="0123456789"
                 android:drawableRight="@drawable/icon_add_ppl"
                 android:ems="11"
                 android:hint="@string/hintPhone"
                 android:inputType="phone"
-                android:digits="0123456789"
                 android:maxLength="11"
                 android:textColor="@color/black_semi_transparent"
                 android:textColorHighlight="@color/hint_color"
-                android:textColorHint="@color/hint_color" />
+                android:textColorHint="@color/hint_color"/>
         </com.cc.grameenphone.views.CustomTextInputLayout>
 
 
@@ -217,7 +218,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/login_button"
             android:text="CONFIRM"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"/>
 
     </com.cc.grameenphone.views.RippleView>
 

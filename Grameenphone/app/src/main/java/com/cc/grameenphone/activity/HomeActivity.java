@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.api_models.BalanceCommandModel;
 import com.cc.grameenphone.api_models.BalanceEnquiryModel;
+import com.cc.grameenphone.api_models.NotificationMessageModel;
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
 import com.cc.grameenphone.api_models.OtherPaymentModel;
 import com.cc.grameenphone.api_models.ProfileModel;
@@ -48,6 +49,8 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import co.uk.rushorm.core.RushSearch;
+import co.uk.rushorm.core.RushSearchCallback;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -270,7 +273,10 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
 
     }
 
+    int unreadNotifications;
+
     private void init() {
+        unreadNotifications = 0;
         internetDialog = new MaterialDialog(HomeActivity.this);
         internetDialog.setMessage("No Internet connection , please connect and retry");
         internetDialog.setCanceledOnTouchOutside(false);
@@ -295,6 +301,15 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
         preferenceManager = new PreferenceManager(HomeActivity.this);
         fragment = new HomeFragment();
         toolbarTextView.setText("Home");
+        new RushSearch()
+                .find(NotificationMessageModel.class, new RushSearchCallback<NotificationMessageModel>() {
+                    @Override
+                    public void complete(final List<NotificationMessageModel> listDB) {
+                        for (NotificationMessageModel model : listDB)
+                            if (model.isRead())
+                                unreadNotifications++;
+                    }
+                });
     }
 
     private void getOtherPaymentCompanies() {

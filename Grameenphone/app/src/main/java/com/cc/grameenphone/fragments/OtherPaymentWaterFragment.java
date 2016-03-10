@@ -172,6 +172,7 @@ public class OtherPaymentWaterFragment extends BaseTabFragment implements Valida
                 rb[i].setTextColor(getActivity().getResources().getColor(R.color.black_semi_transparent));
                 rb[i].setText(companyList.get(i).getCOMPNAME());
                 rb[i].setTag(companyList.get(i));
+                rb[i].setBackgroundResource(R.drawable.radio_button_selector);
                 rg.addView(rb[i], layoutParams);
             }
 

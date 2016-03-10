@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/primary"
-        android:contentInsetLeft="0dp"
-        android:contentInsetStart="0dp"
-        android:minHeight="?attr/actionBarSize"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp">
+    <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+                                       xmlns:android="http://schemas.android.com/apk/res/android"
+                                       android:layout_width="match_parent"
+                                       android:layout_height="?actionBarSize"
+                                       android:background="@drawable/toolbar_gradient"
+                                       android:contentInsetLeft="0dp"
+                                       android:contentInsetStart="0dp"
+                                       android:minHeight="?attr/actionBarSize"
+                                       app:contentInsetLeft="0dp"
+                                       app:contentInsetStart="0dp">
 
         <RelativeLayout
             android:id="@+id/toolbar_container"
@@ -32,8 +32,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:paddingLeft="6dp"
                 android:paddingRight="6dp"
                 app:rv_rippleDuration="100">
@@ -45,7 +45,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
-                    android:src="@drawable/icon_back" />
+                    android:src="@drawable/icon_back"/>
 
             </com.cc.grameenphone.views.RippleView>
 
@@ -58,7 +58,7 @@
                 android:layout_toRightOf="@+id/backRipple"
                 android:gravity="center_vertical"
                 android:text="Bill Payment"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"/>
 
             <com.cc.grameenphone.views.RippleView
                 android:id="@+id/icon1Ripple"
@@ -76,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:src="@drawable/icon_wallet_balance" />
+                    android:src="@drawable/icon_wallet_balance"/>
 
 
                 <TextView
@@ -92,7 +92,7 @@
                     android:paddingRight="4dp"
                     android:text="৳ 0.0"
                     android:textColor="@color/white"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"/>
 
             </com.cc.grameenphone.views.RippleView>
         </RelativeLayout>
@@ -119,7 +119,7 @@
             android:paddingLeft="24dp"
             android:text="My Pending Bills"
             android:textColor="#030303"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <CheckBox
             android:id="@+id/multiBillsCheckBox"
@@ -128,8 +128,8 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:checked="false"
-            tools:visibility="visible"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:visibility="visible"/>
     </RelativeLayout>
 
     <ListView
@@ -143,7 +143,7 @@
         android:clickable="false"
         android:listSelector="@drawable/rowbackgroundselector"
         android:paddingBottom="8dp"
-        android:paddingTop="8dp" />
+        android:paddingTop="8dp"/>
 
     <com.cc.grameenphone.views.RippleView
         android:id="@+id/selectedPayRippleView"
@@ -166,7 +166,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/mybutton"
             android:text="PAY SELECTED BILLS"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"/>
     </com.cc.grameenphone.views.RippleView>
 
     <com.cc.grameenphone.views.RippleView
@@ -188,7 +188,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/mybutton"
             android:text="QUICK PAY"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"/>
     </com.cc.grameenphone.views.RippleView>
 
     <com.cc.grameenphone.views.RippleView
@@ -211,7 +211,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/mybutton"
             android:text="@string/button_stringname"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"/>
     </com.cc.grameenphone.views.RippleView>
 
 </RelativeLayout>

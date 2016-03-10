@@ -1,9 +1,13 @@
 package com.cc.grameenphone.api_models;
 
+import co.uk.rushorm.core.Rush;
+import co.uk.rushorm.core.RushCallback;
+import co.uk.rushorm.core.RushCore;
+
 /**
  * Created by aditlal on 19/11/15.
  */
-public class NotificationMessageModel {
+public class NotificationMessageModel implements Rush {
     private String NOTDATA;
 
     private String NOTCODE;
@@ -13,6 +17,10 @@ public class NotificationMessageModel {
     private String NOTENDDAT;
 
     private String NOTSTDAT;
+
+    private String NOTID;
+
+    private boolean isRead;
 
     public String getNOTDATA() {
         return NOTDATA;
@@ -54,8 +62,49 @@ public class NotificationMessageModel {
         this.NOTSTDAT = NOTSTDAT;
     }
 
+    public String getNOTID() {
+        return NOTID;
+    }
+
+    public void setNOTID(String NOTID) {
+        this.NOTID = NOTID;
+    }
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
+    }
+
     @Override
     public String toString() {
-        return "ClassPojo [NOTDATA = " + NOTDATA + ", NOTCODE = " + NOTCODE + ", NOTHEAD = " + NOTHEAD + ", NOTENDDAT = " + NOTENDDAT + ", NOTSTDAT = " + NOTSTDAT + "]";
+        return "ClassPojo [NOTDATA = " + NOTDATA + ", NOTCODE = " + NOTCODE + ", NOTID = " + NOTID + ", NOTHEAD = " + NOTHEAD + ", NOTENDDAT = " + NOTENDDAT + ", NOTSTDAT = " + NOTSTDAT + "]";
+    }
+
+    @Override
+    public void save() {
+        RushCore.getInstance().save(this);
+    }
+
+    @Override
+    public void save(RushCallback callback) {
+        RushCore.getInstance().save(this, callback);
+    }
+
+    @Override
+    public void delete() {
+        RushCore.getInstance().delete(this);
+    }
+
+    @Override
+    public void delete(RushCallback callback) {
+        RushCore.getInstance().delete(this, callback);
+    }
+
+    @Override
+    public String getId() {
+        return RushCore.getInstance().getId(this);
     }
 }

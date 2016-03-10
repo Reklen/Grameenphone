@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.cc.grameenphone.activity.LoginActivity;
+import com.cc.grameenphone.api_models.NotificationMessageModel;
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
 import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
@@ -31,6 +32,7 @@ public class SessionClearTask extends AsyncTask<Void, Void, Void> {
 
            // RushCore.getInstance().deleteAll(ContactModel.class);
             RushCore.getInstance().deleteAll(OtherPaymentCompanyModel.class);
+            RushCore.getInstance().deleteAll(NotificationMessageModel.class);
         }
         return null;
     }

@@ -3,6 +3,7 @@ package com.cc.grameenphone;
 import android.app.Application;
 
 import com.cc.grameenphone.api_models.ContactModel;
+import com.cc.grameenphone.api_models.NotificationMessageModel;
 import com.cc.grameenphone.api_models.OtherPaymentCompanyModel;
 import com.cc.grameenphone.utils.Logger;
 
@@ -50,6 +51,7 @@ public class MainApplication extends Application {
         // Add classes
         classes.add(ContactModel.class);
         classes.add(OtherPaymentCompanyModel.class);
+        classes.add(NotificationMessageModel.class);
 
         AndroidInitializeConfig config = new AndroidInitializeConfig(getApplicationContext());
         config.setClasses(classes);

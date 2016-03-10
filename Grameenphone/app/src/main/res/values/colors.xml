@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#64B41E</color>
-    <color name="primary_dark">#498216</color>
+    <color name="primary">#00A1E4</color>
+    <color name="primary_dark">#006b98</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
-    <color name="colorAccent">#64B41E</color>
-    <color name="colorListSelector">#3364B41E</color>
+    <color name="colorAccent">#00a1e5</color>
+    <color name="colorListSelector">#3300A1E4</color>
     <color name="black_semi_transparent">#B2000000</color>
     <color name="black_eighty_seven">#87000000</color>
     <color name="black_35_percent">#59000000</color>
@@ -14,6 +14,10 @@
     <color name="hint_color">#d2d2d2</color>
     <color name="color_error">#f44336</color>
     <color name="color_success">#3CCD88</color>
+    <color name="black_99">#999999</color>
+    <color name="radio_unselected">#f0f0f0</color>
+    <color name="radio_selected">#c3c8cd</color>
+    <color name="tab_bg">#0e8cd0</color>
 
 
     <!-- used as background colors for contacts that don't have photos -->

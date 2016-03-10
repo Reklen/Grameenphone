@@ -79,6 +79,7 @@
             android:id="@+id/firstName_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHint="@color/colorAccent"
             android:layout_marginTop="16dp">
 
             <EditText
@@ -94,6 +95,7 @@
             android:id="@+id/lastName_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHint="@color/colorAccent"
             android:layout_marginTop="16dp">
 
             <EditText
@@ -109,6 +111,7 @@
             android:id="@+id/emailid_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHint="@color/colorAccent"
             android:layout_marginTop="16dp">
 
             <EditText

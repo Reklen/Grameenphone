@@ -170,6 +170,7 @@ public class OtherPaymentInternetFragment extends BaseTabFragment implements Val
                 rb[i].setCompoundDrawablePadding(compoundDrawablePadding);
                 rb[i].setTextSize(15);*/
                 rb[i].setAllCaps(true);
+                rb[i].setBackgroundResource(R.drawable.radio_button_selector);
                 rb[i].setTextColor(getActivity().getResources().getColor(R.color.black_semi_transparent));
                 rb[i].setText(companyList.get(i).getCOMPNAME());
                 rb[i].setTag(companyList.get(i));
