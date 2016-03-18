@@ -22,7 +22,7 @@ public final class PreferenceManager {
     }
 
     public void setAuthToken(String authToken) {
-        Logger.d("Preference manager ", "Auth token   " + authToken);
+        //Logger.d("Preference manager ", "Auth token   " + authToken);
         mSharedPreferences.edit().putString("authToken", authToken).commit();
     }
 
@@ -58,7 +58,7 @@ public final class PreferenceManager {
     public void setCompaniesSavedFlag(boolean companiesSavedFlag) {
 
         mSharedPreferences.edit().putBoolean("companiesSavedFlag", companiesSavedFlag).commit();
-        Logger.d("Pref Check", getCompaniesSavedFlag() + "");
+        //Logger.d("Pref Check", getCompaniesSavedFlag() + "");
     }
 
     public Boolean getCompaniesSavedFlag() {

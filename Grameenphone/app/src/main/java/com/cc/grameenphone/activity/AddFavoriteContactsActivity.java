@@ -123,7 +123,7 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
         mListView.setAdapter(mAdapter);
         mListView.setOnScrollListener(mAdapter);
         mListView.setEnableHeaderTransparencyChanges(false);
-        Logger.d("Textis", "Add fav");
+        //Logger.d("Textis", "Add fav");
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                              @Override
                                              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -141,7 +141,7 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
                                                                          for (ContactModel d : list) {
                                                                              if (d.getName() != null && d.getName().contains(contact.displayName)) {
                                                                                  isNameFoundCheck = true;
-                                                                                 Logger.d("nme check", "found " + contact.displayName);
+                                                                                 //Logger.d("nme check", "found " + contact.displayName);
                                                                                  break;
                                                                              }
 
@@ -154,7 +154,7 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
                                                                                  @Override
                                                                                  public void complete() {
                                                                                      loadingDialog.cancel();
-                                                                                     Logger.d("Contact adding to fav", contactModel.getId() + "");
+                                                                                     //Logger.d("Contact adding to fav", contactModel.getId() + "");
                                                                                      finish();
 
                                                                                  }
@@ -188,7 +188,7 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
 
     public void getFilterContacts(String searchText) {
         if (mAdapter != null) {
-            Logger.d("Search Text", searchText);
+            //Logger.d("Search Text", searchText);
             mAdapter.getFilter().filter(searchText);
         }
     }
@@ -219,7 +219,7 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String s) {
                 //adapter.getFilter().filter(s);
-                Logger.d("Text is", s);
+                //Logger.d("Text is", s);
                 getFilterContacts(s);
                 return true;
             }
@@ -241,12 +241,12 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
             case R.id.action_search:
                 if (item.isActionViewExpanded()) {
                     item.collapseActionView();
-                    Logger.d(("Closing Group Search"));
+                    //Logger.d(("Closing Group Search"));
 
 
                 } else {
                     item.expandActionView();
-                    Logger.d(("Opening Group Search"));
+                    //Logger.d(("Opening Group Search"));
                 }
 
                 return true;

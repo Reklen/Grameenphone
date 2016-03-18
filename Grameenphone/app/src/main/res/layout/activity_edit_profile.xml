@@ -106,4 +106,12 @@
             android:textColorHint="@color/hint_color" />
     </com.cc.grameenphone.views.CustomTextInputLayout>
 
+    <ImageView
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"/>
+
 </RelativeLayout>

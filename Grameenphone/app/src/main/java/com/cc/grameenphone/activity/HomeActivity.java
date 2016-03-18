@@ -105,7 +105,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
 
 
         if (!preferenceManager.getCompaniesSavedFlag()) {
-            Logger.d("shfjdhf", "fetching list");
+            //Logger.d("shfjdhf", "fetching list");
             getOtherPaymentCompanies();
 
         }
@@ -313,7 +313,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
     }
 
     private void getOtherPaymentCompanies() {
-        otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
+        otherPaymentApi = ServiceGenerator.createService(HomeActivity.this, OtherPaymentApi.class);
         android_id = Settings.Secure.getString(HomeActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         try {
@@ -324,7 +324,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
             innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CTCMPLREQ");
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("getOtherPaymentCompanies ", jsonObject.toString());
+            //Logger.d("getOtherPaymentCompanies ", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             otherPaymentApi.fetchCompanies(in, new Callback<OtherPaymentModel>() {
@@ -419,7 +419,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
 
 
     private void getWalletBalance() {
-        walletCheckApi = ServiceGenerator.createService(WalletCheckApi.class);
+        walletCheckApi = ServiceGenerator.createService(HomeActivity.this, WalletCheckApi.class);
         android_id = Settings.Secure.getString(HomeActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         try {
@@ -430,7 +430,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
             innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CBEREQ");
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("wallet request ", jsonObject.toString());
+            //Logger.d("wallet request ", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             if (preferenceManager.getWalletBalance().isEmpty())
@@ -438,13 +438,13 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
                     @Override
                     public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
                         if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
-                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            //Logger.d("Balance", balanceEnquiryModel.toString());
                             walletLabel.setText("  ৳ " + balanceEnquiryModel.getCOMMAND().getBALANCE());
                             preferenceManager.setWalletBalance(balanceEnquiryModel.getCOMMAND().getBALANCE());
                             preferenceManager.setWalletMessage(balanceEnquiryModel.getCOMMAND().getMESSAGE());
                             walletLabel.setTag(balanceEnquiryModel);
                         } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
-                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            //Logger.d("Balance", balanceEnquiryModel.toString());
                             sessionDialog = new MaterialDialog(HomeActivity.this);
                             sessionDialog.setMessage("Session expired , please login again");
                             sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
@@ -458,7 +458,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
                             sessionDialog.setCanceledOnTouchOutside(false);
                             sessionDialog.show();
                         } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA903")) {
-                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            //Logger.d("Balance", balanceEnquiryModel.toString());
                             sessionDialog = new MaterialDialog(HomeActivity.this);
                             sessionDialog.setMessage("Session expired , please login again");
                             sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
@@ -481,7 +481,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
                                 }
                             });
                             errorDialog.show();
-                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            //Logger.d("Balance", balanceEnquiryModel.toString());
                         }
                     }
 
@@ -508,12 +508,12 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //Logger.d("Return Contact", "contacts " + data.getExtras().getString(Constants.RETURN_RESULT));
+        ////Logger.d("Return Contact", "contacts " + data.getExtras().getString(Constants.RETURN_RESULT));
     }
 
     @Override
     public void fetchBalanceAgain() {
-        Logger.d("WalletCheck ", "again 2");
+        //Logger.d("WalletCheck ", "again 2");
 
         walletLabel.setText("  ৳ ");
         preferenceManager.setWalletBalance("");

@@ -19,7 +19,6 @@ import com.cc.grameenphone.api_models.ProfileUpdateModel;
 import com.cc.grameenphone.async.SessionClearTask;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.ProfileUpdateApi;
-import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
 import com.cc.grameenphone.views.CustomTextInputLayout;
 import com.cc.grameenphone.views.RippleView;
@@ -150,7 +149,7 @@ public class ProfileUpdateActivity extends Activity implements DatePickerDialog.
         android_id = Settings.Secure.getString(ProfileUpdateActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         preferenceManager = new PreferenceManager(ProfileUpdateActivity.this);
-        profileUpdateApi = ServiceGenerator.createService(ProfileUpdateApi.class);
+        profileUpdateApi = ServiceGenerator.createService(ProfileUpdateActivity.this,ProfileUpdateApi.class);
 
         try {
             JSONObject jsonObject = new JSONObject();
@@ -173,13 +172,13 @@ public class ProfileUpdateActivity extends Activity implements DatePickerDialog.
             innerObject.put("TYPE", "PRFLUPDATE");
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("ProfileUpdates", jsonObject.toString());
+            //Logger.d("ProfileUpdates", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             profileUpdateApi.profileUpdate(in, new Callback<ProfileUpdateModel>() {
                 @Override
                 public void success(ProfileUpdateModel profileUpdateModel, Response response) {
-                    Logger.d("Its pin change ", "status " + profileUpdateModel.toString());
+                    //Logger.d("Its pin change ", "status " + profileUpdateModel.toString());
                     loadingDialog.dismiss();
                     if (profileUpdateModel.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
                         successSignupDialog = new MaterialDialog(ProfileUpdateActivity.this);
@@ -204,7 +203,7 @@ public class ProfileUpdateActivity extends Activity implements DatePickerDialog.
                         });
                         errorDialog.show();
                     } else if (profileUpdateModel.getCommand().getTXNSTATUS().equalsIgnoreCase("MA907")) {
-                        Logger.d("Balance", profileUpdateModel.toString());
+                        //Logger.d("Balance", profileUpdateModel.toString());
                         sessionDialog = new MaterialDialog(ProfileUpdateActivity.this);
                         sessionDialog.setMessage("Session expired , please login again");
                         sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
@@ -219,14 +218,14 @@ public class ProfileUpdateActivity extends Activity implements DatePickerDialog.
                         sessionDialog.show();
                     } else {
                         Toast.makeText(ProfileUpdateActivity.this, "Some error occured", Toast.LENGTH_SHORT).show();
-                        Logger.d("ProfileUpdate", profileUpdateModel.toString());
+                        //Logger.d("ProfileUpdate", profileUpdateModel.toString());
                     }
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     loadingDialog.dismiss();
-                    Logger.d("Profile Update response failed ", ": " + error.getMessage().toString());
+                    //Logger.d("Profile Update response failed ", ": " + error.getMessage().toString());
                 }
             });
 

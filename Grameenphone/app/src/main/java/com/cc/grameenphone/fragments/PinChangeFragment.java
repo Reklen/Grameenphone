@@ -149,7 +149,7 @@ public class PinChangeFragment extends Fragment implements ValidationListener {
                 Pattern.COMMENTS);
         Matcher regexMatcher = consPattern.matcher(newPineditText.getText().toString());
         if (regexMatcher.matches()) {
-            Logger.d("Pattern", "matches");
+            //Logger.d("Pattern", "matches");
             isPinCons = true;
         } else {
             Logger.e("Pattern", "does not match");
@@ -160,7 +160,7 @@ public class PinChangeFragment extends Fragment implements ValidationListener {
         Pattern pattern = Pattern.compile("([0-9])\\1{3}");
         Matcher matcher = pattern.matcher(newPineditText.getText().toString());
         if (matcher.find()) {
-            Logger.d("PatternRep", "matches");
+            //Logger.d("PatternRep", "matches");
             isPinRep = true;
         } else {
             Logger.e("PatternRep", "does not match");
@@ -212,7 +212,7 @@ public class PinChangeFragment extends Fragment implements ValidationListener {
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         preferenceManager = new PreferenceManager(getActivity());
-        pinchnageApi = ServiceGenerator.createService(PinchangeApi.class);
+        pinchnageApi = ServiceGenerator.createService(getActivity(),PinchangeApi.class);
 
         try {
             JSONObject jsonObject = new JSONObject();
@@ -250,13 +250,13 @@ public class PinChangeFragment extends Fragment implements ValidationListener {
                 return;
             }
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("PinChange", jsonObject.toString());
+            //Logger.d("PinChange", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             pinchnageApi.pinChange(in, new Callback<PinChangeModel>() {
                 @Override
                 public void success(PinChangeModel pinChangeModel, Response response) {
-                    Logger.d("Its pin change ", "status " + pinChangeModel.toString());
+                    //Logger.d("Its pin change ", "status " + pinChangeModel.toString());
                     if (pinChangeModel.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
                         successSignupDialog = new MaterialDialog(getActivity());
                         successSignupDialog.setMessage(pinChangeModel.getCommand().getMESSAGE() + "");

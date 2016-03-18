@@ -175,7 +175,7 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
                             calculateSections(notificationsAdapter, list);
                     }
                 });
-        final NotificationFetchApi notificationFetchApi = ServiceGenerator.createService(NotificationFetchApi.class);
+        final NotificationFetchApi notificationFetchApi = ServiceGenerator.createService(NotificationActivity.this,NotificationFetchApi.class);
         android_id = Settings.Secure.getString(NotificationActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         if (list.size() == 0) {
@@ -187,7 +187,7 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
                 innerObject.put("MSISDN", preferenceManager.getMSISDN());
                 innerObject.put("TYPE", "SUBNOTFREQ");
                 jsonObject.put("COMMAND", innerObject);
-                Logger.d("wallet request ", jsonObject.toString());
+                //Logger.d("wallet request ", jsonObject.toString());
                 String json = jsonObject.toString();
                 TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
 
@@ -195,7 +195,7 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
                     @Override
                     public void success(NotificationModel notificationModel, Response response) {
                         progressDialog.cancel();
-                        Logger.d("notification", notificationModel.toString());
+                        //Logger.d("notification", notificationModel.toString());
                         if (notificationModel.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
                             if (list.size() == 0) {
                                 list.addAll(notificationModel.getCommand().getMessageModelList());
@@ -263,7 +263,7 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
         mSectionedAdapter.setSections(sections.toArray(dummy));
         //Apply this adapter to the RecyclerView
         mRecyclerView.setAdapter(mSectionedAdapter);
-        Logger.d("Sectipons", mSectionedAdapter.getItemCount() + "");
+        //Logger.d("Sectipons", mSectionedAdapter.getItemCount() + "");
     }
 
 
@@ -271,7 +271,7 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
     public void clickNotification(final int pos) {
         final NotificationMessageModel model = list.get(pos);
 
-        Logger.d("POSS", pos + "" + model.getNOTDATA());
+        //Logger.d("POSS", pos + "" + model.getNOTDATA());
         /*//*  dialogView = LayoutInflater.from(NotificationActivity.this).inflate(R.layout.notification_row_item, null);
         ((TextView) dialogView.findViewById(R.id.notificationTypeTextView)).setText("" + model.getNOTCODE());
         ((TextView) dialogView.findViewById(R.id.notificationTitleTextView)).setText("" + model.getNOTHEAD());

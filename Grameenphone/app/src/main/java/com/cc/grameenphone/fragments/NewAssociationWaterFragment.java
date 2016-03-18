@@ -27,7 +27,6 @@ import com.cc.grameenphone.async.SessionClearTask;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.AddAssociationApi;
 import com.cc.grameenphone.utils.KeyboardUtil;
-import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
 import com.cc.grameenphone.views.RippleView;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -158,7 +157,7 @@ public class NewAssociationWaterFragment extends BaseTabFragment implements Vali
         Bundle b;
         try {
             b = getArguments();
-            Logger.d("argu", b.toString());
+            //Logger.d("argu", b.toString());
             type = getArguments().getInt("type");
         } catch (Exception e) {
 
@@ -221,11 +220,11 @@ public class NewAssociationWaterFragment extends BaseTabFragment implements Vali
                       //  selectedCompany = btn.getText().toString().toUpperCase();
                         selectedCompany = ((OtherPaymentCompanyModel) btn.getTag()).getCOMPCODE().toUpperCase();
 
-                       /* Logger.d("Selcted Compnay" + selectedCompany);
+                       /* //Logger.d("Selcted Compnay" + selectedCompany);
                         try {
                             OtherPaymentCompanyModel companyModel = (OtherPaymentCompanyModel) btn.getTag();
                             String isSurcharge = companyModel.getSURCREQ();
-                            Logger.d("Surcharge Available ", isSurcharge);
+                            //Logger.d("Surcharge Available ", isSurcharge);
                             if (isSurcharge.equalsIgnoreCase("Y")) {
                                 surchargeEditText.setVisibility(View.VISIBLE);
                             } else {
@@ -280,7 +279,7 @@ public class NewAssociationWaterFragment extends BaseTabFragment implements Vali
         preferenceManager = new PreferenceManager(getActivity());
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        addAssociationApi = ServiceGenerator.createService(AddAssociationApi.class);
+        addAssociationApi = ServiceGenerator.createService(getActivity(),AddAssociationApi.class);
         try {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
@@ -292,7 +291,7 @@ public class NewAssociationWaterFragment extends BaseTabFragment implements Vali
             innerObject.put("PREF1", accountNumbEdit.getText().toString());
             innerObject.put("BILLCCODE", selectedCompany);
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("confirmaing bill payment ", jsonObject.toString());
+            //Logger.d("confirmaing bill payment ", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             addAssociationApi.associationSubmit(in, new Callback<BillConfirmationModel>() {
@@ -315,7 +314,7 @@ public class NewAssociationWaterFragment extends BaseTabFragment implements Vali
                         confirmationDialog.show();
 
                     } else if (billConfirmationModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
-                        Logger.d("Balance", billConfirmationModel.toString());
+                        //Logger.d("Balance", billConfirmationModel.toString());
                         sessionDialog = new MaterialDialog(getActivity());
                         sessionDialog.setMessage("Session expired , please login again");
                         sessionDialog.setPositiveButton("OK", new View.OnClickListener() {

@@ -200,7 +200,7 @@
             android:layout_below="@+id/amount_container"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             app:rv_rippleDuration="100">
 
             <Button
@@ -239,7 +239,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_below="@+id/grameenPhone_icon"
                 android:layout_marginTop="24dp"
-                android:background="@drawable/flexiload_bg">
+                android:background="@drawable/flexi_button_border">
 
                 <ImageView
                     android:id="@+id/flexi_image"
@@ -254,11 +254,11 @@
                 <TextView
                     android:id="@+id/felexi_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="64dp"
+                    android:layout_height="56dp"
                     android:layout_centerInParent="true"
                     android:gravity="center"
                     android:text="FLEXILOAD"
-                    android:textColor="@color/black_semi_transparent"
+                    android:textColor="@color/white"
                     android:textSize="12sp" />
             </RelativeLayout>
         </RelativeLayout>
@@ -287,11 +287,8 @@
        android:layout_width="wrap_content"
       android:layout_height="match_parent"
        android:layout_centerInParent="true"
-       android:layout_marginTop="10dp"
        android:gravity="center"
-       android:layout_gravity="center"
-
-       >
+       android:layout_gravity="center">
 
         <com.cc.grameenphone.views.RippleView
             android:id="@+id/billPayRipple"
@@ -299,10 +296,8 @@
             rv_zoom="true"
             android:layout_width="140dp"
             android:layout_height="100dp"
-            android:layout_below="@+id/sec_container"
             android:layout_marginRight="8dp"
             android:layout_marginTop="13dp"
-            android:layout_toLeftOf="@+id/centerview"
             app:rv_rippleDuration="100">
 
             <RelativeLayout
@@ -341,7 +336,6 @@
             rv_zoom="true"
             android:layout_width="140dp"
             android:layout_height="100dp"
-            android:layout_below="@+id/sec_container"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="13dp"
             android:layout_toRightOf="@+id/billPayRipple"
@@ -387,8 +381,7 @@
             android:layout_below="@+id/billPayRipple"
             android:layout_marginRight="8dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="24dp"
-            android:layout_toLeftOf="@+id/centerview"
+            android:layout_marginBottom="16dp"
             app:rv_rippleDuration="100">
 
             <RelativeLayout
@@ -430,7 +423,7 @@
             android:layout_below="@+id/transactionOverviewRipple"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             android:layout_toRightOf="@+id/emergencyCallRipple"
             app:rv_rippleDuration="100">
 
@@ -466,6 +459,11 @@
 
         </com.cc.grameenphone.views.RippleView>
    </RelativeLayout>
+        <ImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/logo"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 </ScrollView>

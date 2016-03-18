@@ -75,7 +75,7 @@ public class NewAssociationActivity extends AppCompatActivity {
         preferenceManager = new PreferenceManager(NewAssociationActivity.this);
         android_id = Settings.Secure.getString(NewAssociationActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        associationApi = ServiceGenerator.createService(ManageAssociationApi.class);
+        associationApi = ServiceGenerator.createService(NewAssociationActivity.this,ManageAssociationApi.class);
         setUpToolBar();
         fetchCompanies();
 
@@ -85,7 +85,7 @@ public class NewAssociationActivity extends AppCompatActivity {
         loadingDialog = new ProgressDialog(NewAssociationActivity.this);
         loadingDialog.setMessage("Fetching list..");
         loadingDialog.show();
-        Logger.d("Pref Check", preferenceManager.getCompaniesSavedFlag() + "");
+        //Logger.d("Pref Check", preferenceManager.getCompaniesSavedFlag() + "");
         if (preferenceManager.getCompaniesSavedFlag()) {
 
             loadingDialog.dismiss();
@@ -98,7 +98,7 @@ public class NewAssociationActivity extends AppCompatActivity {
     }
 
     private void getOtherPaymentCompanies() {
-        otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
+        otherPaymentApi = ServiceGenerator.createService(NewAssociationActivity.this,OtherPaymentApi.class);
         android_id = Settings.Secure.getString(NewAssociationActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         try {
@@ -109,7 +109,7 @@ public class NewAssociationActivity extends AppCompatActivity {
             innerObject.put("MSISDN",  preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CTCMPLREQ");
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("getOtherPaymentCompanies ", jsonObject.toString());
+            //Logger.d("getOtherPaymentCompanies ", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             otherPaymentApi.fetchCompanies(in, new Callback<OtherPaymentModel>() {
@@ -185,13 +185,13 @@ public class NewAssociationActivity extends AppCompatActivity {
             innerObject.put("MSISDN",  preferenceManager.getMSISDN());
             innerObject.put("TYPE", "FBILASCREQ");
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("sending json", jsonObject.toString());
+            //Logger.d("sending json", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             associationApi.fetchAssociaition(in, new Callback<CompanyListModel>() {
                 @Override
                 public void success(CompanyListModel companyListModel, Response response) {
-                    Logger.d("Companyies ", companyListModel.toString());
+                    //Logger.d("Companyies ", companyListModel.toString());
                 }
 
                 @Override

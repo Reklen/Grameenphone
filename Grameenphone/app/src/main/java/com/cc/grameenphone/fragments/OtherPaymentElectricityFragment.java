@@ -27,7 +27,6 @@ import com.cc.grameenphone.interfaces.ManageAssociationApi;
 import com.cc.grameenphone.interfaces.OtherPaymentApi;
 import com.cc.grameenphone.utils.ConnectivityUtils;
 import com.cc.grameenphone.utils.KeyboardUtil;
-import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
 import com.cc.grameenphone.views.RippleView;
 import com.google.gson.Gson;
@@ -162,7 +161,7 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment implements 
         Bundle b;
         try {
             b = getArguments();
-            Logger.d("argu", b.toString());
+            //Logger.d("argu", b.toString());
             type = getArguments().getInt("type");
         } catch (Exception e) {
 
@@ -226,11 +225,11 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment implements 
                         selectedCompany = ((OtherPaymentCompanyModel) btn.getTag()).getCOMPCODE();
                         selectedCompanyName = ((OtherPaymentCompanyModel) btn.getTag()).getCOMPNAME();
                         selectedCompanyName = selectedCompanyName.toUpperCase();
-                        Logger.d("Selcted Compnay" + selectedCompany);
+                        //Logger.d("Selcted Compnay" + selectedCompany);
                         try {
                             OtherPaymentCompanyModel companyModel = (OtherPaymentCompanyModel) btn.getTag();
                             String isSurcharge = companyModel.getSURCREQ();
-                            Logger.d("Surcharge Available ", isSurcharge);
+                            //Logger.d("Surcharge Available ", isSurcharge);
                             if (isSurcharge.equalsIgnoreCase("Y")) {
                                 surchargeEditText.setVisibility(View.VISIBLE);
                             } else {
@@ -285,7 +284,7 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment implements 
         preferenceManager = new PreferenceManager(getActivity());
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
+        otherPaymentApi = ServiceGenerator.createService(getActivity(),OtherPaymentApi.class);
 
         try {
             JSONObject jsonObject = new JSONObject();
@@ -302,7 +301,7 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment implements 
             innerObject.put("SURCHARGE", surchargeEditText.getText().toString());
             innerObject.put("PIN", pin);
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("confirmaing bill payment ", jsonObject.toString());
+            //Logger.d("confirmaing bill payment ", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
           /*  otherPaymentApi.billConfirmation(in, new Callback<BillConfirmationModel>() {
@@ -354,7 +353,7 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment implements 
         preferenceManager = new PreferenceManager(getActivity());
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
+        otherPaymentApi = ServiceGenerator.createService(getActivity(),OtherPaymentApi.class);
 
         try {
             JSONObject jsonObject = new JSONObject();
@@ -367,7 +366,7 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment implements 
             innerObject.put("ACCOUNTNUM", accountNumbEdit.getText().toString());
             innerObject.put("BILLNUM", billNumbEdit.getText().toString());
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("confirmaing bill payment ", jsonObject.toString());
+            //Logger.d("confirmaing bill payment ", jsonObject.toString());
             String json = jsonObject.toString();
             final TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             otherPaymentApi.billFetch(in, new Callback<Response>() {
@@ -395,7 +394,7 @@ public class OtherPaymentElectricityFragment extends BaseTabFragment implements 
                             errorDialog.show();
 
                         } else {
-                            Logger.d("Respionse", object.toString());
+                            //Logger.d("Respionse", object.toString());
                             Gson gsonMapper = new Gson();
                             OtherPaymentNewModel otherPaymentNewModel = gsonMapper.fromJson(object.toString(), OtherPaymentNewModel.class);
                             Intent intent = new Intent(getActivity(), OtherDetailsPaymentActivity.class);

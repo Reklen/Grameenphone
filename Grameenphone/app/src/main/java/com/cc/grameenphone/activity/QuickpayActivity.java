@@ -132,7 +132,7 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
         Bundle args = new Bundle();
         args.putString("QUICKPAYCODE", paycode);
         quickBillFragment.setArguments(args);
-        Logger.d("PAYCODE" + paycode);
+        //Logger.d("PAYCODE" + paycode);
         if (paycode.equals("")) {
             transaction.replace(R.id.container, quickCodeFragment);
             successDialog = new MaterialDialog(QuickPayActivity.this);
@@ -152,7 +152,7 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
 
     private void getWalletBalance() {
 
-        walletCheckApi = ServiceGenerator.createService(WalletCheckApi.class);
+        walletCheckApi = ServiceGenerator.createService(QuickPayActivity.this,WalletCheckApi.class);
         android_id = Settings.Secure.getString(QuickPayActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         try {
@@ -163,7 +163,7 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
             innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CBEREQ");
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("wallet request ", jsonObject.toString());
+            //Logger.d("wallet request ", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             if (preferenceManager.getWalletBalance().isEmpty())
@@ -171,11 +171,11 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
                     @Override
                     public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
                         if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
-                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            //Logger.d("Balance", balanceEnquiryModel.toString());
                             walletLabel.setText("  ৳ " + balanceEnquiryModel.getCOMMAND().getBALANCE());
                             walletLabel.setTag(balanceEnquiryModel);
                         } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
-                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            //Logger.d("Balance", balanceEnquiryModel.toString());
                             sessionDialog = new MaterialDialog(QuickPayActivity.this);
                             sessionDialog.setMessage("Session expired , please login again");
                             sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
@@ -188,7 +188,7 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
                             sessionDialog.setCanceledOnTouchOutside(false);
                             sessionDialog.show();
                         } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA903")) {
-                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            //Logger.d("Balance", balanceEnquiryModel.toString());
                             sessionDialog = new MaterialDialog(QuickPayActivity.this);
                             sessionDialog.setMessage("Session expired , please login again");
                             sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
@@ -211,7 +211,7 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
                                 }
                             });
                             errorDialog.show();
-                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            //Logger.d("Balance", balanceEnquiryModel.toString());
                         }
                     }
 
@@ -248,7 +248,7 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
     @Override
     public void onQuickCodeSubmit(String code) {
         //Caaling to get entire quick payment details
-        Logger.d("QUickCode",code);
+        //Logger.d("QUickCode",code);
         getQuickPayDetails(code);
     }
 
@@ -259,7 +259,7 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
         loadingDialog.setMessage("Fetching details");
         loadingDialog.setCanceledOnTouchOutside(false);
         loadingDialog.show();
-        quickPayApi = ServiceGenerator.createService(QuickPayApi.class);
+        quickPayApi = ServiceGenerator.createService(QuickPayActivity.this,QuickPayApi.class);
         String quickPayCode = code;
         try {
             JSONObject jsonObject = new JSONObject();
@@ -270,14 +270,14 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
             innerObject.put("TYPE", "QCKBILLDEL");
             innerObject.put("BILLCODE", quickPayCode);
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("Qickpay Bill Fragment", jsonObject.toString());
+            //Logger.d("Qickpay Bill Fragment", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             quickPayApi.quickPay(in, new Callback<QuickPayModel>() {
                 @Override
                 public void success(final QuickPayModel quickPayModel, Response response) {
                     if (quickPayModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
-                        Logger.d("Quickpay Bill Success", quickPayModel.toString());
+                        //Logger.d("Quickpay Bill Success", quickPayModel.toString());
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         loadingDialog.cancel();
                         quickBillFragment = new QuickBillPayFragment();
@@ -409,12 +409,12 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
                                     innerObject.put("BPROVIDER", quickPayModel.getCOMMAND().getBPROVIDER());
                                     innerObject.put("PIN", pinNumbEdit.getText().toString());
                                     jsonObject.put("COMMAND", innerObject);
-                                    Logger.d("Qickpay Bill Congirmation Strinv", jsonObject.toString());
+                                    //Logger.d("Qickpay Bill Congirmation Strinv", jsonObject.toString());
                                     quickPayApi.quickPayConfirm(jsonObject, new Callback<QuickPayConfirmModel>() {
                                         @Override
                                         public void success(QuickPayConfirmModel quickPayConfirmModel, Response response) {
                                             if (quickPayConfirmModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
-                                                Logger.d("Qickpay Bill Congirmation Success", quickPayConfirmModel.toString());
+                                                //Logger.d("Qickpay Bill Congirmation Success", quickPayConfirmModel.toString());
                                                 confirmDialog = new MaterialDialog(getActivity());
                                                 confirmDialog.setMessage(quickPayConfirmModel.getCOMMAND().getMESSAGE() + "");
                                                 confirmDialog.setPositiveButton("OK", new View.OnClickListener() {

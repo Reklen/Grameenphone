@@ -16,7 +16,6 @@ import com.cc.grameenphone.api_models.ProfileModel;
 import com.cc.grameenphone.api_models.ProfileUpdateModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.ProfileUpdateApi;
-import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener;
@@ -90,7 +89,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
         preferenceManager = new PreferenceManager(EditProfileActivity.this);
         android_id = Settings.Secure.getString(EditProfileActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        profileDisplay = ServiceGenerator.createService(ProfileUpdateApi.class);
+        profileDisplay = ServiceGenerator.createService(EditProfileActivity.this,ProfileUpdateApi.class);
 
         dob.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +139,11 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
             else
                 lastName.setEnabled(false);
 
+            if (nationId.length() == 4)
+                nationalId.setEnabled(true);
+            else
+                nationalId.setEnabled(false);
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -151,14 +155,14 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
                 innerObject.put("MSISDN", preferenceManager.getMSISDN());
                 innerObject.put("TYPE", "SUBDATAREQ");
                 jsonObject.put("COMMAND", innerObject);
-                Logger.d("Profile Fetch Data", jsonObject.toString());
+                //Logger.d("Profile Fetch Data", jsonObject.toString());
                 String json = jsonObject.toString();
                 TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
                 profileDisplay.profile(in, new Callback<ProfileModel>() {
                     @Override
                     public void success(ProfileModel profileModel, Response response) {
                         if (profileModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
-                            Logger.d("Profile Success" + profileModel.toString());
+                            //Logger.d("Profile Success" + profileModel.toString());
                             firstName.setText("" + profileModel.getCOMMAND().getFNAME());
                             fName = profileModel.getCOMMAND().getFNAME();
                             lastName.setText("" + profileModel.getCOMMAND().getLNAME());
@@ -171,14 +175,14 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
                             dateOfBirth = profileModel.getCOMMAND().getDOB();
                         } else {
                             //Dont know
-                            Logger.d("Profile fetch failed");
+                            //Logger.d("Profile fetch failed");
                         }
 
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
-                        Logger.d("Retrofit failure" + error.getMessage());
+                        //Logger.d("Retrofit failure" + error.getMessage());
                     }
                 });
 
@@ -206,7 +210,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
     @OnClick(R.id.button_save)
     public void clickSave() {
 
-        profileUpdateApi = ServiceGenerator.createService(ProfileUpdateApi.class);
+        profileUpdateApi = ServiceGenerator.createService(EditProfileActivity.this, ProfileUpdateApi.class);
         if (emailName.getText().toString() != email) {
             fName = firstName.getText().toString();
             lName = lastName.getText().toString();
@@ -228,20 +232,20 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
                 String dobText = dob.getText().toString();
                 dobText = dobText.replace("/", "");
                 dobText = dobText.replace("\\", "");
-                Logger.d("DOBstring", dobText);
+                //Logger.d("DOBstring", dobText);
 
                 innerObject.put("DOB", dobText);
                 innerObject.put("IDNO", nationId);
                 innerObject.put("TYPE", "PRFLUPDATE");
                 innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
                 jsonObject.put("COMMAND", innerObject);
-                Logger.d("ProfileUpdates", jsonObject.toString());
+                //Logger.d("ProfileUpdates", jsonObject.toString());
                 String json = jsonObject.toString();
                 TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
                 profileUpdateApi.profileUpdate(in, new Callback<ProfileUpdateModel>() {
                     @Override
                     public void success(ProfileUpdateModel profileUpdateModel, Response response) {
-                        Logger.d("Email change success change ", "status " + profileUpdateModel.toString());
+                        //Logger.d("Email change success change ", "status " + profileUpdateModel.toString());
                         if (profileUpdateModel.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
                             successDialog = new MaterialDialog(EditProfileActivity.this);
                             successDialog.setMessage(profileUpdateModel.getCommand().getMESSAGE());
@@ -274,7 +278,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
 
                     @Override
                     public void failure(RetrofitError error) {
-                        Logger.d("Profile Update response failed ", ": " + error.getMessage().toString());
+                        //Logger.d("Profile Update response failed ", ": " + error.getMessage().toString());
                     }
                 });
 

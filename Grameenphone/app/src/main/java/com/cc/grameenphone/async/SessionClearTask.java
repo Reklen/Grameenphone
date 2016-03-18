@@ -41,7 +41,7 @@ public class SessionClearTask extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         PreferenceManager preferenceManager = new PreferenceManager(ctx);
-        Logger.d("shfjdhf", "cleared");
+        //Logger.d("shfjdhf", "cleared");
         preferenceManager.setCompaniesSavedFlag(false);
         preferenceManager.setAuthToken("");
         preferenceManager.setWalletBalance("");

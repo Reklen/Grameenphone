@@ -5,10 +5,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +53,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -163,7 +169,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener, 
         registerReceiver(sms, filter);
         validator = new Validator(this);
         validator.setValidationListener(this);
-        msisdnCheckApi = ServiceGenerator.createService(MSISDNCheckApi.class);
+        msisdnCheckApi = ServiceGenerator.createService(SignUpActivity.this,MSISDNCheckApi.class);
         loadingDialog = new ProgressDialog(SignUpActivity.this);
         loadingDialog.setMessage("Registering , please wait..");
         handleExtras();
@@ -171,7 +177,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener, 
                 Settings.Secure.ANDROID_ID);
         preferenceManager = new PreferenceManager(SignUpActivity.this);
 
-        signupApi = ServiceGenerator.createService(SignupApi.class);
+        signupApi = ServiceGenerator.createService(SignUpActivity.this,SignupApi.class);
 
         setPinEdit.setTransformationMethod(new MyPasswordTransformationMethod());
         conformPinEdit.setTransformationMethod(new MyPasswordTransformationMethod());
@@ -267,7 +273,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener, 
                 Pattern.COMMENTS);
         Matcher regexMatcher = consPattern.matcher(setPinEdit.getText().toString());
         if (regexMatcher.matches()) {
-            Logger.d("Pattern", "matches");
+            //Logger.d("Pattern", "matches");
             isPinCons = true;
         } else {
             Logger.e("Pattern", "does not match");
@@ -278,7 +284,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener, 
         Pattern pattern = Pattern.compile("([0-9])\\1{3}");
         Matcher matcher = pattern.matcher(setPinEdit.getText().toString());
         if (matcher.find()) {
-            Logger.d("PatternRep", "matches");
+            //Logger.d("PatternRep", "matches");
             isPinRep = true;
         } else {
             Logger.e("PatternRep", "does not match");
@@ -309,7 +315,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener, 
 
     @Override
     public void onValidationSucceeded() {
-        Logger.d("Signup validation", "success");
+        //Logger.d("Signup validation", "success");
         doMSISDNCheck();
     }
 
@@ -332,14 +338,38 @@ public class SignUpActivity extends BaseActivity implements ValidationListener, 
         }
     }
 
+    public String getKey(){
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.cc.grameenphone",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                return Base64.encodeToString(md.digest(), Base64.DEFAULT);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            return "";
+
+        } catch (NoSuchAlgorithmException e) {
+            return "";
+
+        }
+        return "";
+
+    }
+
     private void doMSISDNCheck() {
-        Logger.d("Signup ", "doing msisdncheck");
+        //Logger.d("Signup ", "doing msisdncheck");
+        String key =getKey();
         try {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
             innerObject.put("DEVICEID", android_id);
             innerObject.put("MSISDN", phoneNumberEditText.getText().toString());
             innerObject.put("TYPE", "MSISDNCHK");
+            innerObject.put("INITKEY", key);
+
             jsonObject.put("COMMAND", innerObject);
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
@@ -349,7 +379,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener, 
                     Logger.d("MSISDN  ", msisdnCheckModel.toString());
                     if (msisdnCheckModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                         otpString = msisdnCheckModel.getCOMMAND().getOTP();
-                       // Toast.makeText(SignUpActivity.this, "OTP for test is "+ otpString, Toast.LENGTH_LONG).show();
+                        // Toast.makeText(SignUpActivity.this, "OTP for test is "+ otpString, Toast.LENGTH_LONG).show();
                         authTokenString = msisdnCheckModel.getCOMMAND().getAUTHTOKEN();
                         signUpUser();
                     } else {
@@ -389,7 +419,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener, 
         // "AUTHTOKEN": "5e48dad31259c988275c34641d1ba78761d54391a389225309bb65bd8aed946d", "OTP": "3427359088" }}
 
         otpView = LayoutInflater.from(SignUpActivity.this).inflate(R.layout.sign_up_dialog, null);
-        Logger.d("Signup ", "doing signUpUser");
+        //Logger.d("Signup ", "doing signUpUser");
        /* SmsRadar.initializeSmsRadarService(SignUpActivity.this, new SmsListener() {
             @Override
             public void onSmsSent(Sms sms) {
@@ -399,11 +429,11 @@ public class SignUpActivity extends BaseActivity implements ValidationListener, 
             @Override
             public void onSmsReceived(Sms sms) {
                 displayToast(sms.getMsg());
-                Logger.d("OTP", sms.getMsg());
+                //Logger.d("OTP", sms.getMsg());
 
                 if (sms.getMsg().contains("otp")) {
                     //then call signup api
-                    Logger.d("OTP", sms.getMsg());
+                    //Logger.d("OTP", sms.getMsg());
                     SmsRadar.stopSmsRadarService(SignUpActivity.this);
                 }
             }
@@ -425,7 +455,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener, 
                     otpDialog.dismiss();
                     signupRequest();
                     //signup
-                }else
+                } else
                     ((EditText) otpView.findViewById(R.id.otpEdit)).setError("Invalid OTP entered");
 
             }
@@ -476,13 +506,13 @@ public class SignUpActivity extends BaseActivity implements ValidationListener, 
             innerJsonObj.put("AUTHTOKEN", "" + authTokenString);
             jsonObject.put("COMMAND", innerJsonObj);
 
-            Logger.d("Signup ", "doing signUpUser check " + jsonObject.toString());
+            //Logger.d("Signup ", "doing signUpUser check " + jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             signupApi.signup(in, new Callback<SignupModel>() {
                 @Override
                 public void success(final SignupModel signupModel, Response response) {
-                    Logger.d("Signup Model", signupModel.toString());
+                    //Logger.d("Signup Model", signupModel.toString());
                     if (signupModel.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
                         //dialog
 
@@ -540,7 +570,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener, 
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Logger.d("Its msisdn check ", "failure " + error.getMessage() + " its url is " + error.getUrl());
+                    //Logger.d("Its msisdn check ", "failure " + error.getMessage() + " its url is " + error.getUrl());
                     displayToast("Some error occurred");
                 }
             });

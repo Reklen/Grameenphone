@@ -108,7 +108,7 @@ public class ManageFavoriteFragment extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 confirmDialog.dismiss();
-                                Logger.d("Delte fav", "position is " + position);
+                                //Logger.d("Delte fav", "position is " + position);
                                 adapter.getItem(position).delete();
                                 adapter.remove(position);
 
@@ -162,7 +162,7 @@ public class ManageFavoriteFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         confirmDialog.dismiss();
-                        Logger.d("Delte fav", "position is " + position);
+                        //Logger.d("Delte fav", "position is " + position);
                         adapter.getItem(position).delete();
                         adapter.remove(position);
 
@@ -184,7 +184,7 @@ public class ManageFavoriteFragment extends Fragment {
         Bundle b;
         try {
             b = getArguments();
-            Logger.d("argu", b.toString());
+            //Logger.d("argu", b.toString());
             isHome = getArguments().getBoolean("isHome");
 
         } catch (Exception e) {
@@ -195,7 +195,7 @@ public class ManageFavoriteFragment extends Fragment {
 
     public void getFilterContacts(String searchText) {
         if (adapter != null) {
-            Logger.d("Search Text", searchText);
+            //Logger.d("Search Text", searchText);
             adapter.getFilter().filter(searchText);
         }
     }

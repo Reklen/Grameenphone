@@ -48,7 +48,7 @@ public class OtherPaymentActivity extends AppCompatActivity {
 
     BillPaymentViewPagerAdapter adapter;
 
-    CharSequence titles[] = {"ELECTRICITY", "GAS", "WATER", "INTERNET","TICKET"};
+    CharSequence titles[] = {"ELECTRICITY", "GAS", "WATER", "INTERNET", "TICKET"};
     int NumOfTabs = 5;
 
     @InjectView(R.id.toolbar_text)
@@ -135,7 +135,7 @@ public class OtherPaymentActivity extends AppCompatActivity {
 
     private void getWalletBalance() {
 
-        walletCheckApi = ServiceGenerator.createService(WalletCheckApi.class);
+        walletCheckApi = ServiceGenerator.createService(OtherPaymentActivity.this,WalletCheckApi.class);
         android_id = Settings.Secure.getString(OtherPaymentActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         try {
@@ -146,7 +146,7 @@ public class OtherPaymentActivity extends AppCompatActivity {
             innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CBEREQ");
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("wallet request ", jsonObject.toString());
+            //Logger.d("wallet request ", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             if (preferenceManager.getWalletBalance().isEmpty())
@@ -154,13 +154,13 @@ public class OtherPaymentActivity extends AppCompatActivity {
                     @Override
                     public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
                         if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
-                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            //Logger.d("Balance", balanceEnquiryModel.toString());
                             walletLabel.setText("  ৳ " + balanceEnquiryModel.getCOMMAND().getBALANCE());
                             walletLabel.setTag(balanceEnquiryModel);
                             preferenceManager.setWalletBalance(balanceEnquiryModel.getCOMMAND().getBALANCE());
                             preferenceManager.setWalletMessage(balanceEnquiryModel.getCOMMAND().getMESSAGE());
                         } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
-                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            //Logger.d("Balance", balanceEnquiryModel.toString());
                             sessionDialog = new MaterialDialog(OtherPaymentActivity.this);
                             sessionDialog.setMessage("Session expired , please login again");
                             sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
@@ -173,7 +173,7 @@ public class OtherPaymentActivity extends AppCompatActivity {
                             });
                             sessionDialog.show();
                         } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA903")) {
-                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            //Logger.d("Balance", balanceEnquiryModel.toString());
                             sessionDialog = new MaterialDialog(OtherPaymentActivity.this);
                             sessionDialog.setMessage("Session expired , please login again");
                             sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
@@ -196,7 +196,7 @@ public class OtherPaymentActivity extends AppCompatActivity {
                                 }
                             });
                             errorDialog.show();
-                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            //Logger.d("Balance", balanceEnquiryModel.toString());
                         }
                     }
 
@@ -224,7 +224,7 @@ public class OtherPaymentActivity extends AppCompatActivity {
         loadingDialog = new ProgressDialog(OtherPaymentActivity.this);
         loadingDialog.setMessage("Fetching list..");
         loadingDialog.show();
-        Logger.d("Pref Check", preferenceManager.getCompaniesSavedFlag() + "");
+        //Logger.d("Pref Check", preferenceManager.getCompaniesSavedFlag() + "");
         if (preferenceManager.getCompaniesSavedFlag()) {
 
             loadingDialog.dismiss();
@@ -237,7 +237,7 @@ public class OtherPaymentActivity extends AppCompatActivity {
 
 
     private void getOtherPaymentCompanies() {
-        otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
+        otherPaymentApi = ServiceGenerator.createService(OtherPaymentActivity.this, OtherPaymentApi.class);
         android_id = Settings.Secure.getString(OtherPaymentActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         try {
@@ -248,7 +248,7 @@ public class OtherPaymentActivity extends AppCompatActivity {
             innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CTCMPLREQ");
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("getOtherPaymentCompanies ", jsonObject.toString());
+            //Logger.d("getOtherPaymentCompanies ", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             otherPaymentApi.fetchCompanies(in, new Callback<OtherPaymentModel>() {

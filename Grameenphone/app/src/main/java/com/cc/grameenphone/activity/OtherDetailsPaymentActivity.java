@@ -135,8 +135,8 @@ public class OtherDetailsPaymentActivity extends AppCompatActivity implements Va
         setContentView(R.layout.activity_other_payment_details);
         ButterKnife.inject(this);
         preferenceManager = new PreferenceManager(OtherDetailsPaymentActivity.this);
-        otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
-        addAssociationApi = ServiceGenerator.createService(AddAssociationApi.class);
+        otherPaymentApi = ServiceGenerator.createService(OtherDetailsPaymentActivity.this,OtherPaymentApi.class);
+        addAssociationApi = ServiceGenerator.createService(OtherDetailsPaymentActivity.this,AddAssociationApi.class);
 
         validator = new Validator(OtherDetailsPaymentActivity.this);
         validator.setValidationListener(OtherDetailsPaymentActivity.this);
@@ -185,7 +185,7 @@ public class OtherDetailsPaymentActivity extends AppCompatActivity implements Va
         progressDialog.show();
         android_id = Settings.Secure.getString(OtherDetailsPaymentActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
+        otherPaymentApi = ServiceGenerator.createService(OtherDetailsPaymentActivity.this,OtherPaymentApi.class);
         try {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
@@ -201,8 +201,8 @@ public class OtherDetailsPaymentActivity extends AppCompatActivity implements Va
             innerObject.put("SURCHARGE", surcharge);
             innerObject.put("PIN", pinConfirmEditText.getText().toString());
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("confirmaing bill payment ", jsonObject.toString());
-            Logger.d("confirmaing bill payment ",billCCode );
+            //Logger.d("confirmaing bill payment ", jsonObject.toString());
+            //Logger.d("confirmaing bill payment ",billCCode );
 
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
@@ -271,7 +271,7 @@ public class OtherDetailsPaymentActivity extends AppCompatActivity implements Va
             innerObject.put("PREF1", accNum);
             innerObject.put("BILLCCODE", billCCode);
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("confirmaing bill payment ", jsonObject.toString());
+            //Logger.d("confirmaing bill payment ", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             addAssociationApi.associationSubmit(in, new Callback<BillConfirmationModel>() {
@@ -292,7 +292,7 @@ public class OtherDetailsPaymentActivity extends AppCompatActivity implements Va
                         confirmationDialog.show();
 
                     } else if (billConfirmationModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
-                        Logger.d("Balance", billConfirmationModel.toString());
+                        //Logger.d("Balance", billConfirmationModel.toString());
                         sessionDialog = new MaterialDialog(OtherDetailsPaymentActivity.this);
                         sessionDialog.setMessage("Session expired , please login again");
                         sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
@@ -371,7 +371,7 @@ public class OtherDetailsPaymentActivity extends AppCompatActivity implements Va
 
     private void getWalletBalance() {
 
-        walletCheckApi = ServiceGenerator.createService(WalletCheckApi.class);
+        walletCheckApi = ServiceGenerator.createService(OtherDetailsPaymentActivity.this,WalletCheckApi.class);
         android_id = Settings.Secure.getString(OtherDetailsPaymentActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         try {
@@ -382,7 +382,7 @@ public class OtherDetailsPaymentActivity extends AppCompatActivity implements Va
             innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CBEREQ");
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("wallet request ", jsonObject.toString());
+            //Logger.d("wallet request ", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             if (preferenceManager.getWalletBalance().isEmpty())
@@ -391,13 +391,13 @@ public class OtherDetailsPaymentActivity extends AppCompatActivity implements Va
                     public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
 
                         if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
-                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            //Logger.d("Balance", balanceEnquiryModel.toString());
                             walletLabel.setText("  ৳ " + balanceEnquiryModel.getCOMMAND().getBALANCE());
                             walletLabel.setTag(balanceEnquiryModel);
                             preferenceManager.setWalletBalance(balanceEnquiryModel.getCOMMAND().getBALANCE());
                             preferenceManager.setWalletMessage(balanceEnquiryModel.getCOMMAND().getMESSAGE());
                         } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA907")) {
-                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            //Logger.d("Balance", balanceEnquiryModel.toString());
                             sessionDialog = new MaterialDialog(OtherDetailsPaymentActivity.this);
                             sessionDialog.setMessage("Session expired , please login again");
                             sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
@@ -410,7 +410,7 @@ public class OtherDetailsPaymentActivity extends AppCompatActivity implements Va
                             });
                             sessionDialog.show();
                         } else if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("MA903")) {
-                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            //Logger.d("Balance", balanceEnquiryModel.toString());
                             sessionDialog = new MaterialDialog(OtherDetailsPaymentActivity.this);
                             sessionDialog.setMessage("Session expired , please login again");
                             sessionDialog.setPositiveButton("OK", new View.OnClickListener() {
@@ -433,7 +433,7 @@ public class OtherDetailsPaymentActivity extends AppCompatActivity implements Va
                                 }
                             });
                             errorDialog.show();
-                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            //Logger.d("Balance", balanceEnquiryModel.toString());
                         }
                     }
 

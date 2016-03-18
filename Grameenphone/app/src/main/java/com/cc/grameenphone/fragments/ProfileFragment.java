@@ -15,7 +15,6 @@ import com.cc.grameenphone.R;
 import com.cc.grameenphone.api_models.ProfileModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.ProfileUpdateApi;
-import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
 
 import org.json.JSONException;
@@ -92,7 +91,7 @@ public class ProfileFragment extends Fragment {
         preferenceManager = new PreferenceManager(getActivity());
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        profileDisplay = ServiceGenerator.createService(ProfileUpdateApi.class);
+        profileDisplay = ServiceGenerator.createService(getActivity(),ProfileUpdateApi.class);
         try {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
@@ -101,14 +100,14 @@ public class ProfileFragment extends Fragment {
             innerObject.put("MSISDN",  preferenceManager.getMSISDN());
             innerObject.put("TYPE", "SUBDATAREQ");
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("Profile Fetch Data", jsonObject.toString());
+            //Logger.d("Profile Fetch Data", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             profileDisplay.profile(in, new Callback<ProfileModel>() {
                 @Override
                 public void success(ProfileModel profileModel, Response response) {
                     if (profileModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
-                        Logger.d("Profile Success" + profileModel.toString());
+                        //Logger.d("Profile Success" + profileModel.toString());
                         try {
                             setProfileModel(profileModel);
                             firstName.setText("" + profileModel.getCOMMAND().getFNAME());
@@ -123,14 +122,14 @@ public class ProfileFragment extends Fragment {
                     } else {
 
                         //Dont know
-                        Logger.d("Profile fetch failed");
+                        //Logger.d("Profile fetch failed");
                     }
                     loadingDialog.dismiss();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Logger.d("Retrofit failure" + error.getMessage());
+                    //Logger.d("Retrofit failure" + error.getMessage());
                 }
             });
         } catch (JSONException e) {

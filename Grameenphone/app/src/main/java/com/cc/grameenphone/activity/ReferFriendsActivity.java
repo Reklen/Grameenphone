@@ -122,14 +122,14 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
                 final int DRAWABLE_RIGHT = 2;
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    Logger.d("Touch ", "Action UP " + event.getRawX());
+                    //Logger.d("Touch ", "Action UP " + event.getRawX());
                     if (event.getRawX() >= (phoneNumberEditText.getRight() - phoneNumberEditText.getTotalPaddingRight())) {
                         // your action here
-                        Logger.d("Touch ", "Going in");
+                        //Logger.d("Touch ", "Going in");
                         startActivityForResult(new Intent(ReferFriendsActivity.this, SelectContactsActivity.class), IntentUtils.SELECT_CONTACT_REQ);
                         return true;
                     }
-                    Logger.d("Touch ", "Outside drawable");
+                    //Logger.d("Touch ", "Outside drawable");
                 }
                 return false;
             }
@@ -141,7 +141,7 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IntentUtils.SELECT_CONTACT_REQ) {
             try {
-                Logger.d("Return Contact", "contacts " + ((String) data.getExtras().get(Constants.RETURN_RESULT)));
+                //Logger.d("Return Contact", "contacts " + ((String) data.getExtras().get(Constants.RETURN_RESULT)));
                 if (((String) data.getExtras().get(Constants.RETURN_RESULT)) != null)
                 phoneNumberEditText.setText("" + ((String) data.getExtras().get(Constants.RETURN_RESULT)));
 
@@ -172,7 +172,7 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
 
         android_id = Settings.Secure.getString(ReferFriendsActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        referFriendsApi = ServiceGenerator.createService(ReferFriendsApi.class);
+        referFriendsApi = ServiceGenerator.createService(ReferFriendsActivity.this,ReferFriendsApi.class);
         try {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
@@ -184,7 +184,7 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
             innerObject.put("MSISDN2",  phoneNumberEditText.getText().toString());
             innerObject.put("TYPE", "RFRFRDREQ");
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("pp", jsonObject.toString());
+            //Logger.d("pp", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             referFriendsApi.referFriends(in, new Callback<ReferFriendModel>() {
@@ -202,7 +202,7 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
                         });
                         successDialog.show();
                     } else if (referFriendModel.getCommand().getTXNSTATUS().equalsIgnoreCase("MA903")) {
-                        Logger.d("Balance", referFriendModel.toString());
+                        //Logger.d("Balance", referFriendModel.toString());
                         sessionDialog = new MaterialDialog(ReferFriendsActivity.this);
                         sessionDialog.setMessage("Session expired , please login again");
                         sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {
@@ -216,7 +216,7 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
                         sessionDialog.setCanceledOnTouchOutside(false);
                         sessionDialog.show();
                     } else if (referFriendModel.getCommand().getTXNSTATUS().equalsIgnoreCase("MA907")) {
-                        Logger.d("Balance", referFriendModel.toString());
+                        //Logger.d("Balance", referFriendModel.toString());
                         sessionDialog = new MaterialDialog(ReferFriendsActivity.this);
                         sessionDialog.setMessage("Session expired , please login again");
                         sessionDialog.setPositiveButton("Ok", new View.OnClickListener() {

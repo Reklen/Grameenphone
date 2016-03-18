@@ -18,7 +18,7 @@ public class SMS extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO Auto-generated method stub
-        Logger.d("SMS", intent.getAction());
+        //Logger.d("SMS", intent.getAction());
 
         if (intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")) {
             Bundle bundle = intent.getExtras();           //---get the SMS message passed in---
@@ -33,7 +33,7 @@ public class SMS extends BroadcastReceiver {
                         msgs[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
                         msg_from = msgs[i].getOriginatingAddress();
                         String msgBody = msgs[i].getMessageBody();
-                        Logger.d("SMS", msgBody);
+                        //Logger.d("SMS", msgBody);
                         if (msgBody.contains("MobiCash"))
                             if (onSMSInterface != null)
                                 onSMSInterface.onSMS(msgBody);

@@ -96,7 +96,7 @@ public class QuickBillPayFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_bill_pay, container, false);
         ButterKnife.inject(this, view);
-        quickPayApi = ServiceGenerator.createService(QuickPayApi.class);
+        quickPayApi = ServiceGenerator.createService(getActivity(),QuickPayApi.class);
         handleArguments();
         //Confirm payment
         confirmRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
@@ -120,14 +120,14 @@ public class QuickBillPayFragment extends Fragment {
                     innerObject.put("BPROVIDER", bProvider);
                     innerObject.put("PIN", pinNumbEdit.getText().toString());
                     jsonObject.put("COMMAND", innerObject);
-                    Logger.d("Qickpay Bill Congirmation Strinv", jsonObject.toString());
+                    //Logger.d("Qickpay Bill Congirmation Strinv", jsonObject.toString());
                     String json = jsonObject.toString();
                     TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
                     quickPayApi.quickPayConfirm(in, new Callback<QuickPayConfirmModel>() {
                         @Override
                         public void success(QuickPayConfirmModel quickPayConfirmModel, Response response) {
                             if (quickPayConfirmModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
-                                Logger.d("Qickpay Bill Congirmation Success", quickPayConfirmModel.toString());
+                                //Logger.d("Qickpay Bill Congirmation Success", quickPayConfirmModel.toString());
                                 confirmDialog = new MaterialDialog(getActivity());
                                 confirmDialog.setMessage(quickPayConfirmModel.getCOMMAND().getMESSAGE() + "");
                                 confirmDialog.setPositiveButton("OK", new View.OnClickListener() {

@@ -78,7 +78,7 @@ public class TransactionOverviewActivity extends AppCompatActivity {
                 Settings.Secure.ANDROID_ID);
         preferenceManager = new PreferenceManager(TransactionOverviewActivity.this);
         posMessageMap = new ArrayList<>();
-        transactionOverviewApi = ServiceGenerator.createService(TransactionOverviewApi.class);
+        transactionOverviewApi = ServiceGenerator.createService(TransactionOverviewActivity.this,TransactionOverviewApi.class);
         backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
@@ -112,13 +112,13 @@ public class TransactionOverviewActivity extends AppCompatActivity {
             innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CLTREQ");
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("sending json", jsonObject.toString());
+            //Logger.d("sending json", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             transactionOverviewApi.fetchStatements(in, new Callback<TransactionOverviewModel>() {
                         @Override
                         public void success(TransactionOverviewModel transactionOverviewModel, Response response) {
-                            Logger.d("TransactionOverview", transactionOverviewModel.toString());
+                            //Logger.d("TransactionOverview", transactionOverviewModel.toString());
                             if (transactionOverviewModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                                 listItemsList.clear();
                                 try {
@@ -157,7 +157,7 @@ public class TransactionOverviewActivity extends AppCompatActivity {
                                     )
 
                             {
-                                Logger.d("Balance", transactionOverviewModel.toString());
+                                //Logger.d("Balance", transactionOverviewModel.toString());
                                 loadingDialog.cancel();
                                 sessionDialog = new MaterialDialog(TransactionOverviewActivity.this);
                                 sessionDialog.setMessage("Session expired , please login again");

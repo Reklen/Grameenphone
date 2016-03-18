@@ -139,7 +139,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         android_id = Settings.Secure.getString(BillPaymentActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         preferenceManager = new PreferenceManager(BillPaymentActivity.this);
-        billspaymentApi = ServiceGenerator.createService(BillspaymentApi.class);
+        billspaymentApi = ServiceGenerator.createService(BillPaymentActivity.this, BillspaymentApi.class);
 
         fetchBills();
         setupListViewItemClick();
@@ -159,25 +159,25 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             innerObject.put("TYPE", "SAPLBPREQ");
             innerObject.put("AUTHTOKEN", preferenceManager.getAuthToken());
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("ProfileUpdates", jsonObject.toString());
+            //Logger.d("ProfileUpdates", jsonObject.toString());
             //TODO Checking API Calls
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             billspaymentApi.fetchBills(in, new Callback<BillListModel>() {
                 @Override
                 public void success(BillListModel billListModel, Response response) {
-                    Logger.d("BILLS response", billListModel.toString());
+                    //Logger.d("BILLS response", billListModel.toString());
                     if (billListModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
 
                         if (billListModel.getCOMMAND().getMessage().getComapny() != null) {
-                            Logger.d("BILLS response", billListModel.getCOMMAND().getMessage().getComapny().toString());
+                            //Logger.d("BILLS response", billListModel.getCOMMAND().getMessage().getComapny().toString());
                             List<UserBillsModel> bills = billListModel.getCOMMAND().getMessage().getComapny();
                             for (UserBillsModel b : bills) {
                                 if (!b.getBILLNUM().equalsIgnoreCase("null")) {
                                     userBillsModels.add(b);
-                                    Logger.d("UserBills not null");
+                                    //Logger.d("UserBills not null");
                                 } else {
-                                    Logger.d("UserBills null");
+                                    //Logger.d("UserBills null");
                                 }
                             }
 
@@ -321,7 +321,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         pinConfirmDialog.show();
 
 
-        Logger.d("Bills selected", "Position are " + billsSelectedList.toString());
+        //Logger.d("Bills selected", "Position are " + billsSelectedList.toString());
 
 
     }
@@ -343,12 +343,12 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             innerObject.put("PIN", pin);//TODO add pin confirm dialog
             innerObject.put("BPROVIDER", userBillsModel.getbProvider());
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("Paying Bill", jsonObject.toString());
+            //Logger.d("Paying Bill", jsonObject.toString());
             //TODO Checking API Calls
             billspaymentApi.payBill(jsonObject, new Callback<BillPaymentModel>() {
                 @Override
                 public void success(BillPaymentModel billPaymentModel, Response response) {
-                    Logger.d("BILLS response", billPaymentModel.toString());
+                    //Logger.d("BILLS response", billPaymentModel.toString());
                     if (billPaymentModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                         loadingDialog.dismiss();
                         userBillsModel.setStatus(1);
@@ -456,7 +456,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
 
             innerObject.put("PIN", pin);//TODO add pin confirm dialog
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("Paying Bill", jsonObject.toString());
+            //Logger.d("Paying Bill", jsonObject.toString());
             //TODO Checking API Calls
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
@@ -464,7 +464,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             billspaymentApi.payMultipleBill(in, new Callback<MultiBillApiModel>() {
                 @Override
                 public void success(MultiBillApiModel multiBillApiModel, Response response) {
-                    Logger.d(multiBillApiModel.toString());
+                    //Logger.d(multiBillApiModel.toString());
                     if (multiBillApiModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                         //Success
                         loadingDialog.dismiss();
@@ -522,7 +522,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
           /*  billspaymentApi.payBill(jsonObject, new Callback<BillPaymentModel>() {
                 @Override
                 public void success(BillPaymentModel billPaymentModel, Response response) {
-                    Logger.d("BILLS response", billPaymentModel.toString());
+                    //Logger.d("BILLS response", billPaymentModel.toString());
                     if (billPaymentModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                         loadingDialog.dismiss();
                         userBillsModel.setStatus(1);
@@ -600,10 +600,10 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
         billsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Logger.d("bills test ", "clicked on " + view.getId() + "");
+                //Logger.d("bills test ", "clicked on " + view.getId() + "");
                 CheckBox checkBox = (CheckBox) view.findViewById(R.id.billCheckBox);
                 UserBillsModel userBillsModel = (UserBillsModel) listViewAdapter.getItem(position);
-                Logger.d("bills test ", "clicked on " + position + " " + billsSelectedList.toString());
+                //Logger.d("bills test ", "clicked on " + position + " " + billsSelectedList.toString());
                 if (billsSelectedList.contains(position + "")) {
                     billsSelectedList.remove(position + "");
                     checkBox.setChecked(false);
@@ -686,7 +686,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
 
     private void getWalletBalance() {
 
-        walletCheckApi = ServiceGenerator.createService(WalletCheckApi.class);
+        walletCheckApi = ServiceGenerator.createService(BillPaymentActivity.this, WalletCheckApi.class);
         android_id = Settings.Secure.getString(BillPaymentActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         try {
@@ -697,7 +697,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "CBEREQ");
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("wallet request ", jsonObject.toString());
+            //Logger.d("wallet request ", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             if (preferenceManager.getWalletBalance().isEmpty())
@@ -705,7 +705,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
                     @Override
                     public void success(BalanceEnquiryModel balanceEnquiryModel, Response response) {
                         if (balanceEnquiryModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
-                            Logger.d("Balance", balanceEnquiryModel.toString());
+                            //Logger.d("Balance", balanceEnquiryModel.toString());
                             walletLabel.setText("  ৳ " + balanceEnquiryModel.getCOMMAND().getBALANCE());
                             preferenceManager.setWalletBalance(balanceEnquiryModel.getCOMMAND().getBALANCE());
                             preferenceManager.setWalletMessage(balanceEnquiryModel.getCOMMAND().getMESSAGE());
@@ -855,7 +855,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
 
     @Override
     public void payClickedAt(int position) {
-        Logger.d("bills test ", "clicked on " + position + "");
+        //Logger.d("bills test ", "clicked on " + position + "");
         final UserBillsModel userBillsModel = listViewAdapter.getItem(position);
         pinConfirmationView = LayoutInflater.from(BillPaymentActivity.this).inflate(R.layout.dialog_pin_confirmation, null);
         pinConfirmationET = (EditText) pinConfirmationView.findViewById(R.id.pinConfirmEditText);
@@ -900,14 +900,14 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
             innerObject.put("PIN", pin);//TODO add pin confirm dialog
             innerObject.put("BPROVIDER", userBillsModel.getBPROVIDER());
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("Paying Bill", jsonObject.toString());
+            //Logger.d("Paying Bill", jsonObject.toString());
             //TODO Checking API Calls
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             billspaymentApi.payBill(in, new Callback<BillPaymentModel>() {
                 @Override
                 public void success(BillPaymentModel billPaymentModel, Response response) {
-                    Logger.d("BILLS response", billPaymentModel.toString());
+                    //Logger.d("BILLS response", billPaymentModel.toString());
                     if (billPaymentModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                         loadingDialog.dismiss();
                         dialog = new MaterialDialog(BillPaymentActivity.this);

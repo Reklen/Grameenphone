@@ -100,12 +100,12 @@ public class SelectContactsActivity extends AppCompatActivity implements SearchV
             case R.id.action_search:
                 if (item.isActionViewExpanded()) {
                     item.collapseActionView();
-                    Logger.d(("Closing Group Search"));
+                    //Logger.d(("Closing Group Search"));
 
 
                 } else {
                     item.expandActionView();
-                    Logger.d(("Opening Group Search"));
+                    //Logger.d(("Opening Group Search"));
                 }
 
                 return true;
@@ -139,7 +139,7 @@ public class SelectContactsActivity extends AppCompatActivity implements SearchV
             @Override
             public boolean onQueryTextChange(String s) {
                 //adapter.getFilter().filter(s);
-                Logger.d("Text is", s);
+                //Logger.d("Text is", s);
                 if (contactsViewpager.getCurrentItem() == 1)
                     selectcontactAdapter.contactsDetailsFragment.getFilterContacts(s);
                 else {

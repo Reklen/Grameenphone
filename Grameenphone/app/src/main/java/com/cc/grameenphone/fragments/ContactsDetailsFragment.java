@@ -108,7 +108,7 @@ public class ContactsDetailsFragment extends Fragment {
 
     public void getFilterContacts(String searchText) {
         if (mAdapter != null) {
-            Logger.d("Search Text", searchText);
+            //Logger.d("Search Text", searchText);
             mAdapter.getFilter().filter(searchText);
         }
     }
@@ -139,7 +139,7 @@ public class ContactsDetailsFragment extends Fragment {
                 contact.displayName = cursor.getString(ContactsQuery.DISPLAY_NAME);
                 contact.photoId = cursor.getString(ContactsQuery.PHOTO_THUMBNAIL_DATA);
                 contact.number = cursor.getString(ContactsQuery.PHONE_NUMBER);
-                Logger.d("Number" + contact.number);
+                //Logger.d("Number" + contact.number);
                 result.add(contact);
             }
 

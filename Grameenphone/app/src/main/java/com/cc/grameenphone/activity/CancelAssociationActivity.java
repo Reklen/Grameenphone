@@ -195,7 +195,7 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
         selectedPayConfirmationDialog.show();
         cancelMultiple(multiBillListModelList);
 
-        Logger.d("Bills selected", "Position are " + cancelBillsSelectedList.toString());
+        //Logger.d("Bills selected", "Position are " + cancelBillsSelectedList.toString());
 
     }
 
@@ -206,7 +206,7 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
         android_id = Settings.Secure.getString(CancelAssociationActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         preferenceManager = new PreferenceManager(CancelAssociationActivity.this);
-        getAssociationApi = ServiceGenerator.createService(ManageAssociationApi.class);
+        getAssociationApi = ServiceGenerator.createService(CancelAssociationActivity.this,ManageAssociationApi.class);
 
         adapter = new CancelAssociationAdapter(this, list, this);
         associationListView.setAdapter(adapter);
@@ -220,7 +220,7 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
         associationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Logger.d("CancelAssociation", "Position " + position);
+                //Logger.d("CancelAssociation", "Position " + position);
 
                 CheckBox checkBox = (CheckBox) view.findViewById(R.id.cancelCheckBox);
                 Button cancelButton = (Button) view.findViewById(R.id.cancelButton);
@@ -308,13 +308,13 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
             innerObject.put("MSISDN", preferenceManager.getMSISDN());
             innerObject.put("TYPE", "FBILASCREQ");
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("sending json", jsonObject.toString());
+            //Logger.d("sending json", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             getAssociationApi.fetchUserAssociaition(in, new Callback<AssociationModel>() {
                 @Override
                 public void success(AssociationModel associationModel, Response response) {
-                    Logger.d("CancelCrash", associationModel.toString());
+                    //Logger.d("CancelCrash", associationModel.toString());
                     if (associationModel.getCommandModel().getTXNSTATUS().equalsIgnoreCase("200")) {
                         list.clear();
                         if (associationModel.getCommandModel().getBILLDEL() != null) {
@@ -368,7 +368,7 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
                     innerObject.put("BILLCCODE", model.getCOMPCODE());
                     innerObject.put("PREF1", model.getACCNUM());
                     jsonObject.put("COMMAND", innerObject);
-                    Logger.d("sending json", jsonObject.toString());
+                    //Logger.d("sending json", jsonObject.toString());
                     cancelDialog.dismiss();
                     String json = jsonObject.toString();
                     TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
@@ -475,14 +475,14 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
 
             // innerObject.put("PIN", pin);//TODO add pin confirm dialog
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("Paying Bill", jsonObject.toString());
+            //Logger.d("Paying Bill", jsonObject.toString());
             //TODO Checking API Calls
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             getAssociationApi.cancelMultipleAssociation(in, new Callback<CancelMultipleResponseModel>() {
                         @Override
                         public void success(CancelMultipleResponseModel cancelMultipleResponseModel, Response response) {
-                            Logger.d(cancelMultipleResponseModel.toString());
+                            //Logger.d(cancelMultipleResponseModel.toString());
 
                             if (cancelMultipleResponseModel.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
                                 //Success
@@ -517,7 +517,7 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
 
 
 
-                   /* Logger.d(cancelAssociationModel.toString());
+                   /* //Logger.d(cancelAssociationModel.toString());
 
                     if (cancelAssociationModel.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
                         //Success
@@ -546,7 +546,7 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
           /*  billspaymentApi.payBill(jsonObject, new Callback<BillPaymentModel>() {
                 @Override
                 public void success(BillPaymentModel billPaymentModel, Response response) {
-                    Logger.d("BILLS response", billPaymentModel.toString());
+                    //Logger.d("BILLS response", billPaymentModel.toString());
                     if (billPaymentModel.getCOMMAND().getTXNSTATUS().equalsIgnoreCase("200")) {
                         loadingDialog.dismiss();
                         userBillsModel.setStatus(1);

@@ -28,7 +28,6 @@ import com.cc.grameenphone.generator.ServiceGenerator;
 import com.cc.grameenphone.interfaces.OtherPaymentApi;
 import com.cc.grameenphone.utils.ConnectivityUtils;
 import com.cc.grameenphone.utils.KeyboardUtil;
-import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.PreferenceManager;
 import com.cc.grameenphone.views.RippleView;
 import com.google.gson.Gson;
@@ -194,7 +193,7 @@ public class OtherPaymentTicketingFragment extends BaseTabFragment implements Va
                         try {
                             OtherPaymentCompanyModel companyModel = (OtherPaymentCompanyModel) btn.getTag();
                             String isSurcharge = companyModel.getSURCREQ();
-                            Logger.d("Surcharge Available ", isSurcharge);
+                            //Logger.d("Surcharge Available ", isSurcharge);
                             if (isSurcharge.equalsIgnoreCase("Y")) {
                                 surchargeEditText.setVisibility(View.VISIBLE);
                             } else {
@@ -246,7 +245,7 @@ public class OtherPaymentTicketingFragment extends BaseTabFragment implements Va
         preferenceManager = new PreferenceManager(getActivity());
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
+        otherPaymentApi = ServiceGenerator.createService(getActivity(),OtherPaymentApi.class);
         try {
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
@@ -262,7 +261,7 @@ public class OtherPaymentTicketingFragment extends BaseTabFragment implements Va
             innerObject.put("SURCHARGE", surchargeEditText.getText().toString());
             innerObject.put("PIN", pin);
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("confirmaing bill payment ", jsonObject.toString());
+            //Logger.d("confirmaing bill payment ", jsonObject.toString());
             String json = jsonObject.toString();
             TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             otherPaymentApi.billConfirmation(in, new Callback<BillConfirmationModel>() {
@@ -321,7 +320,7 @@ public class OtherPaymentTicketingFragment extends BaseTabFragment implements Va
          Bundle b;
          try {
              b = getArguments();
-             Logger.d("argu", b.toString());
+             //Logger.d("argu", b.toString());
              type = getArguments().getInt("type");
          } catch (Exception e) {
 
@@ -341,7 +340,7 @@ public class OtherPaymentTicketingFragment extends BaseTabFragment implements Va
         preferenceManager = new PreferenceManager(getActivity());
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        otherPaymentApi = ServiceGenerator.createService(OtherPaymentApi.class);
+        otherPaymentApi = ServiceGenerator.createService(getActivity(),OtherPaymentApi.class);
 
         try {
             JSONObject jsonObject = new JSONObject();
@@ -354,7 +353,7 @@ public class OtherPaymentTicketingFragment extends BaseTabFragment implements Va
             innerObject.put("ACCOUNTNUM", accountNumbEdit.getText().toString());
             innerObject.put("BILLNUM", billNumbEdit.getText().toString());
             jsonObject.put("COMMAND", innerObject);
-            Logger.d("confirmaing bill payment ", jsonObject.toString());
+            //Logger.d("confirmaing bill payment ", jsonObject.toString());
             String json = jsonObject.toString();
             final TypedInput in = new TypedByteArray("application/json", json.getBytes("UTF-8"));
             otherPaymentApi.billFetch(in, new Callback<Response>() {
@@ -382,7 +381,7 @@ public class OtherPaymentTicketingFragment extends BaseTabFragment implements Va
                             errorDialog.show();
 
                         } else {
-                            Logger.d("Respionse", object.toString());
+                            //Logger.d("Respionse", object.toString());
                             Gson gsonMapper = new Gson();
                             OtherPaymentNewModel otherPaymentNewModel = gsonMapper.fromJson(object.toString(), OtherPaymentNewModel.class);
                             Intent intent = new Intent(getActivity(), OtherDetailsPaymentActivity.class);

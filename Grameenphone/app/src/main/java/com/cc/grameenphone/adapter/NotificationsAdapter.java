@@ -55,7 +55,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
     @Override
     public void onBindViewHolder(NotificationsViewHolder holder, int position) {
-        Logger.d("BindHodler", "pos = " + position);
+        //Logger.d("BindHodler", "pos = " + position);
         NotificationMessageModel model = notifications.get(position);
         holder.notificationTypeTextView.setText("" + model.getNOTCODE());
         holder.notificationLayout.setTag(position);
