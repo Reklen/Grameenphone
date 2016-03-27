@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.utils.Logger;
+import com.cc.grameenphone.utils.SelfSigningClientBuilder;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
@@ -37,8 +39,12 @@ public class ServiceGenerator {
     }
 
     public static <S> S createService(Context context, Class<S> serviceClass) {
-        OkHttpClient client = new OkHttpClient();
-        client = setupCertificateLogic(context, client);
+       /* OkHttpClient client = new OkHttpClient();
+        client = setupCertificateLogic(context, client);*/
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setReadTimeout(60, TimeUnit.SECONDS);
+        okHttpClient.setConnectTimeout(60, TimeUnit.SECONDS);
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(BASE_URL)
                 .setLog(new RestAdapter.Log() {
@@ -48,8 +54,7 @@ public class ServiceGenerator {
                     }
                 })
                 .setLogLevel(RestAdapter.LogLevel.FULL)
-
-                .setClient(new OkClient(client));
+                .setClient(new OkClient(SelfSigningClientBuilder.createClient(okHttpClient)));
 
         RestAdapter adapter = builder.build();
 

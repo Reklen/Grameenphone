@@ -24,9 +24,8 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:paddingLeft="6dp"
             android:paddingRight="6dp"
+            android:layout_marginLeft="10dp"
             app:rv_rippleDuration="100">
 
             <ImageView

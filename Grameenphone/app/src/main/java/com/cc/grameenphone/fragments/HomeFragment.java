@@ -250,7 +250,7 @@ public class HomeFragment extends Fragment {
                     phoneNumberEditText.setError(null);
                     editamt.setError(null);
                     otherFlexiLoadClick();
-                    flexiBtn.setText("FLEXILOAD");
+                    flexiBtn.setText("CONTINUE");
 
                 }
                 else{

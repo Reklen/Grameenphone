@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cc.grameenphone.BuildConfig;
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.api_models.LoginModel;
 import com.cc.grameenphone.generator.ServiceGenerator;
@@ -121,7 +122,7 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
         errorDialogBuilder = new AlertDialog.Builder(LoginActivity.this);
         validator = new Validator(this);
         validator.setValidationListener(this);
-        loginApi = ServiceGenerator.createService(LoginActivity.this,LoginApi.class);
+        loginApi = ServiceGenerator.createService(LoginActivity.this, LoginApi.class);
         loadingDialog = new ProgressDialog(LoginActivity.this);
         walletPinNumber.setTransformationMethod(new MyPasswordTransformationMethod());
         phoneNumberEditText.addTextChangedListener(new TextWatcher() {
@@ -181,7 +182,7 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
             walletPinInputLayout.setVisibility(View.VISIBLE);
             walletPinNumber.requestFocus();
         } catch (Exception e) {
-           // e.printStackTrace();
+            // e.printStackTrace();
         }
 
     }
@@ -197,7 +198,7 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
         validator.validate();
     }
 
-    public String getKey(){
+    public String getKey() {
         try {
             PackageInfo info = getPackageManager().getPackageInfo(
                     "com.cc.grameenphone",
@@ -224,7 +225,10 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
         loadingDialog.setCanceledOnTouchOutside(false);
         loadingDialog.show();
         try {
-            String key = getKey();
+            String key =
+                    getKey();
+            if (BuildConfig.DEBUG)
+                Logger.d("Key", key);
 
             JSONObject jsonObject = new JSONObject();
             JSONObject innerObject = new JSONObject();
@@ -243,6 +247,7 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
             loginApi.login(in, new Callback<LoginModel>() {
                 @Override
                 public void success(LoginModel model, Response response) {
+                    if(model.getCommand()!=null)
                     Logger.d("Its msisdn check ", "status " + model.toString());
                     if (model.getCommand().getTXNSTATUS().equalsIgnoreCase("200")) {
                         //Logger.d("Its msisdn check ", "success " + model.getCommand().getAUTHTOKEN().toString());
@@ -296,7 +301,7 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Logger.d("Its msisdn check ", "failure " + error.getMessage() + " its url is " + error.getUrl() + " "+ error.getBody());
+                    Logger.d("Its msisdn check ", "failure " + error.getMessage() + " its url is " + error.getUrl() + " " + error.getBody());
                     displayToast("Some error occurred");
                     loadingDialog.dismiss();
 

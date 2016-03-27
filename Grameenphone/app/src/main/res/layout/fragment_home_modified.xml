@@ -1,14 +1,14 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:orientation="vertical">
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="24dp"
+                  android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/fst_container"
@@ -17,159 +17,160 @@
             android:visibility="gone"
             tools:visibility="visible">
 
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/prepaidOption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:drawablePadding="50dp"
-                android:paddingLeft="8dp"
-                android:text="Self"
-                android:textColor="#D9000000"
-                android:textSize="17sp"
-                android:textStyle="normal" />
-
-            <RadioButton
-                android:id="@+id/postpaidOption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="79dp"
-                android:drawablePadding="50dp"
-                android:paddingLeft="8dp"
-                android:text="Others"
-                android:textColor="#D9000000"
-                android:textSize="17sp"
-                android:textStyle="normal" />
-        </RadioGroup>
-
-        <RelativeLayout
-            android:id="@+id/top_container1"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_below="@+id/radioGroup"
-            android:layout_marginTop="24dp">
-
-            <!--  <com.cc.grameenphone.views.CustomTextInputLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content">
-
-                  <EditText
-                      android:id="@+id/editTextEmail"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:hint="@string/hint_email"
-                      android:inputType="textEmailAddress" />
-
-              </com.cc.grameenphone.views.CustomTextInputLayout>
-      -->
-
-            <EditText
-                android:id="@+id/areaCode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="16dp"
-                android:clickable="false"
-                android:editable="false"
-                android:focusable="false"
-                android:inputType="none"
-                android:text="+88"
-                android:textColor="@color/hint_color" />
-            <!-- <TextView
-                 android:id="@+id/areaCode"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_alignParentLeft="true"
-                 android:layout_marginLeft="15dp"
-                 android:layout_marginTop="33dp"
-                 android:text="+88"
-                 android:textColor="@color/hint_color"
-                 android:textSize="15sp"
-                 android:textStyle="bold" />
-
-             <View
-                 android:layout_width="60dp"
-                 android:layout_height="1dp"
-                 android:layout_alignParentBottom="true"
-                 android:layout_marginLeft="15dp"
-                 android:layout_marginTop="7dp"
-                 android:background="#aaaaaa">
-
-        </View>-->
-
-            <com.cc.grameenphone.views.CustomTextInputLayout
-                android:id="@+id/phone_container"
+            <RadioGroup
+                android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
                 android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_toRightOf="@+id/areaCode">
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
 
-                <AutoCompleteTextView
-                    android:id="@+id/phoneNumberEditText"
+                <RadioButton
+                    android:id="@+id/prepaidOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:drawablePadding="50dp"
+                    android:paddingLeft="8dp"
+                    android:text="Self"
+                    android:textColor="#D9000000"
+                    android:textSize="17sp"
+                    android:textStyle="normal"/>
+
+                <RadioButton
+                    android:id="@+id/postpaidOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="79dp"
+                    android:drawablePadding="50dp"
+                    android:paddingLeft="8dp"
+                    android:text="Others"
+                    android:textColor="#D9000000"
+                    android:textSize="17sp"
+                    android:textStyle="normal"/>
+            </RadioGroup>
+
+            <RelativeLayout
+                android:id="@+id/top_container1"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/radioGroup"
+                android:layout_marginTop="24dp">
+
+                <!--  <com.cc.grameenphone.views.CustomTextInputLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content">
+
+                      <EditText
+                          android:id="@+id/editTextEmail"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:hint="@string/hint_email"
+                          android:inputType="textEmailAddress" />
+
+                  </com.cc.grameenphone.views.CustomTextInputLayout>
+          -->
+
+                <EditText
+                    android:id="@+id/areaCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="16dp"
+                    android:clickable="false"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:inputType="none"
+                    android:text="+88"
+                    android:textColor="@color/hint_color"/>
+                <!-- <TextView
+                     android:id="@+id/areaCode"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_alignParentLeft="true"
+                     android:layout_marginLeft="15dp"
+                     android:layout_marginTop="33dp"
+                     android:text="+88"
+                     android:textColor="@color/hint_color"
+                     android:textSize="15sp"
+                     android:textStyle="bold" />
+
+                 <View
+                     android:layout_width="60dp"
+                     android:layout_height="1dp"
+                     android:layout_alignParentBottom="true"
+                     android:layout_marginLeft="15dp"
+                     android:layout_marginTop="7dp"
+                     android:background="#aaaaaa">
+
+            </View>-->
+
+                <com.cc.grameenphone.views.CustomTextInputLayout
+                    android:id="@+id/phone_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="6dip"
-                    android:hint="@string/hintPhone"
-                    android:inputType="phone"
-                    android:digits="0123456789"
-                    android:maxLength="11"
-                    android:textColor="@color/black_semi_transparent"
-                    android:textColorHighlight="@color/hint_color"
-                    android:textColorHint="@color/hint_color" />
-            </com.cc.grameenphone.views.CustomTextInputLayout>
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_toRightOf="@+id/areaCode">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/phoneNumberEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789"
+                        android:drawablePadding="6dip"
+                        android:hint="@string/hintPhone"
+                        android:inputType="phone"
+                        android:maxLength="11"
+                        android:textColor="@color/black_semi_transparent"
+                        android:textColorHighlight="@color/hint_color"
+                        android:textColorHint="@color/hint_color"/>
+                </com.cc.grameenphone.views.CustomTextInputLayout>
 
 
-            <!--  <View
-                  android:layout_width="match_parent"
-                  android:layout_height="1dp"
-                  android:layout_alignParentBottom="true"
-                  android:layout_marginLeft="20dp"
-                  android:layout_marginRight="10dp"
-                  android:layout_marginTop="7dp"
-                  android:layout_toRightOf="@+id/areaCode"
-                  android:background="#aaaaaa">
+                <!--  <View
+                      android:layout_width="match_parent"
+                      android:layout_height="1dp"
+                      android:layout_alignParentBottom="true"
+                      android:layout_marginLeft="20dp"
+                      android:layout_marginRight="10dp"
+                      android:layout_marginTop="7dp"
+                      android:layout_toRightOf="@+id/areaCode"
+                      android:background="#aaaaaa">
 
-              </View>-->
+                  </View>-->
+                <TextView
+                    android:id="@+id/other_flex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginRight="20dp"
+                    android:text="OTHER FLEXILOAD"
+                    android:textColor="#00adee"
+                    android:textSize="12sp"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+
             <TextView
-                android:id="@+id/other_flex"
+                android:id="@+id/taka_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="15dp"
-                android:layout_marginRight="20dp"
-                android:text="OTHER FLEXILOAD"
-                android:visibility="gone"
-                android:textColor="#00adee"
-                android:textSize="12sp" />
+                android:layout_above="@+id/flexi_Ripple"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="12dp"
+                android:paddingTop="8dp"
+                android:text="৳"
+                android:textSize="16sp"
+                android:visibility="gone"/>
 
-        </RelativeLayout>
-
-         <TextView
-             android:id="@+id/taka_text"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginLeft="16dp"
-             android:layout_marginTop="16dp"
-             android:textSize="16sp"
-             android:layout_above="@+id/flexi_Ripple"
-             android:layout_centerHorizontal="true"
-             android:layout_alignParentLeft="true"
-             android:paddingTop="8dp"
-             android:visibility="gone"
-             android:paddingBottom="12dp"
-             android:text="৳"/>
             <com.cc.grameenphone.views.CustomTextInputLayout
                 android:id="@+id/amount_container"
                 android:layout_width="match_parent"
@@ -179,6 +180,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="16dp">
                 ​
+
                 <com.cc.grameenphone.views.AmountEditText
                     android:id="@+id/editamt"
                     android:layout_width="match_parent"
@@ -191,29 +193,30 @@
                     android:textColorHint="@color/hint_color"/>
             </com.cc.grameenphone.views.CustomTextInputLayout>
 
-        <com.cc.grameenphone.views.RippleView
-            android:id="@+id/flexi_Ripple"
-            rv_centered="true"
-            rv_zoom="true"
-            android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:layout_below="@+id/amount_container"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
-            app:rv_rippleDuration="100">
-
-            <Button
-                android:id="@+id/flexi_btn"
+            <com.cc.grameenphone.views.RippleView
+                android:id="@+id/flexi_Ripple"
+                rv_centered="true"
+                rv_zoom="true"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:background="@drawable/flexi_button_border"
-                android:gravity="center"
-                android:text="FLEXILOAD"
-                android:textColor="#ffffff"
-                android:textSize="14sp" />
-        </com.cc.grameenphone.views.RippleView>
+                android:layout_below="@+id/amount_container"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                app:rv_rippleDuration="100">
+
+                <Button
+                    android:id="@+id/flexi_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:background="@drawable/flexi_button_border"
+                    android:gravity="center"
+                    android:text="CONFIRM"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"/>
+            </com.cc.grameenphone.views.RippleView>
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/sec_container"
             android:layout_width="match_parent"
@@ -229,15 +232,15 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="25dp"
                 android:background="@android:color/transparent"
-                android:src="@drawable/logo" />
+                android:src="@drawable/logo"/>
 
             <RelativeLayout
                 android:id="@+id/flexi_load_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_below="@+id/grameenPhone_icon"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_below="@+id/grameenPhone_icon"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/flexi_button_border">
 
@@ -249,7 +252,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="14dp"
                     android:src="@drawable/icon_bill_payment"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/felexi_text"
@@ -259,7 +262,7 @@
                     android:gravity="center"
                     android:text="FLEXILOAD"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
             </RelativeLayout>
         </RelativeLayout>
 
@@ -271,7 +274,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
-            android:background="#12000000" />
+            android:background="#12000000"/>
 
         <View
             android:id="@+id/centerview"
@@ -279,191 +282,186 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/divider"
             android:layout_centerHorizontal="true"
-            android:background="@null" />
+            android:background="@null"/>
 
 
-   <RelativeLayout
-       android:id="@+id/bills_container"
-       android:layout_width="wrap_content"
-      android:layout_height="match_parent"
-       android:layout_centerInParent="true"
-       android:gravity="center"
-       android:layout_gravity="center">
+        <RelativeLayout
+            android:id="@+id/bills_container"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:gravity="center">
 
-        <com.cc.grameenphone.views.RippleView
-            android:id="@+id/billPayRipple"
-            rv_centered="true"
-            rv_zoom="true"
-            android:layout_width="140dp"
-            android:layout_height="100dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="13dp"
-            app:rv_rippleDuration="100">
+            <com.cc.grameenphone.views.RippleView
+                android:id="@+id/billPayRipple"
+                rv_centered="true"
+                rv_zoom="true"
+                android:layout_width="140dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="13dp"
+                app:rv_rippleDuration="100">
 
-            <RelativeLayout
-                android:id="@+id/billPayment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bill_background">
+                <RelativeLayout
+                    android:id="@+id/billPayment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bill_background">
 
-                <ImageView
-                    android:id="@+id/billpay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="14dp"
-                    android:src="@drawable/icon_bill_payment"
-                    android:visibility="gone" />
+                    <ImageView
+                        android:id="@+id/billpay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="14dp"
+                        android:src="@drawable/icon_bill_payment"
+                        android:visibility="gone"/>
 
-                <TextView
-                    android:id="@+id/bill_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/billpay"
-                    android:layout_centerInParent="true"
-                    android:drawableTop="@drawable/icon_bill_payment"
-                    android:gravity="center"
-                    android:text="BILL \nPAYMENT"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
-            </RelativeLayout>
-        </com.cc.grameenphone.views.RippleView>
+                    <TextView
+                        android:id="@+id/bill_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/billpay"
+                        android:layout_centerInParent="true"
+                        android:drawableTop="@drawable/icon_bill_payment"
+                        android:gravity="center"
+                        android:text="BILL \nPAYMENT"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"/>
+                </RelativeLayout>
+            </com.cc.grameenphone.views.RippleView>
 
-        <com.cc.grameenphone.views.RippleView
-            android:id="@+id/transactionOverviewRipple"
-            rv_centered="true"
-            rv_zoom="true"
-            android:layout_width="140dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="13dp"
-            android:layout_toRightOf="@+id/billPayRipple"
-            app:rv_rippleDuration="100">
+            <com.cc.grameenphone.views.RippleView
+                android:id="@+id/transactionOverviewRipple"
+                rv_centered="true"
+                rv_zoom="true"
+                android:layout_width="140dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="13dp"
+                android:layout_toRightOf="@+id/billPayRipple"
+                app:rv_rippleDuration="100">
 
-            <RelativeLayout
-                android:id="@+id/transactionOverview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bill_background">
+                <RelativeLayout
+                    android:id="@+id/transactionOverview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bill_background">
 
-                <ImageView
-                    android:id="@+id/trans_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="12dp"
-                    android:src="@drawable/icon_transaction_overview"
-                    android:visibility="gone" />
+                    <ImageView
+                        android:id="@+id/trans_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/icon_transaction_overview"
+                        android:visibility="gone"/>
 
-                <TextView
-                    android:id="@+id/transc_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/trans_icon"
-                    android:layout_centerInParent="true"
-                    android:drawableTop="@drawable/icon_transaction_overview"
-                    android:gravity="center"
-                    android:text="TRANSACTION\nOVERVIEW"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
-            </RelativeLayout>
-        </com.cc.grameenphone.views.RippleView>
+                    <TextView
+                        android:id="@+id/transc_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/trans_icon"
+                        android:layout_centerInParent="true"
+                        android:drawableTop="@drawable/icon_transaction_overview"
+                        android:gravity="center"
+                        android:text="TRANSACTION\nOVERVIEW"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"/>
+                </RelativeLayout>
+            </com.cc.grameenphone.views.RippleView>
 
 
-        <com.cc.grameenphone.views.RippleView
-            android:id="@+id/emergencyCallRipple"
-            rv_centered="true"
-            rv_zoom="true"
-            android:layout_width="140dp"
-            android:layout_height="100dp"
-            android:layout_below="@+id/billPayRipple"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            app:rv_rippleDuration="100">
+            <com.cc.grameenphone.views.RippleView
+                android:id="@+id/emergencyCallRipple"
+                rv_centered="true"
+                rv_zoom="true"
+                android:layout_width="140dp"
+                android:layout_height="100dp"
+                android:layout_below="@+id/billPayRipple"
+                android:layout_marginBottom="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="16dp"
+                app:rv_rippleDuration="100">
 
-            <RelativeLayout
-                android:id="@+id/emergencyCall"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bill_background">
+                <RelativeLayout
+                    android:id="@+id/emergencyCall"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bill_background">
 
-                <ImageView
-                    android:id="@+id/emergencyicon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="12dp"
-                    android:src="@drawable/icon_emergency_balance"
-                    android:visibility="gone" />
+                    <ImageView
+                        android:id="@+id/emergencyicon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/icon_emergency_balance"
+                        android:visibility="gone"/>
 
-                <TextView
-                    android:id="@+id/emergency_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/emergencyicon"
-                    android:layout_centerInParent="true"
-                    android:drawableTop="@drawable/icon_emergency_balance"
-                    android:gravity="center"
-                    android:text="EMERGENCY\nBALANCE"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
-            </RelativeLayout>
-        </com.cc.grameenphone.views.RippleView>
+                    <TextView
+                        android:id="@+id/emergency_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/emergencyicon"
+                        android:layout_centerInParent="true"
+                        android:drawableTop="@drawable/icon_emergency_balance"
+                        android:gravity="center"
+                        android:text="EMERGENCY\nBALANCE"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"/>
+                </RelativeLayout>
+            </com.cc.grameenphone.views.RippleView>
 
-        <com.cc.grameenphone.views.RippleView
-            android:id="@+id/referFriendsRipple"
-            rv_centered="true"
-            rv_zoom="true"
-            android:layout_width="140dp"
-            android:layout_height="100dp"
-            android:layout_below="@+id/transactionOverviewRipple"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:layout_toRightOf="@+id/emergencyCallRipple"
-            app:rv_rippleDuration="100">
+            <com.cc.grameenphone.views.RippleView
+                android:id="@+id/referFriendsRipple"
+                rv_centered="true"
+                rv_zoom="true"
+                android:layout_width="140dp"
+                android:layout_height="100dp"
+                android:layout_below="@+id/transactionOverviewRipple"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_toRightOf="@+id/emergencyCallRipple"
+                app:rv_rippleDuration="100">
 
-            <RelativeLayout
-                android:id="@+id/referFriends"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bill_background">
+                <RelativeLayout
+                    android:id="@+id/referFriends"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bill_background">
 
-                <ImageView
-                    android:id="@+id/friends"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="12dp"
-                    android:src="@drawable/icon_refer_friends"
-                    android:visibility="gone" />
+                    <ImageView
+                        android:id="@+id/friends"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/icon_refer_friends"
+                        android:visibility="gone"/>
 
-                <TextView
-                    android:id="@+id/friends_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/friends"
-                    android:layout_centerInParent="true"
-                    android:drawableTop="@drawable/icon_refer_friends"
-                    android:gravity="center"
-                    android:text="REFER\nFRIENDS"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    <TextView
+                        android:id="@+id/friends_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/friends"
+                        android:layout_centerInParent="true"
+                        android:drawableTop="@drawable/icon_refer_friends"
+                        android:gravity="center"
+                        android:text="REFER\nFRIENDS"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"/>
 
-            </RelativeLayout>
+                </RelativeLayout>
 
-        </com.cc.grameenphone.views.RippleView>
-   </RelativeLayout>
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:src="@drawable/logo"
-            android:layout_gravity="center"/>
+            </com.cc.grameenphone.views.RippleView>
+        </RelativeLayout>
 
     </LinearLayout>
 </ScrollView>

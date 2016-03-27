@@ -5,7 +5,7 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:tools="http://schemas.android.com/tools"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     tools:context=".MainActivity">
 
         <ImageView
@@ -108,10 +108,10 @@
                     android:id="@+id/phoneNumberEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:digits="0123456789"
                     android:ems="11"
                     android:hint="@string/hintPhone"
                     android:inputType="phone"
-                    android:digits="0123456789"
                     android:maxLength="11"
                     android:textColor="@color/black_semi_transparent"
                     android:textColorHighlight="@color/hint_color"
@@ -271,6 +271,27 @@
             android:text="@string/create_new_wallet"
             android:textColor="@color/white"/>
 
+        <LinearLayout
+            android:id="@+id/bottomLaot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/createWalletButton">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Powered by:  "
+                android:textSize="9sp"/>
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="bottom"
+                android:src="@drawable/ic_gp"/>
+        </LinearLayout>
     </RelativeLayout>
 </ScrollView>

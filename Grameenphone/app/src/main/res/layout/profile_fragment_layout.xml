@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
 
     <com.cc.grameenphone.views.CustomTextInputLayout
@@ -22,7 +21,7 @@
             android:editable="false"
             android:hint="First Name"
             android:textColor="@color/black_semi_transparent"
-            android:textColorHint="@color/hint_color" />
+            android:textColorHint="@color/hint_color"/>
 
     </com.cc.grameenphone.views.CustomTextInputLayout>
 
@@ -43,7 +42,7 @@
             android:editable="false"
             android:hint="Last Name"
             android:textColor="@color/black_semi_transparent"
-            android:textColorHint="@color/hint_color" />
+            android:textColorHint="@color/hint_color"/>
     </com.cc.grameenphone.views.CustomTextInputLayout>
 
 
@@ -63,7 +62,7 @@
             android:editable="false"
             android:hint="Email"
             android:textColor="@color/black_semi_transparent"
-            android:textColorHint="@color/hint_color" />
+            android:textColorHint="@color/hint_color"/>
 
     </com.cc.grameenphone.views.CustomTextInputLayout>
 
@@ -84,7 +83,7 @@
             android:editable="false"
             android:hint="National Id"
             android:textColor="@color/black_semi_transparent"
-            android:textColorHint="@color/hint_color" />
+            android:textColorHint="@color/hint_color"/>
     </com.cc.grameenphone.views.CustomTextInputLayout>
 
     <com.cc.grameenphone.views.CustomTextInputLayout
@@ -103,7 +102,16 @@
             android:editable="false"
             android:hint="Date of Birth"
             android:textColor="@color/black_semi_transparent"
-            android:textColorHint="@color/hint_color" />
+            android:textColorHint="@color/hint_color"/>
     </com.cc.grameenphone.views.CustomTextInputLayout>
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:src="@drawable/logo"/>
 
 </RelativeLayout>

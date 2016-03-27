@@ -33,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:paddingLeft="6dp"
                 android:paddingRight="6dp"
@@ -78,4 +79,6 @@
         android:listSelector="@drawable/rowbackgroundselector"
         android:scrollingCache="true"
         tools:listitem="@layout/adapter_item_contact"/>
+
+
 </RelativeLayout>

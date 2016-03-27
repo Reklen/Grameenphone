@@ -10,11 +10,22 @@
 
     <ListView
         android:id="@+id/transactionList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/logo"
         android:layout_centerHorizontal="true"
         android:listSelector="@drawable/rowbackgroundselector"
         tools:listitem="@layout/adapter_item_transaction" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:src="@drawable/logo"/>
+
 
 </RelativeLayout>
