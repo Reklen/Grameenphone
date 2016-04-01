@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/quickPayFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/quickPayToolbar"
+        android:layout_margin="16dp"
+        android:text="Enter quick pay code recieved in bill \nnotification SMS"
+        android:textColor="@color/black_semi_transparent"
+        android:textSize="16sp" />
+
+    <com.cc.grameenphone.views.CustomTextInputLayout
+        android:id="@+id/amount_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="20dp">
+
+        <EditText
+            android:id="@+id/editTextQuickPayCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter quick pay code"
+            android:inputType="numberDecimal"
+            android:imeOptions="actionDone"
+            android:textColor="@color/black_semi_transparent"
+            android:textColorHighlight="@color/hint_color"
+            android:textColorHint="@color/hint_color" />
+    </com.cc.grameenphone.views.CustomTextInputLayout>
+
+
+    <com.cc.grameenphone.views.RippleView
+        android:id="@+id/submitRipple"
+        rv_centered="true"
+        rv_zoom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_below="@+id/editTextQuickPayCode"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        app:rv_rippleDuration="100">
+
+        <Button
+            android:id="@+id/submitbutton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="80dp"
+            android:layout_height="36dp"
+            android:background="@drawable/mybutton"
+            android:text="SUBMIT"
+            android:textColor="#FFFFFF" />
+
+    </com.cc.grameenphone.views.RippleView>
+
+</LinearLayout>

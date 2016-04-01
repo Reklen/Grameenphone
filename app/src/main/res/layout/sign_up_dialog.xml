@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:background="@color/red_400">
+
+    <TextView
+        android:id="@+id/code_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/black"
+        tools:text="@string/code_text"/>
+
+    <TextView
+        android:id="@+id/validating_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/code_text"
+        android:layout_marginTop="10dp"
+        android:text="@string/validating"
+        android:textColor="@color/black_semi_transparent"/>
+
+    <TextView
+        android:id="@+id/resendButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/validating_text"
+        android:layout_marginTop="10dp"
+        android:background="@null"
+        android:enabled="false"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="@string/resendbtn"
+        android:textColor="@color/blue_900"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/otpEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/validating_text"
+        android:ems="10"
+        android:inputType="numberPassword"
+        android:hint="Enter the OTP here"
+        android:maxLength="10"/>
+</RelativeLayout>

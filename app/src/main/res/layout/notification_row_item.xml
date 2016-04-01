@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/notificationLayout"
+                android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/notificationTypeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_toLeftOf="@+id/notificationTimeTextView"
+        android:fontFamily="Roboto Medium"
+        android:text="Exclusive Offer"
+        android:textColor="@color/primary"
+        android:textSize="16dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/notificationTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/notificationTypeTextView"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="2dp"
+        android:fontFamily="Roboto Regular"
+        android:text="Full talktime"
+        android:textColor="#212121"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:id="@+id/notificationContentTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/notificationTitleTextView"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:fontFamily="Roboto Light"
+        android:singleLine="true"
+        android:text="@string/Get_full_talktime"
+        android:textColor="#757575"
+        android:textSize="16dp"/>
+
+
+    <TextView
+        android:id="@+id/notificationTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="Roboto light"
+        android:gravity="right"
+        android:text="Today"
+        android:textColor="#8C000000"
+        android:textSize="14dp"/>
+
+
+</RelativeLayout>

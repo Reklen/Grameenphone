@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/notificationTypeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/notificationTimeTextView"
+        android:textColor="@color/primary"
+        android:textStyle="bold"
+        tools:text="Exclusive Offer"
+        />
+
+    <TextView
+        android:id="@+id/notificationTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/notificationTypeTextView"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/black_75_percent"
+        tools:text="First come first take"
+        />
+
+    <TextView
+        android:id="@+id/notificationContentTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/notificationTitleTextView"
+        android:layout_marginTop="1dp"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:textColor="@color/black_35_percent"
+        tools:text="Running in the mill"/>
+
+    <TextView
+        android:id="@+id/notificationTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/notificationTitleTextView"
+        android:layout_alignParentRight="true"
+        tools:text="18th Jul 2015"/>
+</RelativeLayout>

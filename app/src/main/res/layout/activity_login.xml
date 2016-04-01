@@ -1,0 +1,297 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:context=".MainActivity">
+
+        <ImageView
+            android:id="@+id/grameen_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/logo"/>
+
+        <TextView
+            android:id="@+id/grameen_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/grameen_icon"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/grameenPhone"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:visibility="gone"/>
+
+        <!-- <LinearLayout
+             android:id="@+id/phnnumb_layout"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_below="@+id/grameen_text"
+             android:layout_marginTop="10dp"
+             android:orientation="horizontal"
+             android:padding="10dp"
+             android:weightSum="1" />-->
+
+        <RelativeLayout
+            android:id="@+id/top_container1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/grameen_text"
+            android:layout_marginTop="24dp">
+
+            <!--  <com.cc.grameenphone.views.CustomTextInputLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+
+                  <EditText
+                      android:id="@+id/editTextEmail"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:hint="@string/hint_email"
+                      android:inputType="textEmailAddress" />
+
+              </com.cc.grameenphone.views.CustomTextInputLayout>
+      -->
+
+            <EditText
+                android:id="@+id/areaCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="16dp"
+                android:clickable="false"
+                android:editable="false"
+                android:focusable="false"
+                android:inputType="none"
+                android:text="+88"
+                android:textColor="@color/hint_color"/>
+            <!-- <TextView
+                 android:id="@+id/areaCode"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentLeft="true"
+                 android:layout_marginLeft="15dp"
+                 android:layout_marginTop="33dp"
+                 android:text="+88"
+                 android:textColor="@color/hint_color"
+                 android:textSize="15sp"
+                 android:textStyle="bold" />
+
+             <View
+                 android:layout_width="60dp"
+                 android:layout_height="1dp"
+                 android:layout_alignParentBottom="true"
+                 android:layout_marginLeft="15dp"
+                 android:layout_marginTop="7dp"
+                 android:background="#aaaaaa">
+
+        </View>-->
+
+            <com.cc.grameenphone.views.CustomTextInputLayout
+                android:id="@+id/phone_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_toRightOf="@+id/areaCode">
+
+                <EditText
+                    android:id="@+id/phoneNumberEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:digits="0123456789"
+                    android:ems="11"
+                    android:hint="@string/hintPhone"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    android:textColor="@color/black_semi_transparent"
+                    android:textColorHighlight="@color/hint_color"
+                    android:textColorHint="@color/hint_color"/>
+            </com.cc.grameenphone.views.CustomTextInputLayout>
+
+
+            <!--  <View
+                  android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:layout_alignParentBottom="true"
+                  android:layout_marginLeft="20dp"
+                  android:layout_marginRight="10dp"
+                  android:layout_marginTop="7dp"
+                  android:layout_toRightOf="@+id/areaCode"
+                  android:background="#aaaaaa">
+
+              </View>-->
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/wallet_pin_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/top_container1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            tools:visibility="visible">
+
+            <com.cc.grameenphone.views.CustomTextInputLayout
+                android:id="@+id/wallet_pin_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/areaCode"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/walletPinNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_wallet_pin"
+                    android:inputType="numberPassword"
+                    android:maxLength="6"
+                    android:textColor="@color/black_semi_transparent"
+                    android:textColorHighlight="@color/hint_color"
+                    android:textColorHint="@color/hint_color"/>
+
+            </com.cc.grameenphone.views.CustomTextInputLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/checkbox_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/wallet_pin_layout"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/accept_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/check_box"
+                android:text="@string/accept"
+                android:textColor="@color/black"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:id="@+id/terms_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/accept_text"
+                android:paddingLeft="5dp"
+                android:text="@string/terms_condition"
+                android:textColor="@color/blue_900"
+                android:textSize="13sp"/>
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_below="@+id/checkbox_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/login_button"
+            android:text="@string/login"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <LinearLayout
+            android:id="@+id/view_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/loginButton"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="31dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="4dp"
+                android:layout_weight="0.45"
+                android:background="#808080"/>
+
+            <TextView
+                android:id="@+id/or_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_weight="0.1"
+                android:gravity="center"
+                android:text="OR"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="4dp"
+                android:layout_weight="0.45"
+                android:background="#808080"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/createWalletButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_below="@+id/view_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/login_button"
+            android:padding="10dp"
+            android:text="@string/create_new_wallet"
+            android:textColor="@color/white"/>
+
+        <LinearLayout
+            android:id="@+id/bottomLaot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/createWalletButton">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Powered by:  "
+                android:textSize="9sp"/>
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="bottom"
+                android:src="@drawable/ic_gp"/>
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

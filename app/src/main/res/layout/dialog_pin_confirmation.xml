@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        tools:text="Bill No: 123456  \nAccount No: 456789" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Enter your pin to confirm"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <com.cc.grameenphone.views.CustomTextInputLayout
+        android:id="@+id/pinTIL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/areaCode">
+
+        <EditText
+            android:id="@+id/pinConfirmEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter PIN"
+            android:inputType="numberPassword"
+            android:maxLength="6"
+            android:textColor="@color/black_semi_transparent"
+            android:textColorHighlight="@color/hint_color"
+            android:textColorHint="@color/hint_color" />
+    </com.cc.grameenphone.views.CustomTextInputLayout>
+</LinearLayout>

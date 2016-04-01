@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/billPaymentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginTop="16dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/container_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/company_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Company"
+            android:textColor="@color/black_semi_transparent"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/companyName"
+            android:textAllCaps="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text=""
+            android:textColor="@color/black_semi_transparent"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_two"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/accountNmb_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A/C NO"
+            android:textColor="@color/black_semi_transparent"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/accountNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text=""
+            android:textColor="@color/black_semi_transparent"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_three"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/billNumb_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bill No"
+            android:textColor="@color/black_semi_transparent"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/billNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text=""
+            android:textColor="@color/black_semi_transparent"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_six"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dueDate_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Due Date"
+            android:textColor="@color/black_semi_transparent"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/dueDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text=""
+            android:textColor="@color/black_semi_transparent"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <com.cc.grameenphone.views.CustomTextInputLayout
+        android:id="@+id/amount_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:id="@+id/totalAmountEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Amount"
+            android:editable="false"
+            android:inputType="none"
+            android:textColorHighlight="@color/black_eighty_seven"
+            android:textColorHint="@color/hint_color" />
+    </com.cc.grameenphone.views.CustomTextInputLayout>
+
+    <com.cc.grameenphone.views.CustomTextInputLayout
+        android:id="@+id/surcharge_amount_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:id="@+id/surchargeAmountEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Surcharge"
+            android:editable="false"
+            android:inputType="none"
+            android:textColorHighlight="@color/black_eighty_seven"
+            android:textColorHint="@color/hint_color" />
+    </com.cc.grameenphone.views.CustomTextInputLayout>
+
+
+    <TextView
+        android:id="@+id/enter_pin_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="left"
+        android:text="@string/pin_conform"
+        android:textColor="@color/black_semi_transparent"
+        android:textSize="16sp" />
+
+    <com.cc.grameenphone.views.CustomTextInputLayout
+        android:id="@+id/PinConform_container"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_marginTop="24dp">
+
+        <EditText
+            android:id="@+id/pinNumbEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Enter pin"
+            android:inputType="numberPassword"
+            android:textColorHighlight="@color/black_eighty_seven"
+            android:textColorHint="@color/hint_color" />
+    </com.cc.grameenphone.views.CustomTextInputLayout>
+
+    <com.cc.grameenphone.views.RippleView
+        android:id="@+id/confirmRipple"
+        rv_centered="true"
+        rv_zoom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        app:rv_rippleDuration="100">
+
+        <Button
+            android:id="@+id/confirm_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/login_button"
+            android:text="CONFIRM"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </com.cc.grameenphone.views.RippleView>
+
+</LinearLayout>

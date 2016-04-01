@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group_one"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/navigation_item_1"
+            android:icon="@drawable/icon_homepng"
+            android:title="@string/nav_item_home"/>
+        <item
+            android:id="@+id/navigation_item_2"
+            android:icon="@drawable/icon_profile"
+            android:title="@string/nav_item_friends"/>
+        <item
+            android:id="@+id/navigation_item_3"
+            android:icon="@drawable/icon_favorite"
+            android:title="@string/nav_item_notifications"/>
+        <item
+            android:id="@+id/navigation_item_4"
+            android:icon="@drawable/icon_pin_change"
+            android:title="@string/nav_item_pin"/>
+    </group>
+    <group
+        android:id="@+id/group_two"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/navigation_item_5"
+            android:icon="@drawable/ic_settings_display_black"
+            android:title="@string/nav_item_demo"/>
+
+        <item
+            android:id="@+id/navigation_item_6"
+            android:icon="@drawable/icon_t_c"
+            android:title="@string/nav_item_tc"/>
+        <item
+            android:id="@+id/navigation_item_7"
+            android:icon="@drawable/icon_logout"
+            android:title="@string/nav_item_logout"/>
+    </group>
+
+</menu>
+

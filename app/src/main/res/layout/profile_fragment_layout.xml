@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+    <com.cc.grameenphone.views.CustomTextInputLayout
+        android:id="@+id/firstNameTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/first_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:hint="First Name"
+            android:textColor="@color/black_semi_transparent"
+            android:textColorHint="@color/hint_color"/>
+
+    </com.cc.grameenphone.views.CustomTextInputLayout>
+
+    <com.cc.grameenphone.views.CustomTextInputLayout
+        android:id="@+id/lastNameTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstNameTextInputLayout"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp">
+
+
+        <EditText
+            android:id="@+id/last_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:hint="Last Name"
+            android:textColor="@color/black_semi_transparent"
+            android:textColorHint="@color/hint_color"/>
+    </com.cc.grameenphone.views.CustomTextInputLayout>
+
+
+    <com.cc.grameenphone.views.CustomTextInputLayout
+        android:id="@+id/emailTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lastNameTextInputLayout"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/email_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:hint="Email"
+            android:textColor="@color/black_semi_transparent"
+            android:textColorHint="@color/hint_color"/>
+
+    </com.cc.grameenphone.views.CustomTextInputLayout>
+
+
+    <com.cc.grameenphone.views.CustomTextInputLayout
+        android:id="@+id/nationalTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/emailTextInputLayout"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/national_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:hint="National Id"
+            android:textColor="@color/black_semi_transparent"
+            android:textColorHint="@color/hint_color"/>
+    </com.cc.grameenphone.views.CustomTextInputLayout>
+
+    <com.cc.grameenphone.views.CustomTextInputLayout
+        android:id="@+id/dobTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nationalTextInputLayout"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/dob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:hint="Date of Birth"
+            android:textColor="@color/black_semi_transparent"
+            android:textColorHint="@color/hint_color"/>
+    </com.cc.grameenphone.views.CustomTextInputLayout>
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:src="@drawable/logo"/>
+
+</RelativeLayout>

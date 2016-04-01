@@ -1,0 +1,185 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cc.grameenphone.activity.TransactionOverviewDeatilsActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/transaction_toolbar" />
+
+    <TextView
+        android:id="@+id/dueDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Date"
+        android:textColor="#87000000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/enterDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:text="27th June 2015"
+        android:textColor="#87000000"
+        android:textSize="16sp" />
+
+    <RelativeLayout
+        android:id="@+id/second_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dueDate"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/accountText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Service Type"
+            android:textColor="#87000000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/accountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Utility Bill"
+            android:textColor="#87000000"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/third_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/second_top"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/billText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/friends"
+            android:text="Account"
+            android:textColor="#87000000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/companyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="01718181818"
+            android:textColor="#87000000"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/fourth_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/third_top"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/amt_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/friends"
+            android:text="Amount"
+            android:textColor="#87000000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/amountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            tools:text="500"
+            android:textColor="#87000000"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/fourth_half_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fourth_top"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/amt_sc_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/friends"
+            android:text="Service Charge"
+            android:textColor="#87000000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/amountSCTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            tools:text="0"
+            android:textColor="#87000000"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/fifth_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fourth_half_top"
+        android:layout_above="@+id/logo"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/surchargeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/friends"
+            android:text="TNX ID"
+            android:textColor="#87000000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/surchargeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/surchargeText"
+            android:layout_alignParentRight="true"
+            android:text="ASDHD984"
+            android:gravity="right"
+            android:textColor="#87000000"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:src="@drawable/logo"/>
+
+</RelativeLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#00A1E4</color>
+    <color name="primary_dark">#006b98</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="windowBackground">#FFFFFF</color>
+    <color name="navigationBarColor">#000000</color>
+    <color name="colorAccent">#00a1e5</color>
+    <color name="colorListSelector">#3300A1E4</color>
+    <color name="black_semi_transparent">#B2000000</color>
+    <color name="black_eighty_seven">#87000000</color>
+    <color name="black_35_percent">#59000000</color>
+    <color name="black_75_percent">#BF000000</color>
+    <color name="hint_color">#d2d2d2</color>
+    <color name="color_error">#f44336</color>
+    <color name="color_success">#3CCD88</color>
+    <color name="black_99">#999999</color>
+    <color name="radio_unselected">#f0f0f0</color>
+    <color name="radio_selected">#c3c8cd</color>
+    <color name="tab_bg">#0e8cd0</color>
+
+
+    <!-- used as background colors for contacts that don't have photos -->
+    <integer-array name="contacts_text_background_colors">
+        <item>0xFF9C27B0</item>
+        <item>0xFFFF5722</item>
+        <item>0xFF3F51B5</item>
+        <item>0xFFDB4437</item>
+        <item>0xFFEF6C00</item>
+        <item>0xFF689F38</item>
+        <item>0xFF757575</item>
+        <item>0xFF0F9D58</item>
+        <item>0xFF3F51B5</item>
+        <item>0xFF0097A7</item>
+    </integer-array>
+    <!--++++++++++++++++++++-->
+    <!--listview item colors-->
+    <!--++++++++++++++++++++-->
+    <color name="listview_pressed">#FFdddddd</color>
+    <color name="listview_focused">#FF7dbcd3</color>
+    <color name="listview_checked">#FFededed</color>
+    <color name="transparent">#00ffffff</color>
+
+    <color name="pinned_header_text">@color/colorAccent</color>
+</resources>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="20dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/top_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/friends"
+        android:layout_centerHorizontal="true"
+        android:text="Flexiload for 500 is processed\nsuccessfully"
+        android:textColor="@color/black_eighty_seven"
+        android:textSize="14sp" />
+
+    <RelativeLayout
+        android:id="@+id/second_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_text"
+        android:layout_marginTop="25dp">
+
+        <TextView
+            android:id="@+id/mobile_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/friends"
+            android:text="Mobile Number"
+            android:textColor="@color/black_eighty_seven"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/mobileNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="9998855000"
+            android:textColor="@color/black_eighty_seven"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/third_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/second_top"
+        android:layout_marginTop="25dp">
+
+        <TextView
+            android:id="@+id/flxi_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/friends"
+            android:text="Flexi Amount"
+            android:textColor="@color/black_eighty_seven"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/flxiloadAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="500"
+            android:textColor="@color/black_eighty_seven"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/fourth_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/third_top"
+        android:layout_marginTop="25dp">
+
+        <TextView
+            android:id="@+id/surchargeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/friends"
+            android:text="Transaction ID"
+            android:textColor="@color/black_eighty_seven"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/transactionNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="ASDHD984"
+            android:textColor="@color/black_eighty_seven"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/okButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/fourth_top"
+        android:layout_marginTop="30dp"
+        android:background="@null"
+        android:gravity="bottom|right"
+        android:text="OK"
+        android:textColor="@color/primary"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>

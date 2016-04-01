@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="96dp"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:padding="16dp"
+                android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/servicetext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="Service Type"
+            android:fontFamily="RobotoLight"
+            android:textSize="16sp"
+            android:textColor="@color/black_eighty_seven" />
+
+        <TextView
+            android:id="@+id/amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="RobotoLight"
+            android:textSize="16sp"
+            android:layout_below="@+id/servicetext"
+            android:layout_marginTop="5dp"
+            android:text="Amount"
+            android:textColor="@color/black_eighty_seven" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="RobotoLight"
+            android:textSize="16sp"
+            android:layout_below="@+id/servicetext"
+            android:layout_marginTop="5dp"
+            android:text="Date"
+            android:textColor="@color/black_eighty_seven" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="right"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/service_type_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Utility Bill"
+            android:fontFamily="RobotoLight"
+            android:textSize="16sp"
+            android:textColor="@color/black_eighty_seven" />
+
+        <TextView
+            android:id="@+id/amount_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/service_type_tv"
+            android:layout_marginTop="5dp"
+            tools:text="500"
+            android:fontFamily="RobotoLight"
+            android:textSize="16sp"
+            android:textColor="@color/black_eighty_seven" />
+        <TextView
+            android:id="@+id/date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/service_type_tv"
+            android:layout_marginTop="5dp"
+            tools:text="10/12/2015"
+            android:fontFamily="RobotoLight"
+            android:textSize="16sp"
+            android:textColor="@color/black_eighty_seven" />
+    </LinearLayout>
+</RelativeLayout>

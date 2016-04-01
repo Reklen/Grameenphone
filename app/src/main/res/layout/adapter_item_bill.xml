@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+
+    <CheckBox
+        android:id="@+id/billCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:checked="false"
+        android:clickable="false"
+        android:focusable="false" />
+
+
+    <RelativeLayout
+        android:id="@+id/first_conatiner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_toRightOf="@+id/billCheckBox"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/accountNumberText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Acc. No : "
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/accountNumber"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/accountNumberText"
+            android:paddingLeft="5dp"
+            android:text="123432"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/threetext_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/first_conatiner"
+        android:layout_marginLeft="24dp"
+        android:layout_toRightOf="@+id/billCheckBox"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/billNumber_String"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bill No : "
+                android:textColor="@color/black_eighty_seven"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/billNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2834"
+                android:textColor="@color/black_eighty_seven"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/company_String"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Company : "
+                android:textColor="@color/black_eighty_seven"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/companyName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DESCO"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/black_eighty_seven"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dueDate_String"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Due date : "
+                android:textColor="@color/black_eighty_seven"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/dueDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="24, July 2015"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/black_eighty_seven"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category : "
+                android:textColor="@color/black_eighty_seven"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/categoryCompany"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GAS"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/black_eighty_seven"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/totalBillAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="end"
+        android:text="\u09f3 1,200"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <com.cc.grameenphone.views.RippleView
+        android:id="@+id/payRipple"
+        rv_centered="true"
+        rv_zoom="true"
+        android:layout_width="60dp"
+        android:layout_height="36dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        app:rv_rippleDuration="100">
+
+        <Button
+            android:id="@+id/payButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/mybutton"
+            android:focusable="false"
+            android:text="Pay"
+            android:textColor="#FFFFFF" />
+
+    </com.cc.grameenphone.views.RippleView>
+</RelativeLayout>

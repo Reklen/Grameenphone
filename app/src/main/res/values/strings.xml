@@ -1,0 +1,137 @@
+<resources>
+    <string name="app_name">Mobicash</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <string name="accessibility_overflow">overflow</string>
+    <string name="nav_item_home">Home</string>
+    <string name="nav_item_friends">Profile</string>
+    <string name="nav_item_notifications">Manage Favorites</string>
+    <string name="nav_item_pin">Pin Change</string>
+    <string name="nav_item_demo">Demo</string>
+    <string name="nav_item_tc">Terms &amp; Condition</string>
+    <string name="nav_item_logout">Logout</string>
+    <!-- navigation drawer item labels  -->
+    <string-array name="nav_drawer_labels">
+        <item>@string/nav_item_home</item>
+        <item>@string/nav_item_friends</item>
+        <item>@string/nav_item_notifications</item>
+        <item>@string/nav_item_pin</item>
+        <item>@string/nav_item_demo</item>
+        <item>@string/nav_item_tc</item>
+        <item>@string/nav_item_logout</item>
+    </string-array>
+
+    <string name="title_messages">Messages</string>
+    <string name="title_friends">Friends</string>
+    <string name="title_home">Home</string>
+    <string name="title_activity_selct_contacts">SelctContacts</string>
+    <string name="title_activity_select_contacts">SelectContacts</string>
+
+
+    <string name="grameenPhone">grameenphone</string>
+    <string name="numberText">+88</string>
+    <string name="enterPhnnumb">Enter a phone number</string>
+    <string name="accept">Accept</string>
+    <string name="terms_condition"><u>Terms &amp; Conditions</u></string>
+    <string name="toc_title">Terms &amp; Conditions</string>
+    <string name="create_new_wallet">CREATE A NEW WALLET</string>
+    <string name="Or">OR</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="transaction_tool">Transaction Overview</string>
+    <string name="enter_wallet_pin">Enter wallet PIN</string>
+    <string name="login">LOGIN</string>
+    <string name="setPin">Set PIN</string>
+    <string name="Consecutive">Consecutive &amp; repetitive digits are not allowed </string>
+    <string name="ConfirmPin">Comfirm PIN</string>
+    <string name="enterRefferal">Enter referral code(if any) </string>
+    <string name="signUp">SIGN UP</string>
+    <string name="code_text">6 digit code has been sent to\n
+        +880 9988776655</string>
+    <string name="validating">Validating phone number</string>
+    <string name="resendbtn">RESEND</string>
+    <string name="profile">Profile</string>
+    <string name="skip">SKIP</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email_id">Email ID</string>
+    <string name="national_id">National ID</string>
+    <string name="Date_of_birth">DOB</string>
+    <string name="submit">SUBMIT</string>
+    <string name="not_registered">You are not registered with\n
+                                  MobCash wallet. Please cleck create\n
+                                  a new wallet</string>
+    <string name="openDrawer"></string>
+    <string name="closeDrawer"></string>
+    <string name="repository_website">Repository website</string>
+    <string name="all_my_repositories">All my repositories</string>
+    <string name="all_my_apps">All my apps</string>
+    <string name="more_info">More info</string>
+    <string name="title_activity_transaction_overview">TransactionOverview</string>
+    <string name="title_activity_transaction_overview_deatils">TransactionOverviewDeatils</string>
+    <string name="title_activity_add_favorites">AddFavorites</string>
+    <string name="title_activity_refer_friends">ReferFriendsActivity</string>
+    <string name="title_activity_add_favorite_contacts">AddFavoriteContacts</string>
+    <string name="title_activity_edit_profile">EditProfileActivity</string>
+    <string name="other_payment">Other Payment</string>
+    <string name="bill_number">Enter bill number</string>
+    <string name="account_number">Enter account number</string>
+    <string name="date_text">04,july 2015</string>
+    <string name="pin_conform">Enter your PIN to confirm</string>
+    
+    <string name="bill_paid_successfully">Your due bill is paid successfully.\n
+                                          You will get payment conformation\n
+                                          SMS shortly</string>
+    <string name="acc_number">Acc. No:</string>
+    <string name="company">Company:</string>
+    <string name="hintPhone">Enter Phone number</string>
+    
+    <string name="Remove_AccNo">Remove Acc. No: 123432 from\n
+                                DESCO association?</string>
+    <string name="rs_amount"> 230</string>
+    <string name="Get_full_talktime">Get full talktime on top up of \u20B9200 &amp;</string>
+    <string name="association_confrim">Your request is being processed.\nYou will get association conformation\nSMS shortly</string>
+
+
+    <string name="button_stringname">OTHER PAYMENT</string>
+    <string name="button_payselectedbills">PAY SELECTED BILLS</string>
+    <string name="button_cancelBills">CANCEL SELECTED BILLS</string>
+    <string name="terms_condition_statement_1">Lorem ipsum dolor sit amet, consectetuer adipisc-\n
+ing elit. Morbi commodo,ipsum sed pharetra gravi-\n
+da, orci magna rhoncus neque id pulvinar odio\n
+lorem non turpis. Nullam sit amet enim. Suspendis-\n
+se id velit vitae ligula volutpat condimentum. Ali-\n
+quam erat volutpat. Sed quis velit. Nulla facilisi.\n
+Nulla libero. Vivamus pharetra posuere sapien.\n
+Nam consectetuer. Sed aliquam, nunc eget euis-\n
+mod ullamcorper. lectus nunc ullamcorper orci, fer-\n
+mentum bibendum enim nibh eget ipsum. Donec\n
+porttitor ligula eu dolor. Maecenas vitae nulla con-\n
+sequata libero cursus venenatis. Nam magna enim,\n
+accumsan eu, blandit sed, blandit a, eros.</string>
+    <string name="terms_condition_statement_2">Cars dictum. Maecenas ut turpis. In vitae erat ac\n
+orci dignissim eleifend. Nunc quis justro. Sed vel
+ipsum in purus tincidunt pharetra. Sed pulvinar, felis\n
+id consectetuer malesuada, enim nisl mattis elit, a\n
+facilisis torto nibh quis leo. Sed augue lacus, pre-\n
+titum vitae, molesite eget, rhoncus quis, elit. Donec\n
+in augue. Fusce orci wisi ornare id, mollis vel, lacin-\n
+ia vel, massa. pallentesque habitant morbi tristique\n
+senectus et netus et malesuada fames as turpis\n
+egestas</string>
+    <string name="terms_condition_statement_3">Lorem ipsum dolor sit amet, consectetuer adipisc-\n
+ing elit. Morbi commodo,ipsum sed pharetra gravi-\n
+da, orci magna rhoncus neque id pulvinar odio\n
+lorem non turpis. Nullam sit amet enim</string>
+    <string name="title_activity_quickpay">QuickpayActivity</string>
+    <string name="title_activity_ansbvs">ANSBVS</string>
+    <string name="crash">App has crashed , please share the crash logs with the developer.</string>
+
+    <string name="exit_confirmation">Are you sure, want to exit the app ?</string>
+    <string name="exit_app">Exit App</string>
+    <string name="confirm">Confirm</string>
+</resources>

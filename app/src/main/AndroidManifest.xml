@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    package="com.cc.grameenphone"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application
+        android:name=".MainApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/app_icon"
+        android:label="@string/app_name"
+        android:theme="@style/MyMaterialTheme"
+        tools:replace="android:icon">
+
+        <!--
+             <activity
+             android:name=".payment.NewAssociationActivity"
+             android:label="@string/app_nameapp_name"/>
+        -->
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustPan">
+
+        </activity>
+        <activity
+            android:name=".activity.TermsAndConditionsActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustPan"/>
+
+        <activity
+            android:name=".activity.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="nosensor">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.SelectContactsActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.SignUpActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.OtherDetailsPaymentActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.ProfileUpdateActivity"
+            android:screenOrientation="nosensor"/>
+
+        <activity
+            android:name=".activity.HomeActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.TransactionOverviewActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.BillPaymentActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.TransactionOverviewDeatilsActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.AddFavoritesActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.ReferFriendsActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.AddFavoriteContactsActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.EditProfileActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".sign_up.SignUpActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.RegularPayDetailsActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.CancelAssociationActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activity.OtherPaymentActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".activity.NewAssociationActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustPan"/>
+
+
+        <activity
+            android:name=".activity.QuickPayActivity"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".activity.NotificationActivity"
+            android:screenOrientation="nosensor"/>
+
+
+        <service
+            android:name=".SmsRadarService"
+            android:exported="false"/>
+
+        <!-- Updating this will cause a database upgrade -->
+        <meta-data
+            android:name="Rush_db_version"
+            android:value="1"/>
+
+        <!-- Database name -->
+        <meta-data
+            android:name="Rush_db_name"
+            android:value="gp_android.db"/>
+
+        <!-- Setting this to true will cause a migration to happen every launch,
+        this is very handy during development although could cause data loss -->
+        <meta-data
+            android:name="Rush_debug"
+            android:value="true"/>
+
+        <!-- Setting this to true mean that tables will only be created of classes that
+        extend RushObject and are annotated with @RushTableAnnotation -->
+        <meta-data
+            android:name="Rush_requires_table_annotation"
+            android:value="false"/>
+
+        <!-- Turning on logging can be done by settings this value to true -->
+        <meta-data
+            android:name="Rush_log"
+            android:value="false"/>
+       <!-- <receiver android:name=".utils.SMS">
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>-->
+    </application>
+
+</manifest>

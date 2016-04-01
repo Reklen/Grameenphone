@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:id="@+id/relLayout">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="A/C No"
+        android:id="@+id/accountNumber_String_pb"
+        android:layout_marginTop="51dp"
+        android:textSize="20sp"
+        android:layout_marginLeft="42dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="42dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="12342"
+        android:textSize="20sp"
+        android:layout_alignBaseline="@+id/accountNumber_String_pb"
+        android:id="@+id/accountNumber_pb"
+        android:layout_alignTop="@+id/accountNumber_String_pb"
+        android:layout_toEndOf="@+id/inr_pb" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Amount"
+        android:textSize="20sp"
+        android:id="@+id/amountstring_pb"
+        android:layout_marginTop="33dp"
+        android:layout_below="@+id/accountNumber_String_pb"
+        android:layout_alignStart="@+id/accountNumber_String_pb" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="1,200"
+        android:id="@+id/amount_pb"
+        android:textSize="20sp"
+        android:layout_alignTop="@+id/inr_pb"
+        android:layout_alignRight="@+id/accountNumber_pb"
+        android:layout_alignEnd="@+id/accountNumber_pb" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="\u20B9"
+        android:textSize="20sp"
+        android:id="@+id/inr_pb"
+        android:layout_alignTop="@+id/amountstring_pb"
+
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/imageicon"
+        android:background="@drawable/ok_icon"
+        android:layout_above="@+id/amount_pb"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="31dp"
+        android:layout_marginEnd="31dp" />
+
+
+</RelativeLayout>
