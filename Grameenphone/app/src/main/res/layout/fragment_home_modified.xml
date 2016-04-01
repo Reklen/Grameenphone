@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_below="@+id/radioGroup"
-                android:layout_marginTop="24dp">
+                android:layout_marginTop="8dp">
 
                 <!--  <com.cc.grameenphone.views.CustomTextInputLayout
                       android:layout_width="match_parent"
@@ -462,6 +462,14 @@
 
             </com.cc.grameenphone.views.RippleView>
         </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:src="@drawable/logo"/>
 
     </LinearLayout>
 </ScrollView>

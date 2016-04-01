@@ -3,7 +3,6 @@ package com.cc.grameenphone.fragments;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
@@ -146,6 +145,10 @@ public class HomeFragment extends Fragment {
     RippleView emergencyCallRipple;
     @InjectView(R.id.referFriendsRipple)
     RippleView referFriendsRipple;
+    @InjectView(R.id.taka_text)
+    TextView takaText;
+    @InjectView(R.id.logo)
+    ImageView logo;
     private String android_id;
     PreferenceManager preferenceManager;
     MaterialDialog materialDialog;
@@ -188,6 +191,7 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home_modified, container, false);
         // Inflate the layout for this fragment
         ButterKnife.inject(this, rootView);
+        logo.setVisibility(View.GONE);
 
         preferenceManager = new PreferenceManager(getActivity());
         android_id = Settings.Secure.getString(getActivity().getContentResolver(),
@@ -252,8 +256,7 @@ public class HomeFragment extends Fragment {
                     otherFlexiLoadClick();
                     flexiBtn.setText("CONTINUE");
 
-                }
-                else{
+                } else {
                     phoneNumberEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 
                 }
@@ -362,9 +365,9 @@ public class HomeFragment extends Fragment {
     }
 
     void emergencyClick() {
-        String ussd = "*XXX*X" + Uri.encode("#");
+       /* String ussd = "*XXX*X" + Uri.encode("#");
         Uri finalUssdUri = PhoneUtils.ussdToCallableUri(ussd);
-        startActivity(new Intent(Intent.ACTION_DIAL, finalUssdUri));
+        startActivity(new Intent(Intent.ACTION_DIAL, finalUssdUri));*/
     }
 
     void referFriendsClick() {
@@ -389,7 +392,7 @@ public class HomeFragment extends Fragment {
         String str = phoneNumberEditText.getText().toString();
         str = str.replace(" ", "");
         phoneNumberEditText.setText(str);
-        rechargeApi = ServiceGenerator.createService(getActivity(),RechargeApi.class);
+        rechargeApi = ServiceGenerator.createService(getActivity(), RechargeApi.class);
         if (phoneNumberEditText.getText().toString().length() == 0) {
             phoneNumberEditText.setError("Enter a valid number");
             phoneNumberEditText.requestFocus();
@@ -408,8 +411,8 @@ public class HomeFragment extends Fragment {
         loadingDialog.setMessage("Flexiload in progress , please wait");
 
 
-        selfPrepaidApi = ServiceGenerator.createService(getActivity(),SelfPrepaidApi.class);
-        otherPostpaidApi = ServiceGenerator.createService(getActivity(),OtherPostpaidApi.class);
+        selfPrepaidApi = ServiceGenerator.createService(getActivity(), SelfPrepaidApi.class);
+        otherPostpaidApi = ServiceGenerator.createService(getActivity(), OtherPostpaidApi.class);
         //Logger.d("CheckFlexi", selfFlexiOption.isChecked() + " " + otherFlexi + " " + othersFlexiOption.isChecked());
         if (selfFlexiOption.isChecked()) {
             loadingDialog.show();
@@ -460,7 +463,7 @@ public class HomeFragment extends Fragment {
                                     phoneNumberEditText.setText("" + preferenceManager.getMSISDN());
                                     phoneNumberEditText.setInputType(0x00000000);
                                     phoneNumberEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                                   // otherFlex.setVisibility(View.VISIBLE);
+                                    // otherFlex.setVisibility(View.VISIBLE);
                                     editamt.setText("৳ 50");
                                     //Logger.d("WalletCheck ", "again 1");
                                     mCallback.fetchBalanceAgain();
@@ -791,6 +794,7 @@ public class HomeFragment extends Fragment {
     void flexiLoadCick() {
         fstContainer.setVisibility(View.VISIBLE);
         secContainer.setVisibility(View.GONE);
+        logo.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.other_flex)

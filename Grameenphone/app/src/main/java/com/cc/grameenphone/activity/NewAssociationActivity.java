@@ -92,8 +92,8 @@ public class NewAssociationActivity extends AppCompatActivity {
             tabs.setViewPager(pager);
 
         } else {
-            //fetchList();
-            //getOtherPaymentCompanies();
+          //  fetchList();
+            getOtherPaymentCompanies();
         }
     }
 

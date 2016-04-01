@@ -110,8 +110,8 @@
         rv_zoom="true"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
+        android:layout_above="@+id/logo"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:visibility="gone"
@@ -126,5 +126,12 @@
             android:text="CANCEL SELECTED BILLS"
             android:textColor="#ffffff"/>
     </com.cc.grameenphone.views.RippleView>
-
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
+        android:src="@drawable/logo"/>
 </RelativeLayout>

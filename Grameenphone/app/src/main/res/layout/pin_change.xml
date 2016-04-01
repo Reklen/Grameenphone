@@ -90,4 +90,12 @@
             android:textColor="@color/white" />
 
     </com.cc.grameenphone.views.RippleView>
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:src="@drawable/logo"/>
 </RelativeLayout>
