@@ -5,12 +5,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView"
+    <WebView
+        android:id="@+id/tocWeb"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        android:padding="16dp"
-        tools:text="@string/terms"
-        />
+        android:layout_height="0dp"/>
 </ScrollView>

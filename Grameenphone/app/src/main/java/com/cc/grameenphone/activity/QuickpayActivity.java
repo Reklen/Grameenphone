@@ -34,8 +34,8 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -45,21 +45,21 @@ import retrofit.mime.TypedInput;
 
 public class QuickPayActivity extends AppCompatActivity implements QuickPayInterface {
 
-    @InjectView(R.id.image_back)
+    @Bind(R.id.image_back)
     ImageButton imageBack;
-    @InjectView(R.id.backRipple)
+    @Bind(R.id.backRipple)
     RippleView backRipple;
-    @InjectView(R.id.toolbar_text)
+    @Bind(R.id.toolbar_text)
     TextView toolbarText;
-    @InjectView(R.id.icon1)
+    @Bind(R.id.icon1)
     ImageButton icon1;
-    @InjectView(R.id.walletLabel)
+    @Bind(R.id.walletLabel)
     TextView walletLabel;
-    @InjectView(R.id.icon1Ripple)
+    @Bind(R.id.icon1Ripple)
     RippleView icon1Ripple;
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(R.id.container)
+    @Bind(R.id.container)
     FrameLayout container;
     private WalletCheckApi walletCheckApi;
     private String android_id;
@@ -76,7 +76,7 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quickpay);
 
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         setupToolbar();
         preferenceManager = new PreferenceManager(QuickPayActivity.this);
 
@@ -152,7 +152,7 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
 
     private void getWalletBalance() {
 
-        walletCheckApi = ServiceGenerator.createService(QuickPayActivity.this,WalletCheckApi.class);
+        walletCheckApi = ServiceGenerator.createService(QuickPayActivity.this, WalletCheckApi.class);
         android_id = Settings.Secure.getString(QuickPayActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         try {
@@ -259,7 +259,7 @@ public class QuickPayActivity extends AppCompatActivity implements QuickPayInter
         loadingDialog.setMessage("Fetching details");
         loadingDialog.setCanceledOnTouchOutside(false);
         loadingDialog.show();
-        quickPayApi = ServiceGenerator.createService(QuickPayActivity.this,QuickPayApi.class);
+        quickPayApi = ServiceGenerator.createService(QuickPayActivity.this, QuickPayApi.class);
         String quickPayCode = code;
         try {
             JSONObject jsonObject = new JSONObject();

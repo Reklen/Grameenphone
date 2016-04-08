@@ -16,15 +16,14 @@ import android.widget.Toast;
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.interfaces.QuickPayInterface;
 import com.cc.grameenphone.utils.KeyboardUtil;
-import com.cc.grameenphone.utils.Logger;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
@@ -33,22 +32,22 @@ import butterknife.OnClick;
 public class QuickPayFragment extends Fragment implements Validator.ValidationListener {
     private static EditText payCode;
     QuickPayInterface quickPayInterface;
-    @InjectView(R.id.textView2)
+    @Bind(R.id.textView2)
     TextView textView2;
 
     @NotEmpty
-    @InjectView(R.id.editTextQuickPayCode)
+    @Bind(R.id.editTextQuickPayCode)
     EditText editTextQuickPayCode;
-    @InjectView(R.id.submitbutton)
+    @Bind(R.id.submitbutton)
     Button submitbutton;
-    @InjectView(R.id.quickPayFragment)
+    @Bind(R.id.quickPayFragment)
     LinearLayout quickPayFragment;
     Validator mValidator;
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     @Override
@@ -65,7 +64,7 @@ public class QuickPayFragment extends Fragment implements Validator.ValidationLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_quickpay_entercode, container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         mValidator = new Validator(QuickPayFragment.this);
         mValidator.setValidationListener(QuickPayFragment.this);
         /*editTextQuickPayCode.setOnKeyListener(new View.OnKeyListener() {

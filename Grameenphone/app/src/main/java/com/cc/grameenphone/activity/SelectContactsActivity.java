@@ -16,27 +16,27 @@ import android.widget.TextView;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.adapter.SelectcontactAdapter;
-import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.ToolBarUtils;
 import com.cc.grameenphone.views.MySearchView;
 import com.cc.grameenphone.views.RippleView;
 import com.cc.grameenphone.views.tabs.SlidingTabLayout;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+
 
 public class SelectContactsActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
-    @InjectView(R.id.back_btn)
+    @Bind(R.id.back_btn)
     ImageButton backBtn;
-    @InjectView(R.id.parenting_feed_heading_txt)
+    @Bind(R.id.parenting_feed_heading_txt)
     TextView parentingFeedHeadingTxt;
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(R.id.contacts_tabs)
+    @Bind(R.id.contacts_tabs)
     SlidingTabLayout contactsTabs;
-    @InjectView(R.id.contacts_viewpager)
+    @Bind(R.id.contacts_viewpager)
     ViewPager contactsViewpager;
-    @InjectView(R.id.backRipple)
+    @Bind(R.id.backRipple)
     RippleView backRipple;
     private Context context;
     SearchView searchView;
@@ -48,7 +48,7 @@ public class SelectContactsActivity extends AppCompatActivity implements SearchV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_contacts);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         setupToolBar();
 
     }

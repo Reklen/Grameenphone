@@ -29,8 +29,8 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -45,43 +45,43 @@ public class QuickBillPayFragment extends Fragment {
 
 
     MaterialDialog confirmDialog;
-    @InjectView(R.id.company_text)
+    @Bind(R.id.company_text)
     TextView companyText;
-    @InjectView(R.id.companyName)
+    @Bind(R.id.companyName)
     TextView companyName;
-    @InjectView(R.id.container_one)
+    @Bind(R.id.container_one)
     LinearLayout containerOne;
-    @InjectView(R.id.accountNmb_text)
+    @Bind(R.id.accountNmb_text)
     TextView accountNmbText;
-    @InjectView(R.id.accountNumber)
+    @Bind(R.id.accountNumber)
     TextView accountNumberTV;
-    @InjectView(R.id.container_two)
+    @Bind(R.id.container_two)
     LinearLayout containerTwo;
-    @InjectView(R.id.billNumb_text)
+    @Bind(R.id.billNumb_text)
     TextView billNumbText;
-    @InjectView(R.id.billNumber)
+    @Bind(R.id.billNumber)
     TextView billNumberTV;
-    @InjectView(R.id.container_three)
+    @Bind(R.id.container_three)
     LinearLayout containerThree;
-    @InjectView(R.id.totalAmountEditText)
+    @Bind(R.id.totalAmountEditText)
     EditText totalAmountEditText;
-    @InjectView(R.id.surchargeAmountEditText)
+    @Bind(R.id.surchargeAmountEditText)
     EditText surchargeAmountEditText;
-    @InjectView(R.id.dueDate_text)
+    @Bind(R.id.dueDate_text)
     TextView dueDateText;
-    @InjectView(R.id.dueDate)
+    @Bind(R.id.dueDate)
     TextView dueDate;
-    @InjectView(R.id.container_six)
+    @Bind(R.id.container_six)
     LinearLayout containerSix;
-    @InjectView(R.id.pinNumbEdit)
+    @Bind(R.id.pinNumbEdit)
     EditText pinNumbEdit;
-    @InjectView(R.id.PinConform_container)
+    @Bind(R.id.PinConform_container)
     TextInputLayout PinConformContainer;
-    @InjectView(R.id.confirm_btn)
+    @Bind(R.id.confirm_btn)
     Button confirmBtn;
-    @InjectView(R.id.confirmRipple)
+    @Bind(R.id.confirmRipple)
     RippleView confirmRipple;
-    @InjectView(R.id.billPaymentLayout)
+    @Bind(R.id.billPaymentLayout)
     LinearLayout billPaymentLayout;
     private String android_id;
     PreferenceManager preferenceManager;
@@ -95,7 +95,7 @@ public class QuickBillPayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_bill_pay, container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         quickPayApi = ServiceGenerator.createService(getActivity(),QuickPayApi.class);
         handleArguments();
         //Confirm payment
@@ -196,7 +196,7 @@ public class QuickBillPayFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
 

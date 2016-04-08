@@ -48,8 +48,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -63,44 +63,44 @@ import static android.provider.Settings.Secure;
 public class LoginActivity extends BaseActivity implements ValidationListener {
 
     static String TAG = LoginActivity.class.getSimpleName();
-    @InjectView(R.id.grameen_icon)
+    @Bind(R.id.grameen_icon)
     ImageView grameenIcon;
-    @InjectView(R.id.grameen_text)
+    @Bind(R.id.grameen_text)
     TextView grameenText;
-    @InjectView(R.id.areaCode)
+    @Bind(R.id.areaCode)
     TextView areaCode;
     @NotEmpty
     @Length(min = 8)
-    @InjectView(R.id.phoneNumberEditText)
+    @Bind(R.id.phoneNumberEditText)
     EditText phoneNumberEditText;
-    @InjectView(R.id.phone_container)
+    @Bind(R.id.phone_container)
     TextInputLayout phoneContainer;
-    @InjectView(R.id.top_container1)
+    @Bind(R.id.top_container1)
     RelativeLayout topContainer1;
     @NotEmpty
     @Password(min = 4, scheme = Password.Scheme.NUMERIC)
-    @InjectView(R.id.walletPinNumber)
+    @Bind(R.id.walletPinNumber)
     EditText walletPinNumber;
-    @InjectView(R.id.wallet_pin_layout)
+    @Bind(R.id.wallet_pin_layout)
     LinearLayout walletPinLayout;
     @Checked
-    @InjectView(R.id.check_box)
+    @Bind(R.id.check_box)
     CheckBox checkBox;
-    @InjectView(R.id.accept_text)
+    @Bind(R.id.accept_text)
     TextView acceptText;
-    @InjectView(R.id.terms_text)
+    @Bind(R.id.terms_text)
     TextView termsText;
-    @InjectView(R.id.checkbox_layout)
+    @Bind(R.id.checkbox_layout)
     RelativeLayout checkboxLayout;
-    @InjectView(R.id.loginButton)
+    @Bind(R.id.loginButton)
     Button loginButton;
-    @InjectView(R.id.or_text)
+    @Bind(R.id.or_text)
     TextView orText;
-    @InjectView(R.id.view_layout)
+    @Bind(R.id.view_layout)
     LinearLayout viewLayout;
-    @InjectView(R.id.createWalletButton)
+    @Bind(R.id.createWalletButton)
     Button createWalletButton;
-    @InjectView(R.id.wallet_pin_input_layout)
+    @Bind(R.id.wallet_pin_input_layout)
     TextInputLayout walletPinInputLayout;
     LoginApi loginApi;
 
@@ -114,7 +114,7 @@ public class LoginActivity extends BaseActivity implements ValidationListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         handleExtras();
         android_id = Secure.getString(LoginActivity.this.getContentResolver(),
                 Secure.ANDROID_ID);

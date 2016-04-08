@@ -33,8 +33,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import co.uk.rushorm.core.RushCallback;
 import co.uk.rushorm.core.RushSearch;
 import co.uk.rushorm.core.RushSearchCallback;
@@ -50,13 +50,13 @@ import retrofit.mime.TypedInput;
  */
 public class NotificationActivity extends AppCompatActivity implements NotificationClickInterface {
 
-    @InjectView(R.id.backRipple)
+    @Bind(R.id.backRipple)
     RippleView backRipple;
-    @InjectView(R.id.toolbar_text)
+    @Bind(R.id.toolbar_text)
     TextView toolbarText;
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(R.id.notificationList)
+    @Bind(R.id.notificationList)
     RecyclerView mRecyclerView;
     private String android_id;
     private PreferenceManager preferenceManager;
@@ -71,7 +71,7 @@ public class NotificationActivity extends AppCompatActivity implements Notificat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         progressDialog = new ProgressDialog(NotificationActivity.this);
         progressDialog.setMessage("Loading");
         backRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {

@@ -44,8 +44,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
@@ -66,23 +66,23 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
 
     MaterialDialog cancelDialog, removeDialog;
     ManageAssociationApi getAssociationApi;
-    @InjectView(R.id.image_back)
+    @Bind(R.id.image_back)
     ImageButton imageBack;
-    @InjectView(R.id.backRipple)
+    @Bind(R.id.backRipple)
     RippleView backRipple;
-    @InjectView(R.id.toolbar_text)
+    @Bind(R.id.toolbar_text)
     TextView toolbarText;
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(R.id.associationList)
+    @Bind(R.id.associationList)
     ListView associationListView;
-    @InjectView(R.id.selectedCancelButton)
+    @Bind(R.id.selectedCancelButton)
     Button selectedCancelButton;
-    @InjectView(R.id.multiCancelBillsCheckBox)
+    @Bind(R.id.multiCancelBillsCheckBox)
     CheckBox multiCancelBillsCheckBox;
-    @InjectView(R.id.cancelBillsbar)
+    @Bind(R.id.cancelBillsbar)
     TextView cancelBillsbar;
-    @InjectView(R.id.selectedCancelRippleView)
+    @Bind(R.id.selectedCancelRippleView)
     RippleView selectedCancelRippleView;
     private String android_id;
     private PreferenceManager preferenceManager;
@@ -103,7 +103,7 @@ public class CancelAssociationActivity extends AppCompatActivity implements Butt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cancel_association);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         setupToolbar();
         init();
         cancelBillsSelectedList = new ArrayList<>();

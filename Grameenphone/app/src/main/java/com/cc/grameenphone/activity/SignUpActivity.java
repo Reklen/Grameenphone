@@ -59,8 +59,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
@@ -80,67 +80,67 @@ public class SignUpActivity extends BaseActivity implements ValidationListener, 
      CheckBox checkBox01;
      EditText phnNumberEdit,conformEdit,setPinEdit,enterReferralEdit;
      Button sign_up,resend_btn;*/
-    @InjectView(R.id.image_icon_back)
+    @Bind(R.id.image_icon_back)
     ImageView imageIconBack;
-    @InjectView(R.id.text_tool)
+    @Bind(R.id.text_tool)
     TextView textTool;
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar transactionToolbar;
 
-    @InjectView(R.id.grameen_text)
+    @Bind(R.id.grameen_text)
     TextView grameenText;
-    @InjectView(R.id.areaCode)
+    @Bind(R.id.areaCode)
     TextView areaCode;
 
     @NotEmpty
     @Length(min = 11)
-    @InjectView(R.id.phoneNumberEditText)
+    @Bind(R.id.phoneNumberEditText)
     EditText phoneNumberEditText;
 
-    @InjectView(R.id.phone_container)
+    @Bind(R.id.phone_container)
     TextInputLayout phoneContainer;
-    @InjectView(R.id.top_container1)
+    @Bind(R.id.top_container1)
     RelativeLayout topContainer1;
     @NotEmpty
     @Password(min = 4, scheme = Password.Scheme.NUMERIC)
-    @InjectView(R.id.setPinEdit)
+    @Bind(R.id.setPinEdit)
     EditText setPinEdit;
-    @InjectView(R.id.setPin_container)
+    @Bind(R.id.setPin_container)
     TextInputLayout setPinContainer;
-    @InjectView(R.id.consecutivetext)
+    @Bind(R.id.consecutivetext)
     TextView consecutivetext;
 
     @ConfirmPassword
-    @InjectView(R.id.conformPinEdit)
+    @Bind(R.id.conformPinEdit)
     EditText conformPinEdit;
-    @InjectView(R.id.confromPin_container)
+    @Bind(R.id.confromPin_container)
     TextInputLayout confromPinContainer;
-    @InjectView(R.id.referralCodeEdit)
+    @Bind(R.id.referralCodeEdit)
     EditText referralCodeEdit;
-    @InjectView(R.id.referral_container)
+    @Bind(R.id.referral_container)
     TextInputLayout referralContainer;
     @Checked
-    @InjectView(R.id.checkbox_signup)
+    @Bind(R.id.checkbox_signup)
     CheckBox checkbox_signup;
-    @InjectView(R.id.sign_accept_text01)
+    @Bind(R.id.sign_accept_text01)
     TextView signAcceptText01;
-    @InjectView(R.id.sign_terms_text01)
+    @Bind(R.id.sign_terms_text01)
     TextView signTermsText01;
-    @InjectView(R.id.checkbox_layout)
+    @Bind(R.id.checkbox_layout)
     RelativeLayout checkboxLayout;
-    @InjectView(R.id.sign_up_btn)
+    @Bind(R.id.sign_up_btn)
     Button signUpBtn;
-    @InjectView(R.id.sign_up_layout)
+    @Bind(R.id.sign_up_layout)
     LinearLayout signUpLayout;
-    @InjectView(R.id.scrollView)
+    @Bind(R.id.scrollView)
     ScrollView scrollView;
     ProgressDialog loadingDialog;
     Validator validator;
     MSISDNCheckApi msisdnCheckApi;
 
-    @InjectView(R.id.backRipple)
+    @Bind(R.id.backRipple)
     RippleView backRipple;
-    @InjectView(R.id.grameen_icon)
+    @Bind(R.id.grameen_icon)
     ImageView grameenIcon;
     View otpView;
     SignupApi signupApi;
@@ -159,7 +159,7 @@ public class SignUpActivity extends BaseActivity implements ValidationListener, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         setUpToolBar();
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.provider.Telephony.SMS_RECEIVED");

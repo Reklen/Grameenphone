@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/drawer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:context=".MainActivity">
+    <android.support.v4.widget.DrawerLayout android:id="@+id/drawer"
+                                            xmlns:android="http://schemas.android.com/apk/res/android"
+                                            xmlns:tools="http://schemas.android.com/tools"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:fitsSystemWindows="true"
+                                            tools:context=".MainActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,19 +26,19 @@
                 <!-- <include layout="@layout/toolbar" />-->
 
 
-                <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:local="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@drawable/toolbar_gradient"
-                    android:contentInsetLeft="0dp"
-                    android:contentInsetStart="0dp"
-                    android:minHeight="?attr/actionBarSize"
-                    app:contentInsetLeft="0dp"
-                    app:contentInsetStart="0dp"
-                    local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                    local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+                <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+                                                   xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:local="http://schemas.android.com/apk/res-auto"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="?attr/actionBarSize"
+                                                   android:background="@drawable/toolbar_gradient"
+                                                   android:contentInsetLeft="0dp"
+                                                   android:contentInsetStart="0dp"
+                                                   android:minHeight="?attr/actionBarSize"
+                                                   app:contentInsetLeft="0dp"
+                                                   app:contentInsetStart="0dp"
+                                                   local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                                                   local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
 
                     <RelativeLayout
@@ -55,7 +55,7 @@
                             android:layout_toRightOf="@+id/backRipple"
                             android:gravity="center_vertical"
                             android:text="Grameenphone"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"/>
 
                         <com.cc.grameenphone.views.RippleView
                             android:id="@+id/icon1Ripple"
@@ -73,7 +73,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:background="@null"
-                                android:src="@drawable/icon_wallet_balance" />
+                                android:src="@drawable/icon_wallet_balance"/>
 
                             <TextView
                                 android:id="@+id/walletLabel"
@@ -88,7 +88,7 @@
                                 android:paddingRight="4dp"
                                 android:text="৳ 0.0"
                                 android:textColor="@color/white"
-                                android:textSize="10sp" />
+                                android:textSize="10sp"/>
 
                         </com.cc.grameenphone.views.RippleView>
 
@@ -108,7 +108,7 @@
                                 android:layout_height="match_parent"
                                 android:background="@null"
                                 android:padding="8dp"
-                                android:src="@drawable/icon_notification" />
+                                android:src="@drawable/icon_notification"/>
                         </com.cc.grameenphone.views.RippleView>
                     </RelativeLayout>
                 </android.support.v7.widget.Toolbar>
@@ -117,7 +117,7 @@
             <FrameLayout
                 android:id="@+id/container_body"
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"/>
         </LinearLayout>
 
         <android.support.design.widget.NavigationView
@@ -127,7 +127,7 @@
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
             app:headerLayout="@layout/nav_drawer_header"
-            app:menu="@menu/menu_grameenhome" />
+            app:menu="@menu/menu_grameenhome"/>
     </android.support.v4.widget.DrawerLayout>
 
 </LinearLayout>

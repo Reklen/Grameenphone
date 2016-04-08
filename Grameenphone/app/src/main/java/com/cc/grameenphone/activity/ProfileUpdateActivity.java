@@ -34,8 +34,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -53,49 +53,49 @@ public class ProfileUpdateActivity extends Activity implements DatePickerDialog.
 
     ProfileUpdateApi profileUpdateApi;
     MaterialDialog otpDialog, successSignupDialog, errorDialog;
-    @InjectView(R.id.toolbar_text)
+    @Bind(R.id.toolbar_text)
     TextView toolbarText;
-    @InjectView(R.id.skipText)
+    @Bind(R.id.skipText)
     TextView skipText;
-    @InjectView(R.id.skipRipple)
+    @Bind(R.id.skipRipple)
     RippleView skipRipple;
-    @InjectView(R.id.toolbar_container)
+    @Bind(R.id.toolbar_container)
     RelativeLayout toolbarContainer;
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
 
     @NotEmpty
-    @InjectView(R.id.first_nameEdit)
+    @Bind(R.id.first_nameEdit)
     EditText firstNameEdit;
-    @InjectView(R.id.firstName_container)
+    @Bind(R.id.firstName_container)
     CustomTextInputLayout firstNameContainer;
 
     @NotEmpty
-    @InjectView(R.id.last_nameEdit)
+    @Bind(R.id.last_nameEdit)
     EditText lastNameEdit;
-    @InjectView(R.id.lastName_container)
+    @Bind(R.id.lastName_container)
     CustomTextInputLayout lastNameContainer;
     @NotEmpty
-    @InjectView(R.id.email_idEdit)
+    @Bind(R.id.email_idEdit)
     EditText emailIdEdit;
 
-    @InjectView(R.id.emailid_container)
+    @Bind(R.id.emailid_container)
     CustomTextInputLayout emailidContainer;
 
     @NotEmpty
-    @InjectView(R.id.national_idEdit)
+    @Bind(R.id.national_idEdit)
     EditText nationalIdEdit;
-    @InjectView(R.id.nationalId_container)
+    @Bind(R.id.nationalId_container)
     CustomTextInputLayout nationalIdContainer;
 
     @NotEmpty
-    @InjectView(R.id.date_of_birthEdit)
+    @Bind(R.id.date_of_birthEdit)
     EditText dateOfBirthEdit;
-    @InjectView(R.id.dateOfBirth_container)
+    @Bind(R.id.dateOfBirth_container)
     CustomTextInputLayout dateOfBirthContainer;
-    @InjectView(R.id.confirmButton)
+    @Bind(R.id.confirmButton)
     Button submitButton;
-    @InjectView(R.id.confirmRippleView)
+    @Bind(R.id.confirmRippleView)
     RippleView submitRippleView;
     private String android_id;
     PreferenceManager preferenceManager;
@@ -108,7 +108,7 @@ public class ProfileUpdateActivity extends Activity implements DatePickerDialog.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         loadingDialog = new ProgressDialog(ProfileUpdateActivity.this);
         loadingDialog.setMessage("Loading..");
         submitRippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {

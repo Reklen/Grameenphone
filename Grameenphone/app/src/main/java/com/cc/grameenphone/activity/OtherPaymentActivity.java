@@ -32,8 +32,8 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -51,23 +51,23 @@ public class OtherPaymentActivity extends AppCompatActivity {
     CharSequence titles[] = {"ELECTRICITY", "GAS", "WATER", "INTERNET", "TICKET"};
     int NumOfTabs = 5;
 
-    @InjectView(R.id.toolbar_text)
+    @Bind(R.id.toolbar_text)
     TextView toolbarText;
-    @InjectView(R.id.tabs)
+    @Bind(R.id.tabs)
     SlidingTabLayout tabs;
-    @InjectView(R.id.pager)
+    @Bind(R.id.pager)
     ViewPager pager;
-    @InjectView(R.id.backRipple)
+    @Bind(R.id.backRipple)
     RippleView backRipple;
-    @InjectView(R.id.icon1)
+    @Bind(R.id.icon1)
     ImageButton icon1;
-    @InjectView(R.id.walletLabel)
+    @Bind(R.id.walletLabel)
     TextView walletLabel;
-    @InjectView(R.id.icon1Ripple)
+    @Bind(R.id.icon1Ripple)
     RippleView icon1Ripple;
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(R.id.image_back)
+    @Bind(R.id.image_back)
     ImageButton imageBack;
     private WalletCheckApi walletCheckApi;
     ProgressDialog loadingDialog;
@@ -81,7 +81,7 @@ public class OtherPaymentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.other_payment_activity);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         preferenceManager = new PreferenceManager(OtherPaymentActivity.this);
         setupToolbar();
         fetchCompanies();

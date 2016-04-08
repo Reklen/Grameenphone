@@ -37,8 +37,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -55,26 +55,26 @@ public class PinChangeFragment extends Fragment implements ValidationListener {
     Button okbtn;
 
     @NotEmpty
-    @InjectView(R.id.oldPinEditText)
+    @Bind(R.id.oldPinEditText)
     EditText oldPinEditText;
     @NotEmpty
-    @InjectView(R.id.newPineditText)
+    @Bind(R.id.newPineditText)
     EditText newPineditText;
     @NotEmpty
-    @InjectView(R.id.confirmPinEditText)
+    @Bind(R.id.confirmPinEditText)
     EditText confirmPinEditText;
-    @InjectView(R.id.confirmButton)
+    @Bind(R.id.confirmButton)
     Button confirmButton;
 
     ProgressDialog loadingDialog;
     PinchangeApi pinchnageApi;
-    @InjectView(R.id.oldPinEditTextLayout)
+    @Bind(R.id.oldPinEditTextLayout)
     TextInputLayout oldPinEditTextLayout;
-    @InjectView(R.id.newPineditTextLayout)
+    @Bind(R.id.newPineditTextLayout)
     TextInputLayout newPineditTextLayout;
-    @InjectView(R.id.confirmPinEditTextLayout)
+    @Bind(R.id.confirmPinEditTextLayout)
     TextInputLayout confirmPinEditTextLayout;
-    @InjectView(R.id.confirmRipple)
+    @Bind(R.id.confirmRipple)
     RippleView confirmRipple;
     private String android_id;
     PreferenceManager preferenceManager;
@@ -98,7 +98,7 @@ public class PinChangeFragment extends Fragment implements ValidationListener {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.pin_change, container, false);
-        ButterKnife.inject(this, rootView);
+        ButterKnife.bind(this, rootView);
         validator = new Validator(this);
         validator.setValidationListener(this);
         // Inflate the layout for this fragment
@@ -204,7 +204,7 @@ public class PinChangeFragment extends Fragment implements ValidationListener {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     void confirmClick() {

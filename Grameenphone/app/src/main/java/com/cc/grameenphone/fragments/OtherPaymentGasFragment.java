@@ -41,8 +41,8 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import co.uk.rushorm.core.RushSearch;
 import co.uk.rushorm.core.RushSearchCallback;
 import me.drakeet.materialdialog.MaterialDialog;
@@ -57,33 +57,33 @@ import retrofit.mime.TypedInput;
  */
 public class OtherPaymentGasFragment extends BaseTabFragment implements Validator.ValidationListener {
 
-    @InjectView(R.id.customRadioGroupLayout)
+    @Bind(R.id.customRadioGroupLayout)
     LinearLayout custodialRadiogroup;
     @NotEmpty
-    @InjectView(R.id.account_numbEdit)
+    @Bind(R.id.account_numbEdit)
     EditText accountNumbEdit;
-    @InjectView(R.id.account_numb_container)
+    @Bind(R.id.account_numb_container)
     TextInputLayout accountNumbContainer;
     @NotEmpty
-    @InjectView(R.id.bill_numbEdit)
+    @Bind(R.id.bill_numbEdit)
     EditText billNumbEdit;
-    @InjectView(R.id.bill_numb_container)
+    @Bind(R.id.bill_numb_container)
     TextInputLayout billNumbContainer;
-    @InjectView(R.id.confirmButton)
+    @Bind(R.id.confirmButton)
     Button sbmtBtn;
-    @InjectView(R.id.electricity_container)
+    @Bind(R.id.electricity_container)
     RelativeLayout electricityContainer;
-    @InjectView(R.id.companyRadioGroupScroll)
+    @Bind(R.id.companyRadioGroupScroll)
     ScrollView companyRadioGroupScroll;
-    @InjectView(R.id.amountEditText)
+    @Bind(R.id.amountEditText)
     EditText amountEditText;
-    @InjectView(R.id.confirmRippleView)
+    @Bind(R.id.confirmRippleView)
     RippleView submitRippleView;
-    @InjectView(R.id.amountTextInputLayout)
+    @Bind(R.id.amountTextInputLayout)
     TextInputLayout amountTextInputLayout;
-    @InjectView(R.id.surchargeEditText)
+    @Bind(R.id.surchargeEditText)
     EditText surchargeEditText;
-    @InjectView(R.id.surchargeTextInputLayout)
+    @Bind(R.id.surchargeTextInputLayout)
     TextInputLayout surchargeTextInputLayout;
     private int type;
     private String android_id;
@@ -112,7 +112,7 @@ public class OtherPaymentGasFragment extends BaseTabFragment implements Validato
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.other_payments_fragment, container, false);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
         validator = new Validator(this);
         validator.setValidationListener(this);
         getCompaniesDetails();
@@ -434,7 +434,7 @@ public class OtherPaymentGasFragment extends BaseTabFragment implements Validato
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     @Override

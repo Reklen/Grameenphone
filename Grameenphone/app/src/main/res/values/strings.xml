@@ -100,33 +100,7 @@
     <string name="button_stringname">OTHER PAYMENT</string>
     <string name="button_payselectedbills">PAY SELECTED BILLS</string>
     <string name="button_cancelBills">CANCEL SELECTED BILLS</string>
-    <string name="terms_condition_statement_1">Lorem ipsum dolor sit amet, consectetuer adipisc-\n
-ing elit. Morbi commodo,ipsum sed pharetra gravi-\n
-da, orci magna rhoncus neque id pulvinar odio\n
-lorem non turpis. Nullam sit amet enim. Suspendis-\n
-se id velit vitae ligula volutpat condimentum. Ali-\n
-quam erat volutpat. Sed quis velit. Nulla facilisi.\n
-Nulla libero. Vivamus pharetra posuere sapien.\n
-Nam consectetuer. Sed aliquam, nunc eget euis-\n
-mod ullamcorper. lectus nunc ullamcorper orci, fer-\n
-mentum bibendum enim nibh eget ipsum. Donec\n
-porttitor ligula eu dolor. Maecenas vitae nulla con-\n
-sequata libero cursus venenatis. Nam magna enim,\n
-accumsan eu, blandit sed, blandit a, eros.</string>
-    <string name="terms_condition_statement_2">Cars dictum. Maecenas ut turpis. In vitae erat ac\n
-orci dignissim eleifend. Nunc quis justro. Sed vel
-ipsum in purus tincidunt pharetra. Sed pulvinar, felis\n
-id consectetuer malesuada, enim nisl mattis elit, a\n
-facilisis torto nibh quis leo. Sed augue lacus, pre-\n
-titum vitae, molesite eget, rhoncus quis, elit. Donec\n
-in augue. Fusce orci wisi ornare id, mollis vel, lacin-\n
-ia vel, massa. pallentesque habitant morbi tristique\n
-senectus et netus et malesuada fames as turpis\n
-egestas</string>
-    <string name="terms_condition_statement_3">Lorem ipsum dolor sit amet, consectetuer adipisc-\n
-ing elit. Morbi commodo,ipsum sed pharetra gravi-\n
-da, orci magna rhoncus neque id pulvinar odio\n
-lorem non turpis. Nullam sit amet enim</string>
+
     <string name="title_activity_quickpay">QuickpayActivity</string>
     <string name="title_activity_ansbvs">ANSBVS</string>
     <string name="crash">App has crashed , please share the crash logs with the developer.</string>

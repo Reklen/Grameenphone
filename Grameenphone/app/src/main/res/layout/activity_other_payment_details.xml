@@ -105,6 +105,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
         android:fadeScrollbars="false"
+        android:layout_above="@+id/logo"
         android:scrollbarStyle="outsideOverlay">
 
         <RelativeLayout
@@ -342,7 +343,15 @@
                     android:text="@string/confirm"
                     android:textColor="@color/white"/>
             </com.cc.grameenphone.views.RippleView>
+
         </RelativeLayout>
     </ScrollView>
-
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:src="@drawable/logo"/>
 </RelativeLayout>

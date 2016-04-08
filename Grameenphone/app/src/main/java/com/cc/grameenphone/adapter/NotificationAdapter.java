@@ -12,8 +12,9 @@ import com.cc.grameenphone.api_models.NotificationMessageModel;
 
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+
 
 /**
  * Created by Rajkiran on 9/11/2015.
@@ -85,17 +86,17 @@ public class NotificationAdapter extends BaseAdapter {
      * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
      */
     static class ViewHolder {
-        @InjectView(R.id.notificationTypeTextView)
+        @Bind(R.id.notificationTypeTextView)
         TextView notificationTypeTextView;
-        @InjectView(R.id.notificationTitleTextView)
+        @Bind(R.id.notificationTitleTextView)
         TextView notificationTitleTextView;
-        @InjectView(R.id.notificationContentTextView)
+        @Bind(R.id.notificationContentTextView)
         TextView notificationContentTextView;
-        @InjectView(R.id.notificationTimeTextView)
+        @Bind(R.id.notificationTimeTextView)
         TextView notificationTimeTextView;
 
         ViewHolder(View view) {
-            ButterKnife.inject(this, view);
+            ButterKnife.bind(this, view);
         }
     }
 }

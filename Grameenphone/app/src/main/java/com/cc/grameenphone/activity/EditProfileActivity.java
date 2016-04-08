@@ -26,8 +26,8 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
@@ -40,31 +40,31 @@ import retrofit.mime.TypedInput;
 public class EditProfileActivity extends AppCompatActivity implements OnDateSetListener {
 
 
-    @InjectView(R.id.button)
+    @Bind(R.id.button)
     Button button;
-    @InjectView(R.id.vertical_view)
+    @Bind(R.id.vertical_view)
     View verticalView;
-    @InjectView(R.id.button_save)
+    @Bind(R.id.button_save)
     Button buttonSave;
-    @InjectView(R.id.first_name)
+    @Bind(R.id.first_name)
     EditText firstName;
-    @InjectView(R.id.firstNameTextInputLayout)
+    @Bind(R.id.firstNameTextInputLayout)
     TextInputLayout firstNameTextInputLayout;
-    @InjectView(R.id.last_name)
+    @Bind(R.id.last_name)
     EditText lastName;
-    @InjectView(R.id.lastNameTextInputLayout)
+    @Bind(R.id.lastNameTextInputLayout)
     TextInputLayout lastNameTextInputLayout;
-    @InjectView(R.id.email_name)
+    @Bind(R.id.email_name)
     EditText emailName;
-    @InjectView(R.id.emailTextInputLayout)
+    @Bind(R.id.emailTextInputLayout)
     TextInputLayout emailTextInputLayout;
-    @InjectView(R.id.national_id)
+    @Bind(R.id.national_id)
     EditText nationalId;
-    @InjectView(R.id.nationalTextInputLayout)
+    @Bind(R.id.nationalTextInputLayout)
     TextInputLayout nationalTextInputLayout;
-    @InjectView(R.id.dob)
+    @Bind(R.id.dob)
     EditText dob;
-    @InjectView(R.id.dobTextInputLayout)
+    @Bind(R.id.dobTextInputLayout)
     TextInputLayout dobTextInputLayout;
     private String android_id;
     PreferenceManager preferenceManager;
@@ -78,7 +78,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnDateSetL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         displayProfile();
         emailName.requestFocus();
     }

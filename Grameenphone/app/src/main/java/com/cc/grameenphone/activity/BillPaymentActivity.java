@@ -52,8 +52,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
@@ -69,44 +69,44 @@ import retrofit.mime.TypedInput;
 public class BillPaymentActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, BIllsPayButtonInterface {
 
 
-    @InjectView(R.id.quickpayButton)
+    @Bind(R.id.quickpayButton)
     Button qquickpayButton;
-    @InjectView(R.id.backRipple)
+    @Bind(R.id.backRipple)
     RippleView backRipple;
-    @InjectView(R.id.toolbar_text)
+    @Bind(R.id.toolbar_text)
     TextView toolbarText;
-    @InjectView(R.id.toolbar_container)
+    @Bind(R.id.toolbar_container)
     RelativeLayout toolbarContainer;
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(R.id.billsbar)
+    @Bind(R.id.billsbar)
     TextView billsbar;
-    @InjectView(R.id.billContainer)
+    @Bind(R.id.billContainer)
     RelativeLayout billContainer;
-    @InjectView(R.id.billsList)
+    @Bind(R.id.billsList)
     ListView billsListView;
-    @InjectView(R.id.selectedPaymentButton)
+    @Bind(R.id.selectedPaymentButton)
     Button selectedPaymentButton;
-    @InjectView(R.id.otherPaymentButton)
+    @Bind(R.id.otherPaymentButton)
     Button otherPaymentButton;
     BillsListAdapter listViewAdapter;
     BillspaymentApi billspaymentApi;
     MaterialDialog otpDialog, successSignupDialog, errorDialog;
-    @InjectView(R.id.image_back)
+    @Bind(R.id.image_back)
     ImageButton imageBack;
-    @InjectView(R.id.selectedPayRippleView)
+    @Bind(R.id.selectedPayRippleView)
     RippleView selectedPayRippleView;
-    @InjectView(R.id.quickPayRippleView)
+    @Bind(R.id.quickPayRippleView)
     RippleView quickPayRippleView;
-    @InjectView(R.id.otherPayRippleView)
+    @Bind(R.id.otherPayRippleView)
     RippleView otherPayRippleView;
-    @InjectView(R.id.icon1)
+    @Bind(R.id.icon1)
     ImageButton icon1;
-    @InjectView(R.id.walletLabel)
+    @Bind(R.id.walletLabel)
     TextView walletLabel;
-    @InjectView(R.id.icon1Ripple)
+    @Bind(R.id.icon1Ripple)
     RippleView icon1Ripple;
-    @InjectView(R.id.multiBillsCheckBox)
+    @Bind(R.id.multiBillsCheckBox)
     CheckBox multiBillsCheckBox;
     private String android_id;
     PreferenceManager preferenceManager;
@@ -122,7 +122,7 @@ public class BillPaymentActivity extends AppCompatActivity implements CompoundBu
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill_payment);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         setupToolbar();
         //TODO Listing total number of bills
         loadingDialog = new ProgressDialog(BillPaymentActivity.this);

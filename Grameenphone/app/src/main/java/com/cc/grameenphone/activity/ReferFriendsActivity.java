@@ -36,8 +36,8 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -47,34 +47,34 @@ import retrofit.mime.TypedInput;
 
 public class ReferFriendsActivity extends AppCompatActivity implements Validator.ValidationListener {
 
-    @InjectView(R.id.backRipple)
+    @Bind(R.id.backRipple)
     RippleView backRipple;
-    @InjectView(R.id.refer_text)
+    @Bind(R.id.refer_text)
     TextView referText;
-    @InjectView(R.id.refer_code)
+    @Bind(R.id.refer_code)
     TextView referCode;
-    @InjectView(R.id.refer_text_main)
+    @Bind(R.id.refer_text_main)
     TextView referTextMain;
-    @InjectView(R.id.areaCode)
+    @Bind(R.id.areaCode)
     EditText areaCode;
     @NotEmpty
-    @InjectView(R.id.phoneNumberEditText)
+    @Bind(R.id.phoneNumberEditText)
     EditText phoneNumberEditText;
-    @InjectView(R.id.phone_container)
+    @Bind(R.id.phone_container)
     TextInputLayout phoneContainer;
-    @InjectView(R.id.top_container1)
+    @Bind(R.id.top_container1)
     RelativeLayout topContainer1;
-    @InjectView(R.id.confirm_btn)
+    @Bind(R.id.confirm_btn)
     Button confirmBtn;
-    @InjectView(R.id.image_back)
+    @Bind(R.id.image_back)
     ImageButton imageBack;
-    @InjectView(R.id.toolbar_text)
+    @Bind(R.id.toolbar_text)
     TextView toolbarText;
-    @InjectView(R.id.toolbar_container)
+    @Bind(R.id.toolbar_container)
     RelativeLayout toolbarContainer;
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(R.id.confirmRipple)
+    @Bind(R.id.confirmRipple)
     RippleView confirmRipple;
     private String android_id;
     PreferenceManager preferenceManager;
@@ -89,7 +89,7 @@ public class ReferFriendsActivity extends AppCompatActivity implements Validator
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refer_friends);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         // Refercode availability check
         preferenceManager = new PreferenceManager(ReferFriendsActivity.this);
         if (preferenceManager.getReferCode().equals("null"))

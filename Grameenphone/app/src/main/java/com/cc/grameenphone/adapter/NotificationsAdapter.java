@@ -12,12 +12,12 @@ import android.widget.TextView;
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.api_models.NotificationMessageModel;
 import com.cc.grameenphone.interfaces.NotificationClickInterface;
-import com.cc.grameenphone.utils.Logger;
 
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+
 
 /**
  * Created by aditlal on 10/11/15.
@@ -82,15 +82,15 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     }
 
     static class NotificationsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @InjectView(R.id.notificationTypeTextView)
+        @Bind(R.id.notificationTypeTextView)
         TextView notificationTypeTextView;
-        @InjectView(R.id.notificationTitleTextView)
+        @Bind(R.id.notificationTitleTextView)
         TextView notificationTitleTextView;
-        @InjectView(R.id.notificationContentTextView)
+        @Bind(R.id.notificationContentTextView)
         TextView notificationContentTextView;
-        @InjectView(R.id.notificationTimeTextView)
+        @Bind(R.id.notificationTimeTextView)
         TextView notificationTimeTextView;
-        @InjectView(R.id.notificationLayout)
+        @Bind(R.id.notificationLayout)
         RelativeLayout notificationLayout;
 
 
@@ -98,7 +98,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
         NotificationsViewHolder(NotificationClickInterface clickInterface, View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
             this.clickInterface = clickInterface;
             notificationLayout.setOnClickListener(this);
           /*  notificationTypeTextView.setOnClickListener(this);

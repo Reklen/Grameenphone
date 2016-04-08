@@ -22,8 +22,8 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -35,25 +35,25 @@ import retrofit.mime.TypedInput;
  * Created by rajkiran on 09/09/15.
  */
 public class ProfileFragment extends Fragment {
-    @InjectView(R.id.first_name)
+    @Bind(R.id.first_name)
     EditText firstName;
-    @InjectView(R.id.firstNameTextInputLayout)
+    @Bind(R.id.firstNameTextInputLayout)
     TextInputLayout firstNameTextInputLayout;
-    @InjectView(R.id.last_name)
+    @Bind(R.id.last_name)
     EditText lastName;
-    @InjectView(R.id.lastNameTextInputLayout)
+    @Bind(R.id.lastNameTextInputLayout)
     TextInputLayout lastNameTextInputLayout;
-    @InjectView(R.id.email_name)
+    @Bind(R.id.email_name)
     EditText emailName;
-    @InjectView(R.id.emailTextInputLayout)
+    @Bind(R.id.emailTextInputLayout)
     TextInputLayout emailTextInputLayout;
-    @InjectView(R.id.national_id)
+    @Bind(R.id.national_id)
     EditText nationalId;
-    @InjectView(R.id.nationalTextInputLayout)
+    @Bind(R.id.nationalTextInputLayout)
     TextInputLayout nationalTextInputLayout;
-    @InjectView(R.id.dob)
+    @Bind(R.id.dob)
     EditText dob;
-    @InjectView(R.id.dobTextInputLayout)
+    @Bind(R.id.dobTextInputLayout)
     TextInputLayout dobTextInputLayout;
     private String android_id;
     PreferenceManager preferenceManager;
@@ -78,7 +78,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.profile_fragment_layout, container, false);
         // Inflate the layout for this fragment
-        ButterKnife.inject(this, rootView);
+        ButterKnife.bind(this, rootView);
         displayProfile();
         return rootView;
     }
@@ -153,7 +153,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     public ProfileModel getProfileModel() {

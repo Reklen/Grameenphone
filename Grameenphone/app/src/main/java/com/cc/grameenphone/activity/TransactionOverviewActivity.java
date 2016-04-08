@@ -33,8 +33,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -44,15 +44,15 @@ import retrofit.mime.TypedInput;
 
 public class TransactionOverviewActivity extends AppCompatActivity {
     ImageView back_icon;
-    @InjectView(R.id.image_icon_back)
+    @Bind(R.id.image_icon_back)
     ImageView imageIconBack;
-    @InjectView(R.id.text_tool)
+    @Bind(R.id.text_tool)
     TextView textTool;
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar transactionToolbar;
-    @InjectView(R.id.transactionList)
+    @Bind(R.id.transactionList)
     ListView transactionList;
-    @InjectView(R.id.backRipple)
+    @Bind(R.id.backRipple)
     RippleView backRipple;
     TransactionOverviewAdapter adapter;
     ProgressDialog loadingDialog;
@@ -69,7 +69,7 @@ public class TransactionOverviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_overview);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         listItemsList = new ArrayList<>();
         loadingDialog = new ProgressDialog(TransactionOverviewActivity.this);
         loadingDialog.setMessage("Fetching Transactions");

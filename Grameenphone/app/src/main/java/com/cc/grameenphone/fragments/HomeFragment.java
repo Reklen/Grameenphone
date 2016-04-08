@@ -23,6 +23,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cc.grameenphone.R;
 import com.cc.grameenphone.activity.BillPaymentActivity;
@@ -56,8 +57,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import co.uk.rushorm.core.RushSearch;
 import co.uk.rushorm.core.RushSearchCallback;
@@ -74,80 +75,80 @@ import retrofit.mime.TypedInput;
 public class HomeFragment extends Fragment {
 
 
-    @InjectView(R.id.prepaidOption)
+    @Bind(R.id.prepaidOption)
     RadioButton selfFlexiOption;
     //  RadioButton prepaidOption;
-    @InjectView(R.id.postpaidOption)
+    @Bind(R.id.postpaidOption)
     RadioButton othersFlexiOption;
     //RadioButton postpaidOption;
-    @InjectView(R.id.radioGroup)
+    @Bind(R.id.radioGroup)
     RadioGroup radioGroup;
-    @InjectView(R.id.areaCode)
+    @Bind(R.id.areaCode)
     TextView areaCode;
-    @InjectView(R.id.phoneNumberEditText)
+    @Bind(R.id.phoneNumberEditText)
     AutoCompleteTextView phoneNumberEditText;
-    @InjectView(R.id.phone_container)
+    @Bind(R.id.phone_container)
     TextInputLayout phoneContainer;
-    @InjectView(R.id.other_flex)
+    @Bind(R.id.other_flex)
     TextView otherFlex;
-    @InjectView(R.id.top_container1)
+    @Bind(R.id.top_container1)
     RelativeLayout topContainer1;
-    @InjectView(R.id.editamt)
+    @Bind(R.id.editamt)
     AmountEditText editamt;
-    @InjectView(R.id.amount_container)
+    @Bind(R.id.amount_container)
     TextInputLayout amountContainer;
-    @InjectView(R.id.flexi_btn)
+    @Bind(R.id.flexi_btn)
     Button flexiBtn;
-    @InjectView(R.id.billpay)
+    @Bind(R.id.billpay)
     ImageView billpay;
-    @InjectView(R.id.bill_text)
+    @Bind(R.id.bill_text)
     TextView billText;
-    @InjectView(R.id.billPayment)
+    @Bind(R.id.billPayment)
     RelativeLayout billPayment;
-    @InjectView(R.id.trans_icon)
+    @Bind(R.id.trans_icon)
     ImageView transIcon;
-    @InjectView(R.id.transc_text)
+    @Bind(R.id.transc_text)
     TextView transcText;
-    @InjectView(R.id.transactionOverview)
+    @Bind(R.id.transactionOverview)
     RelativeLayout transactionOverview;
-    @InjectView(R.id.emergencyicon)
+    @Bind(R.id.emergencyicon)
     ImageView emergencyicon;
-    @InjectView(R.id.emergency_text)
+    @Bind(R.id.emergency_text)
     TextView emergencyText;
-    @InjectView(R.id.emergencyCall)
+    @Bind(R.id.emergencyCall)
     RelativeLayout emergencyCall;
-    @InjectView(R.id.friends)
+    @Bind(R.id.friends)
     ImageView friends;
-    @InjectView(R.id.friends_text)
+    @Bind(R.id.friends_text)
     TextView friendsText;
-    @InjectView(R.id.referFriends)
+    @Bind(R.id.referFriends)
     RelativeLayout referFriends;
-    @InjectView(R.id.flexi_load_container)
+    @Bind(R.id.flexi_load_container)
     RelativeLayout flexiLoad;
-    @InjectView(R.id.sec_container)
+    @Bind(R.id.sec_container)
     RelativeLayout secContainer;
-    @InjectView(R.id.fst_container)
+    @Bind(R.id.fst_container)
     RelativeLayout fstContainer;
 
     int REQCODE = IntentUtils.SELECT_CONTACT_REQ;
     RechargeApi rechargeApi;
-    @InjectView(R.id.flexi_Ripple)
+    @Bind(R.id.flexi_Ripple)
     RippleView flexiRipple;
-    @InjectView(R.id.divider)
+    @Bind(R.id.divider)
     View divider;
-    @InjectView(R.id.centerview)
+    @Bind(R.id.centerview)
     View centerview;
-    @InjectView(R.id.billPayRipple)
+    @Bind(R.id.billPayRipple)
     RippleView billPayRipple;
-    @InjectView(R.id.transactionOverviewRipple)
+    @Bind(R.id.transactionOverviewRipple)
     RippleView transactionOverviewRipple;
-    @InjectView(R.id.emergencyCallRipple)
+    @Bind(R.id.emergencyCallRipple)
     RippleView emergencyCallRipple;
-    @InjectView(R.id.referFriendsRipple)
+    @Bind(R.id.referFriendsRipple)
     RippleView referFriendsRipple;
-    @InjectView(R.id.taka_text)
+    @Bind(R.id.taka_text)
     TextView takaText;
-    @InjectView(R.id.logo)
+    @Bind(R.id.logo)
     ImageView logo;
     private String android_id;
     PreferenceManager preferenceManager;
@@ -190,7 +191,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home_modified, container, false);
         // Inflate the layout for this fragment
-        ButterKnife.inject(this, rootView);
+        ButterKnife.bind(this, rootView);
         logo.setVisibility(View.GONE);
 
         preferenceManager = new PreferenceManager(getActivity());
@@ -353,7 +354,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     void billPaymentClick() {
@@ -368,6 +369,7 @@ public class HomeFragment extends Fragment {
        /* String ussd = "*XXX*X" + Uri.encode("#");
         Uri finalUssdUri = PhoneUtils.ussdToCallableUri(ussd);
         startActivity(new Intent(Intent.ACTION_DIAL, finalUssdUri));*/
+        Toast.makeText(getActivity(), "Emergency Balance is currently disabled", Toast.LENGTH_SHORT).show();
     }
 
     void referFriendsClick() {

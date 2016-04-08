@@ -11,62 +11,62 @@ import com.cc.grameenphone.R;
 import com.cc.grameenphone.api_models.TransactionOverviewData;
 import com.cc.grameenphone.views.RippleView;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class TransactionOverviewDeatilsActivity extends AppCompatActivity {
 
 
     TransactionOverviewData data;
-    @InjectView(R.id.image_icon_back)
+    @Bind(R.id.image_icon_back)
     ImageView imageIconBack;
-    @InjectView(R.id.backRipple)
+    @Bind(R.id.backRipple)
     RippleView backRipple;
-    @InjectView(R.id.text_tool)
+    @Bind(R.id.text_tool)
     TextView textTool;
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar transactionToolbar;
-    @InjectView(R.id.dueDate)
+    @Bind(R.id.dueDate)
     TextView dateText;
-    @InjectView(R.id.enterDate)
+    @Bind(R.id.enterDate)
     TextView enterDate;
-    @InjectView(R.id.accountText)
+    @Bind(R.id.accountText)
     TextView serText;
-    @InjectView(R.id.accountTextView)
+    @Bind(R.id.accountTextView)
     TextView serviceTextView;
-    @InjectView(R.id.second_top)
+    @Bind(R.id.second_top)
     RelativeLayout secondTop;
-    @InjectView(R.id.billText)
+    @Bind(R.id.billText)
     TextView cmpnyText;
-    @InjectView(R.id.companyTextView)
+    @Bind(R.id.companyTextView)
     TextView companyNameTextView;
-    @InjectView(R.id.third_top)
+    @Bind(R.id.third_top)
     RelativeLayout thirdTop;
-    @InjectView(R.id.amt_txt)
+    @Bind(R.id.amt_txt)
     TextView amtTxt;
-    @InjectView(R.id.amountTextView)
+    @Bind(R.id.amountTextView)
     TextView amountTextView;
-    @InjectView(R.id.fourth_top)
+    @Bind(R.id.fourth_top)
     RelativeLayout fourthTop;
-    @InjectView(R.id.surchargeText)
+    @Bind(R.id.surchargeText)
     TextView txnText;
-    @InjectView(R.id.surchargeTextView)
+    @Bind(R.id.surchargeTextView)
     TextView transactionNumberTextView;
-    @InjectView(R.id.fifth_top)
+    @Bind(R.id.fifth_top)
     RelativeLayout fifthTop;
     String date;
-    @InjectView(R.id.amt_sc_txt)
+    @Bind(R.id.amt_sc_txt)
     TextView amtScTxt;
-    @InjectView(R.id.amountSCTextView)
+    @Bind(R.id.amountSCTextView)
     TextView amountSCTextView;
-    @InjectView(R.id.fourth_half_top)
+    @Bind(R.id.fourth_half_top)
     RelativeLayout fourthHalfTop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_overview_details);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         textTool.setText("Transaction Overview");
 
         handleRipples();

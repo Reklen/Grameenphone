@@ -39,7 +39,6 @@ import com.cc.grameenphone.utils.CircularContactView;
 import com.cc.grameenphone.utils.ContactImageUtil;
 import com.cc.grameenphone.utils.ContactsQuery;
 import com.cc.grameenphone.utils.ImageCache;
-import com.cc.grameenphone.utils.Logger;
 import com.cc.grameenphone.utils.async_task_thread_pool.AsyncTaskEx;
 import com.cc.grameenphone.utils.async_task_thread_pool.AsyncTaskThreadPool;
 import com.cc.grameenphone.views.MySearchView;
@@ -56,24 +55,24 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import co.uk.rushorm.core.RushCallback;
 import co.uk.rushorm.core.RushSearch;
 import co.uk.rushorm.core.RushSearchCallback;
 
 public class AddFavoriteContactsActivity extends AppCompatActivity {
-    @InjectView(R.id.image_back)
+    @Bind(R.id.image_back)
     ImageButton imageBack;
-    @InjectView(R.id.backRipple)
+    @Bind(R.id.backRipple)
     RippleView backRipple;
-    @InjectView(R.id.toolbar_text)
+    @Bind(R.id.toolbar_text)
     TextView toolbarText;
-    @InjectView(R.id.toolbar_container)
+    @Bind(R.id.toolbar_container)
     RelativeLayout toolbarContainer;
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(android.R.id.list)
+    @Bind(android.R.id.list)
     PinnedHeaderListView list;
     private LayoutInflater mInflater;
     private PinnedHeaderListView mListView;
@@ -89,7 +88,7 @@ public class AddFavoriteContactsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_favorite_contacts);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         back_icon = (ImageView) findViewById(R.id.image_back);
         back_icon.setOnClickListener(new View.OnClickListener() {

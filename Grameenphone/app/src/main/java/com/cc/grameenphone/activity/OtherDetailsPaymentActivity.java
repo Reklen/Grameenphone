@@ -40,8 +40,8 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -57,68 +57,68 @@ public class OtherDetailsPaymentActivity extends AppCompatActivity implements Va
     String company, accNum, billNum, billCCode, amount, surcharge, category;
     boolean isAssociationRequired;
     OtherPaymentNewModel model;
-    @InjectView(R.id.image_back)
+    @Bind(R.id.image_back)
     ImageButton imageBack;
-    @InjectView(R.id.backRipple)
+    @Bind(R.id.backRipple)
     RippleView backRipple;
-    @InjectView(R.id.toolbar_text)
+    @Bind(R.id.toolbar_text)
     TextView toolbarText;
-    @InjectView(R.id.icon1)
+    @Bind(R.id.icon1)
     ImageButton icon1;
-    @InjectView(R.id.walletLabel)
+    @Bind(R.id.walletLabel)
     TextView walletLabel;
-    @InjectView(R.id.icon1Ripple)
+    @Bind(R.id.icon1Ripple)
     RippleView icon1Ripple;
-    @InjectView(R.id.toolbar_container)
+    @Bind(R.id.toolbar_container)
     RelativeLayout toolbarContainer;
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(R.id.companyText)
+    @Bind(R.id.companyText)
     TextView companyText;
-    @InjectView(R.id.companyTextView)
+    @Bind(R.id.companyTextView)
     TextView companyTextView;
-    @InjectView(R.id.accountText)
+    @Bind(R.id.accountText)
     TextView accountText;
-    @InjectView(R.id.accountTextView)
+    @Bind(R.id.accountTextView)
     TextView accountTextView;
-    @InjectView(R.id.second_top)
+    @Bind(R.id.second_top)
     RelativeLayout secondTop;
-    @InjectView(R.id.billText)
+    @Bind(R.id.billText)
     TextView billText;
-    @InjectView(R.id.third_top)
+    @Bind(R.id.third_top)
     RelativeLayout thirdTop;
-    @InjectView(R.id.amt_txt)
+    @Bind(R.id.amt_txt)
     TextView amtTxt;
-    @InjectView(R.id.amountTextView)
+    @Bind(R.id.amountTextView)
     TextView amountTextView;
-    @InjectView(R.id.fourth_top)
+    @Bind(R.id.fourth_top)
     RelativeLayout fourthTop;
-    @InjectView(R.id.surchargeText)
+    @Bind(R.id.surchargeText)
     TextView surchargeText;
-    @InjectView(R.id.surchargeTextView)
+    @Bind(R.id.surchargeTextView)
     TextView surchargeTextView;
-    @InjectView(R.id.fifth_top)
+    @Bind(R.id.fifth_top)
     RelativeLayout fifthTop;
-    @InjectView(R.id.due_date_text)
+    @Bind(R.id.due_date_text)
     TextView dueDateText;
-    @InjectView(R.id.dueDateTextView)
+    @Bind(R.id.dueDateTextView)
     TextView dueDateTextView;
-    @InjectView(R.id.sixth_top)
+    @Bind(R.id.sixth_top)
     RelativeLayout sixthTop;
     @NotEmpty
-    @InjectView(R.id.pinConfirmEditText)
+    @Bind(R.id.pinConfirmEditText)
     EditText pinConfirmEditText;
-    @InjectView(R.id.pinTIL)
+    @Bind(R.id.pinTIL)
     CustomTextInputLayout pinTIL;
-    @InjectView(R.id.pinLayout)
+    @Bind(R.id.pinLayout)
     RelativeLayout pinLayout;
-    @InjectView(R.id.confirmButton)
+    @Bind(R.id.confirmButton)
     Button confirmButton;
-    @InjectView(R.id.confirmRippleView)
+    @Bind(R.id.confirmRippleView)
     RippleView confirmRippleView;
-    @InjectView(R.id.billTextView)
+    @Bind(R.id.billTextView)
     TextView billTextView;
-    @InjectView(R.id.pinHeading)
+    @Bind(R.id.pinHeading)
     TextView pinHeading;
     private MaterialDialog walletBalanceDialog, sessionDialog, errorDialog, confirmationDialog;
     private WalletCheckApi walletCheckApi;
@@ -133,7 +133,7 @@ public class OtherDetailsPaymentActivity extends AppCompatActivity implements Va
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_payment_details);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         preferenceManager = new PreferenceManager(OtherDetailsPaymentActivity.this);
         otherPaymentApi = ServiceGenerator.createService(OtherDetailsPaymentActivity.this,OtherPaymentApi.class);
         addAssociationApi = ServiceGenerator.createService(OtherDetailsPaymentActivity.this,AddAssociationApi.class);

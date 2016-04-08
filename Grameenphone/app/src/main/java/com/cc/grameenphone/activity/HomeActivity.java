@@ -47,8 +47,8 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import co.uk.rushorm.core.RushSearch;
 import co.uk.rushorm.core.RushSearchCallback;
 import me.drakeet.materialdialog.MaterialDialog;
@@ -60,28 +60,28 @@ import retrofit.mime.TypedInput;
 
 public class HomeActivity extends BaseActivity implements WalletBalanceInterface {
 
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(R.id.container_body)
+    @Bind(R.id.container_body)
     FrameLayout containerBody;
-    @InjectView(R.id.navigation_view)
+    @Bind(R.id.navigation_view)
     NavigationView navigationView;
-    @InjectView(R.id.drawer)
+    @Bind(R.id.drawer)
     DrawerLayout drawerLayout;
     FragmentTransaction fragmentTransaction;
     Fragment fragment;
-    @InjectView(R.id.toolbar_text)
+    @Bind(R.id.toolbar_text)
     TextView toolbarTextView;
-    @InjectView(R.id.icon1)
+    @Bind(R.id.icon1)
     ImageButton icon1;
-    @InjectView(R.id.icon2)
+    @Bind(R.id.icon2)
     ImageButton icon2;
     PreferenceManager preferenceManager;
-    @InjectView(R.id.walletLabel)
+    @Bind(R.id.walletLabel)
     TextView walletLabel;
-    @InjectView(R.id.icon1Ripple)
+    @Bind(R.id.icon1Ripple)
     RippleView icon1Ripple;
-    @InjectView(R.id.icon2Ripple)
+    @Bind(R.id.icon2Ripple)
     RippleView icon2Ripple;
     private String android_id;
 
@@ -96,7 +96,7 @@ public class HomeActivity extends BaseActivity implements WalletBalanceInterface
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grameenhome);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         init();
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();

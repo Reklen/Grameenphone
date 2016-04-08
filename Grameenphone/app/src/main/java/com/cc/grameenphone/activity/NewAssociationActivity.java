@@ -29,8 +29,8 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -48,17 +48,17 @@ public class NewAssociationActivity extends AppCompatActivity {
     CharSequence titles[] = {"ELECTRICITY", "GAS", "INSURANCE", "TICKETING", "INTERNET"};
     int numOfTabs = 5;
     Toolbar otherToolbar;
-    @InjectView(R.id.image_back)
+    @Bind(R.id.image_back)
     ImageButton imageBack;
-    @InjectView(R.id.backRipple)
+    @Bind(R.id.backRipple)
     RippleView backRipple;
-    @InjectView(R.id.toolbar_text)
+    @Bind(R.id.toolbar_text)
     TextView toolbarText;
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(R.id.tabs)
+    @Bind(R.id.tabs)
     SlidingTabLayout tabs;
-    @InjectView(R.id.pager)
+    @Bind(R.id.pager)
     ViewPager pager;
 
     ManageAssociationApi associationApi;
@@ -71,7 +71,7 @@ public class NewAssociationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_association);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         preferenceManager = new PreferenceManager(NewAssociationActivity.this);
         android_id = Settings.Secure.getString(NewAssociationActivity.this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
